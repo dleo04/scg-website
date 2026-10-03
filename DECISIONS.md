@@ -173,3 +173,21 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 - **Footer contrast** (checked by `npm run contrast`): links and affiliation 18.42:1, tagline, note and copyright 11.30:1, link hover gold 9.31:1, logo white 17.00:1 and logo gold 9.05:1 on `--ink`. No footer colors needed changing.
 - **Hero contrast** re-measured: H1 7.82–9.06:1, subhead 7.80–8.12:1, EY line 7.80–7.89:1, logo white 7.91–8.80:1, logo gold 4.17–4.63:1.
 - **CLAUDE.md** notes that the reversed logo is used on the hero photo and in the black footer only.
+
+## Stage 1k (logo leads the hero; seam above the stat strip removed)
+
+- **Proportions.**
+  - The reversed logo is now 280/400/480/540px wide at 360/768/1280/1440 (piecewise `clamp()`, `max-width: 82vw`, so 262px at 320).
+  - The H1 is `min(clamp(2.5rem, 4.2vw, 4rem), 10.4vw)`: 40px up to 768, 53.8px at 1280, 60.5px at 1440, 64px cap.
+  - The logo artwork measures 77–105% of the headline's width (92% at 1440; at least 70% was requested).
+- **H1 at 360px (spec conflict).** "Welcome to SCG" at 40px is about 342px wide, but a 360px screen has 328px inside the gutters, so 40px and one line cannot both hold there. The `10.4vw` cap gives 37.4px at 360 (320px wide) and the full 40px from about 385px. Measured on one line from 320 to 1920px.
+- **Visible gaps** (artwork to text, compensating the PNG's 21.5% built-in margin): logo→H1 56px from 1024, 44px from 768, 32px below; H1→subhead 20px; subhead→EY 28px. All measured exact at every width.
+- **Hero height not increased.** The content already had comfortable room, so the stage 1i heights were kept. The request made 96vh conditional on running out of room, and it would also push the stat strip fully below the fold at 1440×900, which stage 1h asked to keep visible (it shows 71px).
+- **Centering.** Top and bottom padding are now equal, `clamp(136px, 17vh, 180px)`, so the block is exactly centered: equal space above the logo and below the EY line at every width (for example 208/208 at 1440×900). The header-to-logo gap is 151–271px (at least 96px required). The EY line ends 57–144px above the start of the fade.
+- **Cause of the line above the stat strip.** The photo sat behind both the hero and the strip. The hero ended in 86% white over the **tinted** photo, while the strip began with 86% white over the **untinted** photo, so brightness stepped up at the boundary (measured row averages 0.733 → 0.792). At 90%/110% zoom the boundary also fell on a fractional pixel that neither semi-transparent layer fully covered, leaving a dark row (0.685 / 0.635).
+- **Fix** (removed at the source, not covered up):
+  - The hero fade (`.hero::after`) is one smooth gradient that reaches opaque `--paper` 8px before its end and extends 2px past the hero edge.
+  - The strip background is solid `--paper`, exactly the fade's final colour.
+  - Measured afterwards: every pixel row within ±4px of the boundary is pure white (1.000) at 1x and 2x, at 90% and 110% zoom, and at 360, 768, 1280 and 1440px.
+  - Unchanged: the stat dividers (`border-left` on items), the numbers, the labels and the spacing.
+- **Contrast** re-measured on the actual pixels: H1 7.89–9.36:1, subhead and EY line 7.80:1, logo white 7.29–7.97:1, logo gold 3.84–4.20:1. Stat numbers are now red on solid white (7.24:1, up from 5.25:1 worst case on the wash).

@@ -480,40 +480,52 @@ main:focus { outline: none; }
   position: relative; display: grid; place-items: center; text-align: center; color: var(--on-ink);
   /* The sticky header sits above the hero (in flow), so heights subtract it. */
   min-height: max(560px, calc(85vh - var(--header-h))); min-height: max(560px, calc(85svh - var(--header-h)));
-  padding: clamp(56px, 9vh, 96px) 0 clamp(112px, 14vh, 168px);
+  /* Equal top/bottom padding keeps the block centred; ≥ 136px from the header to the logo
+     (≥ 96px required) and the EY line stays well above the bottom fade. */
+  padding: clamp(136px, 17vh, 180px) 0;
 }
 @media (min-width: 768px) { .hero { min-height: calc(80vh - var(--header-h)); } }
 @media (min-width: 1024px) { .hero { min-height: clamp(688px, calc(92vh - var(--header-h)), 888px); } }
 /* Flat maroon-black tint over the whole hero (no gradient, no blur). npm run contrast and
    npm run hero-contrast measure text and the reversed logo against it. */
 .hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--hero-tint); }
+/* Fade to white: one continuous gradient that reaches opaque --paper 8px before its end
+   and extends 2px past the hero, so the boundary pixel with the (solid white) stat strip
+   is always fully covered at any zoom/pixel density. This removes the old seam, which came
+   from 86% white over the TINTED photo above vs 86% white over the UNTINTED photo below,
+   plus a partially covered pixel row at fractional zoom levels. */
 .hero::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: clamp(64px, 8vw, 96px); z-index: -1;
-  background: linear-gradient(to bottom, transparent, rgb(255 255 255 / 0.86));
+  content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: clamp(96px, 12vh, 140px); z-index: -1;
+  background: linear-gradient(to bottom,
+    rgb(255 255 255 / 0) 0%, rgb(255 255 255 / .18) 30%, rgb(255 255 255 / .5) 55%,
+    rgb(255 255 255 / .82) 78%, var(--paper) calc(100% - 8px), var(--paper) 100%);
 }
 .hero__inner { display: grid; justify-items: center; }
-/* Reversed logo (officer-approved, dark/photo backgrounds only) directly on the photo.
-   Width: 260px @360, 340 @768, 400 @1280, 440 @1440. The PNG has 21.5% transparent margin
-   above/below the artwork (0.0592 × width), so the margin is reduced by that amount to get
-   a ~32px VISIBLE gap from the artwork to the H1. */
+/* Reversed logo (officer-approved, dark/photo backgrounds only) directly on the photo; it
+   leads, the H1 supports. Width: 280px @360, 400 @768, 480 @1280, 540 @1440 (max 82vw).
+   The PNG has 21.5% transparent margin above/below the artwork (0.0592 × width), so the
+   margin subtracts it to give VISIBLE gaps of 32px (<768), 44px (768+), 56px (1024+). */
 .hero__logo {
-  --logo-w: clamp(260px, calc(189px + 19.6vw), 340px);
-  width: var(--logo-w); max-width: 80vw; height: auto;
-  margin-bottom: calc(32px - min(var(--logo-w), 80vw) * 0.0592);
+  --logo-w: clamp(280px, calc(174px + 29.4vw), 400px); --logo-gap: 32px;
+  width: var(--logo-w); max-width: 82vw; height: auto;
+  margin-bottom: calc(var(--logo-gap) - min(var(--logo-w), 82vw) * 0.0592);
   filter: drop-shadow(0 2px 12px rgba(0, 0, 0, .35));
 }
-@media (min-width: 1024px) { .hero__logo { --logo-w: clamp(340px, calc(250px + 11.72vw), 400px); } }
-@media (min-width: 1281px) { .hero__logo { --logo-w: clamp(400px, calc(80px + 25vw), 440px); } }
-/* H1: one line at every width, as large as fits ("Welcome to SCG": ~0.69em per character
-   in Montserrat 800). 10vw = 36px at 360 (308 of 328px), 5.5rem (88px) cap from 880px. */
-.hero__title { font-weight: 800; font-size: clamp(2rem, 10vw, 5.5rem); letter-spacing: -0.02em; line-height: 1.06; margin-bottom: 20px; white-space: nowrap; }
+@media (min-width: 768px) { .hero__logo { --logo-w: clamp(400px, calc(280px + 15.625vw), 480px); --logo-gap: 44px; } }
+@media (min-width: 1024px) { .hero__logo { --logo-gap: 56px; } }
+@media (min-width: 1280px) { .hero__logo { --logo-w: clamp(480px, 37.5vw, 540px); } }
+/* H1 supports the logo: clamp(2.5rem, 4.2vw, 4rem) = 40px to 768, ~54px @1280, ~60px @1440,
+   64px cap. One line at every width: "Welcome to SCG" is ~8.56 × font-size wide, so below
+   ~385px it is capped at 10.4vw (37.4px at 360 = 320 of 328px available). */
+.hero__title { font-weight: 800; font-size: min(clamp(2.5rem, 4.2vw, 4rem), 10.4vw); letter-spacing: -0.02em; line-height: 1.06; margin-bottom: 20px; white-space: nowrap; }
 /* Subhead: one line from 1024px up; balanced wrapping below. */
 .hero__lede { font-size: clamp(1rem, 1.6vw, 1.5rem); line-height: 1.5; max-width: min(1200px, 100%); margin: 0 auto 28px; text-wrap: balance; }
 @media (min-width: 1024px) { .hero__lede { white-space: nowrap; } }
 .hero__partner { font-family: var(--font-head); font-weight: 600; font-size: .8125rem; letter-spacing: .18em; text-transform: uppercase; margin: 0; text-wrap: balance; }
 @media (max-width: 420px) { .hero__partner { letter-spacing: .1em; font-size: .75rem; } }
 
-.stat-strip { position: relative; background: linear-gradient(to bottom, rgb(255 255 255 / 0.86), var(--paper) 90%); padding-block: 20px 36px; }
+/* Solid --paper: exactly the colour the hero's fade ends in, so there is no seam. */
+.stat-strip { position: relative; background: var(--paper); padding-block: 20px 36px; }
 /* Three compact columns at every width (they fit at 360px); hairline dividers. */
 .stat-strip__list { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); margin: 0 auto; max-width: 960px; text-align: center; }
 .stat-strip__item { display: flex; flex-direction: column-reverse; justify-content: flex-end; padding: 10px 6px; } /* column-reverse: flex-end = top, so numbers align */
