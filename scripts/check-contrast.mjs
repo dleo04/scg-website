@@ -38,7 +38,9 @@ const pairs = [
   ["scg-red", "paper", 4.5, "header nav hover / current page"],
   ["scg-gold", "ink", 4.5, "accent word 'Work', eyebrows on dark"],
   ["on-ink", "ink", 4.5, "text on dark bands"],
-  ["on-ink-2", "ink", 4.5, "secondary text on dark bands / footer"],
+  ["on-ink-2", "ink", 4.5, "secondary text on dark bands / footer tagline, note, copyright"],
+  ["on-ink", "ink", 4.5, "footer links and affiliation line"],
+  ["scg-gold", "ink", 4.5, "footer link hover"],
   ["ink", "ph-bg", 4.5, "placeholder labels"],
   ["ink-2", "ph-bg", 4.5, "placeholder image labels"],
   ["ph-border", "ink", 3, "carousel dots (non-text)"],
@@ -99,8 +101,23 @@ if (brightestBg && fs.existsSync(reversed)) {
     rows.push(`${worst.toFixed(2).padStart(6)}:1  reversed logo ${name} parts (${pxs.length} px) on brightest tinted pixel`);
     if (worst < 3) failures.push(`reversed logo ${name} parts: ${worst.toFixed(2)}:1 < 3:1`);
   }
-} else if (!fs.existsSync(reversed)) {
-  rows.push("     –    reversed logo not supplied (assets/scg-logo-reversed.png); skipped");
+}
+// Footer: the reversed logo sits directly on --ink.
+if (fs.existsSync(reversed)) {
+  const { data } = await sharp(reversed).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const worst = { white: Infinity, gold: Infinity };
+  for (let i = 0; i < data.length; i += 4 * 5) {
+    if (data[i + 3] < 200) continue;
+    const px = [data[i], data[i + 1], data[i + 2]];
+    const near = (c, t) => Math.hypot(c[0] - t[0], c[1] - t[1], c[2] - t[2]) < 45;
+    const g = px.every((c) => c > 225) ? "white" : near(px, [248, 168, 30]) ? "gold" : null;
+    if (g) worst[g] = Math.min(worst[g], ratio(px, C.ink));
+  }
+  for (const [g, r] of Object.entries(worst)) {
+    if (r === Infinity) continue;
+    rows.push(`${r.toFixed(2).padStart(6)}:1  footer reversed logo ${g} parts on ink`);
+    if (r < 3) failures.push(`footer logo ${g} on ink: ${r.toFixed(2)}:1 < 3:1`);
+  }
 }
 
 console.log(rows.join("\n"));

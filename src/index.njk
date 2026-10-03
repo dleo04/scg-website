@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 seoTitle: "Snider Consulting Group | Student-run consulting at the University of Maryland"
-description: "UMD's student-run consulting group, solving real problems for campus organizations and nonprofits since 2020, in partnership with EY."
+description: "Snider Consulting Group (SCG) is UMD's student-run consulting group, solving real problems for campus organizations and nonprofits since 2020, in partnership with EY."
 bodyClass: page-home
 hideBanner: true
 ---
@@ -30,9 +30,9 @@ hideBanner: true
     <div class="container hero__inner">
       {#- Reversed logo: officer-approved variant for dark/photo backgrounds only. -#}
       <img class="hero__logo" data-hero-logo src="{{ brand.reversedLogo.src }}" width="{{ brand.reversedLogo.width }}" height="{{ brand.reversedLogo.height }}" alt="Snider Consulting Group" loading="eager" fetchpriority="high" decoding="async">
-      <h1 class="hero__title" id="hero-title">Welcome to the <span class="hero__name">Snider Consulting Group</span></h1>
-      <p class="hero__lede">UMD's student-run consulting group, solving real problems for campus organizations and nonprofits since {{ site.established }}.</p>
-      <p class="hero__partner">In partnership with Ernst &amp; Young</p>
+      <h1 class="hero__title" id="hero-title">{{ site.hero.title }}</h1>
+      <p class="hero__lede">{{ site.hero.subhead }}</p>
+      <p class="hero__partner">{{ site.hero.partner_line }}</p>
     </div>
     {#- No "Stand-in photo" badge on the hero; the stand-in is tracked in TODO-CONTENT.md (site.json → images.hero_is_standin). -#}
   </section>

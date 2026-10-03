@@ -160,3 +160,16 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 - **The hero starts below the header.** Its heights subtract `--header-h`: mobile `max(560px, 85svh − 60px)`, tablet `80vh − 60px`, desktop `clamp(688px, 92vh − 72px, 888px)`. Header plus hero together occupy the same space as before, so the stat strip still starts at about 829px at 1440×900 and the top 71px of it is visible. Top padding is `clamp(56px, 9vh, 96px)`. Measured gap from the header to the hero logo: 111px (360×780), 83px (360×640), 188px (768×1024), 143px (1280×800) and 168px (1440×900). The browser check fails if the logo or headline comes within 32px of the header.
 - **Anchors.** `[id] { scroll-margin-top: var(--header-h) }` replaces the old `scroll-padding-top`, so `/#places-title` lands right below the bar; ui-check verifies this. Project deep links (`/#alliom`) open the modal dialog in the top layer above the header, so they are unaffected.
 - **Hero contrast** re-measured with the new layout: text 7.80–8.61:1, logo white 7.91–10.37:1, logo gold 4.17–5.47:1.
+
+## Stage 1j (hero copy, nav spacing, reversed footer logo)
+
+- **Hero copy is data-driven.** It now lives in `site.json → hero` (`title`, `subhead`, `partner_line`).
+  - The H1 is "Welcome to SCG", sized `clamp(2rem, 10vw, 5.5rem)` with `white-space: nowrap`. Measured on one line at every width: 32px at 320 (274 of 288px available), 36px at 360 (308 of 328px), 76.8px at 768, and 88px from about 880px up.
+  - The subhead "UMD's student-run consulting group, solving real problems since 2020." is `nowrap` from 1024px. It is one line from 768px and two lines on phones.
+  - The logo, its alt text and vertical spacing, the EY line and the hero height are unchanged.
+- **Full name kept for SEO.** The home `<title>`, `og:title`, `og:site_name` and the JSON-LD `name` already carried "Snider Consulting Group". The home meta description (and therefore `og:description`) did not, so it now starts "Snider Consulting Group (SCG) is UMD's student-run consulting group…".
+- **Nav spacing.** The desktop gap went from 2px to 10px, so there are 38px between link labels. Measured: one row and centered at 1024–1920px, with at least 33px of clearance before the social icons and Join SCG (at 1024px). The mobile menu is unchanged.
+- **Footer logo.** The reversed logo now sits directly on black, with no plate, box, border or shadow: 200px wide on mobile and 240px from 768px. It links home with alt text "Snider Consulting Group" (the old alt was "…home"; the link destination is clear from context, and this matches the requested wording). A small negative margin lines its artwork up with the footer text column, since the PNG has about 5.9% empty space at each side. The `.logo-plate` style is no longer used anywhere and was removed. The header keeps the original red logo.
+- **Footer contrast** (checked by `npm run contrast`): links and affiliation 18.42:1, tagline, note and copyright 11.30:1, link hover gold 9.31:1, logo white 17.00:1 and logo gold 9.05:1 on `--ink`. No footer colors needed changing.
+- **Hero contrast** re-measured: H1 7.82–9.06:1, subhead 7.80–8.12:1, EY line 7.80–7.89:1, logo white 7.91–8.80:1, logo gold 4.17–4.63:1.
+- **CLAUDE.md** notes that the reversed logo is used on the hero photo and in the black footer only.

@@ -16,6 +16,12 @@
     "closed_text": "Fall 2026 applications are closed.",
     "note": "Set 'open' to true and fill the URLs when the cycle is live. When false, the site shows 'closed_text' and the interest form link if present."
   },
+  "hero": {
+    "_readme": "Home hero copy. 'title' must fit on one line at every width (keep it short); 'subhead' is one line from 1024px. The full name stays in the page title, meta description, Open Graph and JSON-LD.",
+    "title": "Welcome to SCG",
+    "subhead": "UMD's student-run consulting group, solving real problems since 2020.",
+    "partner_line": "In partnership with Ernst & Young"
+  },
   "images": {
     "_readme": "Paths are relative to the repo root. Anything under assets/placeholders/ is drawn as a labeled gray block. While an '*_is_standin' flag is true, the photo shows a small 'Stand-in photo' tag (dev only); set it to false once a real replacement is in place.",
     "hero": "assets/placeholder-hero-quad.jpg",
