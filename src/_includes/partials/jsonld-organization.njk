@@ -1,0 +1,18 @@
+{#- Only verified facts from data/site.json. -#}
+{%- set org = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": site.name,
+  "alternateName": site.short_name,
+  "url": site.domain ~ "/",
+  "logo": "/assets/scg-logo.png" | absoluteUrl(site.domain),
+  "description": site.description,
+  "foundingDate": site.established | string,
+  "sameAs": [site.links.instagram, site.links.linkedin],
+  "parentOrganization": {
+    "@type": "CollegeOrUniversity",
+    "name": "University of Maryland",
+    "url": "https://umd.edu/"
+  }
+} -%}
+<script type="application/ld+json">{{ org | jsonLd | safe }}</script>

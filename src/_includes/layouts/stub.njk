@@ -1,0 +1,14 @@
+---
+layout: layouts/base.njk
+noindex: true
+---
+{%- from "components/ui.njk" import tbdBlock with context -%}
+{#- Temporary page so navigation works while later build stages are pending. -#}
+<section class="section">
+  <div class="container narrow">
+    <p class="eyebrow">{{ eyebrow or "Snider Consulting Group" }}</p>
+    <h1 class="page-title">{{ title }}</h1>
+    {{ content | safe }}
+    {{ tbdBlock("This page is built in stage " ~ stage ~ " of the site build.", "[TBD: page content, stage " ~ stage ~ "]") }}
+  </div>
+</section>

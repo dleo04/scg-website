@@ -13,7 +13,17 @@
     "banner_text": "Interest form is open. All UMD majors welcome.",
     "interest_form_url": null,
     "application_url": null,
-    "note": "Set 'open' to true and fill the URLs when the cycle is live. When false, show 'Fall 2026 applications closed' state and the interest form link if present."
+    "closed_text": "Fall 2026 applications are closed.",
+    "note": "Set 'open' to true and fill the URLs when the cycle is live. When false, the site shows 'closed_text' and the interest form link if present."
+  },
+  "images": {
+    "_readme": "Paths are relative to the repo root. Anything under assets/placeholders/ is treated as a placeholder and drawn as a labeled gray block. 'hero' currently points at the old group photo as a stand-in; set 'hero_is_standin' to false once a candid, varied photo replaces it.",
+    "hero": "assets/placeholder-group-photo.jpg",
+    "hero_alt": "SCG members in business attire standing in front of the Robert H. Smith School of Business sign.",
+    "hero_is_standin": true
+  },
+  "forms": {
+    "client_request_endpoint": null
   },
   "timeline": {
     "_readme": "Recruitment timeline steps. Dates are unknown; render 'Dates TBD' until filled. Step names are suggestions modeled on a clear step-by-step pattern; officers must confirm which steps actually exist.",

@@ -1,0 +1,50 @@
+{#- Small shared building blocks. Import with:
+    {% from "components/ui.njk" import tbdText, tbdBlock, media, chip, applyCta with context %} -#}
+
+{#- Inline text that may contain "[TBD: ...]" markers. -#}
+{% macro tbdText(text) -%}
+{{ text | tbd | safe }}
+{%- endmacro %}
+
+{#- Block placeholder for missing content (SPEC 7). Hidden entirely with HIDE_PLACEHOLDERS=1. -#}
+{% macro tbdBlock(label, need) -%}
+{%- if not env.hidePlaceholders -%}
+<div class="ph-text" data-placeholder="true" data-todo="{{ need or label }}">
+  <p class="ph-text__label">{{ label }}</p>
+  {% if need %}<p class="ph-text__need"><span class="tbd">{{ need }}</span></p>{% endif %}
+</div>
+{%- endif -%}
+{%- endmacro %}
+
+{#- Image slot. Anything under assets/placeholders/ renders as a labeled gray block
+    (no network request); real images render inside a fixed-ratio frame (no layout shift). -#}
+{% macro media(src, alt, label, ratio = "16 / 9", eager = false) -%}
+{%- if src | isPlaceholderImage -%}
+  {%- if not env.hidePlaceholders -%}
+  <div class="ph" style="--ratio: {{ ratio }}" data-placeholder="true" data-todo="{{ label }}">
+    <span class="ph__label">{{ label }}</span>
+  </div>
+  {%- endif -%}
+{%- else -%}
+  <div class="media" style="--ratio: {{ ratio }}">
+    <img src="/{{ src }}" alt="{{ '' if (alt | isTbd) else alt }}" {% if eager %}fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+  </div>
+{%- endif -%}
+{%- endmacro %}
+
+{% macro chip(text, variant = "") -%}
+<li class="chip{% if variant %} chip--{{ variant }}{% endif %}">{{ text | tbd | safe }}</li>
+{%- endmacro %}
+
+{#- Apply / interest-list call to action, per SPEC 5.4.
+    variant: "primary" (red, light backgrounds) or "gold" (dark backgrounds). -#}
+{% macro applyCta(variant = "primary") -%}
+{%- set cta = site.recruiting | ctaState -%}
+{%- if cta.kind != "tbd" -%}
+  <a class="btn btn--{{ variant }}" href="{{ cta.href }}" rel="noopener">{{ cta.label }}</a>
+{%- elif not env.hidePlaceholders -%}
+  <span class="btn btn--placeholder" data-placeholder="true" data-todo="[TBD link: recruiting.application_url or recruiting.interest_form_url in data/site.json]">
+    <span class="tbd">[TBD link]</span>&nbsp;Apply or interest form
+  </span>
+{%- endif -%}
+{%- endmacro %}

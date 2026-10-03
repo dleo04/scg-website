@@ -1,0 +1,37 @@
+{%- set cta = site.recruiting | ctaState -%}
+{%- set who = [
+  { label: "About", url: "/about/" },
+  { label: "Team", url: "/team/" },
+  { label: "Alumni", url: "/alumni/" },
+  { label: "Partners", url: "/partners/" }
+] -%}
+{%- set whoActive = page.url.startsWith('/about/') or page.url.startsWith('/team/') or page.url.startsWith('/alumni/') or page.url.startsWith('/partners/') -%}
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-logo" href="/">
+      <img src="/assets/scg-logo.png" width="668" height="184" alt="Snider Consulting Group home">
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+        <span class="nav-toggle__icon" aria-hidden="true"></span>
+        <span class="nav-toggle__label">Menu</span>
+      </button>
+      <ul id="nav-menu" class="nav-menu">
+        <li><a class="nav-link" href="/projects/" {% if page.url.startsWith('/projects/') %}aria-current="page"{% endif %}>Projects</a></li>
+        <li><a class="nav-link" href="/join/" {% if page.url.startsWith('/join/') %}aria-current="page"{% endif %}>Join SCG</a></li>
+        <li class="nav-group">
+          <button class="nav-link nav-group__toggle{% if whoActive %} is-current{% endif %}" type="button" aria-expanded="false" aria-controls="nav-who">
+            Who We Are <span class="nav-group__caret" aria-hidden="true"></span>
+          </button>
+          <ul id="nav-who" class="nav-group__menu">
+            {%- for item in who %}
+            <li><a class="nav-link" href="{{ item.url }}" {% if page.url.startsWith(item.url) %}aria-current="page"{% endif %}>{{ item.label }}</a></li>
+            {%- endfor %}
+          </ul>
+        </li>
+        <li><a class="nav-link" href="/work-with-us/" {% if page.url.startsWith('/work-with-us/') %}aria-current="page"{% endif %}>Work With Us</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn--primary btn--sm header-cta" href="{{ cta.href }}"{% if cta.external %} rel="noopener"{% endif %}>{{ cta.short }}</a>
+  </div>
+</header>

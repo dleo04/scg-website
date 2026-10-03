@@ -1,0 +1,176 @@
+---
+layout: layouts/base.njk
+seoTitle: "Snider Consulting Group | UMD Student Consulting for Every Major"
+bodyClass: page-home
+---
+{%- from "components/ui.njk" import tbdText, tbdBlock, media, chip, applyCta with context -%}
+{%- from "components/project-card.njk" import projectCard with context -%}
+{%- from "components/find-your-seat.njk" import findYourSeat with context -%}
+{%- from "components/how-it-works.njk" import howItWorks with context -%}
+{%- set hero = generatedImages.hero -%}
+
+{# 1. Hero ------------------------------------------------------------------ #}
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <p class="eyebrow eyebrow--accent">University of Maryland · Student-run consulting</p>
+      <h1 class="hero__title" id="hero-title">{{ site.tagline }}</h1>
+      <p class="hero__lede">SCG is UMD's student-run consulting group. Engineers, data scientists, designers, researchers and business students solve real problems for real clients, side by side.</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="/projects/">See our projects</a>
+        <a class="btn btn--secondary" href="/join/">Join SCG</a>
+      </div>
+    </div>
+    <figure class="hero__media">
+      {%- if hero and not (site.images.hero | isPlaceholderImage) %}
+      <picture>
+        <source type="image/webp" srcset="{{ hero.webpSrcset }}" sizes="(min-width: 1024px) 560px, (min-width: 768px) 90vw, 100vw">
+        <img src="{{ hero.src }}" srcset="{{ hero.jpgSrcset }}" sizes="(min-width: 1024px) 560px, (min-width: 768px) 90vw, 100vw"
+             width="{{ hero.width }}" height="{{ hero.height }}" alt="{{ site.images.hero_alt }}" fetchpriority="high" decoding="async">
+      </picture>
+      {%- if site.images.hero_is_standin and not env.hidePlaceholders %}
+      <figcaption class="standin-tag" data-placeholder="true" data-todo="[TBD: replace the stand-in hero photo with a candid photo of members from many majors at work (site.json → images.hero)]">Stand-in photo</figcaption>
+      {%- endif %}
+      {%- else %}
+      {{ media(site.images.hero, site.images.hero_alt, "PHOTO: Candid group or work-session photo (4:3)", "4 / 3", true) }}
+      {%- endif %}
+    </figure>
+  </div>
+</section>
+
+{# 2. Proof strip: only verified stats show numbers ---------------------------- #}
+<section class="section section--ink section--tight" aria-labelledby="proof-title">
+  <div class="container">
+    <h2 class="visually-hidden" id="proof-title">SCG at a glance</h2>
+    <dl class="stats">
+      {%- for s in site.stats %}
+      {%- if s.verified %}
+      <div class="stat"><dt class="stat__label">{{ s.label }}</dt><dd class="stat__value">{{ s.value }}</dd></div>
+      {%- elif not env.hidePlaceholders %}
+      <div class="stat stat--placeholder" data-placeholder="true" data-todo="[TBD: verified figure for '{{ s.label }}' (site.json → stats)]">
+        <dt class="stat__label">{{ s.label }}</dt><dd class="stat__value"><span class="tbd">[TBD]</span></dd>
+      </div>
+      {%- endif %}
+      {%- endfor %}
+    </dl>
+  </div>
+</section>
+
+{# 3. Find your seat ------------------------------------------------------------ #}
+<section class="section section--paper-2" aria-labelledby="seat-title">
+  <div class="container">
+    <header data-reveal class="section__head">
+      <p class="eyebrow">Every major has a role</p>
+      <h2 class="section__title" id="seat-title">Find your seat</h2>
+      <p class="section__lede">Pick the kind of work that excites you. Every track below is drawn from real SCG client projects.</p>
+    </header>
+    {{ findYourSeat(tracks, "home-seat", 3) }}
+  </div>
+</section>
+
+{# 4. Featured projects ------------------------------------------------------- #}
+<section class="section" aria-labelledby="featured-title">
+  <div class="container">
+    <header data-reveal class="section__head section__head--split">
+      <div>
+        <p class="eyebrow">Featured projects</p>
+        <h2 class="section__title" id="featured-title">Real clients. Real problems.</h2>
+      </div>
+      <a class="link-arrow" href="/projects/">Explore all projects <span aria-hidden="true">→</span></a>
+    </header>
+    <div class="card-grid" data-reveal>
+      {%- for p in featuredProjects.slice(0, 3) %}
+      {{ projectCard(p, 3) }}
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+{# 5. How a project works --------------------------------------------------------- #}
+<section class="section section--ink" aria-labelledby="how-title">
+  <div class="container">
+    <header data-reveal class="section__head">
+      <p class="eyebrow eyebrow--gold">How a project works</p>
+      <h2 class="section__title" id="how-title">From client request to handoff</h2>
+    </header>
+    {{ howItWorks(processSteps, 3, true) }}
+  </div>
+</section>
+
+{# 6. Who's in the room: hidden entirely when placeholders are off and no member has consented yet. #}
+{%- if peopleMajors.length or not env.hidePlaceholders %}
+<section class="section section--paper-2" aria-labelledby="room-title">
+  <div class="container room">
+    <header data-reveal class="section__head">
+      <p class="eyebrow">Who's in the room</p>
+      <h2 class="section__title" id="room-title">People like you are already here</h2>
+      {%- if not env.hidePlaceholders %}
+      <p class="section__lede">Members study {{ tbdText("[TBD: N]") }} majors across {{ tbdText("[TBD: number of colleges]") }} colleges.</p>
+      {%- endif %}
+    </header>
+    {%- if peopleMajors.length %}
+    <ul class="chips chips--lg" aria-label="Majors of current members and alumni">
+      {%- for m in peopleMajors %}{{ chip(m, "gold") }}{% endfor -%}
+    </ul>
+    {%- else %}
+    {{ tbdBlock("Majors of our members and alumni", "[TBD: appears automatically once people in data/team.json and data/alumni.json consent to publish]") }}
+    {%- endif %}
+    <p class="btn-row">
+      <a class="link-arrow" href="/team/">Meet the team <span aria-hidden="true">→</span></a>
+      <a class="link-arrow" href="/alumni/">See where alumni went <span aria-hidden="true">→</span></a>
+    </p>
+  </div>
+</section>
+{%- endif %}
+
+{# 7. Credibility ------------------------------------------------------------------ #}
+<section class="section" aria-labelledby="cred-title">
+  <div class="container">
+    <header data-reveal class="section__head">
+      <p class="eyebrow">Backed by</p>
+      <h2 class="section__title" id="cred-title">Guided by industry, rooted at UMD</h2>
+    </header>
+    <div class="partner-grid">
+      {%- for partner in site.partners %}
+      {%- if partner.name == "EY" or partner.name.startsWith("Ed Snider Center") %}
+      <article class="card partner-card">
+        <p class="partner-card__role">{{ partner.role }}</p>
+        <h3 class="partner-card__name">{{ partner.name }}</h3>
+        <p>{{ partner.blurb | tbd | safe }}</p>
+      </article>
+      {%- endif %}
+      {%- endfor %}
+    </div>
+
+    <h3 class="subhead">In the news</h3>
+    <ul class="press-list">
+      {%- for item in site.press %}
+      <li>
+        <a class="press-link" href="{{ item.url }}" rel="noopener">
+          <span class="press-link__label">{{ item.label }}</span>
+          <span class="press-link__blurb">{{ item.blurb }}</span>
+        </a>
+      </li>
+      {%- endfor %}
+    </ul>
+
+    <h3 class="subhead">Past clients</h3>
+    <ul class="chips chips--clients">
+      {%- for c in pastClients %}{{ chip(c.name, "client") }}{% endfor -%}
+    </ul>
+  </div>
+</section>
+
+{# 8. Final CTA --------------------------------------------------------------------- #}
+<section class="section section--ink cta-band" aria-labelledby="cta-title">
+  <div class="container cta-band__inner">
+    <h2 class="cta-band__title" id="cta-title">Your major isn't the point. <span class="accent">Your curiosity is.</span></h2>
+    {%- if not site.recruiting.open %}
+    <p class="cta-band__status">{{ site.recruiting.closed_text }}</p>
+    {%- endif %}
+    <div class="btn-row btn-row--center">
+      {{ applyCta("gold") }}
+      <a class="btn btn--secondary-light" href="/join/">How joining works</a>
+    </div>
+  </div>
+</section>

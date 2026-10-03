@@ -1,0 +1,27 @@
+{%- from "components/ui.njk" import media, chip with context -%}
+{#- One project card. The whole card is a single link (stretched over the card)
+    to the project's own page, so it works without JavaScript. Stage 2 upgrades
+    the same markup to open the detail dialog. -#}
+{% macro projectCard(p, headingLevel = 3) -%}
+<article class="card project-card" data-project-id="{{ p.id }}">
+  <div class="card__media">
+    {{ media(p.image, p.image_alt, "PHOTO: " ~ p.title ~ " team (16:9)") }}
+  </div>
+  <div class="card__body">
+    <ul class="chips chips--meta" aria-label="Project details">
+      {{ chip(p.semester, "solid") }}
+      {{ chip(p.client_type, "outline") }}
+    </ul>
+    <h{{ headingLevel }} class="card__title">
+      <a class="card__link" href="{{ p.url }}">{{ p.title }}</a>
+    </h{{ headingLevel }}>
+    <p class="card__tagline">{{ p.tagline | tbd | safe }}</p>
+    {% if p.skills and p.skills.length -%}
+    <ul class="chips" aria-label="Skills used">
+      {%- for s in p.skills.slice(0, 3) %}{{ chip(s) }}{% endfor -%}
+    </ul>
+    {%- endif %}
+    <span class="card__cta" aria-hidden="true">View project <span class="arrow">→</span></span>
+  </div>
+</article>
+{%- endmacro %}

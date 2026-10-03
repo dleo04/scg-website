@@ -1,0 +1,46 @@
+{%- from "components/ui.njk" import tbdText with context -%}
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <div class="site-footer__brand">
+      <a class="logo-plate" href="/">
+        <img src="/assets/scg-logo.png" width="668" height="184" alt="Snider Consulting Group home" loading="lazy">
+      </a>
+      <p class="site-footer__affiliation">In direct affiliation with the Ed Snider Center for Enterprise and Markets</p>
+      <p class="site-footer__sub">University of Maryland · Robert H. Smith School of Business</p>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+      <h2 class="eyebrow">Explore</h2>
+      <ul>
+        <li><a href="/projects/">Projects</a></li>
+        <li><a href="/join/">Join SCG</a></li>
+        <li><a href="/work-with-us/">Work With Us</a></li>
+      </ul>
+    </nav>
+    <nav class="site-footer__nav" aria-label="Who we are">
+      <h2 class="eyebrow">Who we are</h2>
+      <ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/team/">Team</a></li>
+        <li><a href="/alumni/">Alumni</a></li>
+        <li><a href="/partners/">Partners</a></li>
+      </ul>
+    </nav>
+    <div class="site-footer__contact">
+      <h2 class="eyebrow">Connect</h2>
+      <ul class="social-links">
+        <li><a href="{{ site.links.instagram }}" rel="noopener">Instagram</a></li>
+        <li><a href="{{ site.links.linkedin }}" rel="noopener">LinkedIn</a></li>
+      </ul>
+      <p class="site-footer__email">
+        {%- if site.links.contact_email -%}
+          <a href="mailto:{{ site.links.contact_email }}">{{ site.links.contact_email }}</a>
+        {%- else -%}
+          {{ tbdText("[TBD: shared club contact email or contact form]") }}
+        {%- endif -%}
+      </p>
+    </div>
+  </div>
+  <div class="container site-footer__legal">
+    <p>© {{ env.year }} Snider Consulting Group</p>
+  </div>
+</footer>

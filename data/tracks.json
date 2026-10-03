@@ -1,0 +1,59 @@
+{
+  "_readme": "'Find your seat' role tracks (SPEC 5.2). Each 'name' must match an entry in projects.json -> disciplines; the projects shown under a track are pulled automatically from projects tagged with that discipline. 'what_you_do' items are written ONLY from the scope of real projects and name the project they come from ('project' = project id). 'fits' is a SUGGESTED mapping of majors, copied from the inferred 'fits' of the projects in this track; it does not mean members of those majors have done this work. Officers: correct it to match who actually worked on these projects.",
+  "tracks": [
+    {
+      "name": "Data & Engineering",
+      "slug": "data-engineering",
+      "summary": "Build the models, databases and dashboards a client's decisions run on.",
+      "what_you_do": [
+        { "text": "Source data and assess whether a machine-learning approach is viable.", "project": "alliom" },
+        { "text": "Refine and benchmark forecasting models, including a time-series model and an LSTM.", "project": "alliom" },
+        { "text": "Configure a Google Cloud SQL database and connect it to Looker Studio.", "project": "school-harbor" },
+        { "text": "Rebuild a test-score dashboard segmented by demographics, district and state.", "project": "school-harbor" }
+      ],
+      "skills": ["Machine learning", "Time-series forecasting", "SQL", "Looker Studio", "Data visualization", "Python"],
+      "fits": ["Computer Science", "Data Science", "Statistics", "Mathematics", "Information Systems"],
+      "illustration": "assets/placeholders/track-data-engineering.jpg"
+    },
+    {
+      "name": "Strategy & Research",
+      "slug": "strategy-research",
+      "summary": "Research the landscape, benchmark what works and turn it into a plan.",
+      "what_you_do": [
+        { "text": "Develop monetization and legal-compliance strategy for a machine-learning startup.", "project": "alliom" },
+        { "text": "Benchmark best practices from organizations comparable to the client.", "project": "product-space" },
+        { "text": "Recommend a marketing approach to strengthen campus presence and outreach.", "project": "umd-dynamic-dance" }
+      ],
+      "skills": ["Benchmarking", "Monetization strategy", "Legal and compliance research", "Marketing strategy"],
+      "fits": ["Economics", "Finance", "Business", "Communication", "Marketing", "Pre-law interest"],
+      "illustration": "assets/placeholders/track-strategy-research.jpg"
+    },
+    {
+      "name": "Product & Design",
+      "slug": "product-design",
+      "summary": "Scope the work and design the processes product teams run on.",
+      "what_you_do": [
+        { "text": "Build a client-outreach process for a new product-design organization.", "project": "product-space" },
+        { "text": "Map a timeline and process flow so the organization can grow and handle leadership turnover.", "project": "product-space" },
+        { "text": "[TBD: officers to add design-focused work (for example user research or prototyping) if SCG teams have done it]", "project": null }
+      ],
+      "skills": ["Process mapping", "Client outreach strategy", "Project timelines", "Organizational design"],
+      "fits": ["Design", "Information Science", "Engineering (product interest)", "Communication"],
+      "illustration": "assets/placeholders/track-product-design.jpg"
+    },
+    {
+      "name": "Operations & People",
+      "slug": "operations-people",
+      "summary": "Design roles, documentation and processes that last beyond one semester.",
+      "what_you_do": [
+        { "text": "Design an E-Board role-delegation framework.", "project": "umd-dynamic-dance" },
+        { "text": "Set up a knowledge-management system so documentation survives leadership changes.", "project": "umd-dynamic-dance" },
+        { "text": "Plan how senior members stay engaged and how presentation quality improves.", "project": "scg-internal" },
+        { "text": "Document operating procedures from recruitment through client acquisition.", "project": "scg-internal" }
+      ],
+      "skills": ["Role and responsibility design", "Knowledge management", "Process documentation", "Change management"],
+      "fits": ["Psychology", "Management", "Communication", "Information Systems"],
+      "illustration": "assets/placeholders/track-operations-people.jpg"
+    }
+  ]
+}

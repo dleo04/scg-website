@@ -1,0 +1,11 @@
+{
+  "_readme": "'How a project works' steps (SPEC 5.3), reused on Home, About and Work With Us. Steps are based on what SCG says today; officers must confirm details and replace each [TBD].",
+  "steps": [
+    { "name": "Client request", "text": "A client submits a request, and SCG scopes it into a Statement of Work (SoW)." },
+    { "name": "Team forms", "text": "Members choose from the semester's projects and teams are formed. [TBD: typical team size and roles]" },
+    { "name": "Weekly rhythm", "text": "Teams meet weekly on their project, alongside general body meetings or workshops." },
+    { "name": "EY guidance", "text": "Each client team is paired with EY consultants, senior managers and partners for direction." },
+    { "name": "Deliverables", "text": "The team delivers the items agreed in the SoW. Each project's Scope lists them." },
+    { "name": "Handoff", "text": "[TBD: how outcomes are presented and handed off to the client]" }
+  ]
+}
