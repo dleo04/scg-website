@@ -7,37 +7,11 @@
   const toggle = document.querySelector(".nav-toggle");
   const menu = document.getElementById("nav-menu");
   const desktop = window.matchMedia("(min-width: 1024px)");
-  const header = document.querySelector("[data-header]");
-
-  // ---- Header: transparent over the hero, solid once the page scrolls ----
-  if (header && document.body.classList.contains("has-hero")) {
-    // When the hero shows the reversed logo, the header logo stays hidden (and out of
-    // the tab order / accessibility tree) until the hero logo has scrolled under the header.
-    const heroLogo = header.hasAttribute("data-logo-deferred") ? document.querySelector("[data-hero-logo]") : null;
-    const headerLogo = header.querySelector(".site-logo");
-    const update = () => {
-      header.classList.toggle("is-solid", window.scrollY > 8);
-      if (!heroLogo || !headerLogo) return;
-      const show = heroLogo.getBoundingClientRect().bottom <= header.offsetHeight;
-      header.classList.toggle("logo-in", show);
-      if (show) {
-        headerLogo.removeAttribute("aria-hidden");
-        headerLogo.removeAttribute("tabindex");
-      } else {
-        headerLogo.setAttribute("aria-hidden", "true");
-        headerLogo.setAttribute("tabindex", "-1");
-      }
-    };
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    update();
-  }
 
   const setMenu = (open, { focusToggle = false } = {}) => {
     if (!toggle || !menu) return;
     toggle.setAttribute("aria-expanded", String(open));
     menu.classList.toggle("is-open", open);
-    header?.classList.toggle("is-menu-open", open);
     if (!open && focusToggle) toggle.focus();
   };
 

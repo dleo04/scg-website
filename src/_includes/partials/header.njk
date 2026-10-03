@@ -1,6 +1,5 @@
-{#- Site header (docs/HOME-LAYOUT.md). Same nav on every page; About and Partners
-    live in the footer. On pages with a hero (bodyClass "has-hero") it starts
-    transparent and turns solid on scroll (site.js). -#}
+{#- Site header (docs/HOME-LAYOUT.md): sticky, always solid white, same on every page.
+    About and Partners live in the footer. -#}
 {%- set nav = [
   { label: "Projects", url: "/projects/" },
   { label: "Join SCG", url: "/join/" },
@@ -10,12 +9,9 @@
 ] -%}
 {#- "Join SCG" goes straight to the application while it is open, otherwise to /join/. -#}
 {%- set joinHref = site.recruiting.application_url if (site.recruiting.open and site.recruiting.application_url) else "/join/" -%}
-{#- On a hero page that shows the reversed logo, the header logo waits until the hero
-    logo has scrolled away (site.js), so two logos are never on screen together. -#}
-{%- set deferLogo = brand.reversedLogo and bodyClass and ("has-hero" in bodyClass) -%}
-<header class="site-header" data-header{% if deferLogo %} data-logo-deferred{% endif %}>
+<header class="site-header" data-header>
   <div class="container site-header__inner">
-    <a class="site-logo logo-plate" href="/">
+    <a class="site-logo" href="/">
       <img src="/assets/scg-logo.png" width="668" height="184" alt="Snider Consulting Group home">
     </a>
     <nav class="site-nav" aria-label="Main">

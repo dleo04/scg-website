@@ -147,3 +147,16 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   | 1440×900 | 7.80 | 7.80 | 8.12 | 7.91 | 4.17 |
 
   The whole-photo worst case from `npm run contrast` is white text 7.76:1, logo white 7.60:1 and logo gold 3.80:1. Required minimums: text 4.5:1, logo 3:1.
+
+## Stage 1i (solid sticky header site-wide)
+
+- **This supersedes stages 1b, 1d and 1g** wherever they made the header transparent over the hero or hid its logo. The header is now sticky and solid white on every page at every scroll position, from first paint. The transparent-header CSS, the `is-solid`/`logo-in` scroll JavaScript, the `data-logo-deferred` markup and the `has-hero` body class were all removed. `site.js` no longer listens to scroll at all.
+- **Size and style.**
+  - The header is 60px tall on mobile and 72px from 1024px (`--header-h`), plus a 1px `--line` border, with a `0 1px 8px rgba(0,0,0,.08)` shadow.
+  - The original logo has no plate: 36px tall on mobile, 44px on desktop. The required clear space (the height of the "S", 0.5 × logo height) comes from the header padding plus the PNG's built-in margin: about 20px against 18px needed on mobile, about 23px against 22px on desktop. The white plate is still used in the dark footer.
+- **Join SCG** is now gold with ink text (9.31:1). It hovers to a new token, `--scg-gold-dark: #D98F0C` (ink on it 6.92:1). It was red over white before.
+- **Nav links** are ink (18.42:1). Hover and the current page use red text with a 2px red underline (7.24:1). The focus indicator is the global 3px red ring (7.24:1 against the white bar). Social icons are outlined in ink, and the menu button has a 2px ink outline.
+- **Without JS on small screens** the header is `position: relative`, because the link list is shown expanded and a tall sticky bar would cover the page. From 1024px it is sticky without JS too.
+- **The hero starts below the header.** Its heights subtract `--header-h`: mobile `max(560px, 85svh − 60px)`, tablet `80vh − 60px`, desktop `clamp(688px, 92vh − 72px, 888px)`. Header plus hero together occupy the same space as before, so the stat strip still starts at about 829px at 1440×900 and the top 71px of it is visible. Top padding is `clamp(56px, 9vh, 96px)`. Measured gap from the header to the hero logo: 111px (360×780), 83px (360×640), 188px (768×1024), 143px (1280×800) and 168px (1440×900). The browser check fails if the logo or headline comes within 32px of the header.
+- **Anchors.** `[id] { scroll-margin-top: var(--header-h) }` replaces the old `scroll-padding-top`, so `/#places-title` lands right below the bar; ui-check verifies this. Project deep links (`/#alliom`) open the modal dialog in the top layer above the header, so they are unaffected.
+- **Hero contrast** re-measured with the new layout: text 7.80–8.61:1, logo white 7.91–10.37:1, logo gold 4.17–5.47:1.

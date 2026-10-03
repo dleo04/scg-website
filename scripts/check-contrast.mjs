@@ -19,7 +19,7 @@ const lum = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
 const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
 const mix = (top, alpha, under) => top.map((c, i) => alpha * c + (1 - alpha) * under[i]);
 
-const C = Object.fromEntries(["scg-red", "scg-red-dark", "scg-gold", "scg-gold-soft", "ink", "ink-2", "paper", "paper-2", "line", "on-ink", "on-ink-2", "ph-bg", "ph-border", "line-ink"].map((n) => [n, hex(token(n))]));
+const C = Object.fromEntries(["scg-red", "scg-red-dark", "scg-gold", "scg-gold-dark", "scg-gold-soft", "ink", "ink-2", "paper", "paper-2", "line", "on-ink", "on-ink-2", "ph-bg", "ph-border", "line-ink"].map((n) => [n, hex(token(n))]));
 
 // [foreground, background, minimum, where]
 const pairs = [
@@ -32,7 +32,10 @@ const pairs = [
   ["paper", "scg-red", 4.5, "primary button / icon circles"],
   ["paper", "scg-red-dark", 4.5, "primary button hover"],
   ["ink", "scg-gold", 4.5, "gold button / header Join SCG over hero"],
-  ["ink", "scg-gold-soft", 4.5, "gold button hover, [TBD] highlight, gold chips"],
+  ["ink", "scg-gold-soft", 4.5, "[TBD] highlight, gold chips, gold button hover on dark bands"],
+  ["ink", "scg-gold-dark", 4.5, "header Join SCG hover"],
+  ["ink", "paper", 4.5, "header nav links, menu button, social icons"],
+  ["scg-red", "paper", 4.5, "header nav hover / current page"],
   ["scg-gold", "ink", 4.5, "accent word 'Work', eyebrows on dark"],
   ["on-ink", "ink", 4.5, "text on dark bands"],
   ["on-ink-2", "ink", 4.5, "secondary text on dark bands / footer"],

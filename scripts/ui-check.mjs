@@ -150,37 +150,39 @@ async function keyboard(width) {
     if (tabState.focused !== tabState.selected || tabState.visiblePanels !== 1) fail(`@${width} tabs: ${JSON.stringify(tabState)}`);
   }
 
-  // Header: transparent over the hero, solid after scrolling.
-  if (await page.$(".has-hero")) {
-    const logoState = () => page.evaluate(() => {
-      const l = document.querySelector(".site-logo");
-      return { bg: getComputedStyle(document.querySelector(".site-header")).backgroundColor, headerLogoVisible: getComputedStyle(l).visibility === "visible", ariaHidden: l.getAttribute("aria-hidden") };
-    });
-    await new Promise((r) => setTimeout(r, 300));
-    const before = await logoState();
-    await page.evaluate(() => window.scrollTo(0, 600));
-    await new Promise((r) => setTimeout(r, 400));
-    const after = await logoState();
-    if (!/rgba\(0, 0, 0, 0\)|transparent/.test(before.bg) || !/rgb\(255, 255, 255\)/.test(after.bg)) fail(`@${width} header not transparent→solid (${before.bg} → ${after.bg})`);
-    if (await page.$("[data-logo-deferred]")) {
-      // Reversed hero logo present: header logo hidden (not focusable, aria-hidden) at the top, shown after scrolling.
-      if (before.headerLogoVisible || before.ariaHidden !== "true") fail(`@${width} header logo should be hidden while the hero logo is visible: ${JSON.stringify(before)}`);
-      if (!after.headerLogoVisible || after.ariaHidden) fail(`@${width} header logo should fade in after the hero logo: ${JSON.stringify(after)}`);
-    } else {
-      // No hero logo: the header logo is visible and exposed at all times.
-      if (!before.headerLogoVisible || before.ariaHidden || !after.headerLogoVisible || after.ariaHidden) fail(`@${width} header logo not always visible: ${JSON.stringify({ before, after })}`);
-    }
-    // Never two logos visible at once.
-    for (const y of [0, 600]) {
+  // Header: sticky, solid white, fixed height and logo visible at every scroll position.
+  {
+    const expectedH = width >= 1024 ? 72 : 60;
+    for (const y of [0, 900, 2400]) {
       await page.evaluate((yy) => window.scrollTo(0, yy), y);
-      await new Promise((r) => setTimeout(r, 400));
-      const visible = await page.$$eval('img[src*="scg-logo"]', (els) => els.filter((el) => {
-        const r = el.getBoundingClientRect(); const cs = getComputedStyle(el.closest("a, div, header") || el);
-        return r.bottom > 0 && r.top < innerHeight && getComputedStyle(el).visibility === "visible" && parseFloat(getComputedStyle(el.closest(".site-logo") || el).opacity) > 0.5 && !el.closest("footer");
-      }).length);
-      if (visible > 1) fail(`@${width} ${visible} SCG logos visible at scroll ${y}`);
+      await new Promise((r) => setTimeout(r, 250));
+      const h = await page.evaluate(() => {
+        const el = document.querySelector(".site-header"); const r = el.getBoundingClientRect(); const cs = getComputedStyle(el);
+        const logo = document.querySelector(".site-logo"); const img = logo.querySelector("img");
+        return { top: Math.round(r.top), height: Math.round(r.height), bg: cs.backgroundColor, logoVisible: getComputedStyle(logo).visibility === "visible" && parseFloat(getComputedStyle(logo).opacity) === 1, logoAria: logo.getAttribute("aria-hidden"), logoH: Math.round(img.getBoundingClientRect().height) };
+      });
+      const bannerOffset = await page.evaluate(() => { const b = document.querySelector(".recruit-banner"); return b ? Math.max(0, Math.round(b.getBoundingClientRect().bottom)) : 0; });
+      if (h.top !== bannerOffset || h.bg !== "rgb(255, 255, 255)" || h.height !== expectedH + 1 || !h.logoVisible || h.logoAria || h.logoH !== (width >= 1024 ? 44 : 36)) {
+        fail(`@${width} header at scroll ${y}: ${JSON.stringify(h)} (expected top ${bannerOffset}, white, ${expectedH}px + 1px border, logo visible ${width >= 1024 ? 44 : 36}px)`);
+      }
     }
     await page.evaluate(() => window.scrollTo(0, 0));
+    await new Promise((r) => setTimeout(r, 150));
+    // Hero (if any) starts below the header: its logo and headline never sit under it.
+    const clear = await page.evaluate(() => {
+      const header = document.querySelector(".site-header").getBoundingClientRect();
+      const items = [...document.querySelectorAll("[data-hero-logo], .hero__title")].map((el) => Math.round(el.getBoundingClientRect().top - header.bottom));
+      return items;
+    });
+    if (clear.some((gap) => gap < 32)) fail(`@${width} hero logo/headline too close to the header: gaps ${clear.join(", ")}px`);
+    // Anchors land below the sticky header.
+    if (await page.$("#places-title")) {
+      await page.goto(BASE + "/#places-title", { waitUntil: "networkidle0" });
+      await new Promise((r) => setTimeout(r, 300));
+      const gap = await page.evaluate(() => Math.round(document.getElementById("places-title").getBoundingClientRect().top - document.querySelector(".site-header").getBoundingClientRect().bottom));
+      if (gap < -1) fail(`@${width} anchor #places-title is hidden under the header (gap ${gap}px)`);
+      await page.goto(BASE + "/", { waitUntil: "networkidle0" });
+    }
   }
 
   // Project dialog: keyboard open, focus inside, trap, arrows, Escape, focus return.
