@@ -60,3 +60,23 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 - **No stat row in "Where SCG Takes You",** so the same figures do not appear twice on the page.
 - **Stand-in hero badge** was already limited to dev builds and is confirmed absent from the `SCG_ENV=production` output.
 - `docs/HOME-LAYOUT.md` wireframe and block notes updated to match.
+
+## Stage 1d (home refinements: community copy, shorter cards, hero logo, employer logos)
+
+- **Community copy** replaced with the final text supplied by SCG. The "[TBD: signature tradition]" placeholder is gone, since the semesterly hikes cover it.
+- **Shorter project cards.**
+  - The image is now 2.2:1 (`aspect-ratio: 11 / 5`). The title is 24px, row labels 17px semibold, body 16px at 1.5 line height, and the icon circles 44px.
+  - Rows are 10px apart. "Read more →" (15px, red) replaces "View project". Skill chips moved off the card; they remain in the dialog and on project pages.
+  - Objective is clamped to 3 lines, Scope to 2, Impact to 2. A missing outcome shows a muted, italic one-line "Results coming soon" that is still tracked as a placeholder.
+  - Measured at 1280–1440px: all three cards are 376×529 (height/width 1.41, against about 1.37 in the reference) and equal in height.
+- **Scope line.** The `scopeLine` filter joins the first two scope items and lowercases the second item's first letter only if that word never appears capitalized mid-sentence in the project's own text, so "Google SQL…" keeps its capital. An optional `scope_summary` field in `projects.json` overrides it.
+- **Hero logo.** The unaltered logo sits on a white plate (18px radius, soft shadow), 300px wide on desktop and 220px on mobile. The plate padding gives full "S"-height clear space. The hero's min-height grew to `clamp(600px, 90vh, 780px)` to fit it. The stack stays centered, with about 180–220px above (including the header) and 190–210px below (including the fade), and nothing overflows at 320–1920px.
+- **One logo at a time.** The header turns solid and shows its logo when the bottom of the hero logo passes under the header, rather than at 8px of scroll. Until then the header logo has `visibility: hidden` (so it is not focusable) and `aria-hidden="true"`. Without JS the header logo stays hidden on the home page, where the hero logo is the visible one. The browser check verifies both states.
+- **Employer logos.**
+  - `data/logo-sources.json` lists the 8 files from the old site. `npm run logos` downloads them once, checks the content type and decodes each file to confirm it is a real image, and records width and height in `assets/logos/logos.json`. All 8 downloaded.
+  - The originals (11–280 KB) are committed but not published. The build makes proportional WebP and PNG copies (at most 360×120, 3–15 KB each) without recoloring or trimming.
+  - Each logo is sized for equal visual area, capped at 40px tall and the tile width, so the 9:1 Bain wordmark and the square Booz Allen tile read with similar weight.
+  - Logos show at 80% opacity and 100% on hover. They are not links, so there is no focus state.
+- **"Where SCG Takes You" stays one column until 1024px.** That gives the 4×2 logo grid room at tablet widths. The grid uses 2 columns below 520px so the logos stay legible.
+- **Trademark footnote** added to the site footer, worded as requested.
+- **Asset copying narrowed** so only the published files reach `_site/`; the logo originals and `logos.json`, which holds the old host's URLs, stay in the repo.

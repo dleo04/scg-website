@@ -24,9 +24,14 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("absoluteUrl", filters.absoluteUrl);
   eleventyConfig.addFilter("jsonLd", filters.jsonLd);
   eleventyConfig.addFilter("versioned", filters.versioned);
+  eleventyConfig.addFilter("scopeLine", filters.scopeLine);
+  eleventyConfig.addFilter("logoBox", filters.logoBox);
 
   // Static files. Brand assets are copied as-is (never transformed).
-  eleventyConfig.addPassthroughCopy("assets/**/*.{png,jpg,jpeg,webp,avif,svg,pdf}");
+  // Originals in assets/logos/ are not published; pages use the small copies in assets/generated/logos/.
+  eleventyConfig.addPassthroughCopy("assets/*.{png,jpg,jpeg,webp,avif,svg,pdf}");
+  eleventyConfig.addPassthroughCopy("assets/placeholders/**/*.{png,jpg,jpeg,webp,svg}");
+  eleventyConfig.addPassthroughCopy("assets/generated/**/*.{png,jpg,jpeg,webp,avif,svg}");
   eleventyConfig.addPassthroughCopy({ "src/css": "css", "src/js": "js" });
   eleventyConfig.addPassthroughCopy({
     "node_modules/@fontsource/lato/files/lato-latin-400-normal.woff2": "fonts/lato-latin-400-normal.woff2",

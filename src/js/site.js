@@ -9,10 +9,24 @@
   const desktop = window.matchMedia("(min-width: 1024px)");
   const header = document.querySelector("[data-header]");
 
-  // ---- Header: transparent over the hero, solid once the page scrolls ----
+  // ---- Header over a hero ------------------------------------------------
+  // Transparent with its logo hidden while the hero logo is visible (only one
+  // logo at a time); solid with its logo once the hero logo scrolls under it.
   if (header && document.body.classList.contains("has-hero")) {
-    const update = () => header.classList.toggle("is-solid", window.scrollY > 8);
+    const heroLogo = document.querySelector("[data-hero-logo]");
+    const headerLogo = header.querySelector(".site-logo");
+    const update = () => {
+      const solid = heroLogo
+        ? heroLogo.getBoundingClientRect().bottom <= header.offsetHeight
+        : window.scrollY > 8;
+      header.classList.toggle("is-solid", solid);
+      if (headerLogo) {
+        if (solid) headerLogo.removeAttribute("aria-hidden");
+        else headerLogo.setAttribute("aria-hidden", "true");
+      }
+    };
     window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
     update();
   }
 

@@ -117,6 +117,29 @@ async function responsive(key, widths) {
 await responsive("hero", [640, 1024, 1600, 2000]);
 await responsive("community", [480, 800, 1200]);
 
+// Employer logos (downloaded once by `npm run logos`): small WebP + PNG copies,
+// resized proportionally to at most 360x120 (3x the largest display size). No recoloring.
+const logoManifest = path.join(ROOT, "assets/logos/logos.json");
+if (fs.existsSync(logoManifest)) {
+  fs.mkdirSync(path.join(GEN_DIR, "logos"), { recursive: true });
+  manifest.logos = {};
+  for (const logo of JSON.parse(fs.readFileSync(logoManifest, "utf8")).filter((l) => l.ok)) {
+    const src = path.join(ROOT, logo.file);
+    if (!fs.existsSync(src)) continue;
+    const resized = sharp(src).resize({ width: 360, height: 120, fit: "inside", withoutEnlargement: true });
+    const webp = await resized.clone().webp({ quality: 88 }).toBuffer({ resolveWithObject: true });
+    fs.writeFileSync(path.join(GEN_DIR, "logos", `${logo.slug}.webp`), webp.data);
+    await resized.clone().png({ compressionLevel: 9 }).toFile(path.join(GEN_DIR, "logos", `${logo.slug}.png`));
+    manifest.logos[logo.slug] = {
+      name: logo.name,
+      webp: `/assets/generated/logos/${logo.slug}.webp`,
+      png: `/assets/generated/logos/${logo.slug}.png`,
+      width: webp.info.width,
+      height: webp.info.height,
+    };
+  }
+}
+
 fs.writeFileSync(path.join(GEN_DIR, "images.json"), JSON.stringify(manifest, null, 2));
 console.log(`[assets] generated OG image, icons, photo sizes: ${Object.keys(manifest).filter((k) => k !== "og").join(", ") || "none"}` +
   (created.length ? `; new placeholders: ${created.join(", ")}` : ""));

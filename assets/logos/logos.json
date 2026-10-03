@@ -1,0 +1,90 @@
+[
+  {
+    "name": "EY",
+    "slug": "ey",
+    "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/blob-d507258.png",
+    "ok": true,
+    "file": "assets/logos/ey.png",
+    "width": 2560,
+    "height": 1276,
+    "type": "image/png",
+    "bytes": 239243
+  },
+  {
+    "name": "Deloitte",
+    "slug": "deloitte",
+    "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/blob-45d42ed.png",
+    "ok": true,
+    "file": "assets/logos/deloitte.png",
+    "width": 800,
+    "height": 214,
+    "type": "image/png",
+    "bytes": 39748
+  },
+  {
+    "name": "Capital One",
+    "slug": "capital-one",
+    "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/2560px-Capital_One_logo.svg.png",
+    "ok": true,
+    "file": "assets/logos/capital-one.png",
+    "width": 2560,
+    "height": 922,
+    "type": "image/png",
+    "bytes": 289472
+  },
+  {
+    "name": "KPMG",
+    "slug": "kpmg",
+    "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/KPMG_logo.svg.png",
+    "ok": true,
+    "file": "assets/logos/kpmg.png",
+    "width": 1280,
+    "height": 530,
+    "type": "image/png",
+    "bytes": 97422
+  },
+  {
+    "name": "Bain & Company",
+    "slug": "bain-and-company",
+    "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/blob-8c34c15.png",
+    "ok": true,
+    "file": "assets/logos/bain-and-company.png",
+    "width": 1280,
+    "height": 142,
+    "type": "image/png",
+    "bytes": 123343
+  },
+  {
+    "name": "Boston Consulting Group",
+    "slug": "boston-consulting-group",
+    "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/bcg-logo.png",
+    "ok": true,
+    "file": "assets/logos/boston-consulting-group.png",
+    "width": 810,
+    "height": 177,
+    "type": "image/png",
+    "bytes": 11515
+  },
+  {
+    "name": "Booz Allen Hamilton",
+    "slug": "booz-allen-hamilton",
+    "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/booz%20allen.png",
+    "ok": true,
+    "file": "assets/logos/booz-allen-hamilton.jpg",
+    "width": 400,
+    "height": 400,
+    "type": "image/jpeg",
+    "bytes": 16220
+  },
+  {
+    "name": "Johnson & Johnson",
+    "slug": "johnson-and-johnson",
+    "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/blob-e607ca3.png",
+    "ok": true,
+    "file": "assets/logos/johnson-and-johnson.png",
+    "width": 1280,
+    "height": 243,
+    "type": "image/png",
+    "bytes": 180954
+  }
+]

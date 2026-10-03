@@ -28,6 +28,9 @@ hideBanner: true
   {# 1. Hero -------------------------------------------------------------- #}
   <section class="hero" aria-labelledby="hero-title">
     <div class="container hero__inner">
+      <div class="hero__logo logo-plate" data-hero-logo>
+        <img src="/assets/scg-logo.png" width="668" height="184" alt="Snider Consulting Group" fetchpriority="high">
+      </div>
       <h1 class="hero__title" id="hero-title">Welcome to the <span class="hero__name">Snider Consulting Group</span></h1>
       <p class="hero__lede">UMD's student-run consulting group, solving real problems for campus organizations and nonprofits since {{ site.established }}.</p>
       <p class="hero__partner">In partnership with Ernst &amp; Young</p>
@@ -56,8 +59,8 @@ hideBanner: true
   <div class="container split">
     <div class="split__text">
       <h2 class="home-title" id="community-title">Our <span class="accent-red">Community</span></h2>
-      <p>SCG is built around a simple commitment: a collaborative environment where members share what they know and look out for one another. It is one of SCG's three pillars.</p>
-      <p>Each week, members come together for a general body meeting or workshop and meet with their project teams, plus occasional social outings. {{ tbdText("[TBD: one sentence on a signature tradition or retreat]") }}</p>
+      <p>Founded in 2020, the Snider Consulting Group brings together UMD students who are curious, driven, and invested in helping each other grow. We're intentionally small and close-knit, so members build real friendships and look out for one another, professionally and personally, long after graduation.</p>
+      <p>Our community extends well beyond client work. Between weekly workshops, team meetings, social outings, and our semesterly hikes, members get to know each other outside the project room. That's where mentorship and lasting connections take shape.</p>
       <a class="btn btn--primary" href="/team/">Meet the Team</a>
     </div>
     <figure class="split__media photo-frame">
@@ -115,8 +118,16 @@ hideBanner: true
       <div class="employer-card">
         <h3 class="employer-card__title">Our members work at…</h3>
         <ul class="employer-card__grid">
-          {%- for name in site.member_employers.names %}
-          <li>{{ name }}</li>
+          {%- for e in employers %}
+          {%- set box = e.logo | logoBox %}
+          <li class="employer-card__item{% if not e.logo %} employer-card__item--text{% endif %}">
+            {%- if e.logo %}
+            <picture>
+              <source type="image/webp" srcset="{{ e.logo.webp }}">
+              <img src="{{ e.logo.png }}" alt="{{ e.name }}" width="{{ box.width }}" height="{{ box.height }}" style="--logo-w: {{ box.width }}px" loading="lazy" decoding="async">
+            </picture>
+            {%- else %}{{ e.name }}{% endif %}
+          </li>
           {%- endfor %}
         </ul>
         {#- No stat row here: the home stat strip already shows these figures. -#}

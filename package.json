@@ -8,12 +8,14 @@
   "scripts": {
     "assets": "node scripts/make-assets.mjs",
     "dev": "npm run assets && eleventy --serve --port 8080",
-    "build": "npm run assets && eleventy && node scripts/check-output.mjs && node scripts/check-contrast.mjs > /dev/null",
+    "build": "npm run clean && npm run assets && eleventy && node scripts/check-output.mjs && node scripts/check-contrast.mjs > /dev/null",
     "build:prod": "SCG_ENV=production npm run build",
     "check": "node scripts/check-output.mjs",
     "todo": "npm run build && node scripts/todo.mjs",
     "ui-check": "node scripts/ui-check.mjs",
-    "contrast": "node scripts/check-contrast.mjs"
+    "contrast": "node scripts/check-contrast.mjs",
+    "logos": "node scripts/fetch-logos.mjs",
+    "clean": "node -e \"require('fs').rmSync('_site',{recursive:true,force:true})\""
   },
   "type": "module",
   "devDependencies": {

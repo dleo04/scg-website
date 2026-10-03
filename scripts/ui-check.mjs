@@ -152,11 +152,20 @@ async function keyboard(width) {
 
   // Header: transparent over the hero, solid after scrolling.
   if (await page.$(".has-hero")) {
-    const before = await page.evaluate(() => getComputedStyle(document.querySelector(".site-header")).backgroundColor);
-    await page.evaluate(() => window.scrollTo(0, 400));
+    const logoState = () => page.evaluate(() => {
+      const l = document.querySelector(".site-logo");
+      return { bg: getComputedStyle(document.querySelector(".site-header")).backgroundColor, headerLogoVisible: getComputedStyle(l).visibility === "visible", ariaHidden: l.getAttribute("aria-hidden") };
+    });
+    await new Promise((r) => setTimeout(r, 300));
+    const before = await logoState();
+    await page.evaluate(() => window.scrollTo(0, 600));
     await new Promise((r) => setTimeout(r, 400));
-    const after = await page.evaluate(() => getComputedStyle(document.querySelector(".site-header")).backgroundColor);
-    if (!/rgba\(0, 0, 0, 0\)|transparent/.test(before) || !/rgb\(255, 255, 255\)/.test(after)) fail(`@${width} header not transparent→solid (${before} → ${after})`);
+    const after = await logoState();
+    if (!/rgba\(0, 0, 0, 0\)|transparent/.test(before.bg) || !/rgb\(255, 255, 255\)/.test(after.bg)) fail(`@${width} header not transparent→solid (${before.bg} → ${after.bg})`);
+    if (await page.$("[data-hero-logo]")) {
+      if (before.headerLogoVisible || before.ariaHidden !== "true") fail(`@${width} header logo exposed while hero logo is visible: ${JSON.stringify(before)}`);
+      if (!after.headerLogoVisible || after.ariaHidden) fail(`@${width} header logo not shown after scrolling: ${JSON.stringify(after)}`);
+    }
     await page.evaluate(() => window.scrollTo(0, 0));
   }
 

@@ -1,0 +1,13 @@
+{
+  "base": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/",
+  "logos": [
+    {"name": "EY", "file": "blob-d507258.png"},
+    {"name": "Deloitte", "file": "blob-45d42ed.png"},
+    {"name": "Capital One", "file": "2560px-Capital_One_logo.svg.png"},
+    {"name": "KPMG", "file": "KPMG_logo.svg.png"},
+    {"name": "Bain & Company", "file": "blob-8c34c15.png"},
+    {"name": "Boston Consulting Group", "file": "bcg-logo.png"},
+    {"name": "Booz Allen Hamilton", "file": "booz%20allen.png"},
+    {"name": "Johnson & Johnson", "file": "blob-e607ca3.png"}
+  ]
+}
