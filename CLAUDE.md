@@ -2,13 +2,15 @@
 
 You are rebuilding sniderconsultinggroup.com for SCG, a student-run consulting group at the University of Maryland (Robert H. Smith School of Business, in direct affiliation with the Ed Snider Center for Enterprise and Markets, partnered with EY).
 
-**Read `docs/SPEC.md` before doing anything.** It is the source of truth for pages, components, design tokens and behavior. Data lives in `data/*.json`. Brand assets are in `assets/`.
+**Read `docs/SPEC.md` and `docs/HOME-LAYOUT.md` before doing anything.** It is the source of truth for pages, components, design tokens and behavior. Data lives in `data/*.json`. Brand assets are in `assets/`.
 
 ## Why this rebuild exists
 1. **Recruiting reach.** SCG gets strong applicants, but nearly all are business-school students. The site must make CS, engineering, data science, design, social science and other majors feel they belong, and show concretely what they would do.
 2. **Project depth.** The old site only lists client names. The new site must tell each project's story (challenge, scope, approach, outcome, skills used) and let visitors explore projects interactively.
 
 ## Hard rules
+- **No slogans about majors.** Never put "not only business majors", "every major welcome", "consulting isn't a major" or similar in headings, heroes or buttons. Show range through concrete content (project skills, team/alumni majors). One calm eligibility sentence lives on `/join/` and in the FAQ.
+- **Home page = six blocks only**, per `docs/HOME-LAYOUT.md`. It follows the structure of a reference screenshot but uses SCG's own copy, colors, fonts and images. Never ship or copy the reference.
 - **Keep the logo exactly as provided** (`assets/scg-logo.png`). Do not redraw, recolor, stretch or add effects.
 - **Keep the brand colors**: SCG red `#AE1218` and gold `#F8A81E`, plus black and white. Tokens are in `docs/SPEC.md`.
 - **Never invent facts.** No made-up statistics, outcomes, quotes, client results, member names, majors, dates or logos. If content is unknown, render a clearly visible placeholder (see "Placeholders" in the spec) and list it in `TODO-CONTENT.md`.

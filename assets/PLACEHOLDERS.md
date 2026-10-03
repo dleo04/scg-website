@@ -11,7 +11,7 @@ Generate neutral placeholder blocks (no stock imagery) for everything else, with
 
 | Slot | Ratio | Where |
 |---|---|---|
-| Hero photo | 4:3 or 16:9 | Home |
+| Hero background | wide landscape, dark-overlay friendly | Home (stand-in: `placeholder-hero-quad.jpg`) |
 | Project image (one per project) | 16:9 | Cards, modal, project page |
 | Role-track illustration | 1:1 | Find your seat |
 | Team headshot | 4:5 | Team |

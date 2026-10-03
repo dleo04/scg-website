@@ -22,8 +22,8 @@ Status: v1 for build. Audience for this document: the engineer (Claude Code) bui
 - Past-client list (`data/past-clients.json`) as a credibility strip.
 
 ### Add
-- A hero and structure that speak to every major (Section 5.1).
-- **"Find your seat" role tracks** (Data & Engineering, Strategy & Research, Product & Design, Operations & People) tied to real projects.
+- A calm six-block home page (see `docs/HOME-LAYOUT.md`). Breadth of majors is shown through project skills and team/alumni majors, never announced as a slogan.
+- **"Find your seat" role tracks** (Data & Engineering, Strategy & Research, Product & Design, Operations & People) tied to real projects, placed on `/join/`.
 - **Interactive Projects explorer** with filters, modal detail and a standalone page per project (Section 6).
 - **"How a project works"** timeline so applicants can picture the experience.
 - A step-by-step **recruitment timeline** with optional low-pressure events and an always-visible Apply/Interest-form call to action.
@@ -38,7 +38,7 @@ Status: v1 for build. Audience for this document: the engineer (Claude Code) bui
 - Team presentation: show **major(s), role and projects worked on**, not only the internship employer. Employer logos are optional secondary info.
 - Page title `Business, University of Maryland` becomes a title that does not say "Business" (see SEO).
 - Acceptance-rate language: do not lead with "~5%." See `data/faq.json` (`needs_decision`).
-- Tone: from "brightest student minds" prestige to confident and inviting. Prestige can appear as proof (EY, outcomes), not as the opening line.
+- Tone: no slogans about majors; from "brightest student minds" prestige to confident and inviting. Prestige can appear as proof (EY, outcomes), not as the opening line.
 
 ### Remove
 - All GoDaddy artifacts (builder scripts, "Powered by", sign-in/account blocks, boilerplate cookie banner, the `filler@godaddy.com` string).
@@ -102,18 +102,10 @@ Use `assets/scg-logo.png` on light backgrounds as supplied. On dark sections, pl
 All copy below is **draft** for officers to review. Where a statement is a claim about SCG, it must be supported by data in `data/` or marked `[TBD]`.
 
 ### 5.1 Home `/`
-1. **Header** with logo, nav, Apply button (and a slim recruiting banner above it when `recruiting.open`).
-2. **Hero.** H1: "Consulting isn't a major." Sub: "SCG is UMD's student-run consulting group. Engineers, data scientists, designers, researchers and business students solve real problems for real clients, side by side." CTAs: **See our projects** (primary), **Join SCG** (secondary). Right/below: placeholder photo slot (`assets/placeholders/hero.jpg`; the current group photo is provided only as a stand-in).
-3. **Proof strip** from `site.json → stats`. Only `verified: true` values show real numbers; others show a clearly marked placeholder tile.
-4. **"Find your seat"** (Section 5.2).
-5. **Featured projects** (3, from `featured: true`) as the same interactive cards as the explorer, with "Explore all projects".
-6. **How a project works** (Section 5.3), compact.
-7. **Who's in the room**: a row of major chips drawn from `team.json`/`alumni.json` (placeholder until supplied) and a short line: "Members study [TBD: N] majors across [TBD] colleges."
-8. **Credibility**: EY partnership, Ed Snider Center affiliation, press links, past-client chip strip (`past-clients.json`; "likely_technical" ones can sort first once confirmed).
-9. **Final CTA band** (dark): "Your major isn't the point. Your curiosity is." [draft] + Apply / interest form.
+**Superseded by `docs/HOME-LAYOUT.md`.** The home page has exactly six blocks (hero, stat strip, community, our work, where SCG takes you, footer) following the layout blueprint and the reference screenshot. Do not add other sections to the home page. The interactive project cards in "Our Work" use the dialog defined in Section 6.
 
-### 5.2 Find your seat (component; reused on `/join/`)
-Tabbed or card-based, one per track. Each track shows: who it suits (majors/interests), what you would do (written from real projects), skills you'd build, and links to the matching project cards (filters projects by `disciplines`).
+### 5.2 Find your seat (component; used on `/join/`, not on the home page)
+Tabbed or card-based, one per track. Each track shows: who it suits (majors/interests), what you would do (written from real projects), skills you'd build, and links to the matching project cards (filters projects by `disciplines`). Keep the tone concrete and calm; do not use slogans about majors.
 
 - **Data & Engineering**: model building, databases, dashboards, automation. Examples from data: Alliom (forecasting models), School Harbor (SQL + Looker Studio dashboard).
 - **Strategy & Research**: market and landscape research, benchmarking, business cases, monetization and compliance thinking. Examples: Alliom (business strategy), Product Space (benchmarking report).

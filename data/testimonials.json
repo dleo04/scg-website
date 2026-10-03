@@ -1,0 +1,12 @@
+{
+  "_readme": "Client testimonials for the home page carousel and project pages. Empty on purpose: never invent quotes. Each entry needs the client's written permission to be published.",
+  "testimonials": [
+    {
+      "quote": "[TBD: client quote]",
+      "client": "[TBD: organization]",
+      "person_title": null,
+      "project_id": null,
+      "consent_to_publish": false
+    }
+  ]
+}
