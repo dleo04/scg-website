@@ -1,176 +1,133 @@
 ---
 layout: layouts/base.njk
-seoTitle: "Snider Consulting Group | UMD Student Consulting for Every Major"
-bodyClass: page-home
+seoTitle: "Snider Consulting Group | Student-run consulting at the University of Maryland"
+description: "UMD's student-run consulting group, solving real problems for campus organizations and nonprofits since 2020, in partnership with EY."
+bodyClass: has-hero page-home
+hideBanner: true
 ---
-{%- from "components/ui.njk" import tbdText, tbdBlock, media, chip, applyCta with context -%}
-{%- from "components/project-card.njk" import projectCard with context -%}
-{%- from "components/find-your-seat.njk" import findYourSeat with context -%}
-{%- from "components/how-it-works.njk" import howItWorks with context -%}
+{#- Home page: six blocks only, per docs/HOME-LAYOUT.md (supersedes SPEC 5.1).
+    Find your seat, How a project works, past clients, press and the CTA band
+    live on /join/, /about/ and /partners/. -#}
+{%- from "components/ui.njk" import tbdText, tbdBlock, media with context -%}
+{%- from "components/work-card.njk" import workCard with context -%}
+{%- from "components/project-dialog.njk" import projectDialog with context -%}
 {%- set hero = generatedImages.hero -%}
+{%- set community = generatedImages.community -%}
+{%- set featured = featuredProjects.slice(0, 3) -%}
+{%- set verifiedStats = [] -%}
+{%- for s in site.stats -%}{%- if s.verified and verifiedStats.length < 4 %}{% set verifiedStats = (verifiedStats.push(s), verifiedStats) %}{% endif -%}{%- endfor -%}
 
-{# 1. Hero ------------------------------------------------------------------ #}
-<section class="hero" aria-labelledby="hero-title">
-  <div class="container hero__grid">
-    <div class="hero__copy">
-      <p class="eyebrow eyebrow--accent">University of Maryland · Student-run consulting</p>
-      <h1 class="hero__title" id="hero-title">{{ site.tagline }}</h1>
-      <p class="hero__lede">SCG is UMD's student-run consulting group. Engineers, data scientists, designers, researchers and business students solve real problems for real clients, side by side.</p>
-      <div class="btn-row">
-        <a class="btn btn--primary" href="/projects/">See our projects</a>
-        <a class="btn btn--secondary" href="/join/">Join SCG</a>
+<div class="hero-wrap">
+  {%- if hero %}
+  <picture class="hero-wrap__bg">
+    <source type="image/webp" srcset="{{ hero.webpSrcset }}" sizes="100vw">
+    <img src="{{ hero.src }}" srcset="{{ hero.jpgSrcset }}" sizes="100vw" width="{{ hero.width }}" height="{{ hero.height }}" alt="" fetchpriority="high" decoding="async">
+  </picture>
+  {%- endif %}
+
+  {# 1. Hero -------------------------------------------------------------- #}
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container hero__inner">
+      <h1 class="hero__title" id="hero-title">Welcome to the <span class="hero__name">Snider Consulting Group</span></h1>
+      <p class="hero__lede">UMD's student-run consulting group, solving real problems for campus organizations and nonprofits since {{ site.established }}.</p>
+      <p class="hero__partner">In partnership with Ernst &amp; Young</p>
+      <div class="btn-row btn-row--center">
+        <a class="btn btn--gold" href="/projects/">See our projects</a>
+        <a class="btn btn--secondary-light" href="/join/">Join SCG</a>
       </div>
     </div>
-    <figure class="hero__media">
-      {%- if hero and not (site.images.hero | isPlaceholderImage) %}
+    {%- if site.images.hero_is_standin and not env.production and not env.hidePlaceholders %}
+    <span class="standin-tag standin-tag--hero" data-placeholder="true" data-todo="[TBD: hero background photo; the McKeldin Mall aerial is a stand-in (site.json → images.hero)]">Stand-in photo</span>
+    {%- endif %}
+  </section>
+
+  {# 2. Stat strip: verified stats only ------------------------------------ #}
+  {%- if verifiedStats.length %}
+  <section class="stat-strip" aria-label="SCG at a glance">
+    <div class="container">
+      <dl class="stat-strip__list">
+        {%- for s in verifiedStats %}
+        <div class="stat-strip__item"><dt>{{ s.label }}</dt><dd>{{ s.value }}</dd></div>
+        {%- endfor %}
+      </dl>
+    </div>
+  </section>
+  {%- endif %}
+</div>
+
+{# 3. Community ------------------------------------------------------------- #}
+<section class="home-block community" aria-labelledby="community-title">
+  <div class="container split">
+    <div class="split__text">
+      <h2 class="home-title" id="community-title">Our <span class="accent-red">Community</span></h2>
+      <p>SCG is built around a simple commitment: a collaborative environment where members share what they know and look out for one another. It is one of SCG's three pillars.</p>
+      <p>Each week, members come together for a general body meeting or workshop and meet with their project teams, plus occasional social outings. {{ tbdText("[TBD: one sentence on a signature tradition or retreat]") }}</p>
+      <a class="btn btn--primary" href="/team/">Meet the Team</a>
+    </div>
+    <figure class="split__media photo-frame">
+      {%- if community %}
       <picture>
-        <source type="image/webp" srcset="{{ hero.webpSrcset }}" sizes="(min-width: 1024px) 560px, (min-width: 768px) 90vw, 100vw">
-        <img src="{{ hero.src }}" srcset="{{ hero.jpgSrcset }}" sizes="(min-width: 1024px) 560px, (min-width: 768px) 90vw, 100vw"
-             width="{{ hero.width }}" height="{{ hero.height }}" alt="{{ site.images.hero_alt }}" fetchpriority="high" decoding="async">
+        <source type="image/webp" srcset="{{ community.webpSrcset }}" sizes="(min-width: 1024px) 540px, 92vw">
+        <img src="{{ community.src }}" srcset="{{ community.jpgSrcset }}" sizes="(min-width: 1024px) 540px, 92vw"
+             width="{{ community.width }}" height="{{ community.height }}" alt="{{ site.images.community_alt }}" loading="lazy" decoding="async">
       </picture>
-      {%- if site.images.hero_is_standin and not env.hidePlaceholders %}
-      <figcaption class="standin-tag" data-placeholder="true" data-todo="[TBD: replace the stand-in hero photo with a candid photo of members from many majors at work (site.json → images.hero)]">Stand-in photo</figcaption>
+      {%- if site.images.community_is_standin and not env.production and not env.hidePlaceholders %}
+      <figcaption class="standin-tag" data-placeholder="true" data-todo="[TBD: candid collage of member photos for Our Community (site.json → images.community)]">Stand-in photo</figcaption>
       {%- endif %}
       {%- else %}
-      {{ media(site.images.hero, site.images.hero_alt, "PHOTO: Candid group or work-session photo (4:3)", "4 / 3", true) }}
+      {{ media(site.images.community, site.images.community_alt, "PHOTO: Collage of candid member photos (4:3)", "4 / 3") }}
       {%- endif %}
     </figure>
   </div>
 </section>
 
-{# 2. Proof strip: only verified stats show numbers ---------------------------- #}
-<section class="section section--ink section--tight" aria-labelledby="proof-title">
+{# 4. Our Work (dark) ----------------------------------------------------------- #}
+<section class="home-block home-block--ink work" aria-labelledby="work-title">
   <div class="container">
-    <h2 class="visually-hidden" id="proof-title">SCG at a glance</h2>
-    <dl class="stats">
-      {%- for s in site.stats %}
-      {%- if s.verified %}
-      <div class="stat"><dt class="stat__label">{{ s.label }}</dt><dd class="stat__value">{{ s.value }}</dd></div>
-      {%- elif not env.hidePlaceholders %}
-      <div class="stat stat--placeholder" data-placeholder="true" data-todo="[TBD: verified figure for '{{ s.label }}' (site.json → stats)]">
-        <dt class="stat__label">{{ s.label }}</dt><dd class="stat__value"><span class="tbd">[TBD]</span></dd>
-      </div>
-      {%- endif %}
-      {%- endfor %}
-    </dl>
-  </div>
-</section>
-
-{# 3. Find your seat ------------------------------------------------------------ #}
-<section class="section section--paper-2" aria-labelledby="seat-title">
-  <div class="container">
-    <header data-reveal class="section__head">
-      <p class="eyebrow">Every major has a role</p>
-      <h2 class="section__title" id="seat-title">Find your seat</h2>
-      <p class="section__lede">Pick the kind of work that excites you. Every track below is drawn from real SCG client projects.</p>
+    <header class="work__head">
+      <h2 class="home-title" id="work-title">Our <span class="accent-gold">Work</span></h2>
+      <p class="work__intro">We work alongside our clients to create personalized, long-lasting solutions that serve and elevate UMD's community. Each engagement is led by a student team and guided by consultants and partners from EY.</p>
     </header>
-    {{ findYourSeat(tracks, "home-seat", 3) }}
-  </div>
-</section>
-
-{# 4. Featured projects ------------------------------------------------------- #}
-<section class="section" aria-labelledby="featured-title">
-  <div class="container">
-    <header data-reveal class="section__head section__head--split">
-      <div>
-        <p class="eyebrow">Featured projects</p>
-        <h2 class="section__title" id="featured-title">Real clients. Real problems.</h2>
-      </div>
-      <a class="link-arrow" href="/projects/">Explore all projects <span aria-hidden="true">→</span></a>
-    </header>
-    <div class="card-grid" data-reveal>
-      {%- for p in featuredProjects.slice(0, 3) %}
-      {{ projectCard(p, 3) }}
+    <div class="work__grid">
+      {%- for p in featured %}
+      {{ workCard(p, loop.index, 3) }}
       {%- endfor %}
     </div>
-  </div>
-</section>
-
-{# 5. How a project works --------------------------------------------------------- #}
-<section class="section section--ink" aria-labelledby="how-title">
-  <div class="container">
-    <header data-reveal class="section__head">
-      <p class="eyebrow eyebrow--gold">How a project works</p>
-      <h2 class="section__title" id="how-title">From client request to handoff</h2>
-    </header>
-    {{ howItWorks(processSteps, 3, true) }}
-  </div>
-</section>
-
-{# 6. Who's in the room: hidden entirely when placeholders are off and no member has consented yet. #}
-{%- if peopleMajors.length or not env.hidePlaceholders %}
-<section class="section section--paper-2" aria-labelledby="room-title">
-  <div class="container room">
-    <header data-reveal class="section__head">
-      <p class="eyebrow">Who's in the room</p>
-      <h2 class="section__title" id="room-title">People like you are already here</h2>
-      {%- if not env.hidePlaceholders %}
-      <p class="section__lede">Members study {{ tbdText("[TBD: N]") }} majors across {{ tbdText("[TBD: number of colleges]") }} colleges.</p>
-      {%- endif %}
-    </header>
-    {%- if peopleMajors.length %}
-    <ul class="chips chips--lg" aria-label="Majors of current members and alumni">
-      {%- for m in peopleMajors %}{{ chip(m, "gold") }}{% endfor -%}
-    </ul>
-    {%- else %}
-    {{ tbdBlock("Majors of our members and alumni", "[TBD: appears automatically once people in data/team.json and data/alumni.json consent to publish]") }}
-    {%- endif %}
-    <p class="btn-row">
-      <a class="link-arrow" href="/team/">Meet the team <span aria-hidden="true">→</span></a>
-      <a class="link-arrow" href="/alumni/">See where alumni went <span aria-hidden="true">→</span></a>
+    <p class="btn-row btn-row--center work__more">
+      <a class="btn btn--gold" href="/projects/">View all projects</a>
     </p>
-  </div>
-</section>
-{%- endif %}
 
-{# 7. Credibility ------------------------------------------------------------------ #}
-<section class="section" aria-labelledby="cred-title">
-  <div class="container">
-    <header data-reveal class="section__head">
-      <p class="eyebrow">Backed by</p>
-      <h2 class="section__title" id="cred-title">Guided by industry, rooted at UMD</h2>
-    </header>
-    <div class="partner-grid">
-      {%- for partner in site.partners %}
-      {%- if partner.name == "EY" or partner.name.startsWith("Ed Snider Center") %}
-      <article class="card partner-card">
-        <p class="partner-card__role">{{ partner.role }}</p>
-        <h3 class="partner-card__name">{{ partner.name }}</h3>
-        <p>{{ partner.blurb | tbd | safe }}</p>
-      </article>
-      {%- endif %}
-      {%- endfor %}
+    {%- if testimonials.length %}
+    {% include "partials/testimonials.njk" %}
+    {%- elif not env.production and not env.hidePlaceholders %}
+    <div class="work__testimonial-ph">
+      {{ tbdBlock("Client testimonials appear here", "[TBD: client quotes with written permission (data/testimonials.json, consent_to_publish: true)]") }}
     </div>
-
-    <h3 class="subhead">In the news</h3>
-    <ul class="press-list">
-      {%- for item in site.press %}
-      <li>
-        <a class="press-link" href="{{ item.url }}" rel="noopener">
-          <span class="press-link__label">{{ item.label }}</span>
-          <span class="press-link__blurb">{{ item.blurb }}</span>
-        </a>
-      </li>
-      {%- endfor %}
-    </ul>
-
-    <h3 class="subhead">Past clients</h3>
-    <ul class="chips chips--clients">
-      {%- for c in pastClients %}{{ chip(c.name, "client") }}{% endfor -%}
-    </ul>
-  </div>
-</section>
-
-{# 8. Final CTA --------------------------------------------------------------------- #}
-<section class="section section--ink cta-band" aria-labelledby="cta-title">
-  <div class="container cta-band__inner">
-    <h2 class="cta-band__title" id="cta-title">Your major isn't the point. <span class="accent">Your curiosity is.</span></h2>
-    {%- if not site.recruiting.open %}
-    <p class="cta-band__status">{{ site.recruiting.closed_text }}</p>
     {%- endif %}
-    <div class="btn-row btn-row--center">
-      {{ applyCta("gold") }}
-      <a class="btn btn--secondary-light" href="/join/">How joining works</a>
+  </div>
+</section>
+
+{# 5. Where SCG takes you ---------------------------------------------------------- #}
+<section class="home-block places" aria-labelledby="places-title">
+  <div class="container split split--reverse">
+    <div class="split__text">
+      <h2 class="home-title" id="places-title">Where SCG <span class="accent-red">Takes You</span></h2>
+      <p>Members build their skills through an intensive 10-week professional development program, originally designed by SCG members and alumni at Bain and Capital One. Along the way they connect with alumni at EY, Deloitte, Capital One, Bain and other firms through site visits, workshops, mentorship and social events.</p>
+      <a class="btn btn--primary" href="/alumni/">Explore Alumni</a>
+    </div>
+    <div class="split__media">
+      <div class="employer-card">
+        <h3 class="employer-card__title">Our members work at…</h3>
+        <ul class="employer-card__grid">
+          {%- for name in site.member_employers.names %}
+          <li>{{ name }}</li>
+          {%- endfor %}
+        </ul>
+        {#- Optional 3-stat row (HOME-LAYOUT block 5) renders only once three verified
+            alumni figures exist; none are verified yet, so it is omitted. -#}
+      </div>
     </div>
   </div>
 </section>
+
+{{ projectDialog(featured) }}

@@ -48,7 +48,6 @@ const { projects } = readJson("projects.json");
 const { tracks } = readJson("tracks.json");
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-await placeholder("assets/placeholders/hero.jpg", 1600, 1200, "PHOTO: Candid group or work-session photo (4:3)");
 for (const p of projects) {
   if (p.image?.startsWith("assets/placeholders/")) {
     await placeholder(p.image, 1280, 720, `PHOTO: ${p.title} team (16:9)`);
@@ -90,23 +89,24 @@ for (const size of [180, 192, 512]) {
     .toFile(path.join(GEN_DIR, size === 180 ? "apple-touch-icon.png" : `icon-${size}.png`));
 }
 
-// Hero: responsive WebP + JPEG sizes from whatever site.json points at.
-const heroSrc = site.images?.hero;
-if (heroSrc && !heroSrc.startsWith("assets/placeholders/") && fs.existsSync(path.join(ROOT, heroSrc))) {
-  const meta = await sharp(path.join(ROOT, heroSrc)).metadata();
-  const sizes = [640, 1024, 1600].filter((w) => w <= meta.width);
+// Photos named in site.json → images: responsive WebP + JPEG sizes.
+async function responsive(key, widths) {
+  const src = site.images?.[key];
+  if (!src || src.startsWith("assets/placeholders/") || !fs.existsSync(path.join(ROOT, src))) return;
+  const meta = await sharp(path.join(ROOT, src)).metadata();
+  const sizes = widths.filter((w) => w <= meta.width);
   const variants = [];
   for (const w of sizes) {
     const h = Math.round((meta.height / meta.width) * w);
     for (const fmt of ["webp", "jpg"]) {
-      const name = `hero-${w}.${fmt}`;
-      const img = sharp(path.join(ROOT, heroSrc)).resize({ width: w });
-      await (fmt === "webp" ? img.webp({ quality: 72 }) : img.jpeg({ quality: 76, mozjpeg: true })).toFile(path.join(GEN_DIR, name));
+      const name = `${key}-${w}.${fmt}`;
+      const img = sharp(path.join(ROOT, src)).resize({ width: w });
+      await (fmt === "webp" ? img.webp({ quality: 70 }) : img.jpeg({ quality: 74, mozjpeg: true })).toFile(path.join(GEN_DIR, name));
       variants.push({ w, h, fmt, src: `/assets/generated/${name}` });
     }
   }
   const largest = variants.filter((v) => v.fmt === "jpg").at(-1);
-  manifest.hero = {
+  manifest[key] = {
     width: largest.w,
     height: largest.h,
     src: largest.src,
@@ -114,7 +114,9 @@ if (heroSrc && !heroSrc.startsWith("assets/placeholders/") && fs.existsSync(path
     jpgSrcset: variants.filter((v) => v.fmt === "jpg").map((v) => `${v.src} ${v.w}w`).join(", "),
   };
 }
+await responsive("hero", [640, 1024, 1600, 2000]);
+await responsive("community", [480, 800, 1200]);
 
 fs.writeFileSync(path.join(GEN_DIR, "images.json"), JSON.stringify(manifest, null, 2));
-console.log(`[assets] generated OG image, icons${manifest.hero ? ", hero sizes" : ""}` +
+console.log(`[assets] generated OG image, icons, photo sizes: ${Object.keys(manifest).filter((k) => k !== "og").join(", ") || "none"}` +
   (created.length ? `; new placeholders: ${created.join(", ")}` : ""));

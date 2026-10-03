@@ -33,6 +33,7 @@ export default function (eleventyConfig) {
     "node_modules/@fontsource/lato/files/lato-latin-700-normal.woff2": "fonts/lato-latin-700-normal.woff2",
     "node_modules/@fontsource/montserrat/files/montserrat-latin-600-normal.woff2": "fonts/montserrat-latin-600-normal.woff2",
     "node_modules/@fontsource/montserrat/files/montserrat-latin-700-normal.woff2": "fonts/montserrat-latin-700-normal.woff2",
+    "node_modules/@fontsource/montserrat/files/montserrat-latin-800-normal.woff2": "fonts/montserrat-latin-800-normal.woff2",
   });
 
   return {

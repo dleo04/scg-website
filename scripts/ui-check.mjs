@@ -15,7 +15,8 @@ const AXE = fs.readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
 const OUT = path.resolve(process.argv[2] || path.join(ROOT, ".ui-check"));
 const SITE = path.join(ROOT, "_site");
 const CHROME = process.env.CHROME_PATH || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
-const VIEWPORTS = [360, 768, 1280];
+const VIEWPORTS = (process.env.UI_WIDTHS || "360,768,1280,1440").split(",").map(Number);
+const AXE_WIDTHS = [VIEWPORTS[0], VIEWPORTS.at(-1)];
 fs.mkdirSync(OUT, { recursive: true });
 
 const TYPES = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".png": "image/png", ".jpg": "image/jpeg", ".webp": "image/webp", ".woff2": "font/woff2", ".svg": "image/svg+xml", ".webmanifest": "application/manifest+json", ".json": "application/json" };
@@ -67,7 +68,7 @@ for (const route of routes) {
     if (overflow.scroll || overflow.wide.length) fail(`${route} @${width}: horizontal overflow ${overflow.wide.join(", ")}`);
     errors.forEach((e) => fail(`${route} @${width}: ${e}`));
 
-    if (width !== 768) {
+    if (AXE_WIDTHS.includes(width)) {
       await page.addScriptTag({ content: AXE });
       const axe = await page.evaluate(async () => {
         const r = await window.axe.run(document, { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"] } });
@@ -126,48 +127,108 @@ async function keyboard(width) {
     if (!closed) fail(`@${width} Escape did not close the menu and return focus to the toggle`);
   }
 
-  // Dropdown: open with Enter, Escape closes and returns focus.
+  // Dropdown (only if the header has one).
   await page.goto(BASE + "/", { waitUntil: "networkidle0" });
-  if (width < 1024) { await page.click(".nav-toggle"); }
-  await page.focus(".nav-group__toggle");
-  await page.keyboard.press("Enter");
-  const subOpen = await page.evaluate(() => getComputedStyle(document.getElementById("nav-who")).display !== "none");
-  if (!subOpen) fail(`@${width} "Who We Are" did not open with Enter`);
-  await page.keyboard.press("Tab");
-  if ((await active()).text !== "About") fail(`@${width} first dropdown item is not "About"`);
-  await page.keyboard.press("Escape");
-  const subClosed = await page.evaluate(() => document.activeElement.classList.contains("nav-group__toggle") && document.querySelector(".nav-group__toggle").getAttribute("aria-expanded") === "false");
-  if (!subClosed) fail(`@${width} Escape did not close "Who We Are" and return focus`);
+  if (await page.$(".nav-group__toggle")) {
+    if (width < 1024) await page.click(".nav-toggle");
+    await page.focus(".nav-group__toggle");
+    await page.keyboard.press("Enter");
+    await page.keyboard.press("Tab");
+    if ((await active()).text !== "About") fail(`@${width} first dropdown item is not "About"`);
+    await page.keyboard.press("Escape");
+  }
 
-  // Tabs: arrow keys move selection and focus; only one tab stop.
-  await page.focus("[role=tab][aria-selected=true]");
-  await page.keyboard.press("ArrowRight");
-  const tabState = await page.evaluate(() => ({
-    focused: document.activeElement.textContent.trim(),
-    selected: document.querySelector("[role=tab][aria-selected=true]").textContent.trim(),
-    visiblePanels: [...document.querySelectorAll("[role=tabpanel]")].filter((p) => !p.hidden).length,
-    tabStops: [...document.querySelectorAll("[role=tab]")].filter((t) => t.tabIndex === 0).length,
-  }));
-  if (tabState.focused !== tabState.selected || tabState.visiblePanels !== 1 || tabState.tabStops !== 1) fail(`@${width} tabs: ${JSON.stringify(tabState)}`);
-  await page.keyboard.press("End");
-  await page.keyboard.press("ArrowRight");
-  const wrapped = await page.evaluate(() => document.activeElement.textContent.trim());
-  report.notes.push(`@${width} tabs: ArrowRight → "${tabState.selected}", End+ArrowRight wraps to "${wrapped}"`);
+  // Tabs (only on pages that have them).
+  if (await page.$("[role=tab]")) {
+    await page.focus("[role=tab][aria-selected=true]");
+    await page.keyboard.press("ArrowRight");
+    const tabState = await page.evaluate(() => ({
+      focused: document.activeElement.textContent.trim(),
+      selected: document.querySelector("[role=tab][aria-selected=true]").textContent.trim(),
+      visiblePanels: [...document.querySelectorAll("[role=tabpanel]")].filter((p) => !p.hidden).length,
+    }));
+    if (tabState.focused !== tabState.selected || tabState.visiblePanels !== 1) fail(`@${width} tabs: ${JSON.stringify(tabState)}`);
+  }
+
+  // Header: transparent over the hero, solid after scrolling.
+  if (await page.$(".has-hero")) {
+    const before = await page.evaluate(() => getComputedStyle(document.querySelector(".site-header")).backgroundColor);
+    await page.evaluate(() => window.scrollTo(0, 400));
+    await new Promise((r) => setTimeout(r, 400));
+    const after = await page.evaluate(() => getComputedStyle(document.querySelector(".site-header")).backgroundColor);
+    if (!/rgba\(0, 0, 0, 0\)|transparent/.test(before) || !/rgb\(255, 255, 255\)/.test(after)) fail(`@${width} header not transparent→solid (${before} → ${after})`);
+    await page.evaluate(() => window.scrollTo(0, 0));
+  }
+
+  // Project dialog: keyboard open, focus inside, trap, arrows, Escape, focus return.
+  if (await page.$("[data-project-open]")) {
+    const firstId = await page.$eval("[data-project-open]", (a) => a.dataset.projectOpen);
+    await page.focus(`[data-project-open="${firstId}"]`);
+    await page.keyboard.press("Enter");
+    await new Promise((r) => setTimeout(r, 350));
+    const st = await page.evaluate(() => ({
+      open: document.getElementById("project-dialog").open,
+      hash: location.hash,
+      focusInside: document.getElementById("project-dialog").contains(document.activeElement),
+      label: document.getElementById("project-dialog-title")?.textContent.trim(),
+      locked: getComputedStyle(document.documentElement).overflow === "hidden",
+    }));
+    if (!st.open || st.hash !== `#${firstId}` || !st.focusInside || !st.label || !st.locked) fail(`@${width} dialog open: ${JSON.stringify(st)}`);
+    // Tab 25 times: focus must never leave the dialog.
+    for (let i = 0; i < 25; i++) {
+      await page.keyboard.press("Tab");
+      const inside = await page.evaluate(() => document.getElementById("project-dialog").contains(document.activeElement));
+      if (!inside) { fail(`@${width} focus escaped the dialog after ${i + 1} Tab presses`); break; }
+    }
+    await page.keyboard.press("ArrowRight");
+    const nextTitle = await page.evaluate(() => [document.getElementById("project-dialog-title")?.textContent.trim(), location.hash]);
+    await page.keyboard.press("ArrowLeft");
+    const backTitle = await page.evaluate(() => document.getElementById("project-dialog-title")?.textContent.trim());
+    if (nextTitle[0] === st.label || backTitle !== st.label) fail(`@${width} arrow keys: ${st.label} → ${nextTitle[0]} → ${backTitle}`);
+    await page.keyboard.press("Escape");
+    await new Promise((r) => setTimeout(r, 300));
+    const closed = await page.evaluate((id) => ({
+      open: document.getElementById("project-dialog").open,
+      focusBack: document.activeElement.dataset.projectOpen === id,
+      hash: location.hash,
+      unlocked: getComputedStyle(document.documentElement).overflow !== "hidden",
+    }), firstId);
+    if (closed.open || !closed.focusBack || closed.hash || !closed.unlocked) fail(`@${width} dialog close: ${JSON.stringify(closed)}`);
+    report.notes.push(`@${width} dialog: opened "${st.label}", next → "${nextTitle[0]}" (${nextTitle[1]}), Escape returned focus to the card`);
+
+    // Deep link on a cold load, then browser Back closes it.
+    const second = await page.$$eval("[data-project-open]", (as) => as[1]?.dataset.projectOpen);
+    await page.goto(BASE + "/#" + second, { waitUntil: "networkidle0" });
+    await new Promise((r) => setTimeout(r, 300));
+    const deep = await page.evaluate(() => [document.getElementById("project-dialog").open, document.getElementById("project-dialog-title")?.textContent.trim()]);
+    if (!deep[0]) fail(`@${width} deep link /#${second} did not open the dialog`);
+    await page.goto(BASE + "/", { waitUntil: "networkidle0" });
+    await page.click(`[data-project-open="${firstId}"]`);
+    await new Promise((r) => setTimeout(r, 300));
+    await page.goBack();
+    await new Promise((r) => setTimeout(r, 300));
+    const afterBack = await page.evaluate(() => [document.getElementById("project-dialog").open, location.pathname]);
+    if (afterBack[0] || afterBack[1] !== "/") fail(`@${width} Back did not close the dialog: ${JSON.stringify(afterBack)}`);
+  }
   await page.close();
 }
 for (const w of VIEWPORTS) await keyboard(w);
 
-// No-JS: all tracks visible and nav reachable.
+// No-JS: nav reachable and project cards are plain links to their pages.
 {
   const page = await browser.newPage();
   await page.setJavaScriptEnabled(false);
   await page.setViewport({ width: 360, height: 900 });
   await page.goto(BASE + "/", { waitUntil: "networkidle0" });
   const s = await page.evaluate(() => ({
-    panels: [...document.querySelectorAll(".tracks__panel")].filter((p) => p.offsetHeight > 0).length,
     navVisible: document.querySelector('.nav-menu a[href="/projects/"]').offsetHeight > 0,
+    cardLinks: [...document.querySelectorAll("[data-project-open]")].map((a) => a.getAttribute("href")),
   }));
-  if (s.panels !== 4 || !s.navVisible) fail(`no-JS @360: ${JSON.stringify(s)}`);
+  if (!s.navVisible || !s.cardLinks.length || s.cardLinks.some((h) => !/^\/projects\/[a-z0-9-]+\/$/.test(h))) fail(`no-JS @360: ${JSON.stringify(s)}`);
+  await page.click("[data-project-open]");
+  await page.waitForNavigation({ waitUntil: "networkidle0" }).catch(() => {});
+  if (!/\/projects\/[a-z0-9-]+\/$/.test(new URL(page.url()).pathname)) fail(`no-JS: card click went to ${page.url()}`);
+  await page.goto(BASE + "/", { waitUntil: "networkidle0" });
   await page.screenshot({ path: path.join(OUT, "home-nojs-360.png"), fullPage: true });
   await page.close();
 }

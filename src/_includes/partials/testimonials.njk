@@ -1,0 +1,20 @@
+{#- Client testimonial carousel. Rendered only when data/testimonials.json has
+    entries with consent_to_publish: true (filtered in lib/load-data.js).
+    No autoplay. Without JS all quotes are listed; site.js shows one at a time with dots. -#}
+<section class="testimonials" data-carousel aria-roledescription="carousel" aria-label="Client testimonials">
+  <div class="testimonials__track">
+    {%- for t in testimonials %}
+    <figure class="testimonial" id="testimonial-{{ loop.index }}" role="group" aria-roledescription="slide" aria-label="{{ loop.index }} of {{ testimonials.length }}" data-slide>
+      <figcaption class="testimonial__client">{{ t.client }}{% if t.person_title %}<span class="testimonial__title">, {{ t.person_title }}</span>{% endif %}</figcaption>
+      <blockquote class="testimonial__quote"><p>“{{ t.quote }}”</p></blockquote>
+    </figure>
+    {%- endfor %}
+  </div>
+  {%- if testimonials.length > 1 %}
+  <div class="testimonials__dots" data-dots hidden>
+    {%- for t in testimonials %}
+    <button type="button" class="testimonials__dot" aria-controls="testimonial-{{ loop.index }}" aria-label="Show testimonial {{ loop.index }} of {{ testimonials.length }}"></button>
+    {%- endfor %}
+  </div>
+  {%- endif %}
+</section>

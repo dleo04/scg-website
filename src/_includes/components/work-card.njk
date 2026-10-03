@@ -1,0 +1,50 @@
+{%- from "components/ui.njk" import media, chip with context -%}
+{#- "Our Work" case-study card (docs/HOME-LAYOUT.md block 4).
+    Rows: Objective = tagline, Scope = first two scope items, Impact = outcome
+    (or a visible "Results coming soon" placeholder). The title link goes to
+    /projects/<id>/ and, with JS, opens the project dialog instead. -#}
+{% macro workCard(p, number, headingLevel = 3) -%}
+<article class="work-card">
+  <div class="work-card__media">
+    {{ media(p.image, p.image_alt, "PHOTO: " ~ p.title ~ " team (16:9)") }}
+    <span class="work-card__pill">Case Study {{ number }}</span>
+  </div>
+  <div class="work-card__body">
+    <h{{ headingLevel }} class="work-card__title">
+      <a class="card__link" href="{{ p.url }}" data-project-open="{{ p.id }}">{{ p.title }} <span class="work-card__term">({{ p.semester }})</span></a>
+    </h{{ headingLevel }}>
+    <dl class="work-card__rows">
+      <div class="work-card__row">
+        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg></span>Objective</dt>
+        <dd>{{ p.tagline | tbd | safe }}</dd>
+      </div>
+      <div class="work-card__row">
+        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M9 6h11M9 12h11M9 18h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="4.5" cy="6" r="1.4" fill="currentColor"/><circle cx="4.5" cy="12" r="1.4" fill="currentColor"/><circle cx="4.5" cy="18" r="1.4" fill="currentColor"/></svg></span>Scope</dt>
+        <dd>
+          {%- if p.scope | isTbd %}<span class="tbd" data-placeholder="true" data-todo="[TBD: scope for {{ p.title }}]">[TBD: scope]</span>
+          {%- else %}<ul class="work-card__scope">{% for s in p.scope.slice(0, 2) %}<li>{{ s | tbd | safe }}</li>{% endfor %}</ul>{% endif -%}
+        </dd>
+      </div>
+      {%- if not (p.outcome | isTbd) %}
+      <div class="work-card__row">
+        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 18l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 8h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Impact</dt>
+        <dd>{{ p.outcome | tbd | safe }}</dd>
+      </div>
+      {%- elif not env.hidePlaceholders %}
+      <div class="work-card__row">
+        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 18l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 8h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Impact</dt>
+        <dd><span class="ph-inline" data-placeholder="true" data-todo="[TBD: outcome for {{ p.title }} (projects.json → outcome)]">Results coming soon</span></dd>
+      </div>
+      {%- endif %}
+    </dl>
+    {%- set majors = p.team.majors if (p.team and p.team.majors) else [] %}
+    {%- if (p.skills and p.skills.length) or majors.length %}
+    <ul class="chips chips--sm" aria-label="Skills and team majors">
+      {%- for s in (p.skills or []).slice(0, 3) %}{{ chip(s) }}{% endfor -%}
+      {%- for m in majors %}{{ chip(m, "gold") }}{% endfor -%}
+    </ul>
+    {%- endif %}
+    <span class="card__cta" aria-hidden="true">View project <span class="arrow">→</span></span>
+  </div>
+</article>
+{%- endmacro %}

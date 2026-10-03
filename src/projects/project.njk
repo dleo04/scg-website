@@ -10,15 +10,12 @@ eleventyComputed:
   title: "{{ project.title }}"
   description: "{{ project.tagline }}"
 ---
-{%- from "components/ui.njk" import tbdBlock, chip with context -%}
-{#- Stage 1 placeholder page. Stage 2 replaces this with the full case study. -#}
-<section class="section">
+{%- from "components/project-detail.njk" import projectDetail with context -%}
+{#- Standalone case study (no-JS fallback for the dialog). Stage 2 adds
+    breadcrumbs, BreadcrumbList JSON-LD and per-project Open Graph tags. -#}
+<section class="section project-page">
   <div class="container narrow">
     <p class="eyebrow"><a href="/projects/">Projects</a> / {{ project.semester }}</p>
-    <h1 class="page-title">{{ project.title }}</h1>
-    <ul class="chips chips--meta">{{ chip(project.semester, "solid") }}{{ chip(project.client_type, "outline") }}</ul>
-    <p class="lede">{{ project.tagline | tbd | safe }}</p>
-    <p>{{ project.summary | tbd | safe }}</p>
-    {{ tbdBlock("Full case study (challenge, scope, approach, outcome, team) is built in stage 2.", "[TBD: project detail page, stage 2]") }}
+    {{ projectDetail(project, 1) }}
   </div>
 </section>

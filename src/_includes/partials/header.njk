@@ -1,14 +1,18 @@
-{%- set cta = site.recruiting | ctaState -%}
-{%- set who = [
-  { label: "About", url: "/about/" },
+{#- Site header (docs/HOME-LAYOUT.md). Same nav on every page; About and Partners
+    live in the footer. On pages with a hero (bodyClass "has-hero") it starts
+    transparent and turns solid on scroll (site.js). -#}
+{%- set nav = [
+  { label: "Projects", url: "/projects/" },
+  { label: "Join SCG", url: "/join/" },
   { label: "Team", url: "/team/" },
   { label: "Alumni", url: "/alumni/" },
-  { label: "Partners", url: "/partners/" }
+  { label: "Work With Us", url: "/work-with-us/" }
 ] -%}
-{%- set whoActive = page.url.startsWith('/about/') or page.url.startsWith('/team/') or page.url.startsWith('/alumni/') or page.url.startsWith('/partners/') -%}
-<header class="site-header">
+{#- "Join SCG" goes straight to the application while it is open, otherwise to /join/. -#}
+{%- set joinHref = site.recruiting.application_url if (site.recruiting.open and site.recruiting.application_url) else "/join/" -%}
+<header class="site-header" data-header>
   <div class="container site-header__inner">
-    <a class="site-logo" href="/">
+    <a class="site-logo logo-plate" href="/">
       <img src="/assets/scg-logo.png" width="668" height="184" alt="Snider Consulting Group home">
     </a>
     <nav class="site-nav" aria-label="Main">
@@ -17,21 +21,15 @@
         <span class="nav-toggle__label">Menu</span>
       </button>
       <ul id="nav-menu" class="nav-menu">
-        <li><a class="nav-link" href="/projects/" {% if page.url.startsWith('/projects/') %}aria-current="page"{% endif %}>Projects</a></li>
-        <li><a class="nav-link" href="/join/" {% if page.url.startsWith('/join/') %}aria-current="page"{% endif %}>Join SCG</a></li>
-        <li class="nav-group">
-          <button class="nav-link nav-group__toggle{% if whoActive %} is-current{% endif %}" type="button" aria-expanded="false" aria-controls="nav-who">
-            Who We Are <span class="nav-group__caret" aria-hidden="true"></span>
-          </button>
-          <ul id="nav-who" class="nav-group__menu">
-            {%- for item in who %}
-            <li><a class="nav-link" href="{{ item.url }}" {% if page.url.startsWith(item.url) %}aria-current="page"{% endif %}>{{ item.label }}</a></li>
-            {%- endfor %}
-          </ul>
-        </li>
-        <li><a class="nav-link" href="/work-with-us/" {% if page.url.startsWith('/work-with-us/') %}aria-current="page"{% endif %}>Work With Us</a></li>
+        {%- for item in nav %}
+        <li><a class="nav-link" href="{{ item.url }}" {% if page.url.startsWith(item.url) %}aria-current="page"{% endif %}>{{ item.label }}</a></li>
+        {%- endfor %}
+        <li class="nav-menu__social">{% include "partials/social-links.njk" %}</li>
       </ul>
     </nav>
-    <a class="btn btn--primary btn--sm header-cta" href="{{ cta.href }}"{% if cta.external %} rel="noopener"{% endif %}>{{ cta.short }}</a>
+    <div class="header-actions">
+      <div class="header-social">{% include "partials/social-links.njk" %}</div>
+      <a class="btn btn--sm header-cta" href="{{ joinHref }}"{% if joinHref != "/join/" %} rel="noopener"{% endif %}>Join SCG</a>
+    </div>
   </div>
 </header>

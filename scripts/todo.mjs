@@ -34,7 +34,10 @@ for (const s of site.stats) if (!s.verified) data.push(`site.json → stats: "${
 if (!site.recruiting.application_url) data.push("site.json → recruiting.application_url is empty.");
 if (!site.recruiting.interest_form_url) data.push("site.json → recruiting.interest_form_url is empty.");
 if (!site.links.contact_email) data.push("site.json → links.contact_email: shared club address (never a personal one).");
-if (site.images?.hero_is_standin) data.push("site.json → images.hero is the stand-in group photo; supply a candid photo of members from many majors.");
+if (site.images?.hero_is_standin) data.push("site.json → images.hero is a stand-in (campus aerial); supply a wide hero photo that works under a dark overlay.");
+if (site.images?.community_is_standin) data.push("site.json → images.community is the stand-in suits group photo; supply a candid collage of members.");
+const testimonials = fs.existsSync(path.join(ROOT, "data/testimonials.json")) ? readJson("testimonials.json").testimonials : [];
+if (!testimonials.some((t) => t.consent_to_publish === true)) data.push("testimonials.json: no client quotes with written permission yet (home carousel hidden).");
 site.timeline.steps.forEach((s) => { if (!s.date) data.push(`site.json → timeline: date for "${s.name}".`); });
 for (const p of projects) {
   const missing = ["approach", "outcome", "image_alt"].filter((k) => p[k] == null || /\[TBD/.test(p[k]));

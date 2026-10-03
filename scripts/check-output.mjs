@@ -5,7 +5,7 @@
 //  - with HIDE_PLACEHOLDERS=1: any visible placeholder or [TBD] marker
 import fs from "node:fs";
 import path from "node:path";
-import { ROOT, readJson, unpublishedNames, getEnv } from "../lib/load-data.js";
+import { ROOT, DATA_DIR, readJson, unpublishedNames, getEnv } from "../lib/load-data.js";
 
 const OUT = path.join(ROOT, "_site");
 const TEXT_EXT = new Set([".html", ".xml", ".txt", ".json", ".webmanifest", ".js", ".css"]);
@@ -20,6 +20,12 @@ const files = [];
     else if (TEXT_EXT.has(path.extname(entry.name)) || entry.name === "site.webmanifest") files.push(full);
   }
 })(OUT);
+
+// Unconsented testimonial text (anything real, i.e. not a [TBD] stub) must never ship.
+const testimonialsFile = fs.existsSync(path.join(DATA_DIR, "testimonials.json")) ? readJson("testimonials.json") : { testimonials: [] };
+const unpublishedQuotes = (testimonialsFile.testimonials || [])
+  .filter((t) => t.consent_to_publish !== true && t.quote && !/\[TBD/i.test(t.quote))
+  .map((t) => t.quote.slice(0, 60));
 
 const allowedEmail = site.links?.contact_email?.toLowerCase();
 const names = unpublishedNames();
@@ -49,12 +55,21 @@ for (const file of files) {
     const phone = visible.match(/(?:\+?1[\s.-]?)?\(?\b\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}\b/);
     if (phone) problems.push(`${rel}: contains what looks like a phone number "${phone[0]}".`);
   }
+  for (const q of unpublishedQuotes) {
+    if (text.includes(q)) problems.push(`${rel}: contains a testimonial without consent_to_publish: true.`);
+  }
+  if (/uconsulting/i.test(text)) problems.push(`${rel}: mentions the layout reference site; it must not ship.`);
   for (const marker of ["godaddy", "powered by", "filler@", "img1.wsimg.com", "websitebuilder"]) {
     if (lower.includes(marker)) problems.push(`${rel}: contains builder leftover "${marker}".`);
   }
   if (env.hidePlaceholders && rel.endsWith(".html") && /data-placeholder="true"|\[TBD/i.test(text)) {
     problems.push(`${rel}: still shows a placeholder although HIDE_PLACEHOLDERS=1.`);
   }
+}
+
+// The layout reference screenshot must never be in the build output.
+for (const f of fs.readdirSync(OUT, { recursive: true })) {
+  if (/layout-reference|docs[\\/]reference/i.test(String(f))) problems.push(`${f}: reference material must not be published.`);
 }
 
 if (problems.length) {

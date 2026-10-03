@@ -7,11 +7,20 @@
   const toggle = document.querySelector(".nav-toggle");
   const menu = document.getElementById("nav-menu");
   const desktop = window.matchMedia("(min-width: 1024px)");
+  const header = document.querySelector("[data-header]");
+
+  // ---- Header: transparent over the hero, solid once the page scrolls ----
+  if (header && document.body.classList.contains("has-hero")) {
+    const update = () => header.classList.toggle("is-solid", window.scrollY > 8);
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+  }
 
   const setMenu = (open, { focusToggle = false } = {}) => {
     if (!toggle || !menu) return;
     toggle.setAttribute("aria-expanded", String(open));
     menu.classList.toggle("is-open", open);
+    header?.classList.toggle("is-menu-open", open);
     if (!open && focusToggle) toggle.focus();
   };
 
@@ -89,6 +98,30 @@
 
     root.classList.add("is-tabs");
     select(0);
+  });
+
+  // ---- Testimonial carousel: one quote at a time, dot buttons, no autoplay --
+  document.querySelectorAll("[data-carousel]").forEach((root) => {
+    const slides = [...root.querySelectorAll("[data-slide]")];
+    const dotsWrap = root.querySelector("[data-dots]");
+    if (slides.length < 2 || !dotsWrap) return;
+    const dots = [...dotsWrap.querySelectorAll("button")];
+    const show = (index) => {
+      slides.forEach((s, i) => { s.hidden = i !== index; });
+      dots.forEach((d, i) => d.setAttribute("aria-current", i === index ? "true" : "false"));
+    };
+    dots.forEach((d, i) => d.addEventListener("click", () => show(i)));
+    dotsWrap.addEventListener("keydown", (e) => {
+      const i = dots.indexOf(document.activeElement);
+      if (i < 0 || (e.key !== "ArrowRight" && e.key !== "ArrowLeft")) return;
+      e.preventDefault();
+      const n = (i + (e.key === "ArrowRight" ? 1 : -1) + dots.length) % dots.length;
+      dots[n].focus();
+      show(n);
+    });
+    dotsWrap.hidden = false;
+    root.classList.add("is-carousel");
+    show(0);
   });
 
   // ---- Reveal on scroll (skipped under reduced motion) --------------------

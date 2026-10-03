@@ -5,7 +5,7 @@
 </head>
 <body class="{{ bodyClass }}">
   <a class="skip-link" href="#main">Skip to main content</a>
-  {% include "partials/banner.njk" %}
+  {% if not hideBanner %}{% include "partials/banner.njk" %}{% endif %}
   {% include "partials/header.njk" %}
   <main id="main" tabindex="-1">
     {{ content | safe }}
