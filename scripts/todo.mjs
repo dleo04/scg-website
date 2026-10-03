@@ -30,7 +30,7 @@ const team = readJson("team.json");
 const alumni = readJson("alumni.json").alumni;
 const clients = readJson("past-clients.json").clients;
 
-for (const s of site.stats) if (!s.verified) data.push(`site.json → stats: "${s.label}" needs a verified figure.`);
+for (const s of [...site.stats, ...(site.facts || [])]) if (!s.verified) data.push(`site.json → stats/facts: "${s.label}" needs a verified figure.`);
 if (!site.recruiting.application_url) data.push("site.json → recruiting.application_url is empty.");
 if (!site.recruiting.interest_form_url) data.push("site.json → recruiting.interest_form_url is empty.");
 if (!site.links.contact_email) data.push("site.json → links.contact_email: shared club address (never a personal one).");

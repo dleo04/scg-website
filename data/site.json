@@ -74,13 +74,18 @@
       "url": "https://www.rhsmith.umd.edu/centers/snider-center/programs-curricula/snider-consulting-group"
     }
   ],
+  "stats_readme": "Home page stat strip: every verified entry is shown (max 4), in this order. Figures supplied by SCG leadership on 2026-10-03; update them here when they change.",
   "stats": [
+    { "label": "Alumni", "value": "50+", "verified": true },
+    { "label": "Client projects", "value": "40+", "verified": true },
+    { "label": "Placements each year", "value": "15+", "verified": true }
+  ],
+  "facts_readme": "Other verified facts, kept for /about/ and /join/ (not shown on the home stat strip).",
+  "facts": [
     { "label": "Founded", "value": "2020", "verified": true },
     { "label": "Cost to join", "value": "Free", "verified": true },
     { "label": "EY partnership", "value": "4+ years", "verified": true },
-    { "label": "Client projects completed", "value": "[TBD]", "verified": false },
-    { "label": "Majors represented", "value": "[TBD]", "verified": false },
-    { "label": "Alumni", "value": "[TBD]", "verified": false }
+    { "label": "Majors represented", "value": "[TBD]", "verified": false }
   ],
   "analytics": { "enabled": false, "ga_measurement_id": "G-PRGQGFM60M", "note": "This ID is from the old site. Keep only if officers still own it. If enabled, load only after the visitor consents." }
 }

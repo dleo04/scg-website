@@ -31,10 +31,6 @@ hideBanner: true
       <h1 class="hero__title" id="hero-title">Welcome to the <span class="hero__name">Snider Consulting Group</span></h1>
       <p class="hero__lede">UMD's student-run consulting group, solving real problems for campus organizations and nonprofits since {{ site.established }}.</p>
       <p class="hero__partner">In partnership with Ernst &amp; Young</p>
-      <div class="btn-row btn-row--center">
-        <a class="btn btn--gold" href="/projects/">See our projects</a>
-        <a class="btn btn--secondary-light" href="/join/">Join SCG</a>
-      </div>
     </div>
     {%- if site.images.hero_is_standin and not env.production and not env.hidePlaceholders %}
     <span class="standin-tag standin-tag--hero" data-placeholder="true" data-todo="[TBD: hero background photo; the McKeldin Mall aerial is a stand-in (site.json → images.hero)]">Stand-in photo</span>
@@ -123,8 +119,7 @@ hideBanner: true
           <li>{{ name }}</li>
           {%- endfor %}
         </ul>
-        {#- Optional 3-stat row (HOME-LAYOUT block 5) renders only once three verified
-            alumni figures exist; none are verified yet, so it is omitted. -#}
+        {#- No stat row here: the home stat strip already shows these figures. -#}
       </div>
     </div>
   </div>

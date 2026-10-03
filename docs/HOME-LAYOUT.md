@@ -17,13 +17,13 @@
 │                                                              │
 │              WELCOME TO THE                                  │
 │          SNIDER CONSULTING GROUP     (H1, centered, white)   │
-│   one-line subhead (centered, white, ~22px)                  │
+│   subhead on ONE line from 1100px (centered, white)          │
 │   small line: "In partnership with Ernst & Young"           │
-│   [ See our projects ]  [ Join SCG ]                         │
+│   (no buttons: Projects + Join SCG live in the header)       │
 ├──────────────────────────────────────────────────────────────┤
 │ 2. STAT STRIP  3 stats, centered, hairline dividers ~120px   │
-│     2020            Free            4+ years                 │
-│  FOUNDED       TO JOIN       EY PARTNERSHIP                  │
+│      50+             40+              15+                    │
+│    ALUMNI      CLIENT PROJECTS   PLACEMENTS EACH YEAR        │
 │  (strip sits over the hero's bottom edge on a white wash)    │
 ├──────────────────────────────────────────────────────────────┤
 │ 3. COMMUNITY  2 columns, white background        ~520px      │
@@ -52,8 +52,9 @@
 │ ┌─────────────────────────┐   H2 "Where SCG Takes You"       │
 │ │ card: "Our members work │   paragraph                      │
 │ │ at…" name/logo grid     │   [ Explore Alumni ]             │
-│ │ (4 cols x 3 rows)       │                                  │
-│ │ ── optional 3 stats ──  │                                  │
+│ │ (4 cols x 2 rows)       │                                  │
+│ │ (no stat row: figures   │                                  │
+│ │  are in the stat strip) │                                  │
 │ └─────────────────────────┘                                  │
 ├──────────────────────────────────────────────────────────────┤
 │ 6. FOOTER  dark (--ink)                           ~290px     │
@@ -63,7 +64,7 @@
 └──────────────────────────────────────────────────────────────┘
 ```
 
-Mobile (360-767px): everything single column; hero ~560px; stat strip stacks to 3 compact columns (or 1 column if too tight); Community text above image; project cards in a horizontal scroll-snap row or stacked; logo card full width above its text; header collapses to a menu button with the Join SCG button kept visible.
+Mobile (360-767px): everything single column; hero ~560px; stat strip stays 3 compact columns (verified to fit at 320-360px; labels may wrap to two lines); hero subhead wraps with balanced line breaks; Community text above image; project cards in a horizontal scroll-snap row or stacked; logo card full width above its text; header collapses to a menu button with the Join SCG button kept visible.
 
 ## Block-by-block
 
@@ -72,11 +73,13 @@ Logo (`assets/scg-logo.png`) on a small white rounded plate so the red/gold logo
 
 ### 1. Hero
 - Background: `assets/placeholder-hero-quad.jpg` (UMD Washington Quad aerial already used on the current site; placeholder until better photos exist) with an `--ink` overlay around 55-65% so white text passes contrast. Add a subtle bottom fade to white into the stat strip.
-- Content, vertically centered: H1 **"Welcome to the Snider Consulting Group"**; subhead (draft): **"UMD's student-run consulting group, solving real problems for campus organizations and nonprofits since 2020."**; small line **"In partnership with Ernst & Young"**; two buttons: primary **See our projects** (gold fill on dark), secondary **Join SCG** (outline).
+- Content, vertically centered: H1 **"Welcome to the Snider Consulting Group"**; subhead (draft): **"UMD's student-run consulting group, solving real problems for campus organizations and nonprofits since 2020."**; small line **"In partnership with Ernst & Young"**. **No buttons in the hero**: the header already carries Projects and the Join SCG button. Generous, even space above and below the three items.
+- Subhead: max-width about 1200px, font `clamp(1rem, 1.6vw, 1.5rem)`, `white-space: nowrap` from 1100px up so it is exactly one line on desktop; below 1100px it wraps naturally (2 lines on tablet) with `text-wrap: balance`. No horizontal scroll at any width.
+- The "Stand-in photo" badge renders in dev builds only, never in production.
 - Optional slot above the H1 (like a small emblem): leave out unless a distinct mark exists. Do not repeat the logo.
 
 ### 2. Stat strip
-Three verified stats from `data/site.json -> stats` where `verified: true`: Founded 2020 · Free to join · EY partnership 4+ years. Big number in `--scg-red` (Montserrat 800, ~40px), small uppercase tracked label beneath. Hairline vertical dividers on desktop. If officers later verify "client projects" and "alumni" counts, those can replace or extend the strip (max 4 items).
+Exactly the verified stats in `data/site.json -> stats` (max 4), currently **50+ Alumni · 40+ Client projects · 15+ Placements each year** (figures supplied by SCG leadership). No extra wording or claims beside them. Big number in `--scg-red` (Montserrat 800, ~40-48px), small uppercase letter-spaced label in `--ink-2` beneath. Hairline vertical dividers. Founded 2020, Free to join and the EY partnership length moved to `site.json -> facts` for `/about/` and `/join/`; the EY partnership itself is stated in the hero line.
 
 ### 3. Community
 - H2 **"Our Community"** with the accent word styled in `--scg-red` (the way the reference accents one letter/word; use your own treatment).
@@ -97,7 +100,7 @@ Three verified stats from `data/site.json -> stats` where `verified: true`: Foun
 - Testimonials: a centered quote carousel with dots, only if `data/testimonials.json` has entries; otherwise do not render (dev shows a small placeholder). Never invent quotes.
 
 ### 5. Where SCG Takes You
-- Left: a bordered card (12-16px radius, soft shadow) titled "Our members work at…" with a 4-column name/logo grid. Use these employers already published on the current SCG site as text chips until logos are supplied: EY, Deloitte, Capital One, KPMG, Bain & Company, Boston Consulting Group, Booz Allen Hamilton, Johnson & Johnson. (Source: the old homepage's "Our Members Work At…" logo row.) Under a hairline, an optional 3-stat row, rendered only if three verified stats exist.
+- Left: a bordered card (12-16px radius, soft shadow) titled "Our members work at…" with a 4-column name/logo grid. Use these employers already published on the current SCG site as text chips until logos are supplied: EY, Deloitte, Capital One, KPMG, Bain & Company, Boston Consulting Group, Booz Allen Hamilton, Johnson & Johnson. (Source: the old homepage's "Our Members Work At…" logo row.) No stat row in this card: the same figures already appear in the stat strip, so they are not repeated on the page.
 - Right: H2 **"Where SCG Takes You"** (accent word in red), paragraph from existing material: members build skills through an intensive 10-week professional development program originally designed by SCG members and alumni at Bain and Capital One, and connect with alumni at EY, Deloitte, Capital One, Bain and other firms through site visits, workshops, mentorship and social events. Button **Explore Alumni** to `/alumni/`.
 
 ### 6. Footer
