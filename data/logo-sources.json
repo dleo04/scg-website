@@ -8,6 +8,10 @@
     {"name": "Bain & Company", "file": "blob-8c34c15.png"},
     {"name": "Boston Consulting Group", "file": "bcg-logo.png"},
     {"name": "Booz Allen Hamilton", "file": "booz%20allen.png"},
-    {"name": "Johnson & Johnson", "file": "blob-e607ca3.png"}
+    {"name": "Johnson & Johnson", "file": "blob-e607ca3.png"},
+    {"name": "JPMorgan Chase", "file": "JP-Morgan-Chase-Logo.png"},
+    {"name": "Strategy&", "file": "Logo_PWC%20Strategy.png"},
+    {"name": "Morgan Stanley", "file": "Morgan%20Stanley.jpg"},
+    {"name": "Accenture", "file": "Accenture-logo.png"}
   ]
 }

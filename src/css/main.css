@@ -577,17 +577,18 @@ main:focus { outline: none; }
 .testimonials__dot[aria-current="true"]::before { background: var(--scg-gold); transform: scale(1.3); }
 
 /* 5. Where SCG takes you */
-.employer-card { background: var(--paper-2); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: clamp(22px, 4vw, 40px); }
+/* One white card (outline, radius, shadow); tiles keep their size and spacing but
+   have no background, border or shadow of their own, so only the logos show. */
+.employer-card { background: #FFFFFF; border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: clamp(22px, 4vw, 40px); }
 .employer-card__title { text-align: center; font-size: .8125rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--scg-red); margin-bottom: 24px; }
 .employer-card__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 @media (min-width: 520px) { .employer-card__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-.employer-card__item {
-  display: grid; place-items: center; height: 76px; padding: 10px 8px;
-  background: var(--paper); border: 1px solid var(--line); border-radius: 10px;
-}
-/* Logos: contained, never stretched or recolored; sized for even visual weight (logoBox). */
-.employer-card__item img { width: var(--logo-w); max-width: 100%; height: auto; max-height: 40px; object-fit: contain; opacity: .8; transition: opacity .2s; }
-.employer-card__item:hover img { opacity: 1; }
+.employer-card__item { display: grid; place-items: center; height: 76px; padding: 10px 8px; min-width: 0; }
+/* Same fixed box for every logo: contained, never stretched or recolored, max 40px tall
+   and 80% of the tile wide; logoBox gives each about the same area. Not interactive,
+   so no hover effect. */
+.employer-card__item picture { display: contents; }
+.employer-card__item img { width: var(--logo-w); max-width: 80%; height: auto; max-height: 40px; object-fit: contain; }
 .employer-card__item--text { text-align: center; font-family: var(--font-head); font-weight: 700; font-size: .875rem; line-height: 1.25; color: var(--ink); }
 
 /* Project detail (dialog + standalone page) */

@@ -55,7 +55,9 @@
 │ ┌─────────────────────────┐   H2 "Where SCG Takes You"       │
 │ │ card: "Our members work │   paragraph                      │
 │ │ at…" name/logo grid     │   [ Explore Alumni ]             │
-│ │ logos, 4 cols x 2 rows  │                                  │
+│ │ logos, 4 cols x 3 rows  │                                  │
+│ │ (one white card, outline│                                  │
+│ │  + shadow; plain tiles) │                                  │
 │ │ (no stat row: figures   │                                  │
 │ │  are in the stat strip) │                                  │
 │ └─────────────────────────┘                                  │
@@ -105,7 +107,7 @@ Exactly the verified stats in `data/site.json -> stats` (max 4), currently **50+
 - Testimonials: a centered quote carousel with dots, only if `data/testimonials.json` has entries; otherwise do not render (dev shows a small placeholder). Never invent quotes.
 
 ### 5. Where SCG Takes You
-- Left: a bordered card (12-16px radius, soft shadow) titled "Our members work at…" with a 4-column by 2-row logo grid (2 columns below 520px): EY, Deloitte, Capital One, KPMG, Bain & Company, Boston Consulting Group, Booz Allen Hamilton, Johnson & Johnson (source: the old homepage's "Our Members Work At…" row). Logos come from `data/logo-sources.json` via `npm run logos` into `assets/logos/` and are shown contained in fixed tiles (max 40px tall, sized for even visual weight), slightly reduced opacity with full opacity on hover, alt text = company name, never recolored or distorted. A logo that fails to download falls back to a text chip. The footer carries the trademark footnote. No stat row in this card: the same figures already appear in the stat strip, so they are not repeated on the page.
+- Left: a single pure-white card (#FFFFFF, 1px `--line` outline, 16px radius, soft shadow) titled "Our members work at…" (red heading) with a 4-column by 3-row logo grid (2 columns below 520px). The tiles have no background, border or shadow of their own, so only the logos show. Row 1: EY, Deloitte, Capital One, KPMG. Row 2: Bain & Company, Boston Consulting Group, Booz Allen Hamilton, Johnson & Johnson. Row 3: JPMorgan Chase, Strategy&, Morgan Stanley, Accenture (source: the old homepage's "Our Members Work At…" logos). Logos come from `data/logo-sources.json` via `npm run logos` into `assets/logos/` with blank margins (transparent or near-white) auto-trimmed, and are shown contained in identical fixed tiles (max 40px tall, max 80% of the tile wide, sized for even visual weight), at full color with no hover effect (tiles are not interactive), alt text = company name, never recolored or distorted. A logo that fails to download falls back to a text chip. The footer carries the trademark footnote. No stat row in this card: the same figures already appear in the stat strip, so they are not repeated on the page.
 - Right: H2 **"Where SCG Takes You"** (accent word in red), paragraph from existing material: members build skills through an intensive 10-week professional development program originally designed by SCG members and alumni at Bain and Capital One, and connect with alumni at EY, Deloitte, Capital One, Bain and other firms through site visits, workshops, mentorship and social events. Button **Explore Alumni** to `/alumni/`.
 
 ### 6. Footer

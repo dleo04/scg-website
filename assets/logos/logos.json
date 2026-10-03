@@ -5,10 +5,12 @@
     "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/blob-d507258.png",
     "ok": true,
     "file": "assets/logos/ey.png",
-    "width": 2560,
+    "original": "assets/logos/originals/ey.png",
+    "width": 2558,
     "height": 1276,
-    "type": "image/png",
-    "bytes": 239243
+    "originalSize": "2560x1276",
+    "margin": "transparent",
+    "type": "image/png"
   },
   {
     "name": "Deloitte",
@@ -16,10 +18,12 @@
     "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/blob-45d42ed.png",
     "ok": true,
     "file": "assets/logos/deloitte.png",
-    "width": 800,
-    "height": 214,
-    "type": "image/png",
-    "bytes": 39748
+    "original": "assets/logos/originals/deloitte.png",
+    "width": 711,
+    "height": 135,
+    "originalSize": "800x214",
+    "margin": "transparent",
+    "type": "image/png"
   },
   {
     "name": "Capital One",
@@ -27,10 +31,12 @@
     "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/2560px-Capital_One_logo.svg.png",
     "ok": true,
     "file": "assets/logos/capital-one.png",
+    "original": "assets/logos/originals/capital-one.png",
     "width": 2560,
-    "height": 922,
-    "type": "image/png",
-    "bytes": 289472
+    "height": 920,
+    "originalSize": "2560x922",
+    "margin": "transparent",
+    "type": "image/png"
   },
   {
     "name": "KPMG",
@@ -38,10 +44,12 @@
     "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/KPMG_logo.svg.png",
     "ok": true,
     "file": "assets/logos/kpmg.png",
-    "width": 1280,
-    "height": 530,
-    "type": "image/png",
-    "bytes": 97422
+    "original": "assets/logos/originals/kpmg.png",
+    "width": 1248,
+    "height": 497,
+    "originalSize": "1280x530",
+    "margin": "transparent",
+    "type": "image/png"
   },
   {
     "name": "Bain & Company",
@@ -49,10 +57,12 @@
     "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/blob-8c34c15.png",
     "ok": true,
     "file": "assets/logos/bain-and-company.png",
-    "width": 1280,
-    "height": 142,
-    "type": "image/png",
-    "bytes": 123343
+    "original": "assets/logos/originals/bain-and-company.png",
+    "width": 1142,
+    "height": 126,
+    "originalSize": "1280x142",
+    "margin": "transparent",
+    "type": "image/png"
   },
   {
     "name": "Boston Consulting Group",
@@ -60,21 +70,25 @@
     "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/bcg-logo.png",
     "ok": true,
     "file": "assets/logos/boston-consulting-group.png",
-    "width": 810,
-    "height": 177,
-    "type": "image/png",
-    "bytes": 11515
+    "original": "assets/logos/originals/boston-consulting-group.png",
+    "width": 798,
+    "height": 168,
+    "originalSize": "810x177",
+    "margin": "transparent",
+    "type": "image/png"
   },
   {
     "name": "Booz Allen Hamilton",
     "slug": "booz-allen-hamilton",
     "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/booz%20allen.png",
     "ok": true,
-    "file": "assets/logos/booz-allen-hamilton.jpg",
+    "file": "assets/logos/booz-allen-hamilton.png",
+    "original": "assets/logos/originals/booz-allen-hamilton.jpg",
     "width": 400,
     "height": 400,
-    "type": "image/jpeg",
-    "bytes": 16220
+    "originalSize": "400x400",
+    "margin": "colored (not trimmed)",
+    "type": "image/jpeg"
   },
   {
     "name": "Johnson & Johnson",
@@ -82,9 +96,63 @@
     "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/blob-e607ca3.png",
     "ok": true,
     "file": "assets/logos/johnson-and-johnson.png",
-    "width": 1280,
-    "height": 243,
-    "type": "image/png",
-    "bytes": 180954
+    "original": "assets/logos/originals/johnson-and-johnson.png",
+    "width": 1097,
+    "height": 200,
+    "originalSize": "1280x243",
+    "margin": "transparent",
+    "type": "image/png"
+  },
+  {
+    "name": "JPMorgan Chase",
+    "slug": "jpmorgan-chase",
+    "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/JP-Morgan-Chase-Logo.png",
+    "ok": true,
+    "file": "assets/logos/jpmorgan-chase.png",
+    "original": "assets/logos/originals/jpmorgan-chase.jpg",
+    "width": 401,
+    "height": 308,
+    "originalSize": "420x420",
+    "margin": "white",
+    "type": "image/jpeg"
+  },
+  {
+    "name": "Strategy&",
+    "slug": "strategyand",
+    "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/Logo_PWC%20Strategy.png",
+    "ok": true,
+    "file": "assets/logos/strategyand.png",
+    "original": "assets/logos/originals/strategyand.jpg",
+    "width": 269,
+    "height": 151,
+    "originalSize": "307x164",
+    "margin": "white",
+    "type": "image/jpeg"
+  },
+  {
+    "name": "Morgan Stanley",
+    "slug": "morgan-stanley",
+    "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/Morgan%20Stanley.jpg",
+    "ok": true,
+    "file": "assets/logos/morgan-stanley.png",
+    "original": "assets/logos/originals/morgan-stanley.jpg",
+    "width": 400,
+    "height": 400,
+    "originalSize": "400x400",
+    "margin": "colored (not trimmed)",
+    "type": "image/jpeg"
+  },
+  {
+    "name": "Accenture",
+    "slug": "accenture",
+    "source": "https://img1.wsimg.com/isteam/ip/9330c9bd-caf8-48c8-a083-99d56bbc7e45/Accenture-logo.png",
+    "ok": true,
+    "file": "assets/logos/accenture.png",
+    "original": "assets/logos/originals/accenture.png",
+    "width": 2516,
+    "height": 662,
+    "originalSize": "2560x1440",
+    "margin": "transparent",
+    "type": "image/png"
   }
 ]

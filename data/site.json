@@ -26,7 +26,7 @@
   },
   "member_employers": {
     "_readme": "Shown on the home page under 'Our members work at…'. Source: the old homepage's 'Our Members Work At…' logo row. Text only until logo files are supplied; add 'logo' paths later if wanted.",
-    "names": ["EY", "Deloitte", "Capital One", "KPMG", "Bain & Company", "Boston Consulting Group", "Booz Allen Hamilton", "Johnson & Johnson"]
+    "names": ["EY", "Deloitte", "Capital One", "KPMG", "Bain & Company", "Boston Consulting Group", "Booz Allen Hamilton", "Johnson & Johnson", "JPMorgan Chase", "Strategy&", "Morgan Stanley", "Accenture"]
   },
   "forms": {
     "client_request_endpoint": null

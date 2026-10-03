@@ -80,3 +80,22 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 - **"Where SCG Takes You" stays one column until 1024px.** That gives the 4×2 logo grid room at tablet widths. The grid uses 2 columns below 520px so the logos stay legible.
 - **Trademark footnote** added to the site footer, worded as requested.
 - **Asset copying narrowed** so only the published files reach `_site/`; the logo originals and `logos.json`, which holds the old host's URLs, stay in the repo.
+
+## Stage 1e (logo card: third row, single white card)
+
+- **Four logos added** (JPMorgan Chase, Strategy&, Morgan Stanley, Accenture) to `data/logo-sources.json` and `site.json → member_employers`, as row 3 in that order. All 12 downloaded. Each new file was opened and checked:
+  - **JPMorgan Chase:** the Chase octagon with a "J.P.Morgan" wordmark.
+  - **Strategy&:** the "pwc strategy&" mark.
+  - **Morgan Stanley:** the official navy square with white lettering, not a logo on white (the file's corner pixel is navy).
+  - **Accenture:** the Accenture wordmark.
+- **Auto-trim in `fetch-logos.mjs`.**
+  - The untouched downloads go to `assets/logos/originals/`; trimmed PNGs go to `assets/logos/<slug>.png`.
+  - A margin is trimmed only if the corner pixel is transparent (tolerance 1) or near-white (tolerance 64). The near-white tolerance is high enough to also remove a faint gray edge line in the Strategy& file.
+  - Logos that sit on a colored tile (Booz Allen, Morgan Stanley) are left untrimmed, so the tile itself is never cut.
+  - Every trimmed logo was compared with its original; no part of any mark was removed.
+- **Even grid.**
+  - Every tile is the same box (76px tall) at every width: 124–125px wide at 1280–1440, 155 at 768, 135 at 360.
+  - Logos are contained (`object-fit: contain`) and capped at 40px tall and 80% of the tile wide; `logoBox` gives each about the same area.
+  - 80% instead of the suggested 70%: at 70% the very wide Bain and Johnson & Johnson wordmarks would drop to about 9px tall. Even at 80%, Bain is about 10px tall at desktop, which is inherent to its 9:1 shape.
+- **One white card.** The card background is #FFFFFF (it was `--paper-2`), keeping its 1px `--line` outline, 16px radius and soft shadow. Tiles lost their background and border but keep the same size and gaps, so the layout is unchanged. The heading stays red (now 7.24:1 on white, up from 6.6:1 on `--paper-2`).
+- **No hover effect.** The tiles are not links, so the earlier reduced-opacity-until-hover treatment was removed and logos show at full color. The white JPG backgrounds of the JPMorgan and Strategy& files blend into the white card.
