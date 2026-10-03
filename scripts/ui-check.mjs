@@ -162,10 +162,10 @@ async function keyboard(width) {
     await new Promise((r) => setTimeout(r, 400));
     const after = await logoState();
     if (!/rgba\(0, 0, 0, 0\)|transparent/.test(before.bg) || !/rgb\(255, 255, 255\)/.test(after.bg)) fail(`@${width} header not transparent→solid (${before.bg} → ${after.bg})`);
-    if (await page.$("[data-hero-logo]")) {
-      if (before.headerLogoVisible || before.ariaHidden !== "true") fail(`@${width} header logo exposed while hero logo is visible: ${JSON.stringify(before)}`);
-      if (!after.headerLogoVisible || after.ariaHidden) fail(`@${width} header logo not shown after scrolling: ${JSON.stringify(after)}`);
-    }
+    // The header logo is visible (and exposed) at all times, and there is exactly one logo image on the page header/hero.
+    if (!before.headerLogoVisible || before.ariaHidden || !after.headerLogoVisible || after.ariaHidden) fail(`@${width} header logo not always visible: ${JSON.stringify({ before, after })}`);
+    const logoCount = await page.$$eval('main img[src*="scg-logo"], .site-header img[src*="scg-logo"]', (els) => els.length);
+    if (logoCount !== 1) fail(`@${width} expected one SCG logo in header + main, found ${logoCount}`);
     await page.evaluate(() => window.scrollTo(0, 0));
   }
 
