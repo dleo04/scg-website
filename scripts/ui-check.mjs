@@ -162,10 +162,24 @@ async function keyboard(width) {
     await new Promise((r) => setTimeout(r, 400));
     const after = await logoState();
     if (!/rgba\(0, 0, 0, 0\)|transparent/.test(before.bg) || !/rgb\(255, 255, 255\)/.test(after.bg)) fail(`@${width} header not transparent→solid (${before.bg} → ${after.bg})`);
-    // The header logo is visible (and exposed) at all times, and there is exactly one logo image on the page header/hero.
-    if (!before.headerLogoVisible || before.ariaHidden || !after.headerLogoVisible || after.ariaHidden) fail(`@${width} header logo not always visible: ${JSON.stringify({ before, after })}`);
-    const logoCount = await page.$$eval('main img[src*="scg-logo"], .site-header img[src*="scg-logo"]', (els) => els.length);
-    if (logoCount !== 1) fail(`@${width} expected one SCG logo in header + main, found ${logoCount}`);
+    if (await page.$("[data-logo-deferred]")) {
+      // Reversed hero logo present: header logo hidden (not focusable, aria-hidden) at the top, shown after scrolling.
+      if (before.headerLogoVisible || before.ariaHidden !== "true") fail(`@${width} header logo should be hidden while the hero logo is visible: ${JSON.stringify(before)}`);
+      if (!after.headerLogoVisible || after.ariaHidden) fail(`@${width} header logo should fade in after the hero logo: ${JSON.stringify(after)}`);
+    } else {
+      // No hero logo: the header logo is visible and exposed at all times.
+      if (!before.headerLogoVisible || before.ariaHidden || !after.headerLogoVisible || after.ariaHidden) fail(`@${width} header logo not always visible: ${JSON.stringify({ before, after })}`);
+    }
+    // Never two logos visible at once.
+    for (const y of [0, 600]) {
+      await page.evaluate((yy) => window.scrollTo(0, yy), y);
+      await new Promise((r) => setTimeout(r, 400));
+      const visible = await page.$$eval('img[src*="scg-logo"]', (els) => els.filter((el) => {
+        const r = el.getBoundingClientRect(); const cs = getComputedStyle(el.closest("a, div, header") || el);
+        return r.bottom > 0 && r.top < innerHeight && getComputedStyle(el).visibility === "visible" && parseFloat(getComputedStyle(el.closest(".site-logo") || el).opacity) > 0.5 && !el.closest("footer");
+      }).length);
+      if (visible > 1) fail(`@${width} ${visible} SCG logos visible at scroll ${y}`);
+    }
     await page.evaluate(() => window.scrollTo(0, 0));
   }
 

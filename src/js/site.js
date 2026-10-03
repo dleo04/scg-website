@@ -11,8 +11,25 @@
 
   // ---- Header: transparent over the hero, solid once the page scrolls ----
   if (header && document.body.classList.contains("has-hero")) {
-    const update = () => header.classList.toggle("is-solid", window.scrollY > 8);
+    // When the hero shows the reversed logo, the header logo stays hidden (and out of
+    // the tab order / accessibility tree) until the hero logo has scrolled under the header.
+    const heroLogo = header.hasAttribute("data-logo-deferred") ? document.querySelector("[data-hero-logo]") : null;
+    const headerLogo = header.querySelector(".site-logo");
+    const update = () => {
+      header.classList.toggle("is-solid", window.scrollY > 8);
+      if (!heroLogo || !headerLogo) return;
+      const show = heroLogo.getBoundingClientRect().bottom <= header.offsetHeight;
+      header.classList.toggle("logo-in", show);
+      if (show) {
+        headerLogo.removeAttribute("aria-hidden");
+        headerLogo.removeAttribute("tabindex");
+      } else {
+        headerLogo.setAttribute("aria-hidden", "true");
+        headerLogo.setAttribute("tabindex", "-1");
+      }
+    };
     window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
     update();
   }
 

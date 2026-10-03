@@ -57,17 +57,47 @@ const washRatio = ratio(C["scg-red"], wash);
 rows.push(`${washRatio.toFixed(2).padStart(6)}:1  scg-red on 86% white wash over black (stat strip, worst case)`);
 if (washRatio < 4.5) failures.push(`stat numbers on wash: ${washRatio.toFixed(2)}:1`);
 
-// Hero: white text over the photo + ink overlay, worst pixel of the real image.
-const overlay = parseFloat(token("hero-overlay"));
+// Hero: white text over the photo + flat --hero-tint, worst (brightest) pixel of the real image.
+const tintMatch = token("hero-tint").match(/rgba?\(\s*(\d+)[\s,]+(\d+)[\s,]+(\d+)[\s,/]+([\d.]+)\s*\)/);
+if (!tintMatch) throw new Error("--hero-tint must be an rgba() color");
+const tint = tintMatch.slice(1, 4).map(Number);
+const tintA = parseFloat(tintMatch[4]);
 const heroSrc = readJson("site.json").images?.hero;
+let brightestBg = null;
 if (heroSrc && fs.existsSync(path.join(ROOT, heroSrc))) {
   const { data, info } = await sharp(path.join(ROOT, heroSrc)).resize(600).removeAlpha().raw().toBuffer({ resolveWithObject: true });
   let worst = Infinity;
   for (let i = 0; i < data.length; i += info.channels) {
-    worst = Math.min(worst, ratio(C["on-ink"], mix(C.ink, overlay, [data[i], data[i + 1], data[i + 2]])));
+    const bg = mix(tint, tintA, [data[i], data[i + 1], data[i + 2]]);
+    const r = ratio(C["on-ink"], bg);
+    if (r < worst) { worst = r; brightestBg = bg; }
   }
-  rows.push(`${worst.toFixed(2).padStart(6)}:1  white on hero photo + ${overlay} ink overlay (brightest pixel of ${heroSrc})`);
-  if (worst < 4.5) failures.push(`hero overlay ${overlay}: white text only ${worst.toFixed(2)}:1 on the brightest pixel. Raise --hero-overlay.`);
+  rows.push(`${worst.toFixed(2).padStart(6)}:1  white text on hero photo + tint ${token("hero-tint")} (brightest pixel of ${heroSrc})`);
+  if (worst < 4.5) failures.push(`hero tint: white text only ${worst.toFixed(2)}:1 on the brightest pixel. Darken --hero-tint.`);
+}
+
+// Reversed logo (if supplied): its white and gold parts against that same worst-case background.
+const reversed = path.join(ROOT, "assets/scg-logo-reversed.png");
+if (brightestBg && fs.existsSync(reversed)) {
+  const { data, info } = await sharp(reversed).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const groups = { white: [], gold: [], other: [] };
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i + 3] < 200) continue; // ignore anti-aliased edges and transparency
+    const px = [data[i], data[i + 1], data[i + 2]];
+// White = near pure white; gold = within 45 of brand gold #F8A81E. Blended edge pixels are "other" (reported, not judged).
+    const near = (c, t) => Math.hypot(c[0] - t[0], c[1] - t[1], c[2] - t[2]) < 45;
+    const group = px.every((c) => c > 225) ? "white" : near(px, [248, 168, 30]) ? "gold" : "other";
+    groups[group].push(px);
+  }
+  for (const [name, pxs] of Object.entries(groups)) {
+    if (!pxs.length) continue;
+    const worst = Math.min(...pxs.filter((_, i) => i % 7 === 0).map((px) => ratio(px, brightestBg)));
+    if (name === "other") { rows.push(`     –    reversed logo: ${pxs.length} blended/edge px not judged`); continue; }
+    rows.push(`${worst.toFixed(2).padStart(6)}:1  reversed logo ${name} parts (${pxs.length} px) on brightest tinted pixel`);
+    if (worst < 3) failures.push(`reversed logo ${name} parts: ${worst.toFixed(2)}:1 < 3:1`);
+  }
+} else if (!fs.existsSync(reversed)) {
+  rows.push("     –    reversed logo not supplied (assets/scg-logo-reversed.png); skipped");
 }
 
 console.log(rows.join("\n"));

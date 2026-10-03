@@ -28,6 +28,12 @@ hideBanner: true
   {# 1. Hero -------------------------------------------------------------- #}
   <section class="hero" aria-labelledby="hero-title">
     <div class="container hero__inner">
+      {#- Reversed logo: officer-approved variant for dark/photo backgrounds only. -#}
+      {%- if brand.reversedLogo %}
+      <img class="hero__logo" data-hero-logo src="{{ brand.reversedLogo.src }}" width="{{ brand.reversedLogo.width }}" height="{{ brand.reversedLogo.height }}" alt="Snider Consulting Group" fetchpriority="high" decoding="async">
+      {%- elif not env.hidePlaceholders %}
+      <div class="hero__logo hero__logo--missing" data-placeholder="true" data-todo="[TBD: add assets/scg-logo-reversed.png (officer-approved reversed logo) for the hero]">LOGO: assets/scg-logo-reversed.png not supplied yet</div>
+      {%- endif %}
       <h1 class="hero__title" id="hero-title">Welcome to the <span class="hero__name">Snider Consulting Group</span></h1>
       <p class="hero__lede">UMD's student-run consulting group, solving real problems for campus organizations and nonprofits since {{ site.established }}.</p>
       <p class="hero__partner">In partnership with Ernst &amp; Young</p>

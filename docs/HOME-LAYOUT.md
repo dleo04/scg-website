@@ -13,8 +13,9 @@
 │ HEADER (overlays hero)  [SCG logo plate]  Projects Join Team │  ~70px
 │   Alumni  Work With Us           [IG] [IN] [ Join SCG ]      │
 ├──────────────────────────────────────────────────────────────┤
-│ 1. HERO  full-bleed photo + dark overlay           ~660px    │
-│                                                              │
+│ 1. HERO  full-bleed photo + flat maroon-black tint  ~660px   │
+│              [ reversed SCG logo, no plate ]                 │
+│              (440px @1440 · 400 @1280 · 340 @768 · 260 @360) │
 │              WELCOME TO THE                                  │
 │          SNIDER CONSULTING GROUP     (H1, centered, white)   │
 │   subhead on ONE line from 1100px (centered, white)          │
@@ -71,14 +72,15 @@ Mobile (360-767px): everything single column; hero ~560px; stat strip stays 3 co
 ## Block-by-block
 
 ### Header
-Logo (`assets/scg-logo.png`) on a small white rounded plate so the red/gold logo reads over the dark hero. Nav: Projects, Join SCG (page), Team, Alumni, Work With Us (the rest of the site map lives in the footer). Right side: Instagram and LinkedIn icon buttons and a **Join SCG** button (state driven by `site.json -> recruiting`). The logo plate is always visible (it is the page's single logo). Transparent over the hero; once the page scrolls (8px) it becomes solid (`--paper`) with a subtle shadow. Keyboard-accessible mobile menu.
+Logo (`assets/scg-logo.png`) on a small white rounded plate so the red/gold logo reads over the dark hero. Nav: Projects, Join SCG (page), Team, Alumni, Work With Us (the rest of the site map lives in the footer). Right side: Instagram and LinkedIn icon buttons and a **Join SCG** button (state driven by `site.json -> recruiting`). Transparent over the hero; once the page scrolls (8px) it becomes solid (`--paper`) with a subtle shadow. On the home page, while the reversed hero logo is on screen the header logo plate is hidden (`visibility: hidden`, `aria-hidden="true"`, `tabindex="-1"`) and fades in (0.3s, instant under reduced motion) once the hero logo has scrolled under the header, so two logos are never visible together. Without JavaScript, or when the reversed logo file is absent, the header logo is always shown. On every other page it is always shown. Keyboard-accessible mobile menu.
 
 ### 1. Hero
-- Background: `assets/placeholder-hero-quad.jpg` (UMD Washington Quad aerial already used on the current site; placeholder until better photos exist) with an `--ink` overlay around 55-65% so white text passes contrast. Add a subtle bottom fade to white into the stat strip.
+- Background: `assets/placeholder-hero-quad.jpg` (UMD Washington Quad aerial already used on the current site; placeholder until better photos exist) with a flat maroon-black tint `--hero-tint: rgba(38, 8, 10, 0.72)` (no gradient, no blur on the tint). The existing bottom fade to white into the stat strip stays.
+- Logo: the officer-approved reversed variant `assets/scg-logo-reversed.png` (dark/photo backgrounds only), centered above the H1 directly on the photo: no plate or box, only `drop-shadow(0 2px 12px rgba(0,0,0,.35))`. Width 260px @360, 340 @768, 400 @1280, 440 @1440 (piecewise `clamp()`, `max-width: 80vw`), width/height attributes, eager with `fetchpriority="high"`, alt "Snider Consulting Group". Gap to the H1: 20px mobile, 28px desktop. If the file is missing, a labeled placeholder shows in dev and the header logo simply stays visible.
 - Content, vertically centered: H1 **"Welcome to the Snider Consulting Group"**; subhead (draft): **"UMD's student-run consulting group, solving real problems for campus organizations and nonprofits since 2020."**; small line **"In partnership with Ernst & Young"**. **No buttons in the hero**: the header already carries Projects and the Join SCG button. Generous, even space above and below the three items.
 - Subhead: max-width about 1200px, font `clamp(1rem, 1.6vw, 1.5rem)`, `white-space: nowrap` from 1100px up so it is exactly one line on desktop; below 1100px it wraps naturally (2 lines on tablet) with `text-wrap: balance`. No horizontal scroll at any width.
 - The "Stand-in photo" badge renders in dev builds only, never in production.
-- No logo in the hero. The only SCG logo is the small white plate in the header, which is visible at all times, including over the hero.
+- Contrast (measured with `npm run hero-contrast` on the actual pixels behind each element, 360-1440px): H1, subhead and EY line ≥ 4.5:1 (currently 7.8-8.1:1); logo white and gold parts ≥ 3:1.
 
 ### 2. Stat strip
 Exactly the verified stats in `data/site.json -> stats` (max 4), currently **50+ Alumni · 40+ Client projects · 15+ Placements each year** (figures supplied by SCG leadership). No extra wording or claims beside them. Big number in `--scg-red` (Montserrat 800, ~40-48px), small uppercase letter-spaced label in `--ink-2` beneath. Hairline vertical dividers. Founded 2020, Free to join and the EY partnership length moved to `site.json -> facts` for `/about/` and `/join/`; the EY partnership itself is stated in the hero line.

@@ -15,7 +15,8 @@
     "ui-check": "node scripts/ui-check.mjs",
     "contrast": "node scripts/check-contrast.mjs",
     "logos": "node scripts/fetch-logos.mjs",
-    "clean": "node -e \"require('fs').rmSync('_site',{recursive:true,force:true})\""
+    "clean": "node -e \"require('fs').rmSync('_site',{recursive:true,force:true})\"",
+    "hero-contrast": "node scripts/hero-contrast.mjs"
   },
   "type": "module",
   "devDependencies": {

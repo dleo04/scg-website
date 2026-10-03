@@ -106,3 +106,21 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 - **The header logo plate is visible at all times again,** including over the hero. The hide-until-scrolled logic and the `aria-hidden` toggling were removed, and the header turns solid after 8px of scroll as before. The hero/header CSS, `site.js` and the header markup now match the stage 1c version exactly; this was checked with `git diff`.
 - **The stage 1d "one logo at a time" entry no longer applies.** The browser check now asserts the reverse: the header logo is visible and exposed to screen readers both before and after scrolling, and the header plus `<main>` contain exactly one SCG logo image.
 - Everything else from stages 1c–1e is unchanged.
+
+## Stage 1g (hero rework: maroon tint, reversed logo, header hand-off)
+
+- **Reversed logo not in the repo yet.** `assets/scg-logo-reversed.png` was not present when this stage was built. It was **not** created by the build team, because recoloring the logo is what the hard rule forbids, and the approval covers the officers' file. Everything is wired to pick it up with no code changes:
+  - The loader reads its size from the PNG header.
+  - The hero renders it at the specified widths.
+  - The header hand-off turns on.
+  - `npm run contrast` and `npm run hero-contrast` measure it.
+  - Until it exists, dev builds show a labeled placeholder (listed in `TODO-CONTENT.md`) and the header logo stays visible, so the page always has exactly one logo.
+- **The mechanics were verified with a temporary test block.** A plain white-and-gold rectangle labeled "TEST BLOCK / NOT A LOGO" was saved under the logo's filename, then deleted in the same run; it was never committed or deployed. Results:
+  - Widths were 260/340/400/440px at 360/768/1280/1440 (height from the 668×184 ratio), with gaps to the H1 of 20px (mobile) and 28px (desktop).
+  - At the top of the page the header logo was hidden, `aria-hidden="true"` and `tabindex="-1"` (Tab skipped it); after scrolling it was visible with both attributes removed.
+  - With JS off it was always visible. Reduced motion made the fade effectively instant (0.01ms).
+  - On a 360×740 phone the hero content ends at 471px, with no horizontal scroll.
+- **Header hand-off trigger.** The header logo fades in when the bottom of the hero logo passes under the header (not at the bottom of the whole hero). This way two logos are never visible together and the solid header is never empty for long; the header still turns solid at 8px of scroll as before. The deferred state is rendered server-side (`data-logo-deferred`, hidden only under `.js`), so there is no flash of the header logo at load and no-JS users always see it.
+- **Tint.** `--hero-tint: rgba(38, 8, 10, 0.72)` replaces the 62% ink overlay. White text against the photo's brightest pixel: 7.76:1 worst case. Measured behind each element in the browser: H1 7.80–8.12:1, subhead 7.80:1, EY line 7.80–8.13:1 at all four widths. The bottom fade into the stat strip is a separate element and was kept, so the stat strip looks unchanged (same CSS, same tile heights).
+- **Logo contrast tooling.** Logo colors are grouped as near-white (all channels > 225) or near brand gold (within 45 of #F8A81E). Anti-aliased blend pixels are reported but not judged; an earlier, looser grouping wrongly counted blends as gold. Expected values for the real file: brand gold against this tint's worst-case pixel is about 3.9:1 (the test block measured 3.08:1 in the token check and 4.33–4.38:1 behind the logo in the browser) and white is above 7.7:1. Both need to be re-run once the officers' file is added.
+- **CLAUDE.md** now allows the reversed variant on dark/photo backgrounds only. The original `scg-logo.png` is unchanged and still used in the header and footer.

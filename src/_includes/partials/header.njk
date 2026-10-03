@@ -10,7 +10,10 @@
 ] -%}
 {#- "Join SCG" goes straight to the application while it is open, otherwise to /join/. -#}
 {%- set joinHref = site.recruiting.application_url if (site.recruiting.open and site.recruiting.application_url) else "/join/" -%}
-<header class="site-header" data-header>
+{#- On a hero page that shows the reversed logo, the header logo waits until the hero
+    logo has scrolled away (site.js), so two logos are never on screen together. -#}
+{%- set deferLogo = brand.reversedLogo and bodyClass and ("has-hero" in bodyClass) -%}
+<header class="site-header" data-header{% if deferLogo %} data-logo-deferred{% endif %}>
   <div class="container site-header__inner">
     <a class="site-logo logo-plate" href="/">
       <img src="/assets/scg-logo.png" width="668" height="184" alt="Snider Consulting Group home">
