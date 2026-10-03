@@ -1,0 +1,285 @@
+{
+  "_readme": "Past clients taken from the old homepage's 'Past Client Projects' section. The old page's year labels were garbled in the export, so 'year' is null and must be filled by officers. Several names appeared more than once on the old page (School Harbor, Office of Career Services, American Marketing Association), which may indicate repeat clients: confirm before saying so. 'likely_technical' is my guess from the client name only; officers should confirm so the site can truthfully show that SCG works with technical clients. Logos are not included; use text chips until logos are supplied.",
+  "clients": [
+    {
+      "name": "DefenX",
+      "year": null,
+      "logo": null,
+      "likely_technical": true,
+      "case_study_id": null
+    },
+    {
+      "name": "FBLA",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "MD Parliamentary Debate Society",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Smith Equity Research",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Undergraduate Law Review",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "School Harbor",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Product Space",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Alliom",
+      "year": null,
+      "logo": null,
+      "likely_technical": true,
+      "case_study_id": null
+    },
+    {
+      "name": "UMD Dynamic Dance",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Business Beyond Borders",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "SpeechPundit",
+      "year": null,
+      "logo": null,
+      "likely_technical": true,
+      "case_study_id": null
+    },
+    {
+      "name": "Wind Terpines",
+      "year": null,
+      "logo": null,
+      "likely_technical": true,
+      "case_study_id": null
+    },
+    {
+      "name": "HySwap",
+      "year": null,
+      "logo": null,
+      "likely_technical": true,
+      "case_study_id": null
+    },
+    {
+      "name": "OMBA Society",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Phi Chi Theta",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Double Black Diamondbacks",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Active Minds",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Heart's Delight Wine Auction",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "HAEFA",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "College Park Scholars",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Justice for Fraud Victims",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "R@M",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Terps Raising Pups",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Engineers Without Borders",
+      "year": null,
+      "logo": null,
+      "likely_technical": true,
+      "case_study_id": null
+    },
+    {
+      "name": "APEX Fund",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Office of Career Services",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "American Marketing Association",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Terps Racing",
+      "year": null,
+      "logo": null,
+      "likely_technical": true,
+      "case_study_id": null
+    },
+    {
+      "name": "UMD Loop",
+      "year": null,
+      "logo": null,
+      "likely_technical": true,
+      "case_study_id": null
+    },
+    {
+      "name": "Resident Housing Association",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Survivor Maryland",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Global Consulting Fellows",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Student Government Association",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "UMD Dining Services",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Business Law Society",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "History Undergraduate Association",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Actuary Club",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Private Equity Club",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "Maryland Impact",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    },
+    {
+      "name": "TAMID Group at UMD",
+      "year": null,
+      "logo": null,
+      "likely_technical": false,
+      "case_study_id": null
+    }
+  ]
+}

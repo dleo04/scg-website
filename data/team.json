@@ -1,0 +1,44 @@
+{
+  "_readme": "Schema for team members. NO real people are included; officers must supply entries and confirm each person consents to name/photo/major being public. Goal: show a visitor who is already in SCG by MAJOR and ROLE, not only by internship employer, so non-business students see people like themselves.",
+  "board": [
+    {
+      "name": "[TBD]",
+      "title": "Chair",
+      "cohort": null,
+      "majors": [
+        "[TBD]"
+      ],
+      "school_college": null,
+      "year": null,
+      "worked_on": [],
+      "photo": null,
+      "linkedin": null,
+      "consent_to_publish": false
+    }
+  ],
+  "members": [
+    {
+      "name": "[TBD]",
+      "title": "Consultant",
+      "cohort": null,
+      "majors": [
+        "[TBD]"
+      ],
+      "school_college": null,
+      "year": null,
+      "worked_on": [
+        "project id from projects.json"
+      ],
+      "photo": null,
+      "linkedin": null,
+      "consent_to_publish": false
+    }
+  ],
+  "levels": [
+    "Board of Trustees (Chair, Vice Chair)",
+    "Principal Consultants",
+    "Senior Consultants",
+    "Consultants",
+    "Analysts"
+  ]
+}

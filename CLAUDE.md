@@ -1,0 +1,30 @@
+# Snider Consulting Group (SCG) website revamp
+
+You are rebuilding sniderconsultinggroup.com for SCG, a student-run consulting group at the University of Maryland (Robert H. Smith School of Business, in direct affiliation with the Ed Snider Center for Enterprise and Markets, partnered with EY).
+
+**Read `docs/SPEC.md` before doing anything.** It is the source of truth for pages, components, design tokens and behavior. Data lives in `data/*.json`. Brand assets are in `assets/`.
+
+## Why this rebuild exists
+1. **Recruiting reach.** SCG gets strong applicants, but nearly all are business-school students. The site must make CS, engineering, data science, design, social science and other majors feel they belong, and show concretely what they would do.
+2. **Project depth.** The old site only lists client names. The new site must tell each project's story (challenge, scope, approach, outcome, skills used) and let visitors explore projects interactively.
+
+## Hard rules
+- **Keep the logo exactly as provided** (`assets/scg-logo.png`). Do not redraw, recolor, stretch or add effects.
+- **Keep the brand colors**: SCG red `#AE1218` and gold `#F8A81E`, plus black and white. Tokens are in `docs/SPEC.md`.
+- **Never invent facts.** No made-up statistics, outcomes, quotes, client results, member names, majors, dates or logos. If content is unknown, render a clearly visible placeholder (see "Placeholders" in the spec) and list it in `TODO-CONTENT.md`.
+- **Privacy.** Do not publish personal emails, phone numbers or student contact details. Project data intentionally contains no individual contact info; do not add any. Member names/photos only appear if supplied in `data/team.json`.
+- **Do not copy other sites.** The spec borrows *patterns* from reference sites (UConsulting LA, App Dev Club). Do not reproduce their copy, images, layout pixel-for-pixel or branding.
+- **Accessibility is required**: WCAG 2.2 AA, keyboard-operable everything (especially the project modal), visible focus, alt text, `prefers-reduced-motion` respected, color contrast verified.
+- **No GoDaddy leftovers.** No builder scripts, "powered by" footers, placeholder sign-in blocks or boilerplate cookie banner. If analytics is kept, make it opt-in and configurable in `data/site.json`.
+
+## Stack and conventions
+- Static site, **Eleventy (11ty)** + plain HTML/CSS/vanilla JS. No client-side framework. Output must deploy to any static host (GitHub Pages, Netlify, Cloudflare Pages, or plain upload).
+- Content is data-driven from `data/*.json` so officers can update the site by editing JSON/Markdown with no code changes after the build team graduates.
+- Mobile-first, responsive from 360px up. Fast: no render-blocking third-party scripts, images lazy-loaded with width/height set, fonts via `font-display: swap`.
+- Keep a short `README.md` explaining: how to run locally, how to add a project, how to add a team member, how to update the recruitment banner, how to deploy.
+
+## Working agreement
+- Build in the stages described in `prompts/`. After each stage, run the site, check it at 360px / 768px / 1280px, and fix problems before moving on.
+- Prefer small, reviewable commits.
+- When a spec detail is ambiguous, pick the option that best serves the two goals above and note the decision in `DECISIONS.md`.
+- Definition of done is at the end of `docs/SPEC.md`.

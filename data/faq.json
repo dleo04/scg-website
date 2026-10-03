@@ -1,0 +1,93 @@
+{
+  "_readme": "Draft FAQ. Items marked source:'existing' come from the current SCG site (lightly edited). Items marked source:'new' are drafts that need officer review before publishing. Items with needs_decision:true depend on a club decision noted in the 'decision' field; do not publish them until resolved.",
+  "groups": [
+    {
+      "title": "Who can join",
+      "items": [
+        {
+          "q": "Do I need to be a business major or have consulting experience?",
+          "a": "No. SCG is open to all undergraduates at the University of Maryland who are in good academic standing and meet the semester requirement. Our projects need data science, engineering, design, research and communication skills as much as business skills, and we teach consulting methods in onboarding.",
+          "source": "new",
+          "needs_review": true
+        },
+        {
+          "q": "I'm a CS, engineering or data science student. What would I actually do?",
+          "a": "[TBD: officers to confirm.] Examples from recent projects: building and benchmarking forecasting models, configuring a SQL database and dashboards, and documenting systems and processes. See the Projects page for what each team did.",
+          "source": "new",
+          "needs_review": true
+        },
+        {
+          "q": "Who is eligible to apply?",
+          "a": "All academically eligible students at the University of Maryland with five or more semesters before graduation may be considered. This includes semesters from a Plus-1, MS/A, or MBA program.",
+          "source": "existing",
+          "needs_decision": true,
+          "decision": "Confirm the 'five semesters' rule is still the policy and decide whether to explain why (members typically stay five or more semesters) and whether any exceptions exist for juniors or transfers."
+        },
+        {
+          "q": "If I've applied once, can I apply again?",
+          "a": "Absolutely. We encourage previous applicants to reapply if they are still interested and eligible.",
+          "source": "existing"
+        }
+      ]
+    },
+    {
+      "title": "Joining and the process",
+      "items": [
+        {
+          "q": "Does it cost money to join?",
+          "a": "No. SCG is 100% free to join. We are funded by the generous support of the Ed Snider Center for Enterprise and Markets and our alumni.",
+          "source": "existing"
+        },
+        {
+          "q": "How many people do you accept each semester?",
+          "a": "There is no predetermined number of analyst positions in any semester. SCG is an intentionally small and close-knit community, so we weigh the size of the applicant pool and our graduating seniors, and we look at each candidate's accomplishments and overall fit.",
+          "source": "existing",
+          "needs_decision": true,
+          "decision": "The old homepage said acceptance is 'around 5%'; the old recruitment page said there is no fixed number. Decide which statement is accurate. Recommendation: do not lead with the 5% figure because it discourages first-time and non-business applicants. Publish an exact figure only if officers can confirm it."
+        },
+        {
+          "q": "What does the interview look like?",
+          "a": "[TBD: officers to describe each round, its length and who interviews.] See Prepare for sample behavioral questions and practice cases.",
+          "source": "new",
+          "needs_review": true
+        }
+      ]
+    },
+    {
+      "title": "Life in SCG",
+      "items": [
+        {
+          "q": "What is life like for members?",
+          "a": "Consultants attend weekly general body meetings or workshops, weekly team project meetings, and occasional social outings.",
+          "source": "existing"
+        },
+        {
+          "q": "How does onboarding work?",
+          "a": "New analysts take part in faculty and EY-led workshops and complete a benchmarking analysis for the rest of the semester. After building a foundation in management consulting and learning how SCG operates, they join the ranks as consultants and take on client projects the following term. Analysts typically stay five or more semesters.",
+          "source": "existing"
+        },
+        {
+          "q": "What does the EY partnership mean for me?",
+          "a": "SCG partners with EY to train our consultants and expose us to the industry. EY holds workshops on topics useful to SCG, pairs each project with consultants and partners, and connects us to EY recruiters.",
+          "source": "existing"
+        },
+        {
+          "q": "Do I have to want a career in consulting?",
+          "a": "[TBD: officers to confirm. Draft: No. Our alumni work in engineering, research, policy, technology, finance and more. The problem-solving skills you build here transfer to any field.] Only publish claims about alumni careers that the Alumni page supports.",
+          "source": "new",
+          "needs_review": true
+        }
+      ]
+    },
+    {
+      "title": "For clients",
+      "items": [
+        {
+          "q": "How much do SCG services cost?",
+          "a": "Our on-campus client services are always free of charge. Off-campus non-profit clients are eligible for low rates designed to meet the needs of the project.",
+          "source": "existing"
+        }
+      ]
+    }
+  ]
+}

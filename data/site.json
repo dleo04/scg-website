@@ -1,0 +1,70 @@
+{
+  "_readme": "Global site config. Anything null/TBD must be filled by officers; render visible placeholders until then.",
+  "name": "Snider Consulting Group",
+  "short_name": "SCG",
+  "tagline": "Consulting isn't a major.",
+  "description": "SCG is the University of Maryland's student-run consulting group. Students from every major solve real problems for real clients, with mentorship from EY.",
+  "established": 2020,
+  "established_at": "Robert H. Smith School of Business, University of Maryland",
+  "domain": "https://sniderconsultinggroup.com",
+  "recruiting": {
+    "open": false,
+    "banner_label": "Spring 2027 recruitment",
+    "banner_text": "Interest form is open. All UMD majors welcome.",
+    "interest_form_url": null,
+    "application_url": null,
+    "note": "Set 'open' to true and fill the URLs when the cycle is live. When false, show 'Fall 2026 applications closed' state and the interest form link if present."
+  },
+  "timeline": {
+    "_readme": "Recruitment timeline steps. Dates are unknown; render 'Dates TBD' until filled. Step names are suggestions modeled on a clear step-by-step pattern; officers must confirm which steps actually exist.",
+    "steps": [
+      { "name": "Interest form", "date": null, "optional": false, "description": "Tell us who you are. Takes five minutes." },
+      { "name": "Info session", "date": null, "optional": true, "description": "[TBD]" },
+      { "name": "Application deadline", "date": null, "optional": false, "description": "[TBD: what to submit]" },
+      { "name": "Interviews", "date": null, "optional": false, "description": "[TBD: rounds, format, length]" },
+      { "name": "Decisions", "date": null, "optional": false, "description": "[TBD]" }
+    ]
+  },
+  "links": {
+    "instagram": "https://www.instagram.com/scgumd/",
+    "linkedin": "https://www.linkedin.com/company/sniderconsultinggroup",
+    "snider_center": "https://www.rhsmith.umd.edu/centers/snider-center/programs-curricula/snider-consulting-group",
+    "resume_guide": null,
+    "contact_email": null
+  },
+  "press": [
+    { "label": "Smith School News", "blurb": "Read what the Smith School says about SCG.", "url": "https://www.rhsmith.umd.edu/news/applying-business-acumen-help-student-groups-thrive" },
+    { "label": "The Diamondback", "blurb": "Read about SCG in UMD's student newspaper.", "url": "https://dbknews.com/2021/04/01/umd-school-of-business-snider-consulting-group-student-clubs-organizations/" },
+    { "label": "Ed Snider Center", "blurb": "Learn about SCG and its benefactor.", "url": "https://www.rhsmith.umd.edu/centers/snider-center/programs-curricula/snider-consulting-group" },
+    { "label": "Smith Clubs", "blurb": "Learn about other Smith organizations.", "url": "https://www.rhsmith.umd.edu/programs/undergraduate/community/clubs-and-organizations" }
+  ],
+  "partners": [
+    {
+      "name": "EY",
+      "role": "Corporate partner",
+      "blurb": "EY sends consultants to lead workshops, pairs each project with consultants, senior managers and partners, and connects members to EY recruiters. SCG has partnered with EY for over four years.",
+      "url": "https://www.ey.com/en_us/consulting"
+    },
+    {
+      "name": "Center for Social Value Creation",
+      "role": "Campus partner",
+      "blurb": "Each year SCG collaborates with the Center for Social Value Creation to host the Smith Impact Case Competition. The winning team earns a cash prize and represents UMD at the Seattle Milgard Invitational Case Competition.",
+      "url": null
+    },
+    {
+      "name": "Ed Snider Center for Enterprise and Markets",
+      "role": "Affiliation and primary funder",
+      "blurb": "SCG operates in direct affiliation with the Ed Snider Center and is funded by its generous support and by alumni.",
+      "url": "https://www.rhsmith.umd.edu/centers/snider-center/programs-curricula/snider-consulting-group"
+    }
+  ],
+  "stats": [
+    { "label": "Founded", "value": "2020", "verified": true },
+    { "label": "Cost to join", "value": "Free", "verified": true },
+    { "label": "EY partnership", "value": "4+ years", "verified": true },
+    { "label": "Client projects completed", "value": "[TBD]", "verified": false },
+    { "label": "Majors represented", "value": "[TBD]", "verified": false },
+    { "label": "Alumni", "value": "[TBD]", "verified": false }
+  ],
+  "analytics": { "enabled": false, "ga_measurement_id": "G-PRGQGFM60M", "note": "This ID is from the old site. Keep only if officers still own it. If enabled, load only after the visitor consents." }
+}
