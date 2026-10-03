@@ -124,3 +124,26 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 - **Tint.** `--hero-tint: rgba(38, 8, 10, 0.72)` replaces the 62% ink overlay. White text against the photo's brightest pixel: 7.76:1 worst case. Measured behind each element in the browser: H1 7.80–8.12:1, subhead 7.80:1, EY line 7.80–8.13:1 at all four widths. The bottom fade into the stat strip is a separate element and was kept, so the stat strip looks unchanged (same CSS, same tile heights).
 - **Logo contrast tooling.** Logo colors are grouped as near-white (all channels > 225) or near brand gold (within 45 of #F8A81E). Anti-aliased blend pixels are reported but not judged; an earlier, looser grouping wrongly counted blends as gold. Expected values for the real file: brand gold against this tint's worst-case pixel is about 3.9:1 (the test block measured 3.08:1 in the token check and 4.33–4.38:1 behind the logo in the browser) and white is above 7.7:1. Both need to be re-run once the officers' file is added.
 - **CLAUDE.md** now allows the reversed variant on dark/photo backgrounds only. The original `scg-logo.png` is unchanged and still used in the header and footer.
+
+## Stage 1h (real reversed logo, taller hero)
+
+- **Reversed logo supplied by the officers** (`assets/scg-logo-reversed.png`, 1336×368 RGBA, white "SCG/SNIDER", gold "CONSULTING GROUP" and Maryland mark) and used as provided. The stage 1g placeholder and its CSS were removed. The file is now required: the loader stops the build with a clear message if it is missing or not a PNG, rather than recreating it. The image loads with `loading="eager"` and `fetchpriority="high"`.
+- **Taller hero.**
+  - Mobile is `max(620px, 85svh)` (with an `85vh` fallback), tablet (768+) `80vh`, desktop (1024+) `clamp(760px, 92vh, 960px)`.
+  - The content block is centered. Top padding is header + 1px border + 96px, so the gap from the header to the logo box is at least 96px; it measured 96px on a 360×640 phone and 115–226px elsewhere.
+  - Bottom padding `clamp(112px, 14vh, 168px)` keeps all text clear of the fade into the stat strip.
+  - Measured heights: 663 (360×780), 819 (768×1024), 760 (1280×800), 828 (1440×900) and 960 (1920×1080, the cap).
+- **Spacing is measured as visible gaps,** from the logo artwork to the text. The PNG has a 21.5% transparent margin above and below the artwork (0.0592 × its width), so the logo's bottom margin is `32px − 0.0592 × width`. Measured gaps at every width: 32px logo→H1, 20px H1→subhead, 28px subhead→EY.
+- **Stat strip visibility.** At 1440×900 the top 72px of the strip (the numbers) shows without scrolling. At 1280×800 only the top 40px shows, since the 760px desktop floor takes most of the 800px viewport. At 360×780 it is 117px and at 768×1024 the whole strip.
+- **The photo is centered** (`object-position: center`, was `center 45%`). The flat `--hero-tint` covers the whole taller hero.
+- **Stand-in badge removed from the hero entirely,** in dev builds too. `TODO-CONTENT.md` still lists "images.hero is a stand-in" under the data facts. The community photo's dev-only badge is unchanged, since that block was out of scope.
+- **Contrast, re-measured on the taller hero** with `npm run hero-contrast` (brightest pixel behind each element):
+
+  | Viewport | H1 | Subhead | EY line | Logo white | Logo gold |
+  |---|---|---|---|---|---|
+  | 360×780 | 7.80 | 7.80 | 8.22 | 7.95 | 4.19 |
+  | 768×1024 | 7.81 | 7.80 | 8.03 | 7.99 | 4.21 |
+  | 1280×800 | 7.80 | 7.80 | 8.12 | 7.91 | 4.17 |
+  | 1440×900 | 7.80 | 7.80 | 8.12 | 7.91 | 4.17 |
+
+  The whole-photo worst case from `npm run contrast` is white text 7.76:1, logo white 7.60:1 and logo gold 3.80:1. Required minimums: text 4.5:1, logo 3:1.

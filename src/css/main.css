@@ -471,39 +471,44 @@ main:focus { outline: none; }
 /* 1. Hero + 2. stat strip share one background photo. */
 .hero-wrap { position: relative; isolation: isolate; overflow: hidden; background: var(--ink); }
 .hero-wrap__bg { position: absolute; inset: 0; z-index: -2; }
-.hero-wrap__bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 45%; }
+.hero-wrap__bg img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+/* Full-screen-style hero: content block centered, ≥ 96px between header and logo,
+   extra bottom room so the photo fades into the stat strip below the text.
+   Mobile: max(620px, 85svh) · tablet (768+): 80vh · desktop (1024+): 92vh, 760–960px. */
 .hero {
   position: relative; display: grid; place-items: center; text-align: center; color: var(--on-ink);
-  min-height: clamp(520px, 80vh, 660px); padding: calc(var(--header-h) + 48px) 0 clamp(96px, 11vw, 128px);
+  min-height: max(620px, 85vh); min-height: max(620px, 85svh);
+  padding: calc(var(--header-h) + 1px + 96px) 0 clamp(112px, 14vh, 168px);  /* header + its 1px border + 96px */
 }
-/* Flat maroon-black tint (no gradient, no blur). npm run contrast measures white text
-   and the reversed logo against it. The bottom fade into the stat strip sits below all text. */
+@media (min-width: 768px) { .hero { min-height: 80vh; } }
+@media (min-width: 1024px) { .hero { min-height: clamp(760px, 92vh, 960px); } }
+/* Flat maroon-black tint over the whole hero (no gradient, no blur). npm run contrast and
+   npm run hero-contrast measure text and the reversed logo against it. */
 .hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--hero-tint); }
 .hero::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: clamp(64px, 8vw, 96px); z-index: -1;
   background: linear-gradient(to bottom, transparent, rgb(255 255 255 / 0.86));
 }
 .hero__inner { display: grid; justify-items: center; }
-/* Reversed logo directly on the photo: 260px @360, 340 @768, 400 @1280, 440 @1440. */
+/* Reversed logo (officer-approved, dark/photo backgrounds only) directly on the photo.
+   Width: 260px @360, 340 @768, 400 @1280, 440 @1440. The PNG has 21.5% transparent margin
+   above/below the artwork (0.0592 × width), so the margin is reduced by that amount to get
+   a ~32px VISIBLE gap from the artwork to the H1. */
 .hero__logo {
-  width: clamp(260px, calc(189px + 19.6vw), 340px); max-width: 80vw; height: auto;
-  margin-bottom: 20px; filter: drop-shadow(0 2px 12px rgba(0, 0, 0, .35));
+  --logo-w: clamp(260px, calc(189px + 19.6vw), 340px);
+  width: var(--logo-w); max-width: 80vw; height: auto;
+  margin-bottom: calc(32px - min(var(--logo-w), 80vw) * 0.0592);
+  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, .35));
 }
-@media (min-width: 1024px) { .hero__logo { width: clamp(340px, calc(250px + 11.72vw), 400px); margin-bottom: 28px; } }
-@media (min-width: 1281px) { .hero__logo { width: clamp(400px, calc(80px + 25vw), 440px); } }
-.hero__logo--missing {
-  display: grid; place-items: center; aspect-ratio: 668 / 184; padding: 8px; filter: none;
-  border: 2px dashed var(--scg-gold-soft); border-radius: 12px; color: var(--on-ink);
-  font-family: var(--font-head); font-weight: 600; font-size: .8125rem; text-align: center;
-}
-.hero__title { font-weight: 800; font-size: clamp(2.125rem, 1.3rem + 4vw, 4.25rem); letter-spacing: -0.02em; line-height: 1.06; margin-bottom: .3em; max-width: 24ch; text-wrap: balance; }
+@media (min-width: 1024px) { .hero__logo { --logo-w: clamp(340px, calc(250px + 11.72vw), 400px); } }
+@media (min-width: 1281px) { .hero__logo { --logo-w: clamp(400px, calc(80px + 25vw), 440px); } }
+.hero__title { font-weight: 800; font-size: clamp(2.125rem, 1.3rem + 4vw, 4.25rem); letter-spacing: -0.02em; line-height: 1.06; margin-bottom: 20px; max-width: 24ch; text-wrap: balance; }
 .hero__name { display: block; }
 /* Subhead: one line from 1100px up; balanced wrapping below. */
-.hero__lede { font-size: clamp(1rem, 1.6vw, 1.5rem); line-height: 1.5; max-width: min(1200px, 100%); margin: 0 auto 1.1em; text-wrap: balance; }
+.hero__lede { font-size: clamp(1rem, 1.6vw, 1.5rem); line-height: 1.5; max-width: min(1200px, 100%); margin: 0 auto 28px; text-wrap: balance; }
 @media (min-width: 1100px) { .hero__lede { white-space: nowrap; } }
 .hero__partner { font-family: var(--font-head); font-weight: 600; font-size: .8125rem; letter-spacing: .18em; text-transform: uppercase; margin: 0; text-wrap: balance; }
 @media (max-width: 420px) { .hero__partner { letter-spacing: .1em; font-size: .75rem; } }
-.standin-tag--hero { z-index: 1; left: 16px; bottom: auto; top: calc(var(--header-h) + 12px); }
 
 .stat-strip { position: relative; background: linear-gradient(to bottom, rgb(255 255 255 / 0.86), var(--paper) 90%); padding-block: 20px 36px; }
 /* Three compact columns at every width (they fit at 360px); hairline dividers. */

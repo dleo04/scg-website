@@ -29,18 +29,12 @@ hideBanner: true
   <section class="hero" aria-labelledby="hero-title">
     <div class="container hero__inner">
       {#- Reversed logo: officer-approved variant for dark/photo backgrounds only. -#}
-      {%- if brand.reversedLogo %}
-      <img class="hero__logo" data-hero-logo src="{{ brand.reversedLogo.src }}" width="{{ brand.reversedLogo.width }}" height="{{ brand.reversedLogo.height }}" alt="Snider Consulting Group" fetchpriority="high" decoding="async">
-      {%- elif not env.hidePlaceholders %}
-      <div class="hero__logo hero__logo--missing" data-placeholder="true" data-todo="[TBD: add assets/scg-logo-reversed.png (officer-approved reversed logo) for the hero]">LOGO: assets/scg-logo-reversed.png not supplied yet</div>
-      {%- endif %}
+      <img class="hero__logo" data-hero-logo src="{{ brand.reversedLogo.src }}" width="{{ brand.reversedLogo.width }}" height="{{ brand.reversedLogo.height }}" alt="Snider Consulting Group" loading="eager" fetchpriority="high" decoding="async">
       <h1 class="hero__title" id="hero-title">Welcome to the <span class="hero__name">Snider Consulting Group</span></h1>
       <p class="hero__lede">UMD's student-run consulting group, solving real problems for campus organizations and nonprofits since {{ site.established }}.</p>
       <p class="hero__partner">In partnership with Ernst &amp; Young</p>
     </div>
-    {%- if site.images.hero_is_standin and not env.production and not env.hidePlaceholders %}
-    <span class="standin-tag standin-tag--hero" data-placeholder="true" data-todo="[TBD: hero background photo; the McKeldin Mall aerial is a stand-in (site.json → images.hero)]">Stand-in photo</span>
-    {%- endif %}
+    {#- No "Stand-in photo" badge on the hero; the stand-in is tracked in TODO-CONTENT.md (site.json → images.hero_is_standin). -#}
   </section>
 
   {# 2. Stat strip: verified stats only ------------------------------------ #}

@@ -13,7 +13,8 @@
 │ HEADER (overlays hero)  [SCG logo plate]  Projects Join Team │  ~70px
 │   Alumni  Work With Us           [IG] [IN] [ Join SCG ]      │
 ├──────────────────────────────────────────────────────────────┤
-│ 1. HERO  full-bleed photo + flat maroon-black tint  ~660px   │
+│ 1. HERO  full-bleed photo + flat maroon-black tint           │
+│   tall: 92vh (760-960px) desktop · 80vh tablet · 85svh/620 mobile │
 │              [ reversed SCG logo, no plate ]                 │
 │              (440px @1440 · 400 @1280 · 340 @768 · 260 @360) │
 │              WELCOME TO THE                                  │
@@ -76,10 +77,11 @@ Logo (`assets/scg-logo.png`) on a small white rounded plate so the red/gold logo
 
 ### 1. Hero
 - Background: `assets/placeholder-hero-quad.jpg` (UMD Washington Quad aerial already used on the current site; placeholder until better photos exist) with a flat maroon-black tint `--hero-tint: rgba(38, 8, 10, 0.72)` (no gradient, no blur on the tint). The existing bottom fade to white into the stat strip stays.
-- Logo: the officer-approved reversed variant `assets/scg-logo-reversed.png` (dark/photo backgrounds only), centered above the H1 directly on the photo: no plate or box, only `drop-shadow(0 2px 12px rgba(0,0,0,.35))`. Width 260px @360, 340 @768, 400 @1280, 440 @1440 (piecewise `clamp()`, `max-width: 80vw`), width/height attributes, eager with `fetchpriority="high"`, alt "Snider Consulting Group". Gap to the H1: 20px mobile, 28px desktop. If the file is missing, a labeled placeholder shows in dev and the header logo simply stays visible.
+- Logo: the officer-approved reversed variant `assets/scg-logo-reversed.png` (dark/photo backgrounds only), centered above the H1 directly on the photo: no plate or box, only `drop-shadow(0 2px 12px rgba(0,0,0,.35))`. Width 260px @360, 340 @768, 400 @1280, 440 @1440 (piecewise `clamp()`, `max-width: 80vw`), width/height attributes, eager with `fetchpriority="high"`, alt "Snider Consulting Group". Spacing (visible, artwork to text): 32px logo → H1, 20px H1 → subhead, 28px subhead → EY line. The PNG has 21.5% transparent margin above/below the artwork, which the logo's bottom margin compensates for.
+- Height: desktop (1024px+) `min-height: clamp(760px, 92vh, 960px)`; tablet (768px+) `80vh`; mobile `max(620px, 85svh)`. The content block is vertically centered, with at least 96px between the header and the logo and extra bottom padding (`clamp(112px, 14vh, 168px)`) so the photo fades into the stat strip below the text. At 1440×900 the whole hero plus the top of the stat strip is visible. The photo covers the whole area (`object-fit: cover`, centered) and the tint covers the full hero. The file is required: if it is missing, the build stops with an error (it is never recreated).
 - Content, vertically centered: H1 **"Welcome to the Snider Consulting Group"**; subhead (draft): **"UMD's student-run consulting group, solving real problems for campus organizations and nonprofits since 2020."**; small line **"In partnership with Ernst & Young"**. **No buttons in the hero**: the header already carries Projects and the Join SCG button. Generous, even space above and below the three items.
 - Subhead: max-width about 1200px, font `clamp(1rem, 1.6vw, 1.5rem)`, `white-space: nowrap` from 1100px up so it is exactly one line on desktop; below 1100px it wraps naturally (2 lines on tablet) with `text-wrap: balance`. No horizontal scroll at any width.
-- The "Stand-in photo" badge renders in dev builds only, never in production.
+- No "Stand-in photo" badge on the hero; the stand-in photo is tracked in `TODO-CONTENT.md` instead.
 - Contrast (measured with `npm run hero-contrast` on the actual pixels behind each element, 360-1440px): H1, subhead and EY line ≥ 4.5:1 (currently 7.8-8.1:1); logo white and gold parts ≥ 3:1.
 
 ### 2. Stat strip

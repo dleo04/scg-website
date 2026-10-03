@@ -46,9 +46,9 @@ if (fs.existsSync(logoFile)) {
 const browser = await puppeteer.launch({ executablePath: CHROME, headless: true });
 const failures = [];
 const lines = [];
-for (const width of [360, 768, 1280, 1440]) {
+for (const [width, height] of [[360, 780], [768, 1024], [1280, 800], [1440, 900]]) {
   const page = await browser.newPage();
-  await page.setViewport({ width, height: 900, deviceScaleFactor: 1 });
+  await page.setViewport({ width, height, deviceScaleFactor: 1 });
   await page.goto(`http://localhost:${server.address().port}/`, { waitUntil: "networkidle0" });
   await page.evaluateHandle("document.fonts.ready");
   const boxes = await page.evaluate(() => {
@@ -56,7 +56,7 @@ for (const width of [360, 768, 1280, 1440]) {
     return { h1: pick(".hero__title"), subhead: pick(".hero__lede"), ey: pick(".hero__partner"), logo: pick("img[data-hero-logo]") };
   });
   await page.addStyleTag({ content: ".hero__inner, .standin-tag, .site-header { visibility: hidden !important; }" });
-  const shot = await page.screenshot({ clip: { x: 0, y: 0, width, height: 900 } });
+  const shot = await page.screenshot({ clip: { x: 0, y: 0, width, height } });
   const { data, info } = await sharp(shot).removeAlpha().raw().toBuffer({ resolveWithObject: true });
   const brightest = (b) => {
     let best = null, bestL = -1;
@@ -88,7 +88,7 @@ for (const width of [360, 768, 1280, 1440]) {
   } else {
     row.push(!fs.existsSync(logoFile) ? "logo: file not supplied" : !boxes.logo ? "logo: no <img data-hero-logo> on page (rebuild?)" : "logo: no white/gold pixels found");
   }
-  lines.push(`${String(width).padStart(5)}px  ${row.join("   ")}`);
+  lines.push(`${`${width}x${height}`.padStart(9)}  ${row.join("   ")}`);
   await page.close();
 }
 await browser.close();
