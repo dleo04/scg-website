@@ -38,7 +38,9 @@
 │        intro paragraph (centered, max ~900px)                │
 │  ┌─────────┐   ┌─────────┐   ┌─────────┐   3 cards, 40px gap │
 │  │ photo   │   │ photo   │   │ photo   │   content width     │
-│  │ 2.2:1   │   │ [Case 2]│   │ [Case 3]│   ~1180px           │
+│  │ client  │   │ client  │   │ client  │   up to ~1280px     │
+│  │ logo on │   │ logo on │   │ logo on │   (16/11 tile)      │
+│  │ its bg  │   │ its bg  │   │ its bg  │                     │
 │  │ Title   │   │ Title   │   │ Title   │   equal heights     │
 │  │ ◉ Objective (≤3 lines)               │                     │
 │  │ ◉ Scope   (1 line, ≤2)  │   │         │                  │
@@ -95,12 +97,12 @@ Exactly the verified stats in `data/site.json -> stats` (max 4), currently **50+
 ### 4. Our Work (the centerpiece, keep interactive)
 - Dark band (`--ink`). H2 white. Intro paragraph (existing SCG copy, tightened): "We work alongside our clients to create personalized, long-lasting solutions that serve and elevate UMD's community. Each engagement is led by a student team and guided by consultants and partners from EY."
 - Three cards from the `featured: true` projects in `data/projects.json` (Alliom, School Harbor, Product Space). Card anatomy, top to bottom:
-  1. image (about 2.2:1, shorter than 16:9) with a small pill "Case Study N" bottom-left;
-  2. title with semester, e.g. **Alliom (Fall 2025)**, in `--scg-red` or gold on hover;
-  3. three icon rows (44px red icon circles, labels ~17px semibold, body 16px/1.5, tight row spacing): **Objective** (= `tagline`, max 3 lines), **Scope** (= the first 2 `scope` items joined into one line of plain text, max 2 lines; optional `scope_summary` overrides), **Impact** (= `outcome`, max 2 lines; if null, a compact muted one-line "Results coming soon");
+  1. image area (aspect 16/11, about 270-280px tall on desktop cards, rounded top corners, dashed divider below) showing the client's logo (`projects.json -> logo`) centered on a tile filled with `logo_bg` (sampled from the logo's own background; a neutral off-white for transparent logos). The logo uses `object-fit: contain`, never cropped or distorted: wide logos at 60% of the tile width, square logos sized by height (≤ 55%), all ≤ 62% wide / 60% tall and at most half the file's pixel height so 2x screens stay crisp. Alt "<Project> logo". No "Case Study N" badge. A labeled striped placeholder only when a project has no logo yet;
+  2. title with semester, e.g. **Alliom (Fall 2025)**, in `--scg-red`; underlined only on hover (pointer devices) or keyboard focus;
+  3. three icon rows (red icon circles 28px mobile / 32px desktop with a 16px glyph, centered on the label's first line, 16px gap to the text; labels 17-18px semibold; body 16-16.5px / 1.6; 24px from the title to the first row, 26px between rows): **Objective** (= `tagline`, max 3 lines), **Scope** (= the first 2 `scope` items joined into one line of plain text, max 2 lines; optional `scope_summary` overrides), **Impact** (= `outcome`, max 2 lines; if null, a compact muted one-line "Results coming soon");
   4. no skill chips on the card (skills stay in the dialog and on the project page);
   5. a small red "Read more →" (~15px) at the bottom.
-  Cards are equal height and top-aligned (grid stretch); title ~24px.
+  Body padding 24px (mobile) / 32px (768px+). Cards are equal height and top-aligned (grid stretch) with "Read more" pinned to the same bottom position; title ~24px. Keyboard focus draws a 3px ring around the whole card (on the card itself, so its rounded-corner clipping cannot hide it). Hover lift only on pointer devices and never under reduced motion. The section's content width is up to 1280px (28px gaps) so the text column is wider.
 - **Clicking a card opens the project dialog** from SPEC section 6 (deep link `#alliom`, focus trap, prev/next). Cards link to `/projects/<id>/` without JS.
 - Below the cards: primary button **View all projects** to `/projects/`.
 - Testimonials: a centered quote carousel with dots, only if `data/testimonials.json` has entries; otherwise do not render (dev shows a small placeholder). Never invent quotes.

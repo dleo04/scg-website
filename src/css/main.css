@@ -555,38 +555,61 @@ main:focus { outline: none; }
 /* 4. Our Work */
 .work__head { text-align: center; max-width: 900px; margin: 0 auto clamp(32px, 4vw, 56px); }
 .work__intro { color: var(--on-ink-2); margin-inline: auto; }
+/* Cards get a little more room than the global container so the text column breathes. */
+.work > .container { max-width: calc(1280px + 2 * var(--gutter)); }
 .work__grid { display: grid; gap: 24px; grid-template-columns: minmax(0, 560px); justify-content: center; align-items: stretch; }
-@media (min-width: 1024px) { .work__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 2.8vw, 40px); } }
+@media (min-width: 1024px) { .work__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; } }
 .work-card {
   position: relative; display: flex; flex-direction: column; height: 100%; background: var(--paper); color: var(--ink);
   border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: transform .2s ease, box-shadow .2s ease;
 }
-.work-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgb(0 0 0 / 0.35); }
+@media (hover: hover) { .work-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgb(0 0 0 / 0.35); } }
 .work-card__media { position: relative; }
-.work-card__media .ph, .work-card__media .media { aspect-ratio: 11 / 5; border-radius: 0; border-width: 0 0 2px; }
-.work-card__pill {
-  position: absolute; left: 12px; bottom: 12px; background: var(--ink); color: var(--on-ink);
-  font-family: var(--font-head); font-weight: 700; font-size: .75rem; letter-spacing: .04em; padding: 4px 10px; border-radius: 6px;
+/* Image area 16/11 (≈270-280px tall on desktop cards), same on all cards; dashed divider below. */
+.work-card__media .ph, .work-card__media .media { aspect-ratio: 16 / 11; border-radius: 0; border-width: 0 0 2px; }
+.work-card__logo-tile {
+  aspect-ratio: 16 / 11; container-type: size; display: grid; place-items: center; overflow: hidden;
+  background: var(--tile-bg); border-bottom: 2px dashed var(--ph-border);
 }
-.work-card__body { display: flex; flex-direction: column; gap: 14px; padding: 20px 22px 18px; flex: 1; }
-.work-card__title { font-size: 1.5rem; line-height: 1.2; margin: 0; }   /* ~24px */
-.work-card__title .card__link { color: var(--scg-red); }
-.work-card:hover .card__link { text-decoration: underline; }
+.work-card__logo-tile picture { display: contents; }
+/* Never cropped or distorted (contain). Sizes use container units of the tile itself:
+   wide logos by width (60% of the tile), square ones by height (55%); everything ≤ 62% wide
+   and ≤ 60% tall, and capped at half the file's pixel height so 2x screens stay crisp. */
+.work-card__logo-tile img { object-fit: contain; max-width: 62cqw; max-height: min(60cqh, var(--logo-max-h)); }
+.work-card__logo-tile--wide img { width: 60cqw; height: auto; }
+.work-card__logo-tile--square img { height: min(55cqh, var(--logo-max-h)); width: auto; }
+
+.work-card__body { display: flex; flex-direction: column; padding: 24px; flex: 1; }
+@media (min-width: 768px) { .work-card__body { padding: 32px; } }
+.work-card__title { font-size: 1.5rem; line-height: 1.2; margin: 0 0 24px; }   /* ~24px */
+.work-card__title .card__link { color: var(--scg-red); text-decoration: none; }
+/* Underline only on hover (pointer devices) or keyboard focus; the whole card stays clickable. */
+@media (hover: hover) { .work-card:hover .card__link { text-decoration: underline; text-underline-offset: 4px; } }
+.work-card .card__link:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+/* Keyboard focus ring on the whole card. It is drawn on the card itself because the card's
+   overflow: hidden (for the rounded tile corners) clipped the old ring on the link's ::after. */
+.work-card .card__link:focus-visible::after { outline: none; }
+.work-card:has(.card__link:focus-visible) { outline: 3px solid var(--focus); outline-offset: 4px; }
 .work-card__term { color: var(--ink-2); font-weight: 600; font-size: 1.125rem; }
-.work-card__rows { display: grid; gap: 10px; margin: 0; }
-.work-card__row { position: relative; padding-left: 56px; min-height: 44px; }
-.work-card__row dt { font-family: var(--font-head); font-weight: 600; font-size: 1.0625rem; line-height: 1.3; }   /* ~17px semibold */
-.work-card__row dd { margin: 2px 0 0; color: var(--ink-2); font-size: 1rem; line-height: 1.5; }                  /* 16px / 1.5 */
-.work-card__icon { position: absolute; left: 0; top: 0; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--scg-red); color: var(--paper); }
+.work-card__rows { display: grid; gap: 26px; margin: 0 0 28px; }
+/* Icon column 28px (mobile) / 32px (desktop) + 16px gap; icon centred on the label's first line. */
+.work-card__row { --icon: 28px; position: relative; padding-left: calc(var(--icon) + 16px); }
+@media (min-width: 768px) { .work-card__row { --icon: 32px; } }
+.work-card__row dt { font-family: var(--font-head); font-weight: 600; font-size: 1.0625rem; line-height: 1.4; }   /* ~17px semibold */
+@media (min-width: 1024px) { .work-card__row dt { font-size: 1.125rem; } }                                       /* 18px */
+.work-card__row dd { margin: 4px 0 0; color: var(--ink-2); font-size: 1rem; line-height: 1.6; }                  /* 16px / 1.6 */
+@media (min-width: 1024px) { .work-card__row dd { font-size: 1.03125rem; } }                                    /* 16.5px */
+.work-card__icon {
+  position: absolute; left: 0; top: calc(0.7em - var(--icon) / 2); width: var(--icon); height: var(--icon);
+  border-radius: 50%; display: grid; place-items: center; background: var(--scg-red); color: var(--paper);
+}
 .work-card__pending { font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }   /* muted one line; ink-2 on white 11.2:1 */
-.work-card__more { margin-top: auto; padding-top: 2px; font-family: var(--font-head); font-weight: 600; font-size: .9375rem; color: var(--scg-red); }
+.work-card__more { margin-top: auto; font-family: var(--font-head); font-weight: 600; font-size: .9375rem; color: var(--scg-red); }
 .work-card__more .arrow { display: inline-block; transition: transform .2s; }
-.work-card:hover .work-card__more .arrow { transform: translateX(3px); }
+@media (hover: hover) { .work-card:hover .work-card__more .arrow { transform: translateX(3px); } }
 .clamp { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
 .clamp--2 { -webkit-line-clamp: 2; line-clamp: 2; }
 .clamp--3 { -webkit-line-clamp: 3; line-clamp: 3; }
-.ph-inline { display: inline-block; background: var(--ph-bg); color: var(--ink); border: 1px dashed var(--ph-border); border-radius: 6px; padding: 0 8px; font-weight: 700; font-size: .875rem; }
-.chips--sm .chip { font-size: .8125rem; }
 .work__more { margin-top: clamp(32px, 4vw, 48px); }
 .work__testimonial-ph { max-width: 640px; margin: 48px auto 0; }
 

@@ -140,6 +140,26 @@ if (fs.existsSync(logoManifest)) {
   }
 }
 
+// Project (client) logos for the home cards: WebP + PNG copies at up to 1200x600,
+// proportional, never enlarged, colors untouched. The original files stay in assets/logos/.
+manifest.projectLogos = {};
+fs.mkdirSync(path.join(GEN_DIR, "projects"), { recursive: true });
+for (const p of projects) {
+  if (!p.logo || !fs.existsSync(path.join(ROOT, p.logo))) continue;
+  const src = path.join(ROOT, p.logo);
+  const base = sharp(src).resize({ width: 1200, height: 600, fit: "inside", withoutEnlargement: true });
+  // Lossless: flat brand colours must match logo_bg exactly (lossy WebP shifted navy by 1 unit and showed a box).
+  const webp = await base.clone().webp({ lossless: true }).toBuffer({ resolveWithObject: true });
+  fs.writeFileSync(path.join(GEN_DIR, "projects", `${p.id}.webp`), webp.data);
+  await base.clone().png({ compressionLevel: 9 }).toFile(path.join(GEN_DIR, "projects", `${p.id}.png`));
+  manifest.projectLogos[p.id] = {
+    webp: `/assets/generated/projects/${p.id}.webp`,
+    png: `/assets/generated/projects/${p.id}.png`,
+    width: webp.info.width,
+    height: webp.info.height,
+  };
+}
+
 fs.writeFileSync(path.join(GEN_DIR, "images.json"), JSON.stringify(manifest, null, 2));
 console.log(`[assets] generated OG image, icons, photo sizes: ${Object.keys(manifest).filter((k) => k !== "og").join(", ") || "none"}` +
   (created.length ? `; new placeholders: ${created.join(", ")}` : ""));

@@ -151,6 +151,7 @@ From `site.json → partners`. Keep the EY narrative but shorten and make it fac
 ## 6. Interactive Projects explorer (the centerpiece)
 
 **Data**: `data/projects.json`. Do not hardcode projects in HTML.
+- Optional per-project fields for the home "Our Work" cards: `logo` (path to the client's logo file, e.g. `assets/logos/schoolharborlogo.png`; used unaltered) and `logo_bg` (hex color like `#1E3557` that fills the image tile behind the logo, sampled from the logo's own background or a neutral off-white for transparent logos; required when `logo` is set). Optional `scope_summary` overrides the card's one-line scope.
 
 **Explorer layout**
 - Filter bar: **Semester** (single-select), **Track** (`disciplines`, multi-select chips), **Good fit for** (`fits`, multi-select, searchable), **Client type** (`client_type`), plus a text search over title, client, summary and skills. Show result count and a "Clear filters" button. Filters are reflected in the URL query string so views are shareable. Announce result-count changes to screen readers (`aria-live="polite"`).

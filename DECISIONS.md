@@ -191,3 +191,26 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - Measured afterwards: every pixel row within ±4px of the boundary is pure white (1.000) at 1x and 2x, at 90% and 110% zoom, and at 360, 768, 1280 and 1440px.
   - Unchanged: the stat dividers (`border-left` on items), the numbers, the labels and the spacing.
 - **Contrast** re-measured on the actual pixels: H1 7.89–9.36:1, subhead and EY line 7.80:1, logo white 7.29–7.97:1, logo gold 3.84–4.20:1. Stat numbers are now red on solid white (7.24:1, up from 5.25:1 worst case on the wash).
+
+## Stage 1l (Our Work cards: client logos, roomier body)
+
+- **"Case Study N" badges removed.** The `work-card` component is the only place they existed; the project dialog and `/projects/<id>/` use `project-detail`, which never had them.
+- **Client logos.** The supplied files `assets/logos/alliomlogo.jpeg` (200×200), `schoolharborlogo.png` (1534×512) and `productspacelogo.png` (939×266) are used unaltered. `projects.json` gains `logo` and `logo_bg` (documented in SPEC §6):
+  - Alliom `#EA6F50` and School Harbor `#1E3557` are sampled from the logos' own edge pixels.
+  - Product Space is transparent, so it gets the site's off-white `#F7F4EF`. Its brand purple would hide its purple lettering.
+- **Generated copies** (in `assets/generated/projects/`) are lossless WebP plus PNG, proportionally resized to at most 1200×600 and never enlarged. Lossless matters here: lossy WebP shifted School Harbor's navy by one unit ((30,53,87) → (29,53,88)) and showed a faint box around the wordmark. With lossless output, the colour difference across every logo's box edge measures 0 at 1x and 2x.
+- **Logo sizing.**
+  - The image area is 16/11 rather than the suggested 16/10: at the desktop card width (390–406px), 16/10 gives about 245px, below the requested 260–300px. 16/11 gives 268–279px.
+  - Logos are sized with container units of the tile, since percentage heights did not resolve reliably inside the grid tile.
+  - Wide logos are 60% of the tile width. Square logos are sized by height, capped at half their file's pixel height so they stay crisp on 2x screens.
+  - **The Alliom file is only 200px**, so it renders at 100px (25–45% of the tile height instead of about 55%). It grows to the target automatically when a larger file is supplied (≥ 400px, ideally SVG) and `logo` is updated.
+- **Card body.**
+  - Padding is 24px on mobile and 32px from 768px. There are 24px from the title to the first row and 26px between rows.
+  - Labels are 17px (18px from 1024px), semibold. Body text is 16px (16.5px from 1024px) with line-height 1.6.
+  - Icons are 28px on mobile and 32px from 768px, with 16px glyphs and a 16px gap. Each icon is vertically centered on its label's first line (measured offset 0px in every card at every width).
+  - The section's content width grew to 1280px (28px gaps), so the text column is 278px at 1280 and 294px at 1440 (was about 261–273px), despite the larger padding.
+  - Objective is still clamped to 3 lines and scope to 2; the full text is in the dialog.
+- **Title underline.** It shows only on hover (pointer devices only, via `@media (hover: hover)`, so a tap no longer leaves a sticky underline) or keyboard focus. The stray underline on one title came from hover state during capture.
+- **Focus ring bug fixed.** The stretched link's ring was drawn on its `::after` outside the card, and the card's `overflow: hidden` clipped it, so keyboard users saw only the underline (true since stage 1d). The ring is now drawn on the card itself (`.work-card:has(.card__link:focus-visible)`): 3px gold on the dark band, 9.3:1. ui-check now treats a `::after` ring inside a clipping card as invisible.
+- **Equal height.** Cards are equal height with "Read more" at the same position on desktop (measured equal at 1280 and 1440).
+- **Removed CSS.** The unused `.ph-inline` and `.chips--sm` rules were removed while rewriting this block; nothing has used them since stage 1d.

@@ -15,8 +15,13 @@ import { ROOT, readJson } from "../lib/load-data.js";
 
 const OUT = path.join(ROOT, "assets/logos");
 const ORIG = path.join(OUT, "originals");
-fs.rmSync(OUT, { recursive: true, force: true });
+// Only clear what this script manages (originals/, its <slug>.png files and logos.json);
+// other files in assets/logos/ (e.g. the project/client logos) are left alone.
 fs.mkdirSync(ORIG, { recursive: true });
+const previous = fs.existsSync(path.join(OUT, "logos.json")) ? JSON.parse(fs.readFileSync(path.join(OUT, "logos.json"), "utf8")) : [];
+for (const old of previous) {
+  for (const f of [old.file, old.original].filter(Boolean)) fs.rmSync(path.join(ROOT, f), { force: true });
+}
 
 const { base, logos } = readJson("logo-sources.json");
 const slug = (s) => s.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");

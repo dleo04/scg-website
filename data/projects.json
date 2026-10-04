@@ -1,5 +1,5 @@
 {
-  "_readme": "One object per project. Fields marked null or [TBD] are unknown and MUST render as visible placeholders, never invented. 'fits' is a suggested mapping of majors/interests to the work, inferred from the scope of work; the club should correct it to match who actually worked on each project. No individual client contacts are stored here on purpose.",
+  "_readme": "One object per project. 'logo' (optional) is the client's logo file, shown on the home card; 'logo_bg' is the tile color behind it (sampled from the logo's own background, or a neutral off-white for transparent logos). Officers may change either. Fields marked null or [TBD] are unknown and MUST render as visible placeholders, never invented. 'fits' is a suggested mapping of majors/interests to the work, inferred from the scope of work; the club should correct it to match who actually worked on each project. No individual client contacts are stored here on purpose.",
   "projects": [
     {
       "id": "alliom",
@@ -26,6 +26,8 @@
       "team": { "size": null, "roles": [], "majors": [] },
       "image": "assets/placeholders/project-alliom.jpg",
       "image_alt": "[TBD]",
+      "logo": "assets/logos/alliomlogo.jpeg",
+      "logo_bg": "#EA6F50",
       "links": []
     },
     {
@@ -53,6 +55,8 @@
       "team": { "size": null, "roles": [], "majors": [] },
       "image": "assets/placeholders/project-school-harbor.jpg",
       "image_alt": "[TBD]",
+      "logo": "assets/logos/schoolharborlogo.png",
+      "logo_bg": "#1E3557",
       "links": []
     },
     {
@@ -80,6 +84,8 @@
       "team": { "size": null, "roles": [], "majors": [] },
       "image": "assets/placeholders/project-product-space.jpg",
       "image_alt": "[TBD]",
+      "logo": "assets/logos/productspacelogo.png",
+      "logo_bg": "#F7F4EF",
       "links": []
     },
     {

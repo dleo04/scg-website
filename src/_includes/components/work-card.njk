@@ -1,5 +1,7 @@
 {#- "Our Work" case-study card (docs/HOME-LAYOUT.md block 4), sized to the reference's
-    proportions. Rows: Objective = tagline (max 3 lines), Scope = first two scope items
+    proportions. Image area: the client logo on a tile of its own background colour
+    (projects.json → logo, logo_bg); a labeled placeholder only when there is no logo yet.
+    Rows: Objective = tagline (max 3 lines), Scope = first two scope items
     joined into one line (max 2 lines), Impact = outcome (max 2 lines) or a muted
     "Results coming soon". Skills stay in the dialog and on the project page.
     The title link goes to /projects/<id>/ and, with JS, opens the project dialog. -#}
@@ -7,8 +9,17 @@
 {% macro workCard(p, number, headingLevel = 3) -%}
 <article class="work-card">
   <div class="work-card__media">
-    {{ media(p.image, p.image_alt, "PHOTO: " ~ p.title ~ " team", "11 / 5") }}
-    <span class="work-card__pill">Case Study {{ number }}</span>
+    {%- if p.logoImg %}
+    {#- Client logo, contained and centered on a tile filled with logo_bg (projects.json). -#}
+    <div class="work-card__logo-tile work-card__logo-tile--{{ p.logoImg.shape }}" style="--tile-bg: {{ p.logo_bg }}; --logo-max-h: {{ p.logoImg.maxH }}px">
+      <picture>
+        <source type="image/webp" srcset="{{ p.logoImg.webp }}">
+        <img src="{{ p.logoImg.png }}" width="{{ p.logoImg.width }}" height="{{ p.logoImg.height }}" alt="{{ p.logoImg.alt }}" loading="lazy" decoding="async">
+      </picture>
+    </div>
+    {%- else %}
+    {{ media(p.image, p.image_alt, "PHOTO: " ~ p.title ~ " team", "16 / 11") }}
+    {%- endif %}
   </div>
   <div class="work-card__body">
     <h{{ headingLevel }} class="work-card__title">
@@ -16,11 +27,11 @@
     </h{{ headingLevel }}>
     <dl class="work-card__rows">
       <div class="work-card__row">
-        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg></span>Objective</dt>
+        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg></span>Objective</dt>
         <dd class="clamp clamp--3">{{ p.tagline | tbd | safe }}</dd>
       </div>
       <div class="work-card__row">
-        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M9 6h11M9 12h11M9 18h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="4.5" cy="6" r="1.4" fill="currentColor"/><circle cx="4.5" cy="12" r="1.4" fill="currentColor"/><circle cx="4.5" cy="18" r="1.4" fill="currentColor"/></svg></span>Scope</dt>
+        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 6h11M9 12h11M9 18h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="4.5" cy="6" r="1.4" fill="currentColor"/><circle cx="4.5" cy="12" r="1.4" fill="currentColor"/><circle cx="4.5" cy="18" r="1.4" fill="currentColor"/></svg></span>Scope</dt>
         <dd class="clamp clamp--2">
           {%- if p.scope | isTbd %}<span class="tbd" data-placeholder="true" data-todo="[TBD: scope for {{ p.title }}]">[TBD: scope]</span>
           {%- else %}{{ p | scopeLine | tbd | safe }}{% endif -%}
@@ -28,7 +39,7 @@
       </div>
       {%- if not (p.outcome | isTbd) or not env.hidePlaceholders %}
       <div class="work-card__row">
-        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 18l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 8h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Impact</dt>
+        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 18l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 8h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Impact</dt>
         {%- if p.outcome | isTbd %}
         <dd class="work-card__pending" data-placeholder="true" data-todo="[TBD: outcome for {{ p.title }} (projects.json → outcome)]">Results coming soon</dd>
         {%- else %}

@@ -108,8 +108,18 @@ async function keyboard(width) {
     const a = await active();
     if (a.tag === "BODY") break;
     stops.push(a);
-    const pseudoRing = await page.evaluate(() => getComputedStyle(document.activeElement, "::after").outlineStyle !== "none");
-    if (!a.outline && !pseudoRing) fail(`@${width} focus not visible on <${a.tag}> "${a.text}"`);
+    // A ring counts if it is on the element, its ::after (stretched links), or a card that is
+    // outlined while it contains the focused link. A ::after ring inside an overflow:hidden card
+    // is clipped, so it only counts when no ancestor card clips it.
+    const ring = await page.evaluate(() => {
+      const el = document.activeElement;
+      const card = el.closest(".work-card, .card");
+      const cardRing = card && getComputedStyle(card).outlineStyle !== "none";
+      const after = getComputedStyle(el, "::after").outlineStyle !== "none";
+      const clipped = card && getComputedStyle(card).overflow === "hidden";
+      return { cardRing, afterVisible: after && !clipped };
+    });
+    if (!a.outline && !ring.cardRing && !ring.afterVisible) fail(`@${width} focus not visible on <${a.tag}> "${a.text}"`);
   }
   report.notes.push(`@${width} tab order (${stops.length} stops): ${stops.slice(0, 14).map((s) => s.text || s.tag).join(" → ")} …`);
 
