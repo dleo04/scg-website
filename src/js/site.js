@@ -115,6 +115,51 @@
     show(0);
   });
 
+  // ---- Stat count-up -------------------------------------------------------
+  // Final values are already in the HTML. With motion allowed, the aria-hidden digits are
+  // reset to 0 and count up (easeOutCubic, 1600ms, staggered 120ms) the first time the strip
+  // is ≥ 40% visible; once per page load. Screen readers read the static visually-hidden copy.
+  const countStrip = document.querySelector("[data-countup]");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (countStrip && !reduceMotion && "IntersectionObserver" in window && "requestAnimationFrame" in window) {
+    const nums = [...countStrip.querySelectorAll("[data-count-to]")];
+    const fmt = new Intl.NumberFormat("en-US");
+    const DURATION = 1600, STAGGER = 120;
+    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+    // Lock each number's final rendered width before showing 0, so nothing shifts.
+    nums.forEach((el) => {
+      el.style.width = `${el.getBoundingClientRect().width}px`;
+      el.textContent = fmt.format(0);
+    });
+
+    const run = () => {
+      nums.forEach((el, i) => {
+        const target = parseInt(el.dataset.countTo, 10) || 0;
+        let start = null;
+        const tick = (now) => {
+          if (start === null) start = now + i * STAGGER;
+          const t = Math.min(1, Math.max(0, (now - start) / DURATION));
+          el.textContent = fmt.format(Math.round(target * easeOutCubic(t)));
+          if (t < 1) requestAnimationFrame(tick);
+          else { el.textContent = fmt.format(target); el.style.width = ""; }
+        };
+        requestAnimationFrame(tick);
+      });
+    };
+
+    let firstCallback = true;
+    const io = new IntersectionObserver((entries) => {
+      const visible = entries.some((e) => e.isIntersecting);
+      const alreadyInView = firstCallback;
+      firstCallback = false;
+      if (!visible) return;
+      io.disconnect();
+      if (alreadyInView) setTimeout(run, 300); else run();
+    }, { threshold: 0.4 });
+    io.observe(countStrip);
+  }
+
   // ---- Reveal on scroll (skipped under reduced motion) --------------------
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const revealables = document.querySelectorAll("[data-reveal]");

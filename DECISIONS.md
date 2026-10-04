@@ -252,3 +252,18 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 - **Icons centred against the whole row.** Each icon is vertically centred on the full row (label + body; measured 0px offset with one- and two-line bodies), sits in one left column per card, and has a 14px gap to the text. The request suggested moving the icon into a separate grid column. That would put a `<span>` directly inside the `<dl>`'s row `<div>`, which is invalid HTML (only `<dt>`/`<dd>` are allowed there), so the icon stays inside `<dt>` and is positioned against the row (`top: 50%` + `translateY(-50%)`). The visual result is the same.
 - **Title spacing.** The gap from the title to the Objective row is 28px on desktop and 22px on mobile; the gaps between rows stay at 14px.
 - **Cards at rest.** All three measure at the identical top at every width (for example 1930.7px at 1440). The offset you saw is the 4px hover lift under the cursor; it is not a layout issue.
+
+## Stage 1o (stat count-up)
+
+- **Implementation.** Vanilla JS in `site.js` and CSS, no libraries. An IntersectionObserver (threshold 0.4) fires once and then disconnects. If its first callback already reports the strip in view, the count starts after 300ms. Each number animates from 0 to its target in 1600ms (easeOutCubic, requestAnimationFrame), staggered 120ms left to right.
+- **Data-driven.** The `parseStat` filter splits each `site.json → stats` value into prefix, number and suffix ("50+", "1,200+", "$3M" all work). Numbers are formatted with `toLocaleString("en-US")` at build time and `Intl.NumberFormat("en-US")` in the browser. Verified with a scratch data copy ("45+", "1,200+"): it counted 102, 269 … 1,083 … 1,200 and screen readers got "1,200+".
+- **Accessibility.**
+  - The final values are rendered in the HTML.
+  - Each `<dd>` has a visually hidden static copy for screen readers, and the animated digits are `aria-hidden`. This is used instead of an `aria-label` on the stat: `aria-label` on a `<div>`/`<dd>` is not announced reliably and axe flags it on generic elements. No `aria-live`.
+  - Reduced motion and no-JS both show the final numbers (verified; values never change).
+- **No layout shift.** Digits use tabular figures and a `ch`-based `min-width` for the final length. The script locks each number's measured final width before resetting to 0 and releases it when finished. Digits are right-aligned inside that box, so the "+" never moves.
+- **Verified in Chrome:**
+  - In view on load at 1440×900 and 360×780; scrolled into view at 1440×640, 768×600 and 360×560.
+  - Fires once (still final after scrolling away and back). Labels never move and the "+" positions are constant during the count.
+  - Layout shift attributed to the stat strip is 0.0000 in every case. The page's tiny total (0.0001–0.0004) is a single shift about 27ms after load in the nav links and the hero EY line during the web-font swap. It existed before this change and is far below the 0.1 "good" threshold.
+- **Frame sequences** (not committed): `.ui-check/countup-frames-360.png` and `countup-frames-1440.png`.

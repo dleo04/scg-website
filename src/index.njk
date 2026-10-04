@@ -39,11 +39,18 @@ hideBanner: true
 
   {# 2. Stat strip: verified stats only ------------------------------------ #}
   {%- if verifiedStats.length %}
-  <section class="stat-strip" aria-label="SCG at a glance">
+  {#- Count-up stats: the final values are in the HTML (no-JS, SEO, screen readers); site.js
+      animates the aria-hidden digits from 0 once, when the strip scrolls into view. -#}
+  <section class="stat-strip" aria-label="SCG at a glance" data-countup>
     <div class="container">
       <dl class="stat-strip__list">
         {%- for s in verifiedStats %}
-        <div class="stat-strip__item"><dt>{{ s.label }}</dt><dd>{{ s.value }}</dd></div>
+        {%- set n = s.value | parseStat %}
+        <div class="stat-strip__item"><dt>{{ s.label }}</dt><dd>
+          {%- if n -%}
+          <span class="visually-hidden">{{ s.value }}</span><span class="stat-strip__value" aria-hidden="true">{{ n.prefix }}<span class="stat-strip__num" data-count-to="{{ n.target }}" style="--chars: {{ n.chars }}">{{ n.formatted }}</span>{{ n.suffix }}</span>
+          {%- else -%}{{ s.value }}{%- endif -%}
+        </dd></div>
         {%- endfor %}
       </dl>
     </div>

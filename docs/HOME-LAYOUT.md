@@ -88,6 +88,13 @@ Sticky at the top of every page and always solid white (`--paper`) from the firs
 ### 2. Stat strip
 Exactly the verified stats in `data/site.json -> stats` (max 4), currently **50+ Alumni · 40+ Client projects · 15+ Placements each year** (figures supplied by SCG leadership). No extra wording or claims beside them. Big number in `--scg-red` (Montserrat 800, ~40-48px), small uppercase letter-spaced label in `--ink-2` beneath. Hairline vertical dividers. Founded 2020, Free to join and the EY partnership length moved to `site.json -> facts` for `/about/` and `/join/`; the EY partnership itself is stated in the hero line.
 
+**Count-up** (vanilla JS in `src/js/site.js`, no library): the first time the strip is ≥ 40% visible (IntersectionObserver, threshold 0.4, disconnected after it fires, so once per page load), each number counts from 0 to its target in 1600ms with easeOutCubic via requestAnimationFrame, staggered 120ms left to right. If the strip is already in view on load, it starts after 300ms. Only the digits change; prefix/suffix (e.g. "+") stay put.
+- Targets come from `site.json -> stats` values: the `parseStat` filter splits "50+", "1,200+", etc. into prefix / number / suffix; numbers are formatted with thousands separators.
+- The final values are in the HTML, so no-JS visitors, search engines and screen readers get them. Each `<dd>` has a visually hidden static copy ("50+") for screen readers; the animated digits are `aria-hidden`. No `aria-live`.
+- With `prefers-reduced-motion: reduce` (or no IntersectionObserver), nothing animates and the final numbers show.
+- No layout shift: digits use `tabular-nums`, the number has `min-width` in `ch` for its final length, and the script locks each number's exact final width before showing 0 (released when done). Digits are right-aligned within that box so the "+" never moves. Measured layout shift from the strip: 0.
+
+
 ### 3. Community
 - H2 **"Our Community"** with the accent word styled in `--scg-red` (the way the reference accents one letter/word; use your own treatment).
 - Copy (final, supplied by SCG): two paragraphs, on (1) a small, close-knit group founded in 2020 whose members look out for one another, and (2) community beyond client work: weekly workshops, team meetings, social outings and the semesterly hikes. The hikes cover the former "signature tradition" placeholder.

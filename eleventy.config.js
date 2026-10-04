@@ -26,6 +26,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("versioned", filters.versioned);
   eleventyConfig.addFilter("scopeLine", filters.scopeLine);
   eleventyConfig.addFilter("logoBox", filters.logoBox);
+  eleventyConfig.addFilter("parseStat", filters.parseStat);
 
   // Static files. Brand assets are copied as-is (never transformed).
   // Originals in assets/logos/ are not published; pages use the small copies in assets/generated/logos/.

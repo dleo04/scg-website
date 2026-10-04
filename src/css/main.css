@@ -531,6 +531,9 @@ main:focus { outline: none; }
 .stat-strip__item { display: flex; flex-direction: column-reverse; justify-content: flex-end; padding: 10px 6px; } /* column-reverse: flex-end = top, so numbers align */
 .stat-strip__item + .stat-strip__item { border-left: 1px solid var(--line); }
 .stat-strip__item dd { margin: 0; font-family: var(--font-head); font-weight: 800; font-size: clamp(2.25rem, 1.75rem + 1.6vw, 3rem); line-height: 1.05; color: var(--scg-red); } /* ≥ 5.2:1 on the wash */
+/* Count-up digits: tabular figures and a min-width for the final value's length, so the
+   layout never shifts while the numbers change (site.js also locks the exact width). */
+.stat-strip__num { display: inline-block; min-width: calc(var(--chars, 2) * 1ch); font-variant-numeric: tabular-nums; text-align: right; }
 .stat-strip__item dt { margin-top: 8px; font-family: var(--font-head); font-weight: 700; font-size: .6875rem; line-height: 1.35; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
 @media (min-width: 560px) {
   .stat-strip__item { padding: 12px 16px; }
