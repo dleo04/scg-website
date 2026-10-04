@@ -193,6 +193,8 @@
       "client": "UMD Dynamic Dance",
       "client_type": "UMD student organization",
       "featured": false,
+      "logo": "assets/logos/dynamicdancelogo-trimmed.png",
+      "logo_bg": "#000000",
       "summary": "UMD Dynamic Dance is a hip-hop dance team with 25 members and a 7-8 member E-Board. It asked for support improving administrative efficiency, knowledge management and marketing.",
       "disciplines": [
         "Operations & People",
@@ -310,7 +312,8 @@
       "client": "Hy-Swap",
       "client_type": null,
       "featured": false,
-      "logo": "assets/logos/hyswaplogo",
+      "logo": "assets/logos/hyswaplogo-trimmed.png",
+      "logo_bg": "#FDFEFE",
       "disciplines": [
         "Strategy & Research",
         "Operations & People"
@@ -354,7 +357,12 @@
       "client": "Wind Terpines",
       "client_type": "UMD student organization",
       "featured": false,
-      "logo": "assets/logos/windterpineslogo",
+      "logo": "assets/logos/windterpineslogo-trimmed.png",
+      "logo_bg": "#F7F4EF",
+      "logo_offset": {
+        "x": 0,
+        "y": -0.0289
+      },
       "disciplines": [
         "Operations & People",
         "Strategy & Research"
@@ -397,7 +405,8 @@
       "client": "Business Beyond Borders",
       "client_type": "UMD student organization",
       "featured": false,
-      "logo": "assets/logos/bbblogo",
+      "logo": "assets/logos/businessbeyondborderslogo-trimmed.png",
+      "logo_bg": "#9C0C0C",
       "disciplines": [
         "Operations & People",
         "Strategy & Research"
@@ -439,7 +448,8 @@
       "client": "SpeechPundit",
       "client_type": "Startup",
       "featured": false,
-      "logo": "assets/logos/speechpunditlogo",
+      "logo": "assets/logos/speechpunditlogo-trimmed.png",
+      "logo_bg": "#FFFFFF",
       "disciplines": [
         "Strategy & Research",
         "Product & Design"
@@ -486,7 +496,8 @@
       "client": "DefenX",
       "client_type": "Startup",
       "featured": false,
-      "logo": "assets/logos/defenxlogo",
+      "logo": "assets/logos/defenxlogo-trimmed.png",
+      "logo_bg": "#F7F4EF",
       "disciplines": [
         "Strategy & Research"
       ],
@@ -526,7 +537,8 @@
       "client": "DefenX",
       "client_type": "Startup",
       "featured": false,
-      "logo": "assets/logos/defenxlogo",
+      "logo": "assets/logos/defenxlogo-trimmed.png",
+      "logo_bg": "#F7F4EF",
       "disciplines": [
         "Strategy & Research"
       ],
@@ -568,7 +580,8 @@
       "short_name": "MPDS",
       "client_type": "UMD student organization",
       "featured": false,
-      "logo": "assets/logos/mpdslogo",
+      "logo": "assets/logos/debatelogo-trimmed.png",
+      "logo_bg": "#D8213F",
       "disciplines": [
         "Operations & People",
         "Strategy & Research"
@@ -611,7 +624,8 @@
       "short_name": "ULR",
       "client_type": "UMD student organization",
       "featured": false,
-      "logo": "assets/logos/ulrlogo",
+      "logo": "assets/logos/undergraduatelawlogo-trimmed.png",
+      "logo_bg": "#980B2D",
       "disciplines": [
         "Operations & People",
         "Strategy & Research"
@@ -655,7 +669,12 @@
       "short_name": "SER",
       "client_type": "UMD student organization",
       "featured": false,
-      "logo": "assets/logos/serlogo",
+      "logo": "assets/logos/smithequitylogo.png",
+      "logo_bg": "#5A5A5A",
+      "logo_offset": {
+        "x": 0.0518,
+        "y": -0.0695
+      },
       "disciplines": [
         "Strategy & Research",
         "Operations & People"
@@ -697,7 +716,8 @@
       "client": "FBLA at UMD",
       "client_type": "UMD student organization",
       "featured": false,
-      "logo": "assets/logos/fblalogo",
+      "logo": "assets/logos/fblalogo-trimmed.png",
+      "logo_bg": "#F3AB19",
       "disciplines": [
         "Operations & People"
       ],

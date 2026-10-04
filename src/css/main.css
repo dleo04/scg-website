@@ -588,8 +588,8 @@ main:focus { outline: none; }
 .work-card__logo-tile picture { display: contents; }
 .work-card__logo-tile source { display: none; }
 /* Never cropped or distorted (contain); sized with the tile's container units. Wide logos by
-   width (55%), square ones by height; everything ≤ 60% wide and ≤ 55% tall, square logos
-   ≤ 100px, and all capped at half the file's pixel height so 2x screens stay crisp. */
+   width (55%), square/tall ones by height (50%); everything ≤ 60% wide and ≤ 55% tall,
+   square logos ≤ 100px, and never enlarged past the file's own pixel size (1x). */
 /* --off-x/--off-y (projects.json → logo_offset) correct uneven built-in margins in opaque logo
    files, as a fraction of the logo's own rendered size, so the artwork is optically centred. */
 .work-card__logo-tile img {
@@ -597,7 +597,7 @@ main:focus { outline: none; }
   transform: translate(calc(var(--off-x, 0) * 100%), calc(var(--off-y, 0) * 100%));
 }
 .work-card__logo-tile--wide img { width: 55cqw; height: auto; }
-.work-card__logo-tile--square img { height: min(55cqh, 100px, var(--logo-max-h)); width: auto; }
+.work-card__logo-tile--square img { height: min(50cqh, 100px, var(--logo-max-h)); width: auto; }
 
 /* Compact body: 20px (mobile) / 24px (768+) padding. */
 .work-card__body { display: flex; flex-direction: column; padding: 20px; flex: 1; }
@@ -736,7 +736,7 @@ html.dialog-open { overflow: hidden; }
   transform: translate(calc(var(--off-x, 0) * 100%), calc(var(--off-y, 0) * 100%));
 }
 .project-banner--wide img { width: 50cqw; height: auto; }
-.project-banner--square img { height: min(55cqh, 110px, var(--logo-max-h)); width: auto; }
+.project-banner--square img { height: min(50cqh, 110px, var(--logo-max-h)); width: auto; }
 .project-banner--missing { border-bottom: 2px dashed var(--ph-border); }
 /* Client name on a neutral tile when there is no logo file (cards and banner). */
 .logo-tile__name { padding: 0 8%; text-align: center; font-family: var(--font-head); font-weight: 700; color: var(--ink); line-height: 1.2; font-size: clamp(1.125rem, 6cqw, 1.75rem); text-wrap: balance; }

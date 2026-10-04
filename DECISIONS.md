@@ -416,3 +416,34 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - ui-check: 24 routes × 360/768/1280/1440, axe clean, no horizontal scroll.
   - Equal-height rows (535/507px at 1440).
   - Contrast: 30 pairings plus the hero pass. `check:notes`: 0 hits on 24 pages.
+
+## Stage 2c (client logos on the project tiles)
+
+- **Files matched** (case-insensitive, any extension), all in `assets/logos/`. Originals are unchanged (checksums compared before and after).
+
+  | Project | File used | `logo_bg` | Why that colour |
+  |---|---|---|---|
+  | DefenX Financial Management, DefenX Client Outreach | `defenxlogo-trimmed.png` (from `defenxlogo.png`) | `#F7F4EF` | transparent, dark artwork → `--paper-2` |
+  | FBLA at UMD | `fblalogo-trimmed.png` (from `.jpg`) | `#F3AB19` | the file's own gold edge |
+  | MPDS | `debatelogo-trimmed.png` (from `.jpg`, tolerance 60) | `#D8213F` | the shell-panel red around the cropped artwork |
+  | Smith Equity Research | `smithequitylogo.png` (untrimmed) | `#5A5A5A` | dominant edge grey of its gradient |
+  | Undergraduate Law Review | `undergraduatelawlogo-trimmed.png` (from `.jpg`) | `#980B2D` | the file's own maroon edge |
+  | Business Beyond Borders | `businessbeyondborderslogo-trimmed.png` (from `.jpg`; nothing to trim) | `#9C0C0C` | the red corners around the white circle |
+  | Hy-Swap | `hyswaplogo-trimmed.png` (from `.avif`) | `#FDFEFE` | the exact near-white of the file's border |
+  | SpeechPundit | `speechpunditlogo-trimmed.png` (from `.jpg`) | `#FFFFFF` | the file's white background |
+  | UMD Dynamic Dance | `dynamicdancelogo-trimmed.png` (from `.jpg`) | `#000000` | the file's black background |
+  | Wind Terpines | `windterpineslogo-trimmed.png` (from `.png`) | `#F7F4EF` | transparent, dark artwork → `--paper-2` |
+
+- **Wind Terpines.** The brief said it had no logo yet, but `windterpineslogo.png` is in `assets/logos/` (added with the other files), and the brief's own rule is "logo if the file exists". It is therefore shown. To go back to the client-name tile, delete `logo` and `logo_bg` from that project.
+- **Trimming.** `npm run trim-logos` (`scripts/trim-logos.mjs` + `lib/logo-tools.js`):
+  - Reads the dominant colour of the outer 2px ring (or detects transparency) and crops to the artwork's bounding box.
+  - Ignores a stray 1px export frame line (the Debate file has one down its right edge).
+  - Writes `<name>-trimmed.png` losslessly; pixels are copied, never recoloured or resized.
+  - It also prints the dominant colour of the trimmed copy's own edge (what actually touches the tile), which is the `logo_bg` used.
+  - `make-assets` now samples `logo_bg` the same way (dominant edge colour instead of one corner pixel) whenever `logo_bg` is omitted.
+- **Smith Equity Research is untrimmed.** Its background is a grey radial gradient (lighter towards the left/bottom-left, #5A at the top/right). Cropping cut into the light part and made a hard-edged box, so the full file is used on its dominant edge grey and the visible artwork is centred with `logo_offset {x: 0.0518, y: -0.0695}`. A lighter box is still visible on the left side; no flat fill can match a gradient. **Needs a transparent or flat-background version from SER.**
+- **MPDS.** The artwork sits on a textured shell pattern. The crop around the text and flag keeps faint fragments of the shell lines, which end at the crop edge. Barely visible at card size; a flat-background version would remove them.
+- **Wind Terpines offset.** The turbine blades have white outlines that are invisible on the light tile, so the visible artwork sat ~3px low; `logo_offset {y: -0.0289}` centres the visible part.
+- **Sizing (CSS only; no card/dialog/page layout change).** Square/tall logos are now 50% of the tile height (was 55%); wide logos stay at 55% of the width, max 55% of the height. The cap is now 1x the file's pixel height (was ½ for 2x crispness); no logo is enlarged past its own size.
+- **Resolution.** On the dialog/page banner (210px tall), SpeechPundit (451×172 after trimming) shows at 303×116, so 1.5 device pixels per CSS pixel. That is sharp on standard screens and slightly soft on 2x/retina screens. Alliom (200×200) shows at 1.9x. All other logos have 2x or more everywhere. A larger SpeechPundit file would help.
+- **Measured centring** of the visible artwork (pixels > 40 levels from `logo_bg`, from 2x captures) for all 15 tiles on the /projects/ cards, the dialog banner and the project page banner at 768, 1280 and 1440: worst offset 0.88px (requirement: 2px). The measurement script reads the dialog from viewport crops; element screenshots of the top-layer dialog are unreliable.

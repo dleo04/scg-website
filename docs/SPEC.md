@@ -164,7 +164,7 @@ From `site.json → partners`. Keep the EY narrative but shorten and make it fac
 | `disciplines`, `fits` (lists) | recommended | chips in the dialog/page; `disciplines` must be in the file's list; `fits` shown as "(suggested)", `fit_inferred: true` until officers confirm |
 | `team` {`size`, `roles`, `majors`}, `links` [{`label`, `url`}] | no | only filled fields render; never invent members or majors |
 | `logo` | no | the client's logo, unaltered. May omit the extension (`assets/logos/hyswaplogo`): any `.png/.jpg/.jpeg/.webp/.svg` with that name is used. Without a file the tile shows the client name on a neutral background. |
-| `logo_bg` | no | tile color behind the logo; if omitted it is sampled from the logo's corner (neutral `#F7F4EF` for transparent logos) |
+| `logo_bg` | no | tile color behind the logo; if omitted it is the dominant color of the logo's outer 2px edge (neutral `#F7F4EF` for transparent logos) |
 | `logo_offset` {`x`, `y`} | no | nudges a logo with uneven built-in margins (fraction of its rendered size) |
 
 | Engagement field | Required | Notes |

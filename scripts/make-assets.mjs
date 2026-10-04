@@ -11,6 +11,7 @@ import path from "node:path";
 import sharp from "sharp";
 import { ROOT, readJson } from "../lib/load-data.js";
 import { resolveLogo } from "../lib/projects.js";
+import { edgeColor } from "../lib/logo-tools.js";
 
 const PH_DIR = path.join(ROOT, "assets/placeholders");
 const GEN_DIR = path.join(ROOT, "assets/generated");
@@ -154,10 +155,10 @@ for (const p of projects) {
   const webp = await base.clone().webp({ lossless: true }).toBuffer({ resolveWithObject: true });
   fs.writeFileSync(path.join(GEN_DIR, "projects", `${p.id}.webp`), webp.data);
   await base.clone().png({ compressionLevel: 9 }).toFile(path.join(GEN_DIR, "projects", `${p.id}.png`));
-  // Background colour sampled from the logo's corner (used when logo_bg is not set):
-  // transparent → a light neutral, opaque → that colour.
-  const corner = await sharp(src).ensureAlpha().extract({ left: 0, top: 0, width: 1, height: 1 }).raw().toBuffer();
-  const sampledBg = corner[3] < 16 ? "#F7F4EF" : "#" + [corner[0], corner[1], corner[2]].map((v) => v.toString(16).padStart(2, "0")).join("").toUpperCase();
+  // Background colour sampled from the logo's edge (used when logo_bg is not set): the
+  // dominant colour of the outer 2px ring; transparent → a light neutral (--paper-2).
+  const edge = await edgeColor(src);
+  const sampledBg = edge.transparent ? PAPER_2 : edge.hex;
   manifest.projectLogos[p.id] = {
     sampledBg,
     webp: `/assets/generated/projects/${p.id}.webp`,
