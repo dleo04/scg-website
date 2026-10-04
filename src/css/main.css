@@ -575,22 +575,32 @@ main:focus { outline: none; }
 .work-card__media .ph, .work-card__media .media, .work-card__logo-tile { width: 100%; min-width: 0; aspect-ratio: 8 / 3; min-height: 180px; max-height: 190px; }
 @media (min-width: 1024px) { .work-card__media .ph, .work-card__media .media, .work-card__logo-tile { min-height: 0; max-height: none; } }
 .work-card__media .ph, .work-card__media .media { border-radius: 0; border-width: 0 0 2px; }
+/* Flex-centred (not grid): with <picture> as display: contents, its <source> child (which
+   Chrome renders as display: block) became a second grid row and pushed the logo 16-32px
+   below centre. The dashed divider is a border, so it is outside the centring box. */
 .work-card__logo-tile {
-  container-type: size; display: grid; place-items: center; overflow: hidden;
+  container-type: size; display: flex; align-items: center; justify-content: center; overflow: hidden;
   background: var(--tile-bg); border-bottom: 2px dashed var(--ph-border);
 }
 .work-card__logo-tile picture { display: contents; }
+.work-card__logo-tile source { display: none; }
 /* Never cropped or distorted (contain); sized with the tile's container units. Wide logos by
    width (55%), square ones by height; everything ≤ 60% wide and ≤ 55% tall, square logos
    ≤ 100px, and all capped at half the file's pixel height so 2x screens stay crisp. */
-.work-card__logo-tile img { object-fit: contain; max-width: 60cqw; max-height: min(55cqh, var(--logo-max-h)); }
+/* --off-x/--off-y (projects.json → logo_offset) correct uneven built-in margins in opaque logo
+   files, as a fraction of the logo's own rendered size, so the artwork is optically centred. */
+.work-card__logo-tile img {
+  display: block; flex: none; object-fit: contain; max-width: 60cqw; max-height: min(55cqh, var(--logo-max-h));
+  transform: translate(calc(var(--off-x, 0) * 100%), calc(var(--off-y, 0) * 100%));
+}
 .work-card__logo-tile--wide img { width: 55cqw; height: auto; }
 .work-card__logo-tile--square img { height: min(55cqh, 100px, var(--logo-max-h)); width: auto; }
 
 /* Compact body: 20px (mobile) / 24px (768+) padding. */
 .work-card__body { display: flex; flex-direction: column; padding: 20px; flex: 1; }
 @media (min-width: 768px) { .work-card__body { padding: 24px; } }
-.work-card__title { font-size: 1.375rem; line-height: 1.25; margin: 0 0 16px; }   /* 22px */
+.work-card__title { font-size: 1.375rem; line-height: 1.25; margin: 0 0 22px; }   /* 22px; 22px below on mobile */
+@media (min-width: 1024px) { .work-card__title { margin-bottom: 28px; } }           /* 28px below on desktop */
 .work-card__title .card__link { color: var(--scg-red); text-decoration: none; }
 /* Underline only on hover (pointer devices) or keyboard focus; the whole card stays clickable. */
 @media (hover: hover) { .work-card:hover .card__link { text-decoration: underline; text-underline-offset: 4px; } }
@@ -601,12 +611,14 @@ main:focus { outline: none; }
 .work-card:has(.card__link:focus-visible) { outline: 3px solid var(--focus); outline-offset: 4px; }
 .work-card__term { color: var(--ink-2); font-weight: 600; font-size: .9375rem; }   /* 15px */
 .work-card__rows { display: grid; gap: 14px; margin: 0; }
-/* 28px icon + 12px gap; icon centred on the label's first line (label line-height 1.4). */
-.work-card__row { --icon: 28px; position: relative; padding-left: calc(var(--icon) + 12px); }
+/* Icon column (28px) + 14px gap. The icon is vertically centred against the WHOLE row
+   (label + body, however many lines). It stays inside <dt> so the <dl> markup is valid, and
+   is positioned against the row rather than moved into a separate grid column. */
+.work-card__row { --icon: 28px; position: relative; padding-left: calc(var(--icon) + 14px); }
 .work-card__row dt { font-family: var(--font-head); font-weight: 600; font-size: .9375rem; line-height: 1.4; }   /* 15px semibold */
 .work-card__row dd { margin: 2px 0 0; color: var(--ink-2); font-size: .9375rem; line-height: 1.5; }               /* 15px / 1.5 */
 .work-card__icon {
-  position: absolute; left: 0; top: calc(0.7em - var(--icon) / 2); width: var(--icon); height: var(--icon);
+  position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: var(--icon); height: var(--icon);
   border-radius: 50%; display: grid; place-items: center; background: var(--scg-red); color: var(--paper);
 }
 .work-card__pending { font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }   /* muted one line; ink-2 on white 11.2:1 */

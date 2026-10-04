@@ -195,6 +195,17 @@ async function keyboard(width) {
     }
   }
 
+  // Card logos are centred in their tiles (guards against <picture>/<source> becoming an extra
+  // grid row). Image boxes may sit up to ~2.5px off centre on purpose (projects.json logo_offset).
+  {
+    const off = await page.$$eval(".work-card__logo-tile", (tiles) => tiles.map((t) => {
+      const tr = t.getBoundingClientRect(); const ir = t.querySelector("img").getBoundingClientRect();
+      const contentH = tr.height - parseFloat(getComputedStyle(t).borderBottomWidth);
+      return Math.abs((ir.top + ir.bottom) / 2 - (tr.top + contentH / 2));
+    }));
+    if (off.some((d) => d > 3)) fail(`@${width} card logo off-centre in its tile by ${off.map((d) => d.toFixed(1)).join(", ")}px`);
+  }
+
   // Project dialog: keyboard open, focus inside, trap, arrows, Escape, focus return.
   if (await page.$("[data-project-open]")) {
     const firstId = await page.$eval("[data-project-open]", (a) => a.dataset.projectOpen);

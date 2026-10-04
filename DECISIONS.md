@@ -229,3 +229,26 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - Objective and scope are both clamped to 2 lines.
   - "Read more" is pinned to the bottom with at least 16px above it. Cards measure 489×392 at 1280 and 495×408 at 1440 (was about 737×392), all three equal, with "Read more" at the same y.
 - **"Alliom sits higher".** At rest all three cards measure at the identical top (1930.7px at 1440). The offset was the 4px hover lift with the cursor over that card. The lift is now limited to pointer devices with `prefers-reduced-motion: no-preference`. Before this change, reduced motion only removed the transition and the card still jumped 4px; it now stays still (verified).
+
+## Stage 1n (card logo centring, icon centring, title spacing)
+
+- **Why the logos sat low.** The tile was a grid with `<picture>` set to `display: contents`, so `<picture>`'s `<source>` child (which Chrome renders as `display: block`) became a second grid item. The grid then had an empty 34px row plus the logo's row, and the logo was centred in the lower row, 16–32px below the tile centre.
+  - The tile is now a flex container (`align-items: center; justify-content: center`), `<source>` is `display: none`, and the image is `display: block`.
+  - The dashed divider is a `border-bottom`, so it is outside the centring box.
+  - ui-check now fails if a card logo's box is more than 3px off the tile centre.
+- **Uneven margins inside the files** (artwork margins top/bottom/left/right in pixels):
+  - Alliom 30/21/21/30 and School Harbor 125/149/256/255. These margins are opaque logo background, not transparency, so they are compensated with `logo_offset` in `projects.json`, as a fraction of the rendered logo size: Alliom `{x: 0.0225, y: -0.0225}`, School Harbor `{y: 0.0234}`.
+  - Product Space 22/43/78/89, transparent. It now uses `assets/logos/productspacelogo-trimmed.png`, cropped 21px at the bottom and 11px at the right to symmetric 22/22/78/78. Its pixels are byte-for-byte identical to that region of the original, which is unchanged.
+- **Measured** (artwork bounding box from 2x screenshots, excluding the rounded corners and the divider; offset of the artwork centre from the tile centre):
+
+  | Width | Alliom Δy / Δx | School Harbor Δy / Δx | Product Space Δy / Δx |
+  |---|---|---|---|
+  | 360 | 0.0 / 0.0 | 0.0 / 0.3 | 0.5 / 0.0 |
+  | 768 | 0.0 / 0.0 | −0.5 / 0.3 | −0.8 / 0.0 |
+  | 1280 | −0.6 / 0.0 | −0.1 / 0.0 | −0.1 / 0.0 |
+  | 1440 | −0.1 / 0.0 | −0.1 / 0.0 | −0.6 / 0.0 |
+
+  The worst case is 0.8px (target ≤ 2px).
+- **Icons centred against the whole row.** Each icon is vertically centred on the full row (label + body; measured 0px offset with one- and two-line bodies), sits in one left column per card, and has a 14px gap to the text. The request suggested moving the icon into a separate grid column. That would put a `<span>` directly inside the `<dl>`'s row `<div>`, which is invalid HTML (only `<dt>`/`<dd>` are allowed there), so the icon stays inside `<dt>` and is positioned against the row (`top: 50%` + `translateY(-50%)`). The visual result is the same.
+- **Title spacing.** The gap from the title to the Objective row is 28px on desktop and 22px on mobile; the gaps between rows stay at 14px.
+- **Cards at rest.** All three measure at the identical top at every width (for example 1930.7px at 1440). The offset you saw is the 4px hover lift under the cursor; it is not a layout issue.
