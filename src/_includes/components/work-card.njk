@@ -1,7 +1,7 @@
 {#- "Our Work" case-study card (docs/HOME-LAYOUT.md block 4), sized to the reference's
     proportions. Image area: the client logo on a tile of its own background colour
     (projects.json → logo, logo_bg); a labeled placeholder only when there is no logo yet.
-    Rows: Objective = tagline (max 3 lines), Scope = first two scope items
+    Rows: Objective = tagline (max 2 lines), Scope = first two scope items
     joined into one line (max 2 lines), Impact = outcome (max 2 lines) or a muted
     "Results coming soon". Skills stay in the dialog and on the project page.
     The title link goes to /projects/<id>/ and, with JS, opens the project dialog. -#}
@@ -27,11 +27,11 @@
     </h{{ headingLevel }}>
     <dl class="work-card__rows">
       <div class="work-card__row">
-        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg></span>Objective</dt>
-        <dd class="clamp clamp--3">{{ p.tagline | tbd | safe }}</dd>
+        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg></span>Objective</dt>
+        <dd class="clamp clamp--2">{{ p.tagline | tbd | safe }}</dd>
       </div>
       <div class="work-card__row">
-        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 6h11M9 12h11M9 18h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="4.5" cy="6" r="1.4" fill="currentColor"/><circle cx="4.5" cy="12" r="1.4" fill="currentColor"/><circle cx="4.5" cy="18" r="1.4" fill="currentColor"/></svg></span>Scope</dt>
+        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M9 6h11M9 12h11M9 18h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="4.5" cy="6" r="1.4" fill="currentColor"/><circle cx="4.5" cy="12" r="1.4" fill="currentColor"/><circle cx="4.5" cy="18" r="1.4" fill="currentColor"/></svg></span>Scope</dt>
         <dd class="clamp clamp--2">
           {%- if p.scope | isTbd %}<span class="tbd" data-placeholder="true" data-todo="[TBD: scope for {{ p.title }}]">[TBD: scope]</span>
           {%- else %}{{ p | scopeLine | tbd | safe }}{% endif -%}
@@ -39,7 +39,7 @@
       </div>
       {%- if not (p.outcome | isTbd) or not env.hidePlaceholders %}
       <div class="work-card__row">
-        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 18l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 8h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Impact</dt>
+        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M4 18l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 8h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Impact</dt>
         {%- if p.outcome | isTbd %}
         <dd class="work-card__pending" data-placeholder="true" data-todo="[TBD: outcome for {{ p.title }} (projects.json → outcome)]">Results coming soon</dd>
         {%- else %}

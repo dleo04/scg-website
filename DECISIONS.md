@@ -214,3 +214,18 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 - **Focus ring bug fixed.** The stretched link's ring was drawn on its `::after` outside the card, and the card's `overflow: hidden` clipped it, so keyboard users saw only the underline (true since stage 1d). The ring is now drawn on the card itself (`.work-card:has(.card__link:focus-visible)`): 3px gold on the dark band, 9.3:1. ui-check now treats a `::after` ring inside a clipping card as invisible.
 - **Equal height.** Cards are equal height with "Read more" at the same position on desktop (measured equal at 1280 and 1440).
 - **Removed CSS.** The unused `.ph-inline` and `.chips--sm` rules were removed while rewriting this block; nothing has used them since stage 1d.
+
+## Stage 1m (compact Our Work cards with banner tiles)
+
+- **Banner tile.** The tile is 8/3. The desktop cards are 390–408px wide (not 590px), so it is 146–152px tall there, which is 30–31% of the card height, the requested "about a third". At 360px, 8/3 alone would give only 123px, so below 1024px the tile is clamped to 180–190px (measured: 180 at 360, 190 at 768).
+  - **Bug found and fixed in the process:** the 180px minimum height made the browser derive a 480px minimum *width* through the aspect ratio, so mobile tiles overflowed the card and logos sat off-centre. Pinning the tile to `width: 100%; min-width: 0` fixed it; logos measure 0px off-centre at every width.
+- **Logo sizing.** Wide logos are 55% of the tile width (School Harbor, Product Space); square logos are sized by height, all at most 55% of the tile height and 60% of its width.
+  - Alliom is 79–83px tall on desktop rather than the suggested 90–100px. The 55%-of-height cap on a ~150px tile allows at most about 83px, and the cap takes priority. It is 98–100px on mobile and tablet.
+  - Logos are still capped at half the file's pixel height, so they stay crisp at 2x.
+- **Compact body** (all measured):
+  - Padding 20px on mobile, 24px from 768px. The title is 22px with "(Fall 2025)" at 15px, then 16px to the first row.
+  - Rows are 14px apart. Labels are 15px semibold with 2px below; body text is 15px at line-height 1.5.
+  - Icons are 28px with a 14px glyph and a 12px gap, centred on the label's first line.
+  - Objective and scope are both clamped to 2 lines.
+  - "Read more" is pinned to the bottom with at least 16px above it. Cards measure 489×392 at 1280 and 495×408 at 1440 (was about 737×392), all three equal, with "Read more" at the same y.
+- **"Alliom sits higher".** At rest all three cards measure at the identical top (1930.7px at 1440). The offset was the 4px hover lift with the cursor over that card. The lift is now limited to pointer devices with `prefers-reduced-motion: no-preference`. Before this change, reduced motion only removed the transition and the card still jumped 4px; it now stays still (verified).

@@ -563,48 +563,55 @@ main:focus { outline: none; }
   position: relative; display: flex; flex-direction: column; height: 100%; background: var(--paper); color: var(--ink);
   border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: transform .2s ease, box-shadow .2s ease;
 }
-@media (hover: hover) { .work-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgb(0 0 0 / 0.35); } }
+/* Small hover lift (4px) on pointer devices only, and none at all under reduced motion. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .work-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgb(0 0 0 / 0.35); }
+}
 .work-card__media { position: relative; }
-/* Image area 16/11 (≈270-280px tall on desktop cards), same on all cards; dashed divider below. */
-.work-card__media .ph, .work-card__media .media { aspect-ratio: 16 / 11; border-radius: 0; border-width: 0 0 2px; }
+/* Banner tile: 8/3 on desktop (~150px on ~400px cards); 180-190px below 1024px so the logo
+   is not cramped on narrower single-column cards. Same height on all cards. */
+/* width: 100% + min-width: 0 stop the min-height from being turned into a minimum width
+   through the aspect ratio (180 × 8/3 = 480px), which overflowed narrow cards. */
+.work-card__media .ph, .work-card__media .media, .work-card__logo-tile { width: 100%; min-width: 0; aspect-ratio: 8 / 3; min-height: 180px; max-height: 190px; }
+@media (min-width: 1024px) { .work-card__media .ph, .work-card__media .media, .work-card__logo-tile { min-height: 0; max-height: none; } }
+.work-card__media .ph, .work-card__media .media { border-radius: 0; border-width: 0 0 2px; }
 .work-card__logo-tile {
-  aspect-ratio: 16 / 11; container-type: size; display: grid; place-items: center; overflow: hidden;
+  container-type: size; display: grid; place-items: center; overflow: hidden;
   background: var(--tile-bg); border-bottom: 2px dashed var(--ph-border);
 }
 .work-card__logo-tile picture { display: contents; }
-/* Never cropped or distorted (contain). Sizes use container units of the tile itself:
-   wide logos by width (60% of the tile), square ones by height (55%); everything ≤ 62% wide
-   and ≤ 60% tall, and capped at half the file's pixel height so 2x screens stay crisp. */
-.work-card__logo-tile img { object-fit: contain; max-width: 62cqw; max-height: min(60cqh, var(--logo-max-h)); }
-.work-card__logo-tile--wide img { width: 60cqw; height: auto; }
-.work-card__logo-tile--square img { height: min(55cqh, var(--logo-max-h)); width: auto; }
+/* Never cropped or distorted (contain); sized with the tile's container units. Wide logos by
+   width (55%), square ones by height; everything ≤ 60% wide and ≤ 55% tall, square logos
+   ≤ 100px, and all capped at half the file's pixel height so 2x screens stay crisp. */
+.work-card__logo-tile img { object-fit: contain; max-width: 60cqw; max-height: min(55cqh, var(--logo-max-h)); }
+.work-card__logo-tile--wide img { width: 55cqw; height: auto; }
+.work-card__logo-tile--square img { height: min(55cqh, 100px, var(--logo-max-h)); width: auto; }
 
-.work-card__body { display: flex; flex-direction: column; padding: 24px; flex: 1; }
-@media (min-width: 768px) { .work-card__body { padding: 32px; } }
-.work-card__title { font-size: 1.5rem; line-height: 1.2; margin: 0 0 24px; }   /* ~24px */
+/* Compact body: 20px (mobile) / 24px (768+) padding. */
+.work-card__body { display: flex; flex-direction: column; padding: 20px; flex: 1; }
+@media (min-width: 768px) { .work-card__body { padding: 24px; } }
+.work-card__title { font-size: 1.375rem; line-height: 1.25; margin: 0 0 16px; }   /* 22px */
 .work-card__title .card__link { color: var(--scg-red); text-decoration: none; }
 /* Underline only on hover (pointer devices) or keyboard focus; the whole card stays clickable. */
 @media (hover: hover) { .work-card:hover .card__link { text-decoration: underline; text-underline-offset: 4px; } }
 .work-card .card__link:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
 /* Keyboard focus ring on the whole card. It is drawn on the card itself because the card's
-   overflow: hidden (for the rounded tile corners) clipped the old ring on the link's ::after. */
+   overflow: hidden (for the rounded tile corners) would clip a ring on the link's ::after. */
 .work-card .card__link:focus-visible::after { outline: none; }
 .work-card:has(.card__link:focus-visible) { outline: 3px solid var(--focus); outline-offset: 4px; }
-.work-card__term { color: var(--ink-2); font-weight: 600; font-size: 1.125rem; }
-.work-card__rows { display: grid; gap: 26px; margin: 0 0 28px; }
-/* Icon column 28px (mobile) / 32px (desktop) + 16px gap; icon centred on the label's first line. */
-.work-card__row { --icon: 28px; position: relative; padding-left: calc(var(--icon) + 16px); }
-@media (min-width: 768px) { .work-card__row { --icon: 32px; } }
-.work-card__row dt { font-family: var(--font-head); font-weight: 600; font-size: 1.0625rem; line-height: 1.4; }   /* ~17px semibold */
-@media (min-width: 1024px) { .work-card__row dt { font-size: 1.125rem; } }                                       /* 18px */
-.work-card__row dd { margin: 4px 0 0; color: var(--ink-2); font-size: 1rem; line-height: 1.6; }                  /* 16px / 1.6 */
-@media (min-width: 1024px) { .work-card__row dd { font-size: 1.03125rem; } }                                    /* 16.5px */
+.work-card__term { color: var(--ink-2); font-weight: 600; font-size: .9375rem; }   /* 15px */
+.work-card__rows { display: grid; gap: 14px; margin: 0; }
+/* 28px icon + 12px gap; icon centred on the label's first line (label line-height 1.4). */
+.work-card__row { --icon: 28px; position: relative; padding-left: calc(var(--icon) + 12px); }
+.work-card__row dt { font-family: var(--font-head); font-weight: 600; font-size: .9375rem; line-height: 1.4; }   /* 15px semibold */
+.work-card__row dd { margin: 2px 0 0; color: var(--ink-2); font-size: .9375rem; line-height: 1.5; }               /* 15px / 1.5 */
 .work-card__icon {
   position: absolute; left: 0; top: calc(0.7em - var(--icon) / 2); width: var(--icon); height: var(--icon);
   border-radius: 50%; display: grid; place-items: center; background: var(--scg-red); color: var(--paper);
 }
 .work-card__pending { font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }   /* muted one line; ink-2 on white 11.2:1 */
-.work-card__more { margin-top: auto; font-family: var(--font-head); font-weight: 600; font-size: .9375rem; color: var(--scg-red); }
+/* Pinned to the bottom of every card (equal-height grid), at least 16px below the rows. */
+.work-card__more { margin-top: auto; padding-top: 16px; font-family: var(--font-head); font-weight: 600; font-size: .9375rem; color: var(--scg-red); }
 .work-card__more .arrow { display: inline-block; transition: transform .2s; }
 @media (hover: hover) { .work-card:hover .work-card__more .arrow { transform: translateX(3px); } }
 .clamp { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
