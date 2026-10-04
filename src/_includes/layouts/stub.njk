@@ -9,6 +9,8 @@ noindex: true
     <p class="eyebrow">{{ eyebrow or "Snider Consulting Group" }}</p>
     <h1 class="page-title">{{ title }}</h1>
     {{ content | safe }}
+    <p class="lede">This page is being prepared and will be available soon.</p>
+    <p><a class="link-arrow" href="/">Back to the home page <span aria-hidden="true">→</span></a></p>
     {{ tbdBlock("This page is built in stage " ~ stage ~ " of the site build.", "[TBD: page content, stage " ~ stage ~ "]") }}
   </div>
 </section>

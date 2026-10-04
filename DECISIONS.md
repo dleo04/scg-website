@@ -321,3 +321,35 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 
   - A third, coarser check on the zoomed 1440 crop reads −1.38px, because it includes the "&" and the overshoot of the round letters. All are within the 2px target.
 - **Unchanged:** logo size (52/56/64/72px), the 28px row gap and 16px stacked gap, centring on mobile, contrast (text 7.80–9.21:1, EY lettering 7.81–11.61:1, beam 6.21–9.22:1), and no horizontal scroll. In the row, the raised beam sits 56px from the band's top edge at 1440 (the minimum), with 87px below the content.
+
+## Stage 1s (dev notes off the public site)
+
+- **Default flipped.** Dev notes were shown by default and hidden with `HIDE_PLACEHOLDERS=1`. They are now hidden by default and shown only with `SHOW_PLACEHOLDERS=1` (`npm run dev:notes`). `getEnv()` forces them off when `SCG_ENV=production`, even if the flag is set (verified). `HIDE_PLACEHOLDERS` is gone.
+- **Removed from the default and production build** (found by scanning `_site` and the templates; before: 142 "TBD", 58 `data-todo`, 58 `data-placeholder`, 16 "PHOTO:", 1 "Stand-in" across 14 pages):
+  - **Home `/`:**
+    - The Community "Stand-in photo" badge (`src/index.njk`). The hero badge was already removed in stage 1h.
+    - In the project dialog templates (`components/project-detail.njk`): the "PHOTO: <project> team (16:9)" tiles and the "Approach / Outcome / Team details coming soon" blocks with `[TBD: …]`.
+    - The `data-todo` / `data-placeholder` attributes on the cards' "Results coming soon" (`components/work-card.njk`).
+  - **Every page:** footer `[TBD: shared club contact email or contact form]` (`partials/footer.njk`). The line is now omitted until `site.links.contact_email` exists; no contact details are invented.
+  - **`/projects/<id>/`** (5 pages, `components/project-detail.njk`): the PHOTO tile and the Approach/Outcome/Team note blocks.
+  - **Stub pages** `/projects/`, `/join/`, `/join/prepare/`, `/about/`, `/team/`, `/alumni/`, `/partners/`, `/work-with-us/` (`layouts/stub.njk`): "This page is built in stage N of the site build." and `[TBD: page content, stage N]`.
+  - **Not currently visible but gated the same way:** the recruiting banner's `[TBD link]` (`partials/banner.njk`), the placeholder Apply button and the generic placeholder blocks (`components/ui.njk`), and the `tbd` filter's `[TBD …]` spans (`lib/filters.js`, which strips the markers in public mode).
+- **What replaces them** (finished, no empty boxes or headings):
+  - **Project dialog and pages:**
+    - Outcome shows "Results coming soon." (the same public copy as the cards).
+    - Approach and Team are omitted until they have content; Team shows only the fields that exist.
+    - Challenge and Scope are omitted if ever empty.
+    - No image block until a real project image exists.
+  - **Stub pages:** "This page is being prepared and will be available soon." plus a "Back to the home page" link. This is new public copy, flagged for review.
+  - **Footer:** the contact item is simply absent.
+- **Kept on purpose:**
+  - "Results coming soon" on the cards and "Results coming soon." on project pages: intentional public copy.
+  - The new stub sentence (please confirm the wording).
+  - "(suggested)" after "Good fit if you study": public copy explaining inferred fits.
+  - Alt text is all visitor-facing (logos named, the group photo described, decorative backgrounds `alt=""`), and aria-labels read naturally. No HTML comments (Nunjucks `{# #}` comments never reach the output) and no `console.*` calls in `src/js`.
+- **Guard.** `scripts/check-notes.mjs` (`npm run check:notes`) runs in `npm run build` / `build:prod`. It fails on any of "TBD", "TODO", "placeholder", "PHOTO:", "not supplied", "Stand-in", "lorem ipsum" or "data/" in any built HTML.
+  - Current build: OK, 14 pages, 0 hits. Production build: OK.
+  - Proven to catch leaks: run against a notes-on build it reports 275 hits.
+  - It skips (with a message) when `SHOW_PLACEHOLDERS=1`.
+- **TODO-CONTENT.md.** `npm run todo` now renders a notes-on copy into `.notes-site/` (git-ignored) and lists every note by page from that copy, so the list stays complete while the real site stays clean. It now includes "Hero and community photos are stand-ins; replace with real photos and confirm photo license", alongside contact email, testimonials, outcomes, approach and team details.
+- **Verified** on all 14 routes at 360 and 1440px: no visible placeholder elements, no heading-only sections, no empty paragraphs or list items, no horizontal scroll; ui-check (axe, keyboard, 4 widths) and contrast pass.

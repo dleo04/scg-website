@@ -74,7 +74,7 @@ hideBanner: true
         <img src="{{ community.src }}" srcset="{{ community.jpgSrcset }}" sizes="(min-width: 1024px) 540px, 92vw"
              width="{{ community.width }}" height="{{ community.height }}" alt="{{ site.images.community_alt }}" loading="lazy" decoding="async">
       </picture>
-      {%- if site.images.community_is_standin and not env.production and not env.hidePlaceholders %}
+      {%- if site.images.community_is_standin and env.showPlaceholders %}
       <figcaption class="standin-tag" data-placeholder="true" data-todo="[TBD: candid collage of member photos for Our Community (site.json → images.community)]">Stand-in photo</figcaption>
       {%- endif %}
       {%- else %}

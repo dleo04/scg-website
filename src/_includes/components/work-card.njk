@@ -33,15 +33,16 @@
       <div class="work-card__row">
         <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M9 6h11M9 12h11M9 18h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="4.5" cy="6" r="1.4" fill="currentColor"/><circle cx="4.5" cy="12" r="1.4" fill="currentColor"/><circle cx="4.5" cy="18" r="1.4" fill="currentColor"/></svg></span>Scope</dt>
         <dd class="clamp clamp--2">
-          {%- if p.scope | isTbd %}<span class="tbd" data-placeholder="true" data-todo="[TBD: scope for {{ p.title }}]">[TBD: scope]</span>
+          {%- if (p.scope | isTbd) and env.showPlaceholders %}<span class="tbd" data-placeholder="true" data-todo="[TBD: scope for {{ p.title }}]">[TBD: scope]</span>
           {%- else %}{{ p | scopeLine | tbd | safe }}{% endif -%}
         </dd>
       </div>
-      {%- if not (p.outcome | isTbd) or not env.hidePlaceholders %}
+      {#- Impact always shows: the outcome, or the public line "Results coming soon". -#}
+      {%- if true %}
       <div class="work-card__row">
         <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M4 18l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 8h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Impact</dt>
         {%- if p.outcome | isTbd %}
-        <dd class="work-card__pending" data-placeholder="true" data-todo="[TBD: outcome for {{ p.title }} (projects.json → outcome)]">Results coming soon</dd>
+        <dd class="work-card__pending"{% if env.showPlaceholders %} data-placeholder="true" data-todo="[TBD: outcome for {{ p.title }} (projects.json → outcome)]"{% endif %}>Results coming soon</dd>
         {%- else %}
         <dd class="clamp clamp--2">{{ p.outcome | tbd | safe }}</dd>
         {%- endif %}

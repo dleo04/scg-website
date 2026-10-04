@@ -3,3 +3,4 @@ _site/
 assets/generated/
 .ui-check/
 .DS_Store
+.notes-site/

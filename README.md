@@ -22,3 +22,16 @@ See the "Open decisions and content needed" list in the chat message that came w
 
 ## Privacy note
 Your project spreadsheet contained individual contact names and emails. I deliberately left those out of `projects.json` so they cannot end up on a public site.
+
+## Development notes and the "no notes" check
+The live site never shows team notes (placeholder labels, `[TBD]` text, "Stand-in photo" badges). They are hidden by default and only appear when you ask for them:
+
+| Command | What you get |
+|---|---|
+| `npm run dev` | Local preview at http://localhost:8080, exactly as visitors see it (no notes). |
+| `npm run dev:notes` | Local preview **with** every note visible (labels, `[TBD]` markers, stand-in badges), so you can see what content is still missing. Development only. |
+| `npm run build` | Production-style build in `_site/`. Fails if any page contains a dev note (see below). `SCG_ENV=production` ignores `SHOW_PLACEHOLDERS` entirely. |
+| `npm run check:notes` | Re-checks the last build: fails if any page's HTML contains `TBD`, `TODO`, `placeholder`, `PHOTO:`, `not supplied`, `Stand-in`, `lorem ipsum` or `data/` (case-insensitive), and lists page + context for each hit. |
+| `npm run todo` | Rebuilds a notes-on copy in `.notes-site/` and writes `TODO-CONTENT.md`: every missing item by page, plus facts still to supply in `data/`. |
+
+When content is missing, the public site shows a finished fallback instead of a note (for example, "Results coming soon." on projects, no contact line in the footer until a club address exists). Fill in the item in `data/*.json` and it appears automatically.

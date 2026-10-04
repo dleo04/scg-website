@@ -8,7 +8,7 @@
       <span>{{ site.recruiting.banner_text }}</span>
       {% if cta.kind != "tbd" -%}
       <a href="{{ cta.href }}" rel="noopener">{{ cta.label }}<span aria-hidden="true"> →</span></a>
-      {%- else -%}
+      {%- elif env.showPlaceholders -%}
       <span class="tbd" data-placeholder="true" data-todo="[TBD link: recruiting.application_url or interest_form_url in data/site.json]">[TBD link]</span>
       {%- endif %}
     </p>

@@ -736,6 +736,7 @@ html.dialog-open { overflow: hidden; }
 .project-detail__section { margin-top: 32px; }
 .project-detail__section > h2, .project-detail__section > h3 { font-size: var(--step-1); }
 .project-detail__note { color: var(--ink-2); margin: 14px 0 0; }
+.project-detail__pending { color: var(--ink-2); font-style: italic; margin: 0; }   /* ink-2 on white 11.2:1 */
 .project-page .project-detail__head { padding-top: 16px; }
 .project-page .project-detail__media { margin-top: 8px; }
 

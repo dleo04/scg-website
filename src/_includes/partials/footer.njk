@@ -28,13 +28,12 @@
     <span class="gold-rule" aria-hidden="true"></span>
     <div class="site-footer__legal">
       <p>© {{ env.year }} Snider Consulting Group</p>
-      <p>
-        {%- if site.links.contact_email -%}
-          <a href="mailto:{{ site.links.contact_email }}">{{ site.links.contact_email }}</a>
-        {%- else -%}
-          {{ tbdText("[TBD: shared club contact email or contact form]") }}
-        {%- endif -%}
-      </p>
+      {#- Contact line only when a shared club address exists (never a personal one). -#}
+      {%- if site.links.contact_email %}
+      <p><a href="mailto:{{ site.links.contact_email }}">{{ site.links.contact_email }}</a></p>
+      {%- elif env.showPlaceholders %}
+      <p>{{ tbdText("[TBD: shared club contact email or contact form]") }}</p>
+      {%- endif %}
     </div>
     <p class="site-footer__note">Company names and logos are trademarks of their respective owners and are shown only to indicate where members work.</p>
   </div>

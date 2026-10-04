@@ -18,12 +18,15 @@
     </dl>
   </header>
 
+  {%- if not (p.challenge | isTbd) or env.showPlaceholders %}
   <section class="project-detail__section">
     <h{{ h }}>Challenge</h{{ h }}>
     {%- if p.challenge | isTbd %}{{ tbdBlock("Challenge coming soon", p.challenge or "[TBD: the client's challenge]") }}
     {%- else %}<p>{{ p.challenge | tbd | safe }}</p>{% endif %}
   </section>
+  {%- endif %}
 
+  {%- if not (p.scope | isTbd) or env.showPlaceholders %}
   <section class="project-detail__section">
     <h{{ h }}>Scope</h{{ h }}>
     {%- if p.scope | isTbd %}{{ tbdBlock("Scope coming soon", "[TBD: deliverables from the Statement of Work]") }}
@@ -32,17 +35,23 @@
     {%- if p.scope_detail %}<p class="project-detail__note">{{ p.scope_detail | tbd | safe }}</p>{% endif %}
     {%- endif %}
   </section>
+  {%- endif %}
 
+  {#- Approach: shown when written; otherwise a dev note in notes mode, nothing in public. -#}
+  {%- if not (p.approach | isTbd) or env.showPlaceholders %}
   <section class="project-detail__section">
     <h{{ h }}>Approach</h{{ h }}>
     {%- if p.approach | isTbd %}{{ tbdBlock("Approach coming soon", p.approach or "[TBD: how the team worked]") }}
     {%- else %}<p>{{ p.approach | tbd | safe }}</p>{% endif %}
   </section>
+  {%- endif %}
 
+  {#- Outcome: the result, or the public line "Results coming soon." (as on the cards). -#}
   <section class="project-detail__section">
     <h{{ h }}>Outcome</h{{ h }}>
-    {%- if p.outcome | isTbd %}{{ tbdBlock("Outcome coming soon", p.outcome or "[TBD: results for the client]") }}
-    {%- else %}<p>{{ p.outcome | tbd | safe }}</p>{% endif %}
+    {%- if not (p.outcome | isTbd) %}<p>{{ p.outcome | tbd | safe }}</p>
+    {%- elif env.showPlaceholders %}{{ tbdBlock("Outcome coming soon", p.outcome or "[TBD: results for the client]") }}
+    {%- else %}<p class="project-detail__pending">Results coming soon.</p>{% endif %}
   </section>
 
   {%- if p.skills and p.skills.length %}
@@ -60,18 +69,24 @@
   </section>
   {%- endif %}
 
+  {#- Team: only the details that exist; the whole section is omitted in public mode when
+      none exist yet (shown as a dev note with SHOW_PLACEHOLDERS=1). -#}
+  {%- set hasTeam = p.team and (not (p.team.size | isTbd) or not (p.team.roles | isTbd) or not (p.team.majors | isTbd)) %}
+  {%- if hasTeam %}
   <section class="project-detail__section">
     <h{{ h }}>Team</h{{ h }}>
-    {%- if (p.team.size | isTbd) and (p.team.roles | isTbd) and (p.team.majors | isTbd) %}
-    {{ tbdBlock("Team details coming soon", "[TBD: team size, roles and majors]") }}
-    {%- else %}
     <dl class="project-detail__meta">
-      <div><dt>Size</dt><dd>{{ (p.team.size | string) if p.team.size else "[TBD: team size]" | tbd | safe }}</dd></div>
-      <div><dt>Roles</dt><dd>{{ p.team.roles | join(", ") if p.team.roles.length else "[TBD: roles]" | tbd | safe }}</dd></div>
-      <div><dt>Majors</dt><dd>{{ p.team.majors | join(", ") if p.team.majors.length else "[TBD: majors]" | tbd | safe }}</dd></div>
+      {%- if not (p.team.size | isTbd) %}<div><dt>Size</dt><dd>{{ p.team.size }}</dd></div>{% endif %}
+      {%- if not (p.team.roles | isTbd) %}<div><dt>Roles</dt><dd>{{ p.team.roles | join(", ") }}</dd></div>{% endif %}
+      {%- if not (p.team.majors | isTbd) %}<div><dt>Majors</dt><dd>{{ p.team.majors | join(", ") }}</dd></div>{% endif %}
     </dl>
-    {%- endif %}
   </section>
+  {%- elif env.showPlaceholders %}
+  <section class="project-detail__section">
+    <h{{ h }}>Team</h{{ h }}>
+    {{ tbdBlock("Team details coming soon", "[TBD: team size, roles and majors]") }}
+  </section>
+  {%- endif %}
 
   {%- if p.links and p.links.length %}
   <section class="project-detail__section">
