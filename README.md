@@ -13,7 +13,7 @@ This folder is a ready-to-use starting repo for Claude Code. It contains the spe
 ## What is in here
 - `CLAUDE.md`: standing rules and goals.
 - `docs/SPEC.md`: pages, components, design tokens, interaction spec, SEO/accessibility targets, definition of done.
-- `data/`: `projects.json` (your five Fall 2025 projects), `faq.json`, `site.json`, `past-clients.json`, `alumni.json`, `team.json`.
+- `data/`: `projects.json` (client projects from Spring 2025, Fall 2025 and Spring 2026), `faq.json`, `site.json`, `past-clients.json`, `alumni.json`, `team.json`.
 - `assets/`: logo, icon, favicon, a stand-in group photo, and `PLACEHOLDERS.md`.
 - `prompts/`: five prompts for Claude Code.
 
@@ -37,9 +37,13 @@ The live site never shows team notes (placeholder labels, `[TBD]` text, "Stand-i
 When content is missing, the public site shows a finished fallback instead of a note (for example, "Results coming soon." on projects, no contact line in the footer until a club address exists). Fill in the item in `data/*.json` and it appears automatically.
 
 ## How to add a project
-Projects live in `data/projects.json`; the card, the dialog and the page `/projects/<id>/` are generated from it.
+Projects live in `data/projects.json`, one object per **client tile**; the card, the dialog and the page `/projects/<id>/` are generated from it.
 1. Copy an existing project object and give it a new `id` (lowercase letters, digits and dashes, e.g. `campus-food-pantry`). The `id` becomes the URL.
-2. Fill in `title`, `client`, `client_type`, `semester`, `tagline` (one sentence, shown as the card's Objective) and `summary`. Add `challenge`, `scope` (a list of deliverables), `skills`, `disciplines` (from the list at the bottom of the file) and `fits` when you have them. Leave `approach`, `outcome`, `team` and `links` empty if unknown: the site hides those sections until they are filled (the card shows "Results coming soon" for a missing outcome).
-3. Logo (optional): put the client's logo file in `assets/logos/` unedited, set `"logo": "assets/logos/<file>"` and `"logo_bg"` to the hex color of the logo's own background (for a transparent logo use a light neutral such as `#F7F4EF`). Without a logo the card shows the client's name on a neutral tile.
-4. Set `"featured": true` to put it on the Home page (Home shows the first three featured projects, in file order).
-5. Run `npm run build`. It checks the data (for example a duplicate `id` or an unknown discipline) and the "no notes" rule. Never add individual contact names or emails.
+2. Fill in `title`, `client` and `client_type` (use one of the existing types). Add `disciplines` (from the list at the bottom of the file) and `fits` when you have them.
+3. Add one engagement under `"engagements"`: `semester` (e.g. "Spring 2026"), `tagline` (one sentence, shown as the card's Objective), `challenge`, `scope` (a list of deliverables), `skills`, and `"outcome": null` until there is a result. Leave `approach`, `team` and `links` empty if unknown: the site hides those parts until they are filled (the card shows "Results coming soon" for a missing outcome).
+4. Logo (optional): put the client's logo file in `assets/logos/` unedited and set `"logo": "assets/logos/<name>"` (the extension may be left off). `logo_bg` is the tile color behind it; leave it out to use the color sampled from the logo, or set a hex color. Without a logo the card shows the client's name on a neutral tile.
+5. Set `"featured": true` to put it on the Home page (Home shows the first three featured projects, in file order). On `/projects/` tiles are sorted newest semester first.
+6. Run `npm run build`. It checks the data (a duplicate `id`, a malformed semester, an unknown discipline) and the "no notes" rule. Never add individual contact names, emails, fees or payment terms.
+
+### A returning client (a second semester)
+Do not create a new tile. Add another object to that client's `"engagements"` list with its own `semester`, optional `title` (e.g. "Colorado school data API"), `tagline`, `challenge`, `scope`, `skills` and `outcome`. The card switches to the newest engagement, the title reads e.g. "(Spring & Fall 2025)", the dialog and page show one section per semester (newest first), and the Semester filter finds the tile under every semester. Two separate projects for the same client in the **same** semester are separate tiles instead; they link to each other automatically.

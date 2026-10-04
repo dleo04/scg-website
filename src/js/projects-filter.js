@@ -67,7 +67,7 @@
       const d = el.dataset;
       const ok =
         words.every((w) => d.search.includes(w)) &&
-        (!state.semester || d.semester === state.semester) &&
+        (!state.semester || split(d.semester).includes(state.semester)) &&
         (!state.type || d.type === state.type) &&
         (!state.fits.length || split(d.fits).some((v) => state.fits.includes(v))) &&
         (!state.tracks.length || split(d.tracks).some((v) => state.tracks.includes(v)));

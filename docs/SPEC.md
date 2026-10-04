@@ -142,7 +142,7 @@ Mission (existing: "help organizations achieve their vision of success through s
 ### 5.8 Work With Us `/work-with-us/`
 Audience: UMD student orgs, departments and nonprofits.
 - Intro: "SCG works alongside your organization to create personalized and long-lasting solutions." On-campus services are always free; off-campus nonprofits get low rates (existing FAQ text).
-- **What we can help with** (derived from Fall 2025 projects, not invented): research and benchmarking; data, dashboards and analytics; machine-learning and AI strategy; process, role and knowledge-management design; marketing and communication strategy; business and monetization strategy.
+- **What we can help with** (derived from the original Spring 2025 projects, not invented): research and benchmarking; data, dashboards and analytics; machine-learning and AI strategy; process, role and knowledge-management design; marketing and communication strategy; business and monetization strategy.
 - Process (reuse How a project works), a short "Past clients" strip, and a **request form** (name, organization, what you need, timeline, email). Form posts to a configurable endpoint (e.g., Formspree/Netlify Forms; endpoint in `site.json`, currently TBD). Include honeypot spam protection and a success/error state. Never expose a personal email.
 
 ### 5.9 Partners `/partners/`
@@ -150,35 +150,48 @@ From `site.json → partners`. Keep the EY narrative but shorten and make it fac
 
 ## 6. Interactive Projects explorer (the centerpiece)
 
-**Data**: `data/projects.json`, one object per project. Do not hardcode projects in HTML. Adding an object adds its card (Home if `featured`, `/projects/`), its dialog and its page `/projects/<id>/` with no code changes.
+**Data**: `data/projects.json`, one object per **client tile**. Do not hardcode projects in HTML. Adding an object adds its card (Home if `featured`, `/projects/`), its dialog and its page `/projects/<id>/` with no code changes.
 
-| Field | Required | Notes |
+**Repeat-client rule.** A client that returns in a different semester keeps ONE tile with several `engagements`. Parallel projects for the same client in the same semester stay separate tiles (they link to each other: "Also for <client>: …").
+
+| Tile field | Required | Notes |
 |---|---|---|
-| `id` | yes | lowercase, digits and dashes; becomes the URL `/projects/<id>/` and the deep link `#<id>` |
-| `title`, `client`, `semester`, `tagline`, `summary` | yes | `tagline` is the card's Objective and the page description |
-| `client_type` | recommended | filter + meta row |
-| `featured` | no | Home shows the first three featured projects |
-| `challenge` | recommended | section omitted if missing |
-| `scope` (list), `scope_detail` | recommended | card Scope = first two items joined; optional `scope_summary` overrides that line |
-| `approach`, `outcome` | no | sections omitted if missing; the card's Impact row shows "Results coming soon" |
-| `skills`, `disciplines`, `fits` (lists) | recommended | chips in the dialog/page (not on cards); `disciplines` must be in the file's `disciplines` list; `fits` is shown as "(suggested)" and `fit_inferred: true` flags it for confirmation |
-| `team` {`size`, `roles`, `majors`} | no | only filled fields render; section omitted if all empty. Never invent members or majors. |
-| `links` [{`label`, `url`}] | no | section omitted if empty |
-| `logo` | no | path to the client's logo file, used unaltered (e.g. `assets/logos/schoolharborlogo.png`). Without it the tile shows the client name on a neutral background. |
-| `logo_bg` | with `logo` | hex color filling the tile behind the logo, sampled from the logo's own background (neutral off-white for transparent logos) |
-| `logo_offset` {`x`, `y`} | no | nudges a logo with uneven built-in margins, as a fraction of its rendered size |
+| `id` | yes | lowercase, digits and dashes; becomes `/projects/<id>/` and the deep link `#<id>` |
+| `title`, `client` | yes | `short_name` (e.g. "MPDS") is optional and searchable |
+| `client_type` | recommended | one of the existing types; filter + meta row |
+| `featured` | no | Home shows the first three featured tiles, in file order |
+| `engagements` | yes | list, see below; newest is used on the card |
+| `disciplines`, `fits` (lists) | recommended | chips in the dialog/page; `disciplines` must be in the file's list; `fits` shown as "(suggested)", `fit_inferred: true` until officers confirm |
+| `team` {`size`, `roles`, `majors`}, `links` [{`label`, `url`}] | no | only filled fields render; never invent members or majors |
+| `logo` | no | the client's logo, unaltered. May omit the extension (`assets/logos/hyswaplogo`): any `.png/.jpg/.jpeg/.webp/.svg` with that name is used. Without a file the tile shows the client name on a neutral background. |
+| `logo_bg` | no | tile color behind the logo; if omitted it is sampled from the logo's corner (neutral `#F7F4EF` for transparent logos) |
+| `logo_offset` {`x`, `y`} | no | nudges a logo with uneven built-in margins (fraction of its rendered size) |
+
+| Engagement field | Required | Notes |
+|---|---|---|
+| `semester` | yes | "Spring 2026", "Fall 2025", etc. (Winter/Spring/Summer/Fall + year) |
+| `title` | no | shown after the semester in the engagement heading |
+| `tagline` | yes | the Objective (card for the latest engagement; page description) |
+| `challenge`, `scope` (list), `scope_detail`, `approach` | no | omitted if missing |
+| `skills` | no | merged across engagements into one chip list |
+| `outcome` | no | `null` until known; the card's Impact row shows "Results coming soon" |
+
+Old flat projects (semester/tagline/… at the top level) are still read as one engagement.
+
+**Semester label** (card title and dialog/page title): one semester "(Fall 2025)"; two or more in the same year "(Spring & Fall 2025)"; across years "(Fall 2025 – Spring 2026)" (earliest – latest).
 
 No individual contact names or emails anywhere in this file (the build fails on emails/phone numbers).
 
-**Card** (shared component `components/work-card.njk`, identical on Home and `/projects/`; spec in `docs/HOME-LAYOUT.md` block 4): logo tile (`components/logo-tile.njk`, 8/3), title + (semester), Objective / Scope / Impact rows with 28px icons, "Read more →". The title link goes to `/projects/<id>/`; with JS it opens the dialog. Cards are equal height.
+**Card** (shared component `components/work-card.njk`, identical on Home and `/projects/`; spec in `docs/HOME-LAYOUT.md` block 4): logo tile (`components/logo-tile.njk`, 8/3), title + (semester label), the LATEST engagement's Objective / Scope (first two items) / Impact rows with 28px icons, "Read more →". The title link goes to `/projects/<id>/`; with JS it opens the dialog. Cards are equal height.
 
 **Explorer `/projects/`**
 - Page header (eyebrow, H1 "Projects", one-line intro). Grid: 1 col mobile, 2 from 640px, 3 from 1024px.
-- Filter bar (progressive enhancement: hidden until `projects-filter.js` runs, so no-JS shows all cards): **Search** (title, client, summary, tagline, skills), **Semester** (select), **Client type** (select), **Good fit for** (`fits`, multi-select with its own search box), **Track** (`disciplines`, multi-select chips). A group appears only when the data has at least two distinct values for it. State is in the query string (`?q=&semester=&type=&fit=&track=`, `replaceState`), the count is `aria-live="polite"`, "Clear all filters" appears when anything is active, and an empty state explains when nothing matches. On mobile, everything except Search sits behind a "Filters (n)" toggle.
+- Order: newest latest engagement first, then alphabetical (Home keeps file order).
+- Filter bar (progressive enhancement: hidden until `projects-filter.js` runs, so no-JS shows all cards): **Search** (title, client, short name, summary, every engagement's title and tagline, skills), **Semester** (select; a tile matches if ANY engagement is in that semester), **Client type** (select), **Good fit for** (`fits`, multi-select with its own search box), **Track** (`disciplines`, multi-select chips). A group appears only when the data has at least two distinct values for it. State is in the query string (`?q=&semester=&type=&fit=&track=`, `replaceState`), the count is `aria-live="polite"`, "Clear all filters" appears when anything is active, and an empty state explains when nothing matches. On mobile, everything except Search sits behind a "Filters (n)" toggle.
 
 **Detail (dialog and page, shared component `components/project-detail.njk`)**
 - Native `<dialog>` labelled by the project title: right-side drawer (720px) on desktop, full-screen sheet on mobile, fade/slide only when motion is allowed.
-- Content, in order: logo banner (same tile, 3/1); title with "(semester)" in the card style; tagline; Client / Client type; **Challenge**; **Scope**; **Approach**; **Outcome**; **Skills used** (chips); **Disciplines** (chips); **Good fit if you study (suggested)** (chips); **Team**; **Links**.
+- Content, in order: logo banner (same tile, 3/1); title with "(semester label)" in the card style; tagline (single-engagement tiles); Client / Client type; "Also for <client>: …" links to parallel tiles; then **one section per engagement, newest first**, headed with its semester (and title), each with **Challenge**, **Scope**, **Approach**, **Outcome** (and the engagement's tagline when there are several); then merged **Skills used**, **Disciplines**, **Good fit if you study (suggested)** (chips), **Team**, **Links**.
 - Missing content: on the live site a section with no data is **omitted** (no placeholder, no note). With `SHOW_PLACEHOLDERS=1` (`npm run dev:notes`) missing sections appear as labeled placeholders. Every omitted field is listed per project in `TODO-CONTENT.md`.
 - Controls: close (X, Escape, backdrop), Previous/Next buttons and Left/Right arrow keys (cycling through the cards currently visible, so filters are respected), "Open full page".
 - Behavior: focus trapped and returned to the originating card; background inert; scroll locked; deep links `/projects/#<id>` and `/#<id>` (Home) open on load; browser Back closes; closing keeps the filter query.

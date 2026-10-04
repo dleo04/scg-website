@@ -1,13 +1,14 @@
 {%- from "components/ui.njk" import tbdBlock, chip with context -%}
 {%- from "components/logo-tile.njk" import logoTile with context -%}
-{#- Full project story (SPEC 6), the single source for the dialog and /projects/<id>/.
-    Order: logo banner; title + (semester); tagline; client / client type; Challenge; Scope;
-    Approach; Outcome; Skills used; Disciplines; Good fit if you study; Team; Links.
-    Live site: a section whose data is missing is OMITTED (no placeholder, no note).
-    SHOW_PLACEHOLDERS=1: missing sections appear as labeled placeholders for the team.
-    titleLevel: 1 on the standalone page, 2 inside the dialog. -#}
-{% macro section(label, h) -%}
-<section class="project-detail__section">
+{#- Full client story (SPEC 6), the single source for the dialog and /projects/<id>/.
+    Order: logo banner; title + (semesters); tagline (single engagement); client / client type;
+    "Also for <client>" links (parallel projects); one section per ENGAGEMENT, newest first,
+    headed with its semester (and title), each with Challenge, Scope, Approach, Outcome;
+    then merged Skills used, Disciplines, Good fit if you study, Team, Links.
+    Live site: anything missing is OMITTED. SHOW_PLACEHOLDERS=1: missing parts appear as
+    labeled placeholders for the team. titleLevel: 1 on the page, 2 in the dialog. -#}
+{% macro section(label, h, cls = "") -%}
+<section class="project-detail__section {{ cls }}">
   <h{{ h }} class="project-detail__label">{{ label | safe }}</h{{ h }}>
   {{ caller() }}
 </section>
@@ -16,33 +17,47 @@
 {% macro projectDetail(p, titleLevel = 2) -%}
 {%- set h = titleLevel + 1 -%}
 {%- set notes = env.showPlaceholders -%}
+{%- set multi = p.engagements.length > 1 -%}
 <article class="project-detail">
   {{ logoTile(p, "banner") }}
   <header class="project-detail__head">
     <h{{ titleLevel }} class="project-detail__title" data-detail-title tabindex="-1">{{ p.title }} <span class="project-detail__term">({{ p.semester }})</span></h{{ titleLevel }}>
-    {%- if not (p.tagline | isTbd) %}<p class="project-detail__tagline">{{ p.tagline | tbd | safe }}</p>{% endif %}
+    {%- if not multi and not (p.tagline | isTbd) %}<p class="project-detail__tagline">{{ p.tagline | tbd | safe }}</p>{% endif %}
     <dl class="project-detail__meta">
       <div><dt>Client</dt><dd>{{ p.client }}</dd></div>
       {%- if p.client_type %}<div><dt>Client type</dt><dd>{{ p.client_type }}</dd></div>{% endif %}
     </dl>
+    {%- if p.related and p.related.length %}
+    <p class="project-detail__related">Also for {{ p.client }}:
+      {%- for r in p.related %} <a href="{{ r.url }}" data-project-open="{{ r.id }}">{{ r.title }}</a>{% if not loop.last %},{% endif %}{% endfor %}
+    </p>
+    {%- endif %}
   </header>
 
   <div class="project-detail__body">
-    {%- if not (p.challenge | isTbd) %}{% call section("Challenge", h) %}<p>{{ p.challenge | tbd | safe }}</p>{% endcall %}
-    {%- elif notes %}{% call section("Challenge", h) %}{{ tbdBlock("Challenge coming soon", "[TBD: the client's challenge]") }}{% endcall %}{% endif %}
+    {%- for e in p.engagements %}
+    <section class="engagement" aria-labelledby="eng-{{ p.id }}-{{ loop.index }}">
+      <h{{ h }} class="engagement__heading" id="eng-{{ p.id }}-{{ loop.index }}"><span class="engagement__semester">{{ e.semester }}</span>{% if e.title %}<span class="engagement__title">{{ e.title }}</span>{% endif %}</h{{ h }}>
+      {%- if multi and not (e.tagline | isTbd) %}<p class="engagement__tagline">{{ e.tagline | tbd | safe }}</p>{% endif %}
 
-    {%- if not (p.scope | isTbd) %}{% call section("Scope", h) %}
-      <ul class="checklist">{% for s in p.scope %}<li>{{ s | tbd | safe }}</li>{% endfor %}</ul>
-      {%- if p.scope_detail and not (p.scope_detail | isTbd) %}<p class="project-detail__note">{{ p.scope_detail | tbd | safe }}</p>{% endif %}
-    {% endcall %}
-    {%- elif notes %}{% call section("Scope", h) %}{{ tbdBlock("Scope coming soon", "[TBD: deliverables from the Statement of Work]") }}{% endcall %}{% endif %}
+      {%- if not (e.challenge | isTbd) %}{% call section("Challenge", h + 1) %}<p>{{ e.challenge | tbd | safe }}</p>{% endcall %}
+      {%- elif notes %}{% call section("Challenge", h + 1) %}{{ tbdBlock("Challenge coming soon", "[TBD: the client's challenge, " ~ e.semester ~ "]") }}{% endcall %}{% endif %}
 
-    {%- if not (p.approach | isTbd) %}{% call section("Approach", h) %}<p>{{ p.approach | tbd | safe }}</p>{% endcall %}
-    {%- elif notes %}{% call section("Approach", h) %}{{ tbdBlock("Approach coming soon", p.approach or "[TBD: how the team worked]") }}{% endcall %}{% endif %}
+      {%- if not (e.scope | isTbd) %}{% call section("Scope", h + 1) %}
+        <ul class="checklist">{% for s in e.scope %}<li>{{ s | tbd | safe }}</li>{% endfor %}</ul>
+        {%- if e.scope_detail and not (e.scope_detail | isTbd) %}<p class="project-detail__note">{{ e.scope_detail | tbd | safe }}</p>{% endif %}
+      {% endcall %}
+      {%- elif notes %}{% call section("Scope", h + 1) %}{{ tbdBlock("Scope coming soon", "[TBD: deliverables, " ~ e.semester ~ "]") }}{% endcall %}{% endif %}
 
-    {%- if not (p.outcome | isTbd) %}{% call section("Outcome", h) %}<p>{{ p.outcome | tbd | safe }}</p>{% endcall %}
-    {%- elif notes %}{% call section("Outcome", h) %}{{ tbdBlock("Outcome coming soon", p.outcome or "[TBD: results for the client]") }}{% endcall %}{% endif %}
+      {%- if not (e.approach | isTbd) %}{% call section("Approach", h + 1) %}<p>{{ e.approach | tbd | safe }}</p>{% endcall %}
+      {%- elif notes %}{% call section("Approach", h + 1) %}{{ tbdBlock("Approach coming soon", "[TBD: how the team worked, " ~ e.semester ~ "]") }}{% endcall %}{% endif %}
 
+      {%- if not (e.outcome | isTbd) %}{% call section("Outcome", h + 1) %}<p>{{ e.outcome | tbd | safe }}</p>{% endcall %}
+      {%- elif notes %}{% call section("Outcome", h + 1) %}{{ tbdBlock("Outcome coming soon", "[TBD: results for the client, " ~ e.semester ~ "]") }}{% endcall %}{% endif %}
+    </section>
+    {%- endfor %}
+
+    <div class="project-detail__shared">
     {%- if p.skills and p.skills.length %}{% call section("Skills used", h) %}<ul class="chips">{% for s in p.skills %}{{ chip(s) }}{% endfor %}</ul>{% endcall %}{% endif %}
 
     {%- if p.disciplines and p.disciplines.length %}{% call section("Disciplines", h) %}<ul class="chips">{% for d in p.disciplines %}{{ chip(d, "outline") }}{% endfor %}</ul>{% endcall %}{% endif %}
@@ -61,6 +76,7 @@
     {%- elif notes %}{% call section("Team", h) %}{{ tbdBlock("Team details coming soon", "[TBD: team size, roles and majors]") }}{% endcall %}{% endif %}
 
     {%- if p.links and p.links.length %}{% call section("Links", h) %}<ul class="link-list">{% for l in p.links %}<li><a href="{{ l.url }}" rel="noopener">{{ l.label }}</a></li>{% endfor %}</ul>{% endcall %}{% endif %}
+    </div>
   </div>
 </article>
 {%- endmacro %}

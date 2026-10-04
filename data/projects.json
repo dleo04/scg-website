@@ -1,150 +1,736 @@
 {
-  "_readme": "One object per project. 'logo' (optional) is the client's logo file, shown on the home card; 'logo_bg' is the tile color behind it (sampled from the logo's own background, or a neutral off-white for transparent logos). Officers may change either. Optional 'logo_offset' {x, y} nudges the logo by a fraction of its own rendered size so its artwork is optically centred when the file has uneven built-in margins on an opaque background (positive = right/down); transparent files are trimmed to symmetric margins instead (e.g. productspacelogo-trimmed.png). Fields marked null or [TBD] are unknown and MUST render as visible placeholders, never invented. 'fits' is a suggested mapping of majors/interests to the work, inferred from the scope of work; the club should correct it to match who actually worked on each project. No individual client contacts are stored here on purpose.",
+  "_readme": "One object per client tile. A client that returns in a later semester keeps ONE tile with several 'engagements' (newest shown on the card); parallel projects for the same client in the same semester are separate tiles. Each engagement: semester (e.g. 'Fall 2025'), optional title, tagline (the card's Objective), challenge, scope (list), optional scope_detail/approach, skills, outcome (null until known). Tile fields: id, title, client, optional short_name, client_type, featured, disciplines, fits (inferred mapping of majors/interests; fit_inferred: true until officers confirm), team, links, logo (path; may omit the extension, e.g. assets/logos/hyswaplogo, and any .png/.jpg/.svg with that name is used), logo_bg (tile color; sampled automatically from the logo if omitted), logo_offset. Fields that are null or empty are omitted on the live site. No individual contact names, emails, fees or payment terms.",
   "projects": [
     {
       "id": "alliom",
       "title": "Alliom",
       "client": "Alliom",
       "client_type": "Startup",
-      "semester": "Fall 2025",
       "featured": true,
-      "tagline": "Predicting housing values at the zip-code level with machine learning.",
       "summary": "Alliom aims to develop machine learning models that address inefficiencies in the stratified housing market by predicting property values at a granular level (for example, by zip code).",
-      "challenge": "The housing market is stratified, and broad averages hide what is happening in specific neighborhoods. Alliom wants models that predict property values at a much finer level.",
-      "scope": [
-        "Viability assessment and data sourcing",
-        "Model refinement and benchmarking",
-        "Business strategy"
+      "disciplines": [
+        "Data & Engineering",
+        "Strategy & Research"
       ],
-      "scope_detail": "The project refines two forecasting models (a time-series model and an LSTM), brings in professionals for technical guidance, and develops business strategies for monetization and legal compliance.",
-      "approach": "[TBD: how the team actually worked, tools, methods, cadence]",
-      "outcome": null,
-      "skills": ["Machine learning", "Time-series forecasting", "LSTM", "Data sourcing", "Model benchmarking", "Monetization strategy", "Legal and compliance research"],
-      "disciplines": ["Data & Engineering", "Strategy & Research"],
-      "fits": ["Computer Science", "Data Science", "Statistics", "Mathematics", "Finance", "Economics", "Real estate interest", "Pre-law interest"],
+      "fits": [
+        "Computer Science",
+        "Data Science",
+        "Statistics",
+        "Mathematics",
+        "Finance",
+        "Economics",
+        "Real estate interest",
+        "Pre-law interest"
+      ],
       "fit_inferred": true,
-      "team": { "size": null, "roles": [], "majors": [] },
-      "image": "assets/placeholders/project-alliom.jpg",
-      "image_alt": "[TBD]",
+      "team": {
+        "size": null,
+        "roles": [],
+        "majors": []
+      },
       "logo": "assets/logos/alliomlogo.jpeg",
       "logo_bg": "#EA6F50",
-      "logo_offset": { "x": 0.0225, "y": -0.0225 },
-      "links": []
+      "logo_offset": {
+        "x": 0.0225,
+        "y": -0.0225
+      },
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Spring 2025",
+          "tagline": "Predicting housing values at the zip-code level with machine learning.",
+          "challenge": "The housing market is stratified, and broad averages hide what is happening in specific neighborhoods. Alliom wants models that predict property values at a much finer level.",
+          "scope": [
+            "Viability assessment and data sourcing",
+            "Model refinement and benchmarking",
+            "Business strategy"
+          ],
+          "scope_detail": "The project refines two forecasting models (a time-series model and an LSTM), brings in professionals for technical guidance, and develops business strategies for monetization and legal compliance.",
+          "approach": "[TBD: how the team actually worked, tools, methods, cadence]",
+          "outcome": null,
+          "skills": [
+            "Machine learning",
+            "Time-series forecasting",
+            "LSTM",
+            "Data sourcing",
+            "Model benchmarking",
+            "Monetization strategy",
+            "Legal and compliance research"
+          ]
+        }
+      ]
     },
     {
       "id": "school-harbor",
       "title": "School Harbor",
       "client": "School Harbor",
       "client_type": "Education organization",
-      "semester": "Fall 2025",
       "featured": true,
-      "tagline": "Rebuilding a student test-score dashboard on a cloud SQL database and Looker Studio.",
       "summary": "The project replicates an existing Tableau dashboard that visualizes student test scores over time, segmented by demographics and aggregated at school-district and state levels.",
-      "challenge": "School Harbor needed its student test-score reporting reproduced in a different toolchain while keeping the same level of detail: scores over time, split by demographics, rolled up to district and state.",
-      "scope": [
-        "Dashboard replication in Looker Studio",
-        "Google SQL database configuration"
+      "disciplines": [
+        "Data & Engineering"
       ],
-      "scope_detail": "Data is managed in a Google SQL database and visualized in Google Looker Studio to give a Tableau-like experience. The work includes configuring the database, connecting it to Looker Studio, and potentially using Python for sub-tasks.",
-      "approach": "[TBD: how the team actually worked, tools, methods, cadence]",
-      "outcome": null,
-      "skills": ["SQL", "Google Cloud SQL", "Looker Studio", "Data visualization", "Dashboard design", "Python"],
-      "disciplines": ["Data & Engineering"],
-      "fits": ["Computer Science", "Information Systems", "Data Science", "Statistics", "Education interest"],
+      "fits": [
+        "Computer Science",
+        "Information Systems",
+        "Data Science",
+        "Statistics",
+        "Education interest"
+      ],
       "fit_inferred": true,
       "repeat_client_note": "School Harbor appears more than once in the old site's past-client list. If it is a repeat client, say so (confirm first).",
-      "team": { "size": null, "roles": [], "majors": [] },
-      "image": "assets/placeholders/project-school-harbor.jpg",
-      "image_alt": "[TBD]",
+      "team": {
+        "size": null,
+        "roles": [],
+        "majors": []
+      },
       "logo": "assets/logos/schoolharborlogo.png",
       "logo_bg": "#1E3557",
-      "logo_offset": { "x": 0, "y": 0.0234 },
-      "links": []
+      "logo_offset": {
+        "x": 0,
+        "y": 0.0234
+      },
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Fall 2025",
+          "title": "Colorado school data API",
+          "tagline": "Building a queryable database and public API for Colorado school data",
+          "challenge": "School Harbor had partial address and school ID data but no centralized, authoritative, easy-to-update source. Reflecting school closures, openings and moves required manual work.",
+          "scope": [
+            "Normalized relational database for school, address and ID records",
+            "Python ETL pipeline to clean, load and annually update Colorado Department of Education data",
+            "REST API with endpoints to query by school name, address, year and ID",
+            "Documentation, setup guide and a version-controlled GitHub repository"
+          ],
+          "skills": [
+            "Python",
+            "SQL",
+            "REST API design",
+            "ETL pipelines",
+            "Git and GitHub",
+            "Technical documentation"
+          ],
+          "outcome": null
+        },
+        {
+          "semester": "Spring 2025",
+          "tagline": "Rebuilding a student test-score dashboard on a cloud SQL database and Looker Studio.",
+          "challenge": "School Harbor needed its student test-score reporting reproduced in a different toolchain while keeping the same level of detail: scores over time, split by demographics, rolled up to district and state.",
+          "scope": [
+            "Dashboard replication in Looker Studio",
+            "Google SQL database configuration"
+          ],
+          "scope_detail": "Data is managed in a Google SQL database and visualized in Google Looker Studio to give a Tableau-like experience. The work includes configuring the database, connecting it to Looker Studio, and potentially using Python for sub-tasks.",
+          "approach": "[TBD: how the team actually worked, tools, methods, cadence]",
+          "outcome": null,
+          "skills": [
+            "SQL",
+            "Google Cloud SQL",
+            "Looker Studio",
+            "Data visualization",
+            "Dashboard design",
+            "Python"
+          ]
+        }
+      ]
     },
     {
       "id": "product-space",
       "title": "Product Space",
       "client": "Product Space",
       "client_type": "UMD student organization",
-      "semester": "Fall 2025",
       "featured": true,
-      "tagline": "Helping a brand-new product-design org scale its outreach and plan for turnover.",
       "summary": "Product Space gives UMD students a way to explore product design, apply their skills on real-world projects, and build a professional network. As a new organization with a 5-member board and an inaugural cohort of 9 members, it needed support streamlining client outreach, benchmarking best practices, and planning for growth and turnover.",
-      "challenge": "A new organization needs repeatable processes before it grows: how to reach clients, what good looks like elsewhere, and how to hand off smoothly as leaders graduate.",
-      "scope": [
-        "Client outreach contact list",
-        "Benchmarking report",
-        "Structured timeline and process flow"
+      "disciplines": [
+        "Operations & People",
+        "Product & Design",
+        "Strategy & Research"
       ],
-      "scope_detail": "The team built an outreach process, benchmarked best practices from comparable organizations, and documented a timeline and process flow to manage growth and turnover.",
-      "approach": "[TBD: how the team actually worked, tools, methods, cadence]",
-      "outcome": null,
-      "skills": ["Benchmarking", "Process mapping", "Client outreach strategy", "Project timelines", "Organizational design"],
-      "disciplines": ["Operations & People", "Product & Design", "Strategy & Research"],
-      "fits": ["Design", "Information Science", "Business", "Communication", "Management", "Engineering (product interest)"],
+      "fits": [
+        "Design",
+        "Information Science",
+        "Business",
+        "Communication",
+        "Management",
+        "Engineering (product interest)"
+      ],
       "fit_inferred": true,
-      "team": { "size": null, "roles": [], "majors": [] },
-      "image": "assets/placeholders/project-product-space.jpg",
-      "image_alt": "[TBD]",
+      "team": {
+        "size": null,
+        "roles": [],
+        "majors": []
+      },
       "logo": "assets/logos/productspacelogo-trimmed.png",
       "logo_bg": "#F7F4EF",
-      "links": []
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Spring 2025",
+          "tagline": "Helping a brand-new product-design org scale its outreach and plan for turnover.",
+          "challenge": "A new organization needs repeatable processes before it grows: how to reach clients, what good looks like elsewhere, and how to hand off smoothly as leaders graduate.",
+          "scope": [
+            "Client outreach contact list",
+            "Benchmarking report",
+            "Structured timeline and process flow"
+          ],
+          "scope_detail": "The team built an outreach process, benchmarked best practices from comparable organizations, and documented a timeline and process flow to manage growth and turnover.",
+          "approach": "[TBD: how the team actually worked, tools, methods, cadence]",
+          "outcome": null,
+          "skills": [
+            "Benchmarking",
+            "Process mapping",
+            "Client outreach strategy",
+            "Project timelines",
+            "Organizational design"
+          ]
+        }
+      ]
     },
     {
       "id": "umd-dynamic-dance",
       "title": "UMD Dynamic Dance",
       "client": "UMD Dynamic Dance",
       "client_type": "UMD student organization",
-      "semester": "Fall 2025",
       "featured": false,
-      "tagline": "Operations, knowledge management and marketing for a 25-member hip-hop dance team.",
       "summary": "UMD Dynamic Dance is a hip-hop dance team with 25 members and a 7-8 member E-Board. It asked for support improving administrative efficiency, knowledge management and marketing.",
-      "challenge": "A busy, growing team needs clear roles, documentation that survives leadership changes, and a marketing approach that strengthens its campus presence and external outreach.",
-      "scope": [
-        "E-Board role delegation framework",
-        "Knowledge management system",
-        "Marketing strategy recommendations"
+      "disciplines": [
+        "Operations & People",
+        "Strategy & Research"
       ],
-      "scope_detail": "The project focuses on role delegation, streamlining documentation and communication processes, and refining the team's marketing approach.",
-      "approach": "[TBD: how the team actually worked, tools, methods, cadence]",
-      "outcome": null,
-      "skills": ["Role and responsibility design", "Knowledge management", "Documentation", "Marketing strategy", "Communication processes"],
-      "disciplines": ["Operations & People", "Strategy & Research"],
-      "fits": ["Communication", "Marketing", "Psychology", "Information Systems", "Management", "Arts and performance interest"],
+      "fits": [
+        "Communication",
+        "Marketing",
+        "Psychology",
+        "Information Systems",
+        "Management",
+        "Arts and performance interest"
+      ],
       "fit_inferred": true,
-      "team": { "size": null, "roles": [], "majors": [] },
-      "image": "assets/placeholders/project-umd-dynamic-dance.jpg",
-      "image_alt": "[TBD]",
-      "links": []
+      "team": {
+        "size": null,
+        "roles": [],
+        "majors": []
+      },
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Spring 2025",
+          "tagline": "Operations, knowledge management and marketing for a 25-member hip-hop dance team.",
+          "challenge": "A busy, growing team needs clear roles, documentation that survives leadership changes, and a marketing approach that strengthens its campus presence and external outreach.",
+          "scope": [
+            "E-Board role delegation framework",
+            "Knowledge management system",
+            "Marketing strategy recommendations"
+          ],
+          "scope_detail": "The project focuses on role delegation, streamlining documentation and communication processes, and refining the team's marketing approach.",
+          "approach": "[TBD: how the team actually worked, tools, methods, cadence]",
+          "outcome": null,
+          "skills": [
+            "Role and responsibility design",
+            "Knowledge management",
+            "Documentation",
+            "Marketing strategy",
+            "Communication processes"
+          ]
+        }
+      ]
     },
     {
       "id": "scg-internal",
       "title": "SCG Internal Project",
       "client": "Snider Consulting Group",
       "client_type": "Internal",
-      "semester": "Fall 2025",
       "featured": false,
-      "tagline": "Turning the lens on ourselves: engagement, quality and operations.",
       "summary": "An internal SCG project addressing member engagement, performance quality and operational efficiency.",
-      "challenge": "Improve how senior members stay involved, raise the quality of work and presentations, and streamline internal procedures across recruitment, onboarding and client acquisition.",
-      "scope": [
-        "Senior member engagement strategy",
-        "Performance and presentation improvement plan",
-        "Operating procedures documentation"
+      "disciplines": [
+        "Operations & People",
+        "Strategy & Research"
       ],
-      "scope_detail": "The team identifies solutions for senior-member involvement, work and presentation quality, and internal procedures from recruitment through client acquisition.",
-      "approach": "[TBD: how the team actually worked, tools, methods, cadence]",
-      "outcome": null,
-      "skills": ["Organizational strategy", "Process documentation", "Presentation coaching", "Change management"],
-      "disciplines": ["Operations & People"],
-      "fits": ["Psychology", "Management", "Information Systems", "Communication"],
+      "fits": [
+        "Psychology",
+        "Management",
+        "Information Systems",
+        "Communication",
+        "Business"
+      ],
       "fit_inferred": true,
-      "team": { "size": null, "roles": [], "majors": [] },
-      "image": "assets/placeholders/project-scg-internal.jpg",
-      "image_alt": "[TBD]",
-      "logo": "assets/scg-logo.png",
-      "logo_bg": "#FFFFFF",
-      "links": []
+      "team": {
+        "size": null,
+        "roles": [],
+        "majors": []
+      },
+      "logo": "assets/scg-logo-reversed.png",
+      "logo_bg": "#141414",
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Fall 2025",
+          "title": "Donation process and Snider Center strategy",
+          "tagline": "Designing a sustainable donation process and assessing SCG's relationship with the Snider Center",
+          "challenge": "SCG needed a clear, sustainable way to receive donations for project work, and a better understanding of how it can work with the Ed Snider Center and its business network.",
+          "scope": [
+            "Donation strategy: develop an approach, pitch it to club leadership and implement it",
+            "Snider Center assessment: a framework for its status and impact within the Smith School, UMD and society",
+            "Opportunity scan for speakers, projects and internships through the Center's network",
+            "Recommendations and action items for club leadership"
+          ],
+          "skills": [
+            "Strategy",
+            "Framework development",
+            "Stakeholder communication",
+            "Organizational design"
+          ],
+          "outcome": null
+        },
+        {
+          "semester": "Spring 2025",
+          "tagline": "Turning the lens on ourselves: engagement, quality and operations.",
+          "challenge": "Improve how senior members stay involved, raise the quality of work and presentations, and streamline internal procedures across recruitment, onboarding and client acquisition.",
+          "scope": [
+            "Senior member engagement strategy",
+            "Performance and presentation improvement plan",
+            "Operating procedures documentation"
+          ],
+          "scope_detail": "The team identifies solutions for senior-member involvement, work and presentation quality, and internal procedures from recruitment through client acquisition.",
+          "approach": "[TBD: how the team actually worked, tools, methods, cadence]",
+          "outcome": null,
+          "skills": [
+            "Organizational strategy",
+            "Process documentation",
+            "Presentation coaching",
+            "Change management"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hy-swap",
+      "title": "Hy-Swap",
+      "client": "Hy-Swap",
+      "client_type": null,
+      "featured": false,
+      "logo": "assets/logos/hyswaplogo",
+      "disciplines": [
+        "Strategy & Research",
+        "Operations & People"
+      ],
+      "fits": [
+        "Marketing",
+        "Communication",
+        "Management"
+      ],
+      "fit_inferred": true,
+      "team": {
+        "size": null,
+        "roles": [],
+        "majors": []
+      },
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Fall 2025",
+          "tagline": "Growing community outreach and volunteer leadership for a local sustainability exchange",
+          "challenge": "Hy-Swap runs local item-exchange events that reduce waste. Since the pandemic, community engagement patterns have shifted, and the organization relies on traditional marketing and an overextended core leadership team.",
+          "scope": [
+            "Community marketing and outreach strategy",
+            "Media and public relations toolkit",
+            "Volunteer engagement and leadership pipeline plan",
+            "Fundraising exploration and implementation plan"
+          ],
+          "skills": [
+            "Marketing strategy",
+            "Communications",
+            "Volunteer program design",
+            "Fundraising research"
+          ],
+          "outcome": null
+        }
+      ]
+    },
+    {
+      "id": "wind-terpines",
+      "title": "Wind Terpines",
+      "client": "Wind Terpines",
+      "client_type": "UMD student organization",
+      "featured": false,
+      "logo": "assets/logos/windterpineslogo",
+      "disciplines": [
+        "Operations & People",
+        "Strategy & Research"
+      ],
+      "fits": [
+        "Management",
+        "Marketing",
+        "Communication"
+      ],
+      "fit_inferred": true,
+      "team": {
+        "size": null,
+        "roles": [],
+        "majors": []
+      },
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Fall 2025",
+          "tagline": "Building sustainable operations and funding for UMD's collegiate wind energy team",
+          "challenge": "A student-led team of 20-30 members competing in the U.S. Department of Energy's Collegiate Wind Competition faces member retention, subteam communication and fundraising gaps, and depends heavily on the national competition for engagement.",
+          "scope": [
+            "Internal organization toolkit covering task delegation, subteam roles and project tracking",
+            "Recruitment and retention strategy, including bridging the VIP course with club participation",
+            "Sponsorship and fundraising packet with tiers, a pitch template and a partner list"
+          ],
+          "skills": [
+            "Operations design",
+            "Program management",
+            "Sponsorship strategy",
+            "Stakeholder research"
+          ],
+          "outcome": null
+        }
+      ]
+    },
+    {
+      "id": "business-beyond-borders",
+      "title": "Business Beyond Borders",
+      "client": "Business Beyond Borders",
+      "client_type": "UMD student organization",
+      "featured": false,
+      "logo": "assets/logos/bbblogo",
+      "disciplines": [
+        "Operations & People",
+        "Strategy & Research"
+      ],
+      "fits": [
+        "Management",
+        "Business",
+        "Communication"
+      ],
+      "fit_inferred": true,
+      "team": {
+        "size": null,
+        "roles": [],
+        "majors": []
+      },
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Fall 2025",
+          "tagline": "Building leadership structure and funding for a fast-growing student organization",
+          "challenge": "Business Beyond Borders creates business opportunities for refugees, immigrants and underrepresented students. As a rapidly growing organization it needed clearer leadership roles, stronger knowledge transfer and systems for sustainable growth.",
+          "scope": [
+            "Leadership framework, E-Board responsibilities and a semester-to-semester transition guide",
+            "Semester event timeline with frameworks for philanthropy, mentoring, fundraising and awareness events",
+            "Corporate sponsorship strategy with a contact list and resource packets"
+          ],
+          "skills": [
+            "Organizational design",
+            "Event planning",
+            "Fundraising strategy"
+          ],
+          "outcome": null
+        }
+      ]
+    },
+    {
+      "id": "speechpundit",
+      "title": "SpeechPundit",
+      "client": "SpeechPundit",
+      "client_type": "Startup",
+      "featured": false,
+      "logo": "assets/logos/speechpunditlogo",
+      "disciplines": [
+        "Strategy & Research",
+        "Product & Design"
+      ],
+      "fits": [
+        "Marketing",
+        "Business",
+        "Design",
+        "Information Science",
+        "Communication"
+      ],
+      "fit_inferred": true,
+      "team": {
+        "size": null,
+        "roles": [],
+        "majors": []
+      },
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Fall 2025",
+          "tagline": "Expanding distribution and engagement for an AI-powered public-speaking platform",
+          "challenge": "SpeechPundit gives users near-instant AI feedback on public speaking, but has limited institutional partnerships and few features that encourage ongoing engagement.",
+          "scope": [
+            "University career-services pilot with outreach, a student trial and an adoption report",
+            "B2B activation strategy piloted through an industry association in construction",
+            "User experience and product opportunity brief based on hands-on use of the platform",
+            "Dual-track growth plan comparing nonprofit and corporate pathways"
+          ],
+          "skills": [
+            "Market research",
+            "Go-to-market strategy",
+            "UX evaluation",
+            "Business planning",
+            "Grant research"
+          ],
+          "outcome": null
+        }
+      ]
+    },
+    {
+      "id": "defenx-financial-management",
+      "title": "DefenX Financial Management",
+      "client": "DefenX",
+      "client_type": "Startup",
+      "featured": false,
+      "logo": "assets/logos/defenxlogo",
+      "disciplines": [
+        "Strategy & Research"
+      ],
+      "fits": [
+        "Finance",
+        "Economics",
+        "Business"
+      ],
+      "fit_inferred": true,
+      "team": {
+        "size": null,
+        "roles": [],
+        "majors": []
+      },
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Spring 2026",
+          "tagline": "Building a five-year financial plan and pricing strategy for a school-safety startup",
+          "challenge": "DefenX is a student-founded UMD startup that built an AI-powered system to detect visible guns in schools and alert staff and security in real time, and winner of the inaugural Xperience Competition. This project focused on its finances.",
+          "scope": [
+            "Five-year financial plan",
+            "Pricing strategy"
+          ],
+          "skills": [
+            "Financial modeling",
+            "Pricing strategy",
+            "Market research"
+          ],
+          "outcome": null
+        }
+      ]
+    },
+    {
+      "id": "defenx-client-outreach",
+      "title": "DefenX Client Outreach",
+      "client": "DefenX",
+      "client_type": "Startup",
+      "featured": false,
+      "logo": "assets/logos/defenxlogo",
+      "disciplines": [
+        "Strategy & Research"
+      ],
+      "fits": [
+        "Marketing",
+        "Business",
+        "Pre-law interest"
+      ],
+      "fit_inferred": true,
+      "team": {
+        "size": null,
+        "roles": [],
+        "majors": []
+      },
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Spring 2026",
+          "tagline": "Planning a two-year outreach strategy to scale a school-safety startup nationally",
+          "challenge": "The second part of DefenX's scope focused on reaching customers: targeting specific counties, districts and schools based on current regulations, in support of scaling across the U.S. within the next three to four years.",
+          "scope": [
+            "Two-year client outreach strategy",
+            "Target list and outreach playbook"
+          ],
+          "skills": [
+            "Go-to-market strategy",
+            "Market research",
+            "Regulatory research",
+            "Sales playbook design"
+          ],
+          "outcome": null
+        }
+      ]
+    },
+    {
+      "id": "maryland-parliamentary-debate-society",
+      "title": "Maryland Parliamentary Debate Society",
+      "client": "Maryland Parliamentary Debate Society",
+      "short_name": "MPDS",
+      "client_type": "UMD student organization",
+      "featured": false,
+      "logo": "assets/logos/mpdslogo",
+      "disciplines": [
+        "Operations & People",
+        "Strategy & Research"
+      ],
+      "fits": [
+        "Management",
+        "Communication",
+        "Business"
+      ],
+      "fit_inferred": true,
+      "team": {
+        "size": null,
+        "roles": [],
+        "majors": []
+      },
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Spring 2026",
+          "tagline": "Opening fundraising channels and organizing events for UMD's competitive debate team",
+          "challenge": "The Maryland Parliamentary Debate Society competes nationally in the American Parliamentary Debate Association and hosts bi-annual tournaments at UMD. It wanted new fundraising channels and more organized transitions, scheduling and event practices.",
+          "scope": [
+            "Fundraising guide covering sponsorships, donations and partnerships with high school academies",
+            "Event logistics best practices",
+            "Transition document for incoming leadership"
+          ],
+          "skills": [
+            "Fundraising strategy",
+            "Event logistics",
+            "Process documentation"
+          ],
+          "outcome": null
+        }
+      ]
+    },
+    {
+      "id": "undergraduate-law-review",
+      "title": "Undergraduate Law Review",
+      "client": "Undergraduate Law Review",
+      "short_name": "ULR",
+      "client_type": "UMD student organization",
+      "featured": false,
+      "logo": "assets/logos/ulrlogo",
+      "disciplines": [
+        "Operations & People",
+        "Strategy & Research"
+      ],
+      "fits": [
+        "Finance",
+        "Marketing",
+        "Communication"
+      ],
+      "fit_inferred": true,
+      "team": {
+        "size": null,
+        "roles": [],
+        "majors": []
+      },
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Spring 2026",
+          "tagline": "Strengthening funding, social media and transitions for UMD's undergraduate legal journal",
+          "challenge": "Re-established in 2024, the Undergraduate Law Review is the only legal journal on campus. It needed more fundraising streams, a clearer social media structure and sustainable transition documents so the club continues after current leadership graduates.",
+          "scope": [
+            "Financial management system",
+            "Social media timeline and content guide",
+            "Transition documentation"
+          ],
+          "skills": [
+            "Financial management",
+            "Social media strategy",
+            "Content planning",
+            "Process documentation"
+          ],
+          "outcome": null
+        }
+      ]
+    },
+    {
+      "id": "smith-equity-research",
+      "title": "Smith Equity Research",
+      "client": "Smith Equity Research",
+      "short_name": "SER",
+      "client_type": "UMD student organization",
+      "featured": false,
+      "logo": "assets/logos/serlogo",
+      "disciplines": [
+        "Strategy & Research",
+        "Operations & People"
+      ],
+      "fits": [
+        "Marketing",
+        "Management",
+        "Communication"
+      ],
+      "fit_inferred": true,
+      "team": {
+        "size": null,
+        "roles": [],
+        "majors": []
+      },
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Spring 2026",
+          "tagline": "Expanding the reach and prestige of UMD's student equity research club",
+          "challenge": "Smith Equity Research teaches analysts fundamental analysis and publishes a club-wide equity report each semester. The goal of this project was to expand the club's reach and prestige.",
+          "scope": [
+            "Marketing and brand reach",
+            "Member engagement",
+            "Internal organization"
+          ],
+          "skills": [
+            "Marketing strategy",
+            "Member engagement",
+            "Organizational design"
+          ],
+          "outcome": null
+        }
+      ]
+    },
+    {
+      "id": "fbla-at-umd",
+      "title": "FBLA at UMD",
+      "client": "FBLA at UMD",
+      "client_type": "UMD student organization",
+      "featured": false,
+      "logo": "assets/logos/fblalogo",
+      "disciplines": [
+        "Operations & People"
+      ],
+      "fits": [
+        "Management",
+        "Business",
+        "Communication"
+      ],
+      "fit_inferred": true,
+      "team": {
+        "size": null,
+        "roles": [],
+        "majors": []
+      },
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Spring 2026",
+          "tagline": "Improving member retention and engagement for UMD's FBLA chapter",
+          "challenge": "UMD's FBLA chapter runs guest speakers, workshops and semester-long group projects. This project focused on member retention and engagement through better organization and a stronger value proposition for members.",
+          "scope": [
+            "Organization strategy guide covering onboarding, task tracking and processes",
+            "E-Board efficiency documents",
+            "Member retention and engagement strategy"
+          ],
+          "skills": [
+            "Organizational design",
+            "Process documentation",
+            "Member engagement strategy"
+          ],
+          "outcome": null
+        }
+      ]
     }
   ],
   "disciplines": [

@@ -3,6 +3,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { ROOT, readJson } from "../lib/load-data.js";
+import { engagementsOf, resolveLogo } from "../lib/projects.js";
 
 // Scans a notes-on build (npm run todo builds one into .notes-site/ with SHOW_PLACEHOLDERS=1),
 // because the normal build no longer renders any dev notes.
@@ -41,26 +42,34 @@ if (fs.existsSync(path.join(ROOT, "assets/logos/ey-reversed.png"))) data.push("a
 const testimonials = fs.existsSync(path.join(ROOT, "data/testimonials.json")) ? readJson("testimonials.json").testimonials : [];
 if (!testimonials.some((t) => t.consent_to_publish === true)) data.push("Client testimonials: add quotes with written permission to data/testimonials.json to enable the section.");
 site.timeline.steps.forEach((s) => { if (!s.date) data.push(`site.json → timeline: date for "${s.name}".`); });
-// Per project: every field the live site OMITS because it is missing (shown only with
-// npm run dev:notes), plus facts to confirm.
+// Per project tile and per engagement: every field the live site OMITS because it is missing
+// (shown only with npm run dev:notes), plus facts to confirm.
 const tbdOrEmpty = (v) => v == null || v === "" || (Array.isArray(v) && v.length === 0) || /\[TBD/i.test(String(v));
 for (const p of projects) {
+  const engagements = engagementsOf(p);
   const omitted = [];
-  if (tbdOrEmpty(p.challenge)) omitted.push("Challenge");
-  if (tbdOrEmpty(p.scope)) omitted.push("Scope");
-  if (tbdOrEmpty(p.approach)) omitted.push("Approach");
-  if (tbdOrEmpty(p.outcome)) omitted.push("Outcome (cards show \"Results coming soon\")");
+  for (const e of engagements) {
+    const miss = [];
+    if (tbdOrEmpty(e.challenge)) miss.push("Challenge");
+    if (tbdOrEmpty(e.scope)) miss.push("Scope");
+    if (tbdOrEmpty(e.approach)) miss.push("Approach");
+    if (tbdOrEmpty(e.outcome)) miss.push("Outcome (card shows \"Results coming soon\")");
+    if (miss.length) omitted.push(`${e.semester}: ${miss.join(", ")}`);
+  }
   if (tbdOrEmpty(p.team?.size) && tbdOrEmpty(p.team?.roles) && tbdOrEmpty(p.team?.majors)) omitted.push("Team (size, roles, majors)");
   if (tbdOrEmpty(p.links)) omitted.push("Links");
-  if (!p.logo) omitted.push("logo + logo_bg (the client name is shown on a neutral tile instead)");
+  if (!resolveLogo(ROOT, p.logo)) omitted.push(p.logo ? `logo file "${p.logo}" not found (add e.g. ${p.logo}.png; the client name is shown on a neutral tile until then)` : "logo + logo_bg (the client name is shown on a neutral tile instead)");
+  if (!p.client_type) omitted.push("client type (no existing type fits; see DECISIONS.md)");
   const confirm = [];
-  if (p.fit_inferred) confirm.push("'fits' (currently inferred)");
+  if (p.fit_inferred) confirm.push(`'fits' (inferred: ${(p.fits || []).join(", ")})`);
+  confirm.push(`disciplines (${(p.disciplines || []).join(", ")})`);
   if (p.repeat_client_note) confirm.push("repeat client");
   const parts = [];
-  if (omitted.length) parts.push(`omitted on the live site: ${omitted.join(", ")}`);
-  if (confirm.length) parts.push(`confirm: ${confirm.join(", ")}`);
-  if (parts.length) data.push(`projects.json → ${p.id}: ${parts.join("; ")}.`);
+  if (omitted.length) parts.push(`omitted on the live site: ${omitted.join("; ")}`);
+  parts.push(`confirm: ${confirm.join("; ")}`);
+  data.push(`projects.json → ${p.id}: ${parts.join(". ")}.`);
 }
+data.push("Semester labels: confirm 'SCG Internal Project' (Spring 2025 + Fall 2025) and 'Business Beyond Borders' (Fall 2025) are listed in the right semesters.");
 for (const g of faq.groups) for (const item of g.items) {
   if (item.needs_decision) data.push(`faq.json → "${item.q}" NEEDS DECISION (hidden in production): ${item.decision}`);
   else if (item.needs_review) data.push(`faq.json → "${item.q}" is a draft; officers to review.`);

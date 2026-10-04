@@ -761,6 +761,16 @@ html.dialog-open { overflow: hidden; }
 .project-detail__section .chips { gap: 6px; }
 .project-detail__section .chip { font-size: .8125rem; }
 .project-detail__note { margin-top: 10px !important; }
+/* Engagements (one per semester, newest first) */
+.engagement { padding-top: 22px; margin-top: 22px; border-top: 1px solid var(--line); }
+.engagement__heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 0 0 4px; font-family: var(--font-head); }
+.engagement__semester { font-size: .75rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--scg-red); }
+.engagement__title { font-size: 1.0625rem; font-weight: 700; color: var(--ink); letter-spacing: 0; }
+.engagement__tagline { margin: 0 0 4px; font-size: .9375rem; line-height: 1.55; color: var(--ink-2); font-style: italic; }
+.engagement .project-detail__section { border-top: 0; margin-top: 14px; padding-top: 0; }
+.project-detail__shared { margin-top: 22px; }
+.project-detail__related { margin: 12px 0 0; font-size: .9375rem; color: var(--ink-2); }
+.project-detail__related a { font-weight: 700; }
 
 /* ---- Standalone project page ---- */
 .project-page { background: var(--paper-2); padding-block: clamp(32px, 5vw, 64px) clamp(48px, 7vw, 88px); }

@@ -386,3 +386,33 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - ui-check: 14 routes × 360/768/1280/1440, axe clean, no horizontal scroll (after the fit-panel fix).
   - Contrast: 30 pairings pass. JS is 6.0KB gzipped in total (budget 60KB). `check:notes`: 0 hits.
   - **Sixth-project test:** temporary entry added at the top of projects.json, featured, no logo, new semester. It appeared on Home (card plus dialog), on /projects/ (6 cards; the Semester filter appeared; filtering to its semester showed 1 of 6), in the dialog, and on its own page with title and JSON-LD, all with zero code changes. The file was then restored byte-for-byte.
+
+## Stage 2b (Spring 2025 relabel, engagements, 12 more projects)
+
+- **Semester fix.** Alliom, School Harbor, Product Space, UMD Dynamic Dance and SCG Internal were Spring 2025, not Fall 2025. They are relabelled everywhere (data, cards, dialogs, pages, filters, titles/OG/JSON-LD, docs). Older DECISIONS entries keep their historical wording.
+- **Repeat-client rule.** A client that returns in a different semester keeps ONE tile with several `engagements`. Parallel projects for the same client in the same semester stay separate tiles and link to each other ("Also for DefenX: …"). The five existing projects were migrated to one engagement each; old flat projects are still read as one engagement (`lib/projects.js`), so nothing broke.
+- **Card.** The card shows the latest engagement's Objective, Scope (first two items) and Impact. The semester label follows the requested pattern: "(Fall 2025)", "(Spring & Fall 2025)", "(Fall 2025 – Spring 2026)" (unit-checked, including three semesters in one year and duplicates). Skills and disciplines are merged across engagements for the dialog/page chips.
+- **Dialog and page.** One section per engagement, newest first, headed with its semester in red small caps plus the title when present. Each section has Challenge / Scope / Approach / Outcome, omitted when empty. The engagement's tagline appears inside its section for multi-engagement tiles; single-engagement tiles keep the tagline under the title.
+- **Order and filters.**
+  - `/projects/` sorts newest latest engagement first, then A–Z. Home keeps file order, so its three featured cards stay Alliom, School Harbor, Product Space; School Harbor's card now shows its Fall 2025 objective and "(Spring & Fall 2025)".
+  - The Semester filter (Spring 2026 / Fall 2025 / Spring 2025) matches a tile if any engagement is in that semester.
+  - Search also covers `short_name` (MPDS, ULR, SER) and every engagement's title and tagline.
+- **Count: 15 tiles, not 14.** That is 5 existing plus 10 new (Hy-Swap, Wind Terpines, BBB, SpeechPundit, DefenX ×2, MPDS, ULR, SER, FBLA). School Harbor's and SCG Internal's Fall 2025 work are engagements on their existing tiles, and the two DefenX projects are parallel, so they are separate tiles. There are 17 engagements in total.
+- **Client types (no new categories).**
+  - Existing names reused: Startup (SpeechPundit, both DefenX), UMD student organization (Wind Terpines, BBB, MPDS, ULR, SER, FBLA), Internal (SCG).
+  - **Hy-Swap has no client type.** It is a local community nonprofit, and none of the existing types (Startup, Education organization, UMD student organization, Internal) describe it truthfully, so the field is left empty: it simply does not appear in the client-type filter or meta row. Recommendation: add "Nonprofit / community organization" if you agree. This is flagged in TODO-CONTENT.md.
+- **Tracks** use the existing four values. DefenX Financial Management is Strategy & Research only, because the existing Data & Engineering tags are used for ML/SQL/dashboards, not financial modelling. SCG Internal gains Strategy & Research for its Fall 2025 strategy work.
+- **Good fit (`fits`).** Filled only from what each scope implies, reusing existing values (Marketing, Communication, Management, Business, Finance, Economics, Design, Information Science, Pre-law interest), all `fit_inferred: true`. TODO-CONTENT.md lists each project's inferred fits and disciplines for review.
+- **Logos.**
+  - None of the nine new logo files (hyswaplogo, windterpineslogo, bbblogo, speechpunditlogo, defenxlogo, mpdslogo, ulrlogo, serlogo, fblalogo) are in the repo.
+  - `logo` now accepts a name without an extension: dropping e.g. `assets/logos/hyswaplogo.png` into the folder switches that tile from the client-name tile to the logo on the next build. `logo_bg` is sampled from the logo if not set (neutral `#F7F4EF` for transparent files). Both DefenX tiles point to the same `defenxlogo`.
+  - Until then, the client name is set in Montserrat bold on `--paper-2`, the existing name-tile treatment.
+  - SCG Internal now uses the approved reversed logo on `#141414`, an approved dark-background use recorded in CLAUDE.md.
+  - Logos measure within 0.5px of the tile centre (768 and 1440).
+- **Bug fixed.** Project page `<title>`/`og:title`/description were double-escaped ("&amp;amp;", "UMD&amp;#39;s"): the computed title was escaped once by the template and again by the head. It is now escaped once.
+- **Privacy.** Only the supplied text was used. There are no individual names, emails, phone numbers, fees, payment terms, scoping notes or video links; the build's contact-detail check passes.
+- **Verified:**
+  - Explorer test, all passing: semester filter for each semester (School Harbor and SCG Internal under both 2025 semesters), client type, track, short-name search, older-engagement search, DefenX cross-link inside the dialog, cold filtered deep link, prev/next within the filter, Back, and no-JS (15 cards, pages render).
+  - ui-check: 24 routes × 360/768/1280/1440, axe clean, no horizontal scroll.
+  - Equal-height rows (535/507px at 1440).
+  - Contrast: 30 pairings plus the hero pass. `check:notes`: 0 hits on 24 pages.

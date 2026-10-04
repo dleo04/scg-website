@@ -10,10 +10,12 @@ bodyClass: page-projects
     rendered from data/projects.json. Filters are progressive enhancement: the bar is hidden
     until projects-filter.js runs, and every card is a plain link without JavaScript.
     A filter group is shown only when the data has at least two different values for it. -#}
-{%- set semesters = projects | distinct("semester") -%}
-{%- set tracks = projects | distinct("disciplines") -%}
-{%- set types = projects | distinct("client_type") -%}
-{%- set fits = projects | distinct("fits") -%}
+{#- Order: newest latest engagement first, then A–Z (projectsSorted). Semester options are
+    every engagement semester, newest first; a tile matches if ANY engagement is in it. -#}
+{%- set semesters = allSemesters -%}
+{%- set tracks = projectsSorted | distinct("disciplines") -%}
+{%- set types = projectsSorted | distinct("client_type") -%}
+{%- set fits = projectsSorted | distinct("fits") -%}
 
 <section class="section projects-head" aria-labelledby="projects-title">
   <div class="container projects-explorer__inner">
@@ -77,17 +79,18 @@ bodyClass: page-projects
         </div>
       </div>
       <div class="project-filters__status">
-        <p class="project-filters__count" data-count aria-live="polite">Showing all {{ projects.length }} projects</p>
+        <p class="project-filters__count" data-count aria-live="polite">Showing all {{ projectsSorted.length }} projects</p>
         <button type="button" class="project-filters__clear" data-clear hidden>Clear all filters</button>
       </div>
     </form>
 
     <div class="projects-grid" data-project-grid>
-      {%- for p in projects %}
+      {%- for p in projectsSorted %}
+      {%- set engText = [] %}{% for e in p.engagements %}{% set engText = (engText.push(e.title or "", e.tagline or ""), engText) %}{% endfor %}
       <div class="projects-grid__item" data-project-item
-           data-semester="{{ p.semester }}" data-type="{{ p.client_type }}"
+           data-semester="{{ p.semesters | join('|') }}" data-type="{{ p.client_type or '' }}"
            data-tracks="{{ (p.disciplines or []) | join('|') }}" data-fits="{{ (p.fits or []) | join('|') }}"
-           data-search="{{ (([p.title, p.client, p.summary, p.tagline] | join(' ')) ~ ' ' ~ ((p.skills or []) | join(' '))) | lower }}">
+           data-search="{{ (([p.title, p.client, p.short_name or '', p.summary] | join(' ')) ~ ' ' ~ (engText | join(' ')) ~ ' ' ~ ((p.skills or []) | join(' '))) | lower }}">
         {{ workCard(p, loop.index, 2) }}
       </div>
       {%- endfor %}
@@ -103,4 +106,4 @@ bodyClass: page-projects
 
 {#- Filters load first so the dialog's position ("2 of 2") already reflects a filtered deep link. -#}
 <script src="{{ '/js/projects-filter.js' | versioned }}" defer></script>
-{{ projectDialog(projects) }}
+{{ projectDialog(projectsSorted) }}

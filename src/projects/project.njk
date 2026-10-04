@@ -1,20 +1,21 @@
 ---
 layout: layouts/base.njk
 pagination:
-  data: projects
+  data: projectsSorted
   size: 1
   alias: project
 permalink: "/projects/{{ project.id }}/"
 eleventyComputed:
-  title: "{{ project.title }} ({{ project.semester }})"
-  description: "{{ project.tagline }}"
+  # "| safe" here because the <head> escapes these values itself (otherwise "&" becomes "&amp;amp;").
+  title: "{{ project.title | safe }} ({{ project.semester | safe }})"
+  description: "{{ project.tagline | safe }}"
 ---
 {%- from "components/project-detail.njk" import projectDetail with context -%}
 {#- Standalone case study: the no-JS / shareable version of the project dialog. Same content
     (components/project-detail.njk), plus breadcrumbs, prev/next and BreadcrumbList JSON-LD. -#}
 {%- set i = pagination.pageNumber -%}
-{%- set prev = projects[i - 1] if i > 0 else null -%}
-{%- set next = projects[i + 1] if i + 1 < projects.length else null -%}
+{%- set prev = projectsSorted[i - 1] if i > 0 else null -%}
+{%- set next = projectsSorted[i + 1] if i + 1 < projectsSorted.length else null -%}
 {%- set crumbs = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
