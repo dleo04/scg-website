@@ -299,3 +299,25 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 - **Band heights.** 220px at 1280/1440 (74–78px above and below the content); 227px at 768 and 244px at 360, slightly over the ~200/~220 targets because the stacked content plus the required 56px above and below needs that much. Content is exactly centred (60/60px when stacked).
 - **Contrast** (`npm run hero-contrast`, brightest photo pixel behind each element, stable across runs): text 7.80 / 8.54 / 8.76 / 9.21:1, EY lettering 7.81 / 11.61 / 9.48 / 9.58:1, beam 6.21 / 9.22 / 7.53 / 7.61:1 at 360 / 768 / 1280 / 1440. The tint did not need darkening.
   - The check now takes one capture of the whole band and retries if it shows only flat ink. A first version read 18.78:1 at 1280 because one capture caught a frame before the photo had repainted.
+
+## Stage 1r (EY band: tighter tracking, EY letters aligned with the phrase)
+
+- **Letter-spacing.** The phrase goes from .1em to .04em, at the same size, weight and colour. Phrase plus logo now take 950px at 1280 and 1016px at 1440 of the 1248px container: one row, comfortably inside it.
+- **No trim needed.** `ey-reversed.png` already had 0px transparent margin on every side (the source was trimmed when first fetched), so no trimmed copy was saved. A copy written during the check was byte-identical and was removed.
+- **Alignment (measured, not guessed).**
+  - From the file's pixels: the beam spans rows 0–420, the "EY" letters 608–1275 and the tagline 885–1232 of 1276. The EY letters' centre therefore sits at 73.82% of the image height, 0.2382 × height below the image-box centre.
+  - In the browser: the phrase's capitals are centred within 0–0.02 × font-size of the text-box centre.
+  - Both boxes are centred on the same flex line, so `--ey-logo-offset: calc(-0.2382 * var(--ey-logo-h) - 0.01 * var(--ey-phrase-fs))` is applied as `transform: translateY(...)`. It is row layout only (≥ 1024px), visual only, and keeps working as both sizes scale.
+- **Proof.** Two independent methods measured the EY-letter centre minus the caps centre, in CSS px:
+  - *Pixel scan* (photo blacked out, white pixels located at 2x) and *bounding rect* (`getBoundingClientRect` × the file geometry):
+
+    | Width | Before | Pixel scan | Bounding rect |
+    |---|---|---|---|
+    | 1024 | n/a | −0.30 | −0.32 |
+    | 1280 | +15.75 (EY too low) | +0.20 | +0.15 |
+    | 1366 | n/a | +0.50 | +0.38 |
+    | 1440 | +17.50 (EY too low) | −0.01 | −0.12 |
+    | 1920 | n/a | −0.28 | −0.40 |
+
+  - A third, coarser check on the zoomed 1440 crop reads −1.38px, because it includes the "&" and the overshoot of the round letters. All are within the 2px target.
+- **Unchanged:** logo size (52/56/64/72px), the 28px row gap and 16px stacked gap, centring on mobile, contrast (text 7.80–9.21:1, EY lettering 7.81–11.61:1, beam 6.21–9.22:1), and no horizontal scroll. In the row, the raised beam sits 56px from the band's top edge at 1440 (the minimum), with 87px below the content.
