@@ -95,18 +95,42 @@ for (const [width, height] of [[360, 780], [768, 1024], [1280, 800], [1440, 900]
     await page.waitForFunction(() => { const i = document.querySelector(".ey-band__bg"); return i.complete && i.naturalWidth > 0; });
   }
   const band = await page.evaluate(() => {
-    const t = document.querySelector(".ey-band__text"); if (!t) return null;
-    const r = t.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height };
+    const box = (el) => { if (!el) return null; const r = el.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; };
+    const t = document.querySelector(".ey-band__text");
+    return t ? { band: box(document.querySelector(".ey-band")), text: box(t), logo: box(document.querySelector(".ey-band__logo img")) } : null;
   });
   if (band) {
     await page.addStyleTag({ content: ".ey-band__inner { visibility: hidden !important; }" });
-    const bshot = await page.screenshot({ clip: { x: Math.floor(band.x), y: Math.floor(band.y), width: Math.ceil(band.w), height: Math.ceil(band.h) }, captureBeyondViewport: true });
-    const b = await sharp(bshot).removeAlpha().raw().toBuffer({ resolveWithObject: true });
-    let bestL = -1, best = null;
-    for (let i = 0; i < b.data.length; i += b.info.channels) { const px = [b.data[i], b.data[i + 1], b.data[i + 2]]; const L = lum(px); if (L > bestL) { bestL = L; best = px; } }
-    const r = ratio([255, 255, 255], best);
-    row.push(`EY band ${r.toFixed(2)}:1`);
-    if (r < 4.5) failures.push(`@${width} EY band text: ${r.toFixed(2)}:1 < 4.5:1`);
+    // One capture of the whole band (after the photo has painted) for both measurements.
+    // A capture that is flat ink means the photo had not painted yet: wait and retry.
+    let cap = null;
+    for (let attempt = 0; attempt < 5; attempt++) {
+      await new Promise((r) => setTimeout(r, 300));
+      const shot = await page.screenshot({ clip: { x: 0, y: Math.floor(band.band.y), width, height: Math.ceil(band.band.h) }, captureBeyondViewport: true });
+      cap = await sharp(shot).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+      let distinct = new Set();
+      for (let i = 0; i < cap.data.length && distinct.size < 50; i += cap.info.channels * 97) distinct.add(`${cap.data[i]},${cap.data[i + 1]},${cap.data[i + 2]}`);
+      if (distinct.size >= 20) break;
+    }
+    const brightestIn = (bx) => {
+      let bestL = -1, best = null;
+      const y0 = Math.max(0, Math.floor(bx.y - band.band.y)), y1 = Math.min(cap.info.height, Math.ceil(bx.y + bx.h - band.band.y));
+      for (let y = y0; y < y1; y++) for (let x = Math.max(0, Math.floor(bx.x)); x < Math.min(cap.info.width, Math.ceil(bx.x + bx.w)); x++) {
+        const i = (y * cap.info.width + x) * cap.info.channels; const px = [cap.data[i], cap.data[i + 1], cap.data[i + 2]]; const L = lum(px);
+        if (L > bestL) { bestL = L; best = px; }
+      }
+      return best;
+    };
+    const tr = ratio([255, 255, 255], brightestIn(band.text));
+    row.push(`EY band text ${tr.toFixed(2)}:1`);
+    if (tr < 4.5) failures.push(`@${width} EY band text: ${tr.toFixed(2)}:1 < 4.5:1`);
+    if (band.logo) {
+      const bg = brightestIn(band.logo);
+      const white = ratio([255, 255, 255], bg), beam = ratio([255, 231, 0], bg);
+      row.push(`EY logo white ${white.toFixed(2)}:1 beam ${beam.toFixed(2)}:1`);
+      if (white < 4.5) failures.push(`@${width} EY logo lettering: ${white.toFixed(2)}:1 < 4.5:1`);
+      if (beam < 3) failures.push(`@${width} EY logo beam: ${beam.toFixed(2)}:1 < 3:1`);
+    }
   }
   lines.push(`${`${width}x${height}`.padStart(9)}  ${row.join("   ")}`);
   await page.close();

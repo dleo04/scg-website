@@ -112,7 +112,7 @@ hideBanner: true
 {%- set eyPartner = (site.partners | selectattr("name", "equalto", "EY") | first) %}
 {%- if eyPartner and eyPartner.band %}
 {%- set band = eyPartner.band %}
-{%- set bandLogo = generatedImages.logos.ey if (generatedImages.logos and generatedImages.logos.ey) else null %}
+{%- set bandLogo = generatedImages.partnerBands[eyPartner.name] if generatedImages.partnerBands else null %}
 <section class="ey-band" aria-label="{{ band.text }}">
   {%- if hero %}
   {#- Same photo as the hero, cropped near the bottom so it does not repeat the hero view. -#}
@@ -121,7 +121,8 @@ hideBanner: true
   <div class="container ey-band__inner">
     {%- if band.url %}<a class="ey-band__link" href="{{ band.url }}" target="_blank" rel="noopener noreferrer">{% else %}<div class="ey-band__link">{% endif %}
       <span class="ey-band__text">{{ band.text }}</span>
-      <span class="ey-band__plate">
+      {#- Reversed EY logo (white lettering, original yellow beam), directly on the band. -#}
+      <span class="ey-band__logo">
         {%- if bandLogo %}
         <picture><source type="image/webp" srcset="{{ bandLogo.webp }}"><img src="{{ bandLogo.png }}" width="{{ bandLogo.width }}" height="{{ bandLogo.height }}" alt="{{ band.logo_alt }}" loading="lazy" decoding="async"></picture>
         {%- else %}

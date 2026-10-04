@@ -160,6 +160,23 @@ for (const p of projects) {
   };
 }
 
+// Partnership band logo (site.json → partners[].band.logo): lossless WebP + PNG, at most
+// 288px tall (4x the 72px display height), proportional, never enlarged.
+for (const partner of site.partners || []) {
+  const logo = partner.band?.logo;
+  if (!logo || !fs.existsSync(path.join(ROOT, logo))) continue;
+  const slugName = partner.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  fs.mkdirSync(path.join(GEN_DIR, "partners"), { recursive: true });
+  const base = sharp(path.join(ROOT, logo)).resize({ height: 288, withoutEnlargement: true });
+  const webp = await base.clone().webp({ lossless: true }).toBuffer({ resolveWithObject: true });
+  fs.writeFileSync(path.join(GEN_DIR, "partners", `${slugName}-band.webp`), webp.data);
+  await base.clone().png({ compressionLevel: 9 }).toFile(path.join(GEN_DIR, "partners", `${slugName}-band.png`));
+  (manifest.partnerBands ??= {})[partner.name] = {
+    webp: `/assets/generated/partners/${slugName}-band.webp`, png: `/assets/generated/partners/${slugName}-band.png`,
+    width: webp.info.width, height: webp.info.height,
+  };
+}
+
 fs.writeFileSync(path.join(GEN_DIR, "images.json"), JSON.stringify(manifest, null, 2));
 console.log(`[assets] generated OG image, icons, photo sizes: ${Object.keys(manifest).filter((k) => k !== "og").join(", ") || "none"}` +
   (created.length ? `; new placeholders: ${created.join(", ")}` : ""));

@@ -67,9 +67,9 @@
       "blurb": "EY sends consultants to lead workshops, pairs each project with consultants, senior managers and partners, and connects members to EY recruiters. SCG has partnered with EY for over four years.",
       "url": "https://www.ey.com/en_us/consulting",
       "band": {
-        "_readme": "Home page partnership band (between Our Work and Where SCG Takes You). 'logo' is shown unaltered on a small white plate; 'url' opens in a new tab (set to null to show the band unlinked).",
+        "_readme": "Home page partnership band (between Our Work and Where SCG Takes You). 'logo' is the reversed (white) EY variant made by scripts/make-ey-reversed.mjs, for dark/photo backgrounds only; 'url' opens in a new tab (set to null to show the band unlinked).",
         "text": "In partnership with Ernst & Young",
-        "logo": "assets/logos/ey.png",
+        "logo": "assets/logos/ey-reversed.png",
         "logo_alt": "EY (Ernst & Young)",
         "url": "https://www.ey.com/en_us"
       }
