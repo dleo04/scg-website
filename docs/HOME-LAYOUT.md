@@ -4,7 +4,7 @@
 
 **What it is not.** Do not copy their text, images, icons, fonts (they use Montserrat Alternates + Open Sans), color scheme, mascot, or markup/CSS. Do not reuse any file from their site. The screenshot is an internal layout reference only; **never ship it** (keep it out of the build output). In the screenshot, the logo grid in the lower-left card did not load; ignore the broken images.
 
-**Why this replaces the earlier home.** The first home page was too cluttered and leaned too hard on the "not only business majors" slogan. This home has 6 calm blocks. Breadth of majors is *shown* (skills and team-major chips on project cards, member backgrounds) and never announced as a slogan. The one plain statement that anyone at UMD can apply lives on `/join/` and in the FAQ.
+**Why this replaces the earlier home.** The first home page was too cluttered and leaned too hard on the "not only business majors" slogan. This home has a short, calm sequence of blocks, in this order: **hero, stat strip, community, our work, EY partnership band, where SCG takes you, footer** (the EY band was added at the officers' request). Breadth of majors is *shown* (skills and team-major chips on project cards, member backgrounds) and never announced as a slogan. The one plain statement that anyone at UMD can apply lives on `/join/` and in the FAQ.
 
 ## Wireframe (desktop, 1440px wide; heights are approximate)
 
@@ -48,8 +48,11 @@
 │  │ Read more →             │   │         │                  │
 │  └─────────┘   └─────────┘   └─────────┘                     │
 │              [ View all projects ]                           │
-│   testimonial carousel (centered quote + dots) ~230px        │
-│   (renders only if data/testimonials.json has entries)       │
+│   testimonial carousel only if consented quotes exist;       │
+│   otherwise nothing (no placeholder); 72-96px below button   │
+├──────────────────────────────────────────────────────────────┤
+│ 4b. EY BAND  hero photo (bottom crop) + --hero-tint  ~160px  │
+│   IN PARTNERSHIP WITH ERNST & YOUNG   [EY logo on white plate]│
 ├──────────────────────────────────────────────────────────────┤
 │ 5. WHERE SCG TAKES YOU  2 columns, white         ~710px      │
 │ ┌─────────────────────────┐   H2 "Where SCG Takes You"       │
@@ -112,7 +115,10 @@ Exactly the verified stats in `data/site.json -> stats` (max 4), currently **50+
   Body padding 20px (mobile) / 24px (768px+); title 22px with "(Fall 2025)" at 15px; 28px (desktop) / 22px (mobile) from the title to the Objective row. "Read more →" (15px, red) is pinned to the bottom with at least 16px above it; cards are equal height and top-aligned, so the three links line up. Titles are underlined only on hover (pointer devices) or keyboard focus. Keyboard focus draws a 3px ring around the whole card (on the card itself, so its rounded-corner clipping cannot hide it). Hover lift: 4px, pointer devices only, none under `prefers-reduced-motion`. The section's content width is up to 1280px (28px gaps).
 - **Clicking a card opens the project dialog** from SPEC section 6 (deep link `#alliom`, focus trap, prev/next). Cards link to `/projects/<id>/` without JS.
 - Below the cards: primary button **View all projects** to `/projects/`.
-- Testimonials: a centered quote carousel with dots, only if `data/testimonials.json` has entries; otherwise do not render (dev shows a small placeholder). Never invent quotes.
+- Testimonials: a centered quote carousel with dots, only if `data/testimonials.json` has entries with `consent_to_publish: true`; otherwise nothing renders (no placeholder, in any build). Never invent quotes. The band ends 72-96px below "View all projects".
+
+### 4b. EY partnership band
+Directly after "Our Work" and before "Where SCG Takes You". Full width, edge to edge with no borders: the hero photo (`object-position: 50% 92%`, a bottom crop so it does not repeat the hero view) under the same flat `--hero-tint`. Centered content from `site.json -> partners[EY].band` (`text`, `logo`, `logo_alt`, `url`): "IN PARTNERSHIP WITH ERNST & YOUNG" in white Montserrat 600, uppercase, letter-spacing .12em, 20px (15px mobile, balanced wrapping), with the EY logo unaltered on a small white rounded plate (padding 10px 16px, radius 12px; logo 36px tall, 30px mobile; alt "EY (Ernst & Young)") to the right on desktop and below on mobile. Height 160px from 768px, about 145px on mobile (the phrase wraps to two lines and the plate stacks). The phrase + logo link to `url` in a new tab (`rel="noopener noreferrer"`, visually hidden "(opens in a new tab)", gold focus ring); with `url: null` the band is unlinked. The small EY line in the hero stays.
 
 ### 5. Where SCG Takes You
 - Left: a single pure-white card (#FFFFFF, 1px `--line` outline, 16px radius, soft shadow) titled "Our members work at…" (red heading) with a 4-column by 3-row logo grid (2 columns below 520px). The tiles have no background, border or shadow of their own, so only the logos show. Row 1: EY, Deloitte, Capital One, KPMG. Row 2: Bain & Company, Boston Consulting Group, Booz Allen Hamilton, Johnson & Johnson. Row 3: JPMorgan Chase, Strategy&, Morgan Stanley, Accenture (source: the old homepage's "Our Members Work At…" logos). Logos come from `data/logo-sources.json` via `npm run logos` into `assets/logos/` with blank margins (transparent or near-white) auto-trimmed, and are shown contained in identical fixed tiles (max 40px tall, max 80% of the tile wide, sized for even visual weight), at full color with no hover effect (tiles are not interactive), alt text = company name, never recolored or distorted. A logo that fails to download falls back to a text chip. The footer carries the trademark footnote. No stat row in this card: the same figures already appear in the stat strip, so they are not repeated on the page.

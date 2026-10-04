@@ -10,7 +10,7 @@ You are rebuilding sniderconsultinggroup.com for SCG, a student-run consulting g
 
 ## Hard rules
 - **No slogans about majors.** Never put "not only business majors", "every major welcome", "consulting isn't a major" or similar in headings, heroes or buttons. Show range through concrete content (project skills, team/alumni majors). One calm eligibility sentence lives on `/join/` and in the FAQ.
-- **Home page = six blocks only**, per `docs/HOME-LAYOUT.md`. It follows the structure of a reference screenshot but uses SCG's own copy, colors, fonts and images. Never ship or copy the reference.
+- **Home page = only the blocks in `docs/HOME-LAYOUT.md`**, in order: hero, stat strip, community, our work, EY partnership band, where SCG takes you, footer. It follows the structure of a reference screenshot but uses SCG's own copy, colors, fonts and images. Never ship or copy the reference.
 - **Keep the logo exactly as provided** (`assets/scg-logo.png`). Do not redraw, recolor, stretch or add effects. Never recolor the logo, except the approved reversed variant `scg-logo-reversed.png` on dark/photo backgrounds (the home hero photo and the black footer). Everywhere on light backgrounds (e.g. the header) use the original.
 - **Keep the brand colors**: SCG red `#AE1218` and gold `#F8A81E`, plus black and white. Tokens are in `docs/SPEC.md`.
 - **Never invent facts.** No made-up statistics, outcomes, quotes, client results, member names, majors, dates or logos. If content is unknown, render a clearly visible placeholder (see "Placeholders" in the spec) and list it in `TODO-CONTENT.md`.

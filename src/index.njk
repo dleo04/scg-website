@@ -100,17 +100,41 @@ hideBanner: true
       <a class="btn btn--gold" href="/projects/">View all projects</a>
     </p>
 
+    {#- Testimonial carousel: renders only when data/testimonials.json has entries with
+        consent_to_publish: true. Nothing (not even a placeholder) is shown otherwise. -#}
     {%- if testimonials.length %}
     {% include "partials/testimonials.njk" %}
-    {%- elif not env.production and not env.hidePlaceholders %}
-    <div class="work__testimonial-ph">
-      {{ tbdBlock("Client testimonials appear here", "[TBD: client quotes with written permission (data/testimonials.json, consent_to_publish: true)]") }}
-    </div>
     {%- endif %}
   </div>
 </section>
 
-{# 5. Where SCG takes you ---------------------------------------------------------- #}
+{# 5. Partnership band (EY), from site.json → partners[EY].band ---------------------- #}
+{%- set eyPartner = (site.partners | selectattr("name", "equalto", "EY") | first) %}
+{%- if eyPartner and eyPartner.band %}
+{%- set band = eyPartner.band %}
+{%- set bandLogo = generatedImages.logos.ey if (generatedImages.logos and generatedImages.logos.ey) else null %}
+<section class="ey-band" aria-label="{{ band.text }}">
+  {%- if hero %}
+  {#- Same photo as the hero, cropped near the bottom so it does not repeat the hero view. -#}
+  <img class="ey-band__bg" src="{{ hero.src }}" srcset="{{ hero.jpgSrcset }}" sizes="100vw" width="{{ hero.width }}" height="{{ hero.height }}" alt="" loading="lazy" decoding="async">
+  {%- endif %}
+  <div class="container ey-band__inner">
+    {%- if band.url %}<a class="ey-band__link" href="{{ band.url }}" target="_blank" rel="noopener noreferrer">{% else %}<div class="ey-band__link">{% endif %}
+      <span class="ey-band__text">{{ band.text }}</span>
+      <span class="ey-band__plate">
+        {%- if bandLogo %}
+        <picture><source type="image/webp" srcset="{{ bandLogo.webp }}"><img src="{{ bandLogo.png }}" width="{{ bandLogo.width }}" height="{{ bandLogo.height }}" alt="{{ band.logo_alt }}" loading="lazy" decoding="async"></picture>
+        {%- else %}
+        <img src="/{{ band.logo }}" alt="{{ band.logo_alt }}" loading="lazy" decoding="async">
+        {%- endif %}
+      </span>
+      {%- if band.url %}<span class="visually-hidden"> (opens in a new tab)</span>{% endif %}
+    {% if band.url %}</a>{% else %}</div>{% endif %}
+  </div>
+</section>
+{%- endif %}
+
+{# 6. Where SCG takes you ---------------------------------------------------------- #}
 <section class="home-block places" aria-labelledby="places-title">
   <div class="container split split--reverse">
     <div class="split__text">

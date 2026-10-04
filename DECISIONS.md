@@ -267,3 +267,17 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - Fires once (still final after scrolling away and back). Labels never move and the "+" positions are constant during the count.
   - Layout shift attributed to the stat strip is 0.0000 in every case. The page's tiny total (0.0001–0.0004) is a single shift about 27ms after load in the nav links and the hero EY line during the web-font swap. It existed before this change and is far below the 0.1 "good" threshold.
 - **Frame sequences** (not committed): `.ui-check/countup-frames-360.png` and `countup-frames-1440.png`.
+
+## Stage 1p (no testimonial placeholder; EY partnership band)
+
+- **Testimonial placeholder removed.** "Client testimonials appear here" and its `[TBD]` note are gone from the home page in every build (it previously showed in dev). `data/testimonials.json` and the carousel partial are kept; the carousel renders only when an entry has `consent_to_publish: true`. `TODO-CONTENT.md` now reads "Client testimonials: add quotes with written permission to data/testimonials.json to enable the section."
+- **Space below "View all projects".** The "Our Work" band now has `padding-bottom: clamp(72px, 7vw, 96px)`. Measured below the button: 72px at 360/768, 90px at 1280, 96px at 1440.
+- **EY band.** It sits between "Our Work" and "Where SCG Takes You" and is data-driven from `site.json → partners[EY].band` (`text`, `logo`, `logo_alt`, `url`).
+  - **Background:** the same hero photo with a bottom crop (`object-position: 50% 92%`) under the same flat `--hero-tint`, with no borders. Edges are flush: 0px gaps above and below.
+  - **Logo:** the existing `assets/logos/ey.png` (fetched earlier for the employer grid; no new download) via its generated copy, unaltered, on a white plate (padding 10px 16px, radius 12px), 36px tall from 768px and 30px on mobile.
+  - **Text:** 20px from 768px, 15px on mobile, white Montserrat 600, uppercase, letter-spacing .12em, with balanced wrapping on mobile ("IN PARTNERSHIP WITH / ERNST & YOUNG").
+  - **Layout:** logo to the right from 768px, below on mobile.
+  - **Height:** 160px from 768px. On mobile it is about 145px rather than 120px, because at 360px the phrase needs two lines and the plate stacks below it; padding and gap were already trimmed for mobile.
+  - **Contrast**, measured against the brightest photo pixel behind the text: 7.83:1 (360), 9.14:1 (768), 8.80:1 (1280), 9.44:1 (1440). `npm run hero-contrast` now includes the band.
+- **Link.** The phrase and logo link to https://www.ey.com/en_us in a new tab (`rel="noopener noreferrer"`), with a visually hidden "(opens in a new tab)" and a 3px gold focus ring. Linking a named corporate partner's public site from a partnership band is appropriate, and `site.json` already listed EY's URL. Setting `band.url` to `null` renders the band unlinked.
+- **Docs.** The section order is now hero, stats, community, our work, EY band, where SCG takes you, footer. `docs/HOME-LAYOUT.md` and the CLAUDE.md "six blocks only" rule were updated to that order, so a future session does not remove the band as an extra block.

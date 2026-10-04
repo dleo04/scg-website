@@ -88,6 +88,26 @@ for (const [width, height] of [[360, 780], [768, 1024], [1280, 800], [1440, 900]
   } else {
     row.push(!fs.existsSync(logoFile) ? "logo: file not supplied" : !boxes.logo ? "logo: no <img data-hero-logo> on page (rebuild?)" : "logo: no white/gold pixels found");
   }
+  // EY band: white text over the same photo + tint (different crop), measured the same way.
+  // The band photo is lazy-loaded, so scroll to it and wait for it before measuring.
+  if (await page.$(".ey-band__bg")) {
+    await page.evaluate(() => document.querySelector(".ey-band").scrollIntoView({ block: "center" }));
+    await page.waitForFunction(() => { const i = document.querySelector(".ey-band__bg"); return i.complete && i.naturalWidth > 0; });
+  }
+  const band = await page.evaluate(() => {
+    const t = document.querySelector(".ey-band__text"); if (!t) return null;
+    const r = t.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height };
+  });
+  if (band) {
+    await page.addStyleTag({ content: ".ey-band__inner { visibility: hidden !important; }" });
+    const bshot = await page.screenshot({ clip: { x: Math.floor(band.x), y: Math.floor(band.y), width: Math.ceil(band.w), height: Math.ceil(band.h) }, captureBeyondViewport: true });
+    const b = await sharp(bshot).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+    let bestL = -1, best = null;
+    for (let i = 0; i < b.data.length; i += b.info.channels) { const px = [b.data[i], b.data[i + 1], b.data[i + 2]]; const L = lum(px); if (L > bestL) { bestL = L; best = px; } }
+    const r = ratio([255, 255, 255], best);
+    row.push(`EY band ${r.toFixed(2)}:1`);
+    if (r < 4.5) failures.push(`@${width} EY band text: ${r.toFixed(2)}:1 < 4.5:1`);
+  }
   lines.push(`${`${width}x${height}`.padStart(9)}  ${row.join("   ")}`);
   await page.close();
 }

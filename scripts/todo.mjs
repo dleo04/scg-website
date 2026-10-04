@@ -37,7 +37,7 @@ if (!site.links.contact_email) data.push("site.json → links.contact_email: sha
 if (site.images?.hero_is_standin) data.push("site.json → images.hero is a stand-in (campus aerial); supply a wide hero photo that works under a dark overlay.");
 if (site.images?.community_is_standin) data.push("site.json → images.community is the stand-in suits group photo; supply a candid collage of members.");
 const testimonials = fs.existsSync(path.join(ROOT, "data/testimonials.json")) ? readJson("testimonials.json").testimonials : [];
-if (!testimonials.some((t) => t.consent_to_publish === true)) data.push("testimonials.json: no client quotes with written permission yet (home carousel hidden).");
+if (!testimonials.some((t) => t.consent_to_publish === true)) data.push("Client testimonials: add quotes with written permission to data/testimonials.json to enable the section.");
 site.timeline.steps.forEach((s) => { if (!s.date) data.push(`site.json → timeline: date for "${s.name}".`); });
 for (const p of projects) {
   const missing = ["approach", "outcome", "image_alt"].filter((k) => p[k] == null || /\[TBD/.test(p[k]));
