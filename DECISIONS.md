@@ -353,3 +353,36 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - It skips (with a message) when `SHOW_PLACEHOLDERS=1`.
 - **TODO-CONTENT.md.** `npm run todo` now renders a notes-on copy into `.notes-site/` (git-ignored) and lists every note by page from that copy, so the list stays complete while the real site stays clean. It now includes "Hero and community photos are stand-ins; replace with real photos and confirm photo license", alongside contact email, testimonials, outcomes, approach and team details.
 - **Verified** on all 14 routes at 360 and 1440px: no visible placeholder elements, no heading-only sections, no empty paragraphs or list items, no horizontal scroll; ui-check (axe, keyboard, 4 widths) and contrast pass.
+
+## Stage 2 (Projects explorer)
+
+- **One card, one detail, one tile.**
+  - `/projects/` renders the Home card (`components/work-card.njk`) unchanged. Its tile is now the shared `components/logo-tile.njk`, also used for the dialog/page banner.
+  - The dialog and `/projects/<id>/` share `components/project-detail.njk`.
+  - Home measured pixel-identical before and after (0 differing pixels, full page, at 360 and 1440).
+- **Projects without a logo.**
+  - The live tile shows the client's name typeset on a neutral background. That is real content, not an invented logo or a placeholder.
+  - `npm run dev:notes` shows a labeled "LOGO: …" placeholder instead.
+  - SCG Internal Project's client is SCG itself, so it uses the original `scg-logo.png` on white (`logo_bg: #FFFFFF`). UMD Dynamic Dance has no logo yet (listed in TODO-CONTENT.md).
+- **Missing sections are omitted on the live site.** This applies to Challenge, Scope, Approach, Outcome, Team and Links. Team shows only its filled fields.
+  - Read literally, the stage 2 request keeps "Results coming soon" only on the cards' Impact row, so the dialog and page no longer show an Outcome section until there is an outcome. This changes stage 1s, where project pages showed "Results coming soon." It is a one-line switch if you prefer the earlier behaviour.
+  - `dev:notes` shows the missing sections as labeled placeholders, and TODO-CONTENT.md lists the omitted fields per project.
+- **Dialog header and sections.** The logo banner (3/1, 150–210px tall) comes first. The title is in the card style with "(semester)": red, 26px. Sections are compact (15px labels, 15px/1.6 body, hairline dividers), in the SPEC §6 order plus a **Disciplines** chip section after Skills.
+  - The title takes programmatic focus (announced by screen readers) but shows no ring, since it is not interactive. The dialog's buttons and links keep their rings. This also changes the shared detail used on Home's dialog: the earlier red ring on the title is gone.
+- **Filters.**
+  - Search covers title, client, summary, tagline and skills. Semester and Client type are selects. "Good fit for" is multi-select with its own search box and closes with Escape. Track is multi-select chips.
+  - A group renders only when the data has at least two distinct values. With the current data Semester is hidden; the sixth-project test showed it appearing automatically.
+  - State goes in the query string via `replaceState`, and closing the dialog keeps it. The count is `aria-live="polite"`. "Clear all filters" appears when anything is active and returns focus to Search. The empty state has its own Clear button.
+  - The bar is progressive enhancement: hidden until the script runs, so no-JS shows all cards as links.
+  - On mobile everything but Search sits behind a "Filters (n)" toggle. The fit panel is right-anchored and capped to the viewport.
+  - The search field uses a visible label and no `placeholder` attribute, which keeps it accessible and keeps check:notes clean.
+- **Dialog prev/next follow the visible (filtered) cards.** A cold deep link like `/projects/?track=Data+%26+Engineering#school-harbor` opens at "2 of 2"; the filter script now loads before the dialog script so the first label is right.
+- **Project pages.**
+  - Now indexable (`noindex` removed). Each has its title "<Project> (<semester>) | Snider Consulting Group", tagline as description, canonical and OG tags.
+  - Visible breadcrumbs plus `BreadcrumbList` JSON-LD, whose first item is "Snider Consulting Group".
+  - Previous/Next project links (file order, no wrap; stacked on mobile) and "Back to all projects".
+- **Verified:**
+  - An explorer end-to-end test, all passing: keyboard-only filters (type-ahead select, fit panel, chips, clear), URL sync, live count, empty state, card → dialog → Escape focus return, cold filtered deep link, prev/next within the filter, Back keeping the filter, Home deep link, accessible names, and no-JS.
+  - ui-check: 14 routes × 360/768/1280/1440, axe clean, no horizontal scroll (after the fit-panel fix).
+  - Contrast: 30 pairings pass. JS is 6.0KB gzipped in total (budget 60KB). `check:notes`: 0 hits.
+  - **Sixth-project test:** temporary entry added at the top of projects.json, featured, no logo, new semester. It appeared on Home (card plus dialog), on /projects/ (6 cards; the Semester filter appeared; filtering to its semester showed 1 of 6), in the dialog, and on its own page with title and JSON-LD, all with zero code changes. The file was then restored byte-for-byte.

@@ -15,6 +15,15 @@
   const full = dialog.querySelector("[data-dialog-full]");
   const templates = [...document.querySelectorAll("template[data-project-template]")];
   const ids = templates.map((t) => t.dataset.projectTemplate);
+  // Prev/next follow the cards currently visible on the page (so filters on /projects/ are
+  // respected); if the open project is not among them (e.g. deep-linked), use all projects.
+  const order = () => {
+    const visible = [...document.querySelectorAll("[data-project-open]")]
+      .filter((a) => !a.closest("[hidden]"))
+      .map((a) => a.dataset.projectOpen)
+      .filter((id, i, arr) => byId[id] && arr.indexOf(id) === i);
+    return current && visible.includes(current) ? visible : ids;
+  };
   const byId = Object.fromEntries(templates.map((t) => [t.dataset.projectTemplate, t]));
 
   let current = null;   // id shown
@@ -28,7 +37,9 @@
     body.replaceChildren(tpl.content.cloneNode(true));
     const title = body.querySelector("[data-detail-title]");
     if (title) title.id = "project-dialog-title";
-    pos.textContent = `${ids.indexOf(id) + 1} of ${ids.length}`;
+    current = id;
+    const list = order();
+    pos.textContent = `${list.indexOf(id) + 1} of ${list.length}`;
     full.href = tpl.dataset.projectUrl;
     full.setAttribute("aria-label", `Open full page for ${tpl.dataset.projectTitle}`);
     body.scrollTop = 0;
@@ -52,7 +63,8 @@
 
   function step(delta) {
     if (current === null) return;
-    const next = ids[(ids.indexOf(current) + delta + ids.length) % ids.length];
+    const list = order();
+    const next = list[(list.indexOf(current) + delta + list.length) % list.length];
     render(next);
     body.querySelector("[data-detail-title]")?.focus();
     history.replaceState(history.state, "", `#${next}`);

@@ -150,22 +150,39 @@ From `site.json → partners`. Keep the EY narrative but shorten and make it fac
 
 ## 6. Interactive Projects explorer (the centerpiece)
 
-**Data**: `data/projects.json`. Do not hardcode projects in HTML.
-- Optional per-project fields for the home "Our Work" cards: `logo` (path to the client's logo file, e.g. `assets/logos/schoolharborlogo.png`; used unaltered) and `logo_bg` (hex color like `#1E3557` that fills the image tile behind the logo, sampled from the logo's own background or a neutral off-white for transparent logos; required when `logo` is set). Optional `scope_summary` overrides the card's one-line scope.
+**Data**: `data/projects.json`, one object per project. Do not hardcode projects in HTML. Adding an object adds its card (Home if `featured`, `/projects/`), its dialog and its page `/projects/<id>/` with no code changes.
 
-**Explorer layout**
-- Filter bar: **Semester** (single-select), **Track** (`disciplines`, multi-select chips), **Good fit for** (`fits`, multi-select, searchable), **Client type** (`client_type`), plus a text search over title, client, summary and skills. Show result count and a "Clear filters" button. Filters are reflected in the URL query string so views are shareable. Announce result-count changes to screen readers (`aria-live="polite"`).
-- Card grid (1 col mobile, 2 tablet, 3 desktop). Card: image slot, semester + client-type chips, title, tagline, 2-3 skill chips, "View project" affordance. The whole card is one button/link.
+| Field | Required | Notes |
+|---|---|---|
+| `id` | yes | lowercase, digits and dashes; becomes the URL `/projects/<id>/` and the deep link `#<id>` |
+| `title`, `client`, `semester`, `tagline`, `summary` | yes | `tagline` is the card's Objective and the page description |
+| `client_type` | recommended | filter + meta row |
+| `featured` | no | Home shows the first three featured projects |
+| `challenge` | recommended | section omitted if missing |
+| `scope` (list), `scope_detail` | recommended | card Scope = first two items joined; optional `scope_summary` overrides that line |
+| `approach`, `outcome` | no | sections omitted if missing; the card's Impact row shows "Results coming soon" |
+| `skills`, `disciplines`, `fits` (lists) | recommended | chips in the dialog/page (not on cards); `disciplines` must be in the file's `disciplines` list; `fits` is shown as "(suggested)" and `fit_inferred: true` flags it for confirmation |
+| `team` {`size`, `roles`, `majors`} | no | only filled fields render; section omitted if all empty. Never invent members or majors. |
+| `links` [{`label`, `url`}] | no | section omitted if empty |
+| `logo` | no | path to the client's logo file, used unaltered (e.g. `assets/logos/schoolharborlogo.png`). Without it the tile shows the client name on a neutral background. |
+| `logo_bg` | with `logo` | hex color filling the tile behind the logo, sampled from the logo's own background (neutral off-white for transparent logos) |
+| `logo_offset` {`x`, `y`} | no | nudges a logo with uneven built-in margins, as a fraction of its rendered size |
 
-**Detail experience (modal/drawer)**
-- Clicking a card opens a **dialog** (use native `<dialog>` or an equivalent with proper ARIA: `role="dialog"`, `aria-modal`, labelled by the title) that animates in (fade/slide, reduced-motion safe). Desktop: right-side drawer ~720px or centered modal; mobile: full-screen sheet.
-- Content, in order: hero image slot; title; client, semester, client type; **Challenge**; **Scope** (deliverable list from `scope`); **Approach**; **Outcome**; **Skills used** (chips); **Good fit if you study…** (`fits`, labeled as suggested); **Team** (size, roles, majors; placeholders until supplied); links.
-- Any field that is `null` or contains `[TBD...]` renders as a **visible placeholder block** ("Outcome coming soon"), not hidden, so officers see what to supply. Provide a build-time flag to hide placeholders in production once content is final.
-- Controls: close (X, ESC, backdrop click), **Previous/Next project** buttons and arrow-key support, "Open full page" link.
-- Behavior: focus is trapped in the dialog and returns to the originating card on close; background is inert; body scroll locked; **deep link** `/projects/#alliom` opens the dialog on load; browser Back closes it (use `history.pushState`/`hashchange`).
-- No-JS fallback: every card links to `/projects/<id>/`, a full server-rendered page with the same sections, its own `<title>`, meta description and Open Graph tags.
+No individual contact names or emails anywhere in this file (the build fails on emails/phone numbers).
 
-**Home featured block** reuses the same card and dialog component.
+**Card** (shared component `components/work-card.njk`, identical on Home and `/projects/`; spec in `docs/HOME-LAYOUT.md` block 4): logo tile (`components/logo-tile.njk`, 8/3), title + (semester), Objective / Scope / Impact rows with 28px icons, "Read more →". The title link goes to `/projects/<id>/`; with JS it opens the dialog. Cards are equal height.
+
+**Explorer `/projects/`**
+- Page header (eyebrow, H1 "Projects", one-line intro). Grid: 1 col mobile, 2 from 640px, 3 from 1024px.
+- Filter bar (progressive enhancement: hidden until `projects-filter.js` runs, so no-JS shows all cards): **Search** (title, client, summary, tagline, skills), **Semester** (select), **Client type** (select), **Good fit for** (`fits`, multi-select with its own search box), **Track** (`disciplines`, multi-select chips). A group appears only when the data has at least two distinct values for it. State is in the query string (`?q=&semester=&type=&fit=&track=`, `replaceState`), the count is `aria-live="polite"`, "Clear all filters" appears when anything is active, and an empty state explains when nothing matches. On mobile, everything except Search sits behind a "Filters (n)" toggle.
+
+**Detail (dialog and page, shared component `components/project-detail.njk`)**
+- Native `<dialog>` labelled by the project title: right-side drawer (720px) on desktop, full-screen sheet on mobile, fade/slide only when motion is allowed.
+- Content, in order: logo banner (same tile, 3/1); title with "(semester)" in the card style; tagline; Client / Client type; **Challenge**; **Scope**; **Approach**; **Outcome**; **Skills used** (chips); **Disciplines** (chips); **Good fit if you study (suggested)** (chips); **Team**; **Links**.
+- Missing content: on the live site a section with no data is **omitted** (no placeholder, no note). With `SHOW_PLACEHOLDERS=1` (`npm run dev:notes`) missing sections appear as labeled placeholders. Every omitted field is listed per project in `TODO-CONTENT.md`.
+- Controls: close (X, Escape, backdrop), Previous/Next buttons and Left/Right arrow keys (cycling through the cards currently visible, so filters are respected), "Open full page".
+- Behavior: focus trapped and returned to the originating card; background inert; scroll locked; deep links `/projects/#<id>` and `/#<id>` (Home) open on load; browser Back closes; closing keeps the filter query.
+- Standalone page `/projects/<id>/`: same content in a card on a warm background, breadcrumbs (Home / Projects / title) with `BreadcrumbList` JSON-LD (first item named "Snider Consulting Group"), own `<title>`, meta description (tagline), canonical URL and Open Graph tags, Previous/Next project links and "Back to all projects".
 
 ## 7. Content and placeholder rules
 

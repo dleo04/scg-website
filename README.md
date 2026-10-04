@@ -35,3 +35,11 @@ The live site never shows team notes (placeholder labels, `[TBD]` text, "Stand-i
 | `npm run todo` | Rebuilds a notes-on copy in `.notes-site/` and writes `TODO-CONTENT.md`: every missing item by page, plus facts still to supply in `data/`. |
 
 When content is missing, the public site shows a finished fallback instead of a note (for example, "Results coming soon." on projects, no contact line in the footer until a club address exists). Fill in the item in `data/*.json` and it appears automatically.
+
+## How to add a project
+Projects live in `data/projects.json`; the card, the dialog and the page `/projects/<id>/` are generated from it.
+1. Copy an existing project object and give it a new `id` (lowercase letters, digits and dashes, e.g. `campus-food-pantry`). The `id` becomes the URL.
+2. Fill in `title`, `client`, `client_type`, `semester`, `tagline` (one sentence, shown as the card's Objective) and `summary`. Add `challenge`, `scope` (a list of deliverables), `skills`, `disciplines` (from the list at the bottom of the file) and `fits` when you have them. Leave `approach`, `outcome`, `team` and `links` empty if unknown: the site hides those sections until they are filled (the card shows "Results coming soon" for a missing outcome).
+3. Logo (optional): put the client's logo file in `assets/logos/` unedited, set `"logo": "assets/logos/<file>"` and `"logo_bg"` to the hex color of the logo's own background (for a transparent logo use a light neutral such as `#F7F4EF`). Without a logo the card shows the client's name on a neutral tile.
+4. Set `"featured": true` to put it on the Home page (Home shows the first three featured projects, in file order).
+5. Run `npm run build`. It checks the data (for example a duplicate `id` or an unknown discipline) and the "no notes" rule. Never add individual contact names or emails.

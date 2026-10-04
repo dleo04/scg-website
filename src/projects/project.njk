@@ -5,17 +5,42 @@ pagination:
   size: 1
   alias: project
 permalink: "/projects/{{ project.id }}/"
-noindex: true
 eleventyComputed:
-  title: "{{ project.title }}"
+  title: "{{ project.title }} ({{ project.semester }})"
   description: "{{ project.tagline }}"
 ---
 {%- from "components/project-detail.njk" import projectDetail with context -%}
-{#- Standalone case study (no-JS fallback for the dialog). Stage 2 adds
-    breadcrumbs, BreadcrumbList JSON-LD and per-project Open Graph tags. -#}
+{#- Standalone case study: the no-JS / shareable version of the project dialog. Same content
+    (components/project-detail.njk), plus breadcrumbs, prev/next and BreadcrumbList JSON-LD. -#}
+{%- set i = pagination.pageNumber -%}
+{%- set prev = projects[i - 1] if i > 0 else null -%}
+{%- set next = projects[i + 1] if i + 1 < projects.length else null -%}
+{%- set crumbs = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": site.name, "item": "/" | absoluteUrl(site.domain) },
+    { "@type": "ListItem", "position": 2, "name": "Projects", "item": "/projects/" | absoluteUrl(site.domain) },
+    { "@type": "ListItem", "position": 3, "name": project.title, "item": project.url | absoluteUrl(site.domain) }
+  ]
+} -%}
+<script type="application/ld+json">{{ crumbs | jsonLd | safe }}</script>
 <section class="section project-page">
-  <div class="container narrow">
-    <p class="eyebrow"><a href="/projects/">Projects</a> / {{ project.semester }}</p>
-    {{ projectDetail(project, 1) }}
+  <div class="container project-page__inner">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li><a href="/projects/">Projects</a></li>
+        <li><span aria-current="page">{{ project.title }}</span></li>
+      </ol>
+    </nav>
+    <div class="project-page__card">
+      {{ projectDetail(project, 1) }}
+    </div>
+    <nav class="project-pager" aria-label="More projects">
+      {%- if prev %}<a class="project-pager__link project-pager__link--prev" href="{{ prev.url }}"><span class="project-pager__dir">Previous project</span><span class="project-pager__name">{{ prev.title }}</span></a>{% else %}<span></span>{% endif %}
+      {%- if next %}<a class="project-pager__link project-pager__link--next" href="{{ next.url }}"><span class="project-pager__dir">Next project</span><span class="project-pager__name">{{ next.title }}</span></a>{% else %}<span></span>{% endif %}
+    </nav>
+    <p class="project-page__back"><a class="link-arrow" href="/projects/"><span aria-hidden="true">←</span> Back to all projects</a></p>
   </div>
 </section>

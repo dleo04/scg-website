@@ -1,25 +1,15 @@
 {#- "Our Work" case-study card (docs/HOME-LAYOUT.md block 4), sized to the reference's
-    proportions. Image area: the client logo on a tile of its own background colour
-    (projects.json → logo, logo_bg); a labeled placeholder only when there is no logo yet.
+    proportions. Image area: the shared logo tile (components/logo-tile.njk): the client
+    logo on its logo_bg, or the client name on a neutral tile when no logo exists yet.
     Rows: Objective = tagline (max 2 lines), Scope = first two scope items
     joined into one line (max 2 lines), Impact = outcome (max 2 lines) or a muted
     "Results coming soon". Skills stay in the dialog and on the project page.
     The title link goes to /projects/<id>/ and, with JS, opens the project dialog. -#}
-{%- from "components/ui.njk" import media with context -%}
+{%- from "components/logo-tile.njk" import logoTile with context -%}
 {% macro workCard(p, number, headingLevel = 3) -%}
 <article class="work-card">
   <div class="work-card__media">
-    {%- if p.logoImg %}
-    {#- Client logo, contained and centered on a tile filled with logo_bg (projects.json). -#}
-    <div class="work-card__logo-tile work-card__logo-tile--{{ p.logoImg.shape }}" style="--tile-bg: {{ p.logo_bg }}; --logo-max-h: {{ p.logoImg.maxH }}px; --off-x: {{ p.logo_offset.x if p.logo_offset else 0 }}; --off-y: {{ p.logo_offset.y if p.logo_offset else 0 }}">
-      <picture>
-        <source type="image/webp" srcset="{{ p.logoImg.webp }}">
-        <img src="{{ p.logoImg.png }}" width="{{ p.logoImg.width }}" height="{{ p.logoImg.height }}" alt="{{ p.logoImg.alt }}" loading="lazy" decoding="async">
-      </picture>
-    </div>
-    {%- else %}
-    {{ media(p.image, p.image_alt, "PHOTO: " ~ p.title ~ " team", "16 / 11") }}
-    {%- endif %}
+    {{ logoTile(p, "card") }}
   </div>
   <div class="work-card__body">
     <h{{ headingLevel }} class="work-card__title">

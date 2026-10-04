@@ -1,7 +1,106 @@
 ---
-layout: layouts/stub.njk
+layout: layouts/base.njk
 title: "Projects"
-eyebrow: "Explore our work"
-stage: 2
-description: "Explore SCG's client projects: the challenge, scope, approach and skills behind each one."
+description: "Client projects led by Snider Consulting Group student teams at the University of Maryland: the challenge, scope and skills behind each one."
+bodyClass: page-projects
 ---
+{%- from "components/work-card.njk" import workCard with context -%}
+{%- from "components/project-dialog.njk" import projectDialog with context -%}
+{#- Projects explorer (SPEC 6). Cards are the shared Home card (components/work-card.njk),
+    rendered from data/projects.json. Filters are progressive enhancement: the bar is hidden
+    until projects-filter.js runs, and every card is a plain link without JavaScript.
+    A filter group is shown only when the data has at least two different values for it. -#}
+{%- set semesters = projects | distinct("semester") -%}
+{%- set tracks = projects | distinct("disciplines") -%}
+{%- set types = projects | distinct("client_type") -%}
+{%- set fits = projects | distinct("fits") -%}
+
+<section class="section projects-head" aria-labelledby="projects-title">
+  <div class="container projects-explorer__inner">
+    <p class="eyebrow eyebrow--accent">Our work</p>
+    <h1 class="page-title" id="projects-title">Projects</h1>
+    <p class="lede">Client engagements led by SCG student teams, with guidance from consultants and partners at EY.</p>
+  </div>
+</section>
+
+<section class="projects-explorer" aria-label="Project explorer">
+  <div class="container projects-explorer__inner">
+    <form class="project-filters" data-filters hidden role="search" aria-label="Filter projects" onsubmit="return false">
+      <div class="project-filters__row">
+        <div class="project-filters__field project-filters__field--search">
+          <label for="pf-q">Search</label>
+          <input id="pf-q" name="q" type="search" autocomplete="off" aria-describedby="pf-q-hint">
+          <span id="pf-q-hint" class="visually-hidden">Searches project names, clients, summaries and skills.</span>
+        </div>
+        {#- On small screens the other filters sit behind this toggle to keep the bar compact. -#}
+        <button type="button" class="project-filters__toggle" aria-expanded="false" aria-controls="pf-more" data-filters-toggle>Filters <span data-active-count></span></button>
+        <div class="project-filters__more" id="pf-more" data-filters-more>
+        {%- if semesters.length > 1 %}
+        <div class="project-filters__field">
+          <label for="pf-semester">Semester</label>
+          <select id="pf-semester" name="semester"><option value="">All semesters</option>{% for v in semesters %}<option>{{ v }}</option>{% endfor %}</select>
+        </div>
+        {%- endif %}
+        {%- if types.length > 1 %}
+        <div class="project-filters__field">
+          <label for="pf-type">Client type</label>
+          <select id="pf-type" name="type"><option value="">All client types</option>{% for v in types %}<option>{{ v }}</option>{% endfor %}</select>
+        </div>
+        {%- endif %}
+        {%- if fits.length > 1 %}
+        <div class="project-filters__field">
+        <span class="project-filters__label" id="pf-fit-label">Good fit for</span>
+        <details class="project-filters__fits" data-fits>
+          <summary aria-labelledby="pf-fit-label pf-fit-summary"><span id="pf-fit-summary">Any major or interest</span> <span class="project-filters__badge" data-fit-count hidden></span></summary>
+          <div class="project-filters__popover">
+            <label for="pf-fit-search">Find a major or interest</label>
+            <input id="pf-fit-search" type="search" autocomplete="off" data-fit-search>
+            <fieldset class="project-filters__chips">
+              <legend class="visually-hidden">Good fit for (suggested)</legend>
+              {%- for v in fits %}
+              <label class="filter-chip" data-fit-option><input type="checkbox" name="fit" value="{{ v }}"><span>{{ v }}</span></label>
+              {%- endfor %}
+            </fieldset>
+            <p class="project-filters__fit-empty" data-fit-empty hidden>No matches.</p>
+          </div>
+        </details>
+        </div>
+        {%- endif %}
+      {%- if tracks.length > 1 %}
+      <fieldset class="project-filters__chips project-filters__tracks">
+        <legend>Track</legend>
+        {%- for v in tracks %}
+        <label class="filter-chip"><input type="checkbox" name="track" value="{{ v }}"><span>{{ v }}</span></label>
+        {%- endfor %}
+      </fieldset>
+      {%- endif %}
+        </div>
+      </div>
+      <div class="project-filters__status">
+        <p class="project-filters__count" data-count aria-live="polite">Showing all {{ projects.length }} projects</p>
+        <button type="button" class="project-filters__clear" data-clear hidden>Clear all filters</button>
+      </div>
+    </form>
+
+    <div class="projects-grid" data-project-grid>
+      {%- for p in projects %}
+      <div class="projects-grid__item" data-project-item
+           data-semester="{{ p.semester }}" data-type="{{ p.client_type }}"
+           data-tracks="{{ (p.disciplines or []) | join('|') }}" data-fits="{{ (p.fits or []) | join('|') }}"
+           data-search="{{ (([p.title, p.client, p.summary, p.tagline] | join(' ')) ~ ' ' ~ ((p.skills or []) | join(' '))) | lower }}">
+        {{ workCard(p, loop.index, 2) }}
+      </div>
+      {%- endfor %}
+    </div>
+
+    <div class="projects-empty" data-empty hidden>
+      <h2 class="projects-empty__title">No projects match these filters.</h2>
+      <p>Try removing a filter or searching for something else.</p>
+      <button type="button" class="btn btn--primary" data-clear>Clear all filters</button>
+    </div>
+  </div>
+</section>
+
+{#- Filters load first so the dialog's position ("2 of 2") already reflects a filtered deep link. -#}
+<script src="{{ '/js/projects-filter.js' | versioned }}" defer></script>
+{{ projectDialog(projects) }}

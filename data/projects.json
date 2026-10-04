@@ -142,6 +142,8 @@
       "team": { "size": null, "roles": [], "majors": [] },
       "image": "assets/placeholders/project-scg-internal.jpg",
       "image_alt": "[TBD]",
+      "logo": "assets/scg-logo.png",
+      "logo_bg": "#FFFFFF",
       "links": []
     }
   ],
