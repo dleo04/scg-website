@@ -82,8 +82,8 @@ data.push("Photos (data/photos.json): 14 group, event and activity photos import
 data.push("Downloads (site.json → downloads): the three SCG case guides credit their student authors by name and photo on page 1, as originally published on the old site; confirm the authors are happy for them to stay public (or supply versions without photos). The guided case also links to sniderconsultinggroup.com/case-prep, which the new site does not have.");
 data.push("assets/logos/snider-center-smith.jpg (About partnership band) is the 576x178 lockup from the old site; a larger or vector version from the Snider Center would be sharper.");
 data.push("faq.json → 'What makes SCG different…' is from the old Recruitment page with the 2021 Vault ranking removed; confirm the wording.");
-data.push("Banners waiting for a photo (gradient until then): /about/ (aboutimage), /join/prepare/ (prepareimage), /work-with-us/ (workwithusimage), /partners/ (partnersimage). Drop a file with that name anywhere under assets/ and rebuild (see README → How to change a page banner).");
-data.push("assets/PHOTO-CREDITS.md: record the photographer and license of the three supplied banner photos (projectsimage, joinscgimage, alumniimage) and of the starter-package photos (placeholder-hero-quad.jpg, placeholder-group-photo.jpg).");
+data.push("Banners waiting for a photo (gradient until then): /join/prepare/ (prepareimage), /partners/ (partnersimage). Drop a file with that name anywhere under assets/ and rebuild (see README → How to change a page banner).");
+data.push("assets/PHOTO-CREDITS.md: record the photographer and license of the five supplied banner photos (projectsimage, joinscgimage, alumniimage, aboutimage, workwithusimage) and of the starter-package photos (placeholder-hero-quad.jpg, placeholder-group-photo.jpg).");
 data.push("Semester labels: confirm 'SCG Internal Project' (Spring 2025 + Fall 2025) and 'Business Beyond Borders' (Fall 2025) are listed in the right semesters.");
 for (const g of faq.groups) for (const item of g.items) {
   if (item.needs_decision) data.push(`faq.json → "${item.q}" NEEDS DECISION (hidden in production): ${item.decision}`);

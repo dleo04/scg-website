@@ -587,3 +587,20 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - All pass at tint 0.78; no page needed 0.8.
 - **Build quirk seen once.** One full build rendered the photo pages as gradients even though the data was correct; it has not reproduced since. `scripts/check-output.mjs` (part of `npm run build`) now fails the build if a page that has a banner photo renders without it, or a gradient page references one.
 - **Size of the originals.** The three supplied originals total about 39MB in the repo; the 28MB Alumni panorama is the biggest. They are kept because the crop script needs them. A 6000px copy would be enough if repo size matters.
+
+## About and Work With Us photos; Alumni band 3
+
+- **Sources.** `assets/photos/aboutimage.jpeg` (6912×2752) → /about/ band 2, and `assets/photos/workwithusimage.jpeg` (8160×3264) → /work-with-us/ band 2, both found by name. /alumni/ keeps `alumniimage.jpeg`, now band 3 (50–75%). Set in `site.json → page_banners`; the originals are untouched.
+- **No window expanded.**
+  - The people in both new photos are motion-blurred, so there are no recognisable faces. Their heads sit inside band 2: about 33–39% of the height on About and 42–47% on Work With Us.
+  - Alumni band 3 is buildings only.
+  - Both new photos are about 2.5:1, wider than 16:9, so phones get the whole photo, as for Join and Alumni.
+- **Files.** `make-banners.mjs` rebuilds `assets/banners/` from scratch on every run, so the old Alumni band-2 crops are gone and no unused crops remain.
+  - Desktop strips: About 4100×408, Work With Us 4000×400, Alumni 3700×407.
+  - Every file is under 220KB; the largest is Work With Us's WebP at 218KB.
+- **Contrast** (`npm run banner-contrast`, brightest background pixel, 360/768/1280/1440), worst values. All pass at tint 0.78; none needed 0.8.
+  - /about/: eyebrow 4.92, title 9.80, intro 9.73
+  - /work-with-us/: eyebrow 4.94, title 9.73
+  - /alumni/: eyebrow 4.92, title 9.73
+- **Checked** at 360/768/1280/1440: finished look, no seam (no border, shadow or gap under the banner) and no horizontal scroll. Heights at 360 / 1440: /about/ 307 / 360, /work-with-us/ 260 / 360, /alumni/ 260 / 360.
+- **Still on the gradient:** /join/prepare/ and /partners/.

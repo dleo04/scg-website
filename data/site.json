@@ -348,7 +348,7 @@
     },
     "/alumni/": {
       "source": "alumniimage",
-      "band": 2,
+      "band": 3,
       "focal": "50% 50%",
       "tint": 0.78
     },

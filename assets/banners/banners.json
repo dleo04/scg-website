@@ -152,6 +152,56 @@
   "/alumni/": {
     "photo": true,
     "source": "assets/photos/alumniimage.jpeg",
+    "band": 3,
+    "focal": "50% 50%",
+    "tint": 0.78,
+    "windows": {
+      "desktop": [
+        50,
+        75
+      ],
+      "tablet": [
+        50,
+        75
+      ],
+      "mobile": [
+        0,
+        100
+      ]
+    },
+    "files": {
+      "desktop": {
+        "webp": "/assets/banners/alumni-desktop-3700.webp 3700w",
+        "jpg": "/assets/banners/alumni-desktop-3700.jpg 3700w",
+        "fallback": "/assets/banners/alumni-desktop-3700.jpg",
+        "width": 3700,
+        "height": 407,
+        "sizes": "max(100vw, 3636px)",
+        "window": "50.0-75.0%"
+      },
+      "tablet": {
+        "webp": "/assets/banners/alumni-desktop-3700.webp 3700w",
+        "jpg": "/assets/banners/alumni-desktop-3700.jpg 3700w",
+        "fallback": "/assets/banners/alumni-desktop-3700.jpg",
+        "width": 3700,
+        "height": 407,
+        "sizes": "max(100vw, 3636px)",
+        "window": "50.0-75.0%"
+      },
+      "mobile": {
+        "webp": "/assets/banners/alumni-mobile-1080.webp 1080w, /assets/banners/alumni-mobile-720.webp 720w",
+        "jpg": "/assets/banners/alumni-mobile-1080.jpg 1080w, /assets/banners/alumni-mobile-720.jpg 720w",
+        "fallback": "/assets/banners/alumni-mobile-1080.jpg",
+        "width": 1080,
+        "height": 475,
+        "sizes": "max(100vw, 636px)",
+        "window": "0.0-100.0%"
+      }
+    }
+  },
+  "/about/": {
+    "photo": true,
+    "source": "assets/photos/aboutimage.jpeg",
     "band": 2,
     "focal": "50% 50%",
     "tint": 0.78,
@@ -171,38 +221,33 @@
     },
     "files": {
       "desktop": {
-        "webp": "/assets/banners/alumni-desktop-3700.webp 3700w",
-        "jpg": "/assets/banners/alumni-desktop-3700.jpg 3700w",
-        "fallback": "/assets/banners/alumni-desktop-3700.jpg",
-        "width": 3700,
-        "height": 407,
-        "sizes": "max(100vw, 3636px)",
+        "webp": "/assets/banners/about-desktop-4100.webp 4100w",
+        "jpg": "/assets/banners/about-desktop-4100.jpg 4100w",
+        "fallback": "/assets/banners/about-desktop-4100.jpg",
+        "width": 4100,
+        "height": 408,
+        "sizes": "max(100vw, 4019px)",
         "window": "25.0-50.0%"
       },
       "tablet": {
-        "webp": "/assets/banners/alumni-desktop-3700.webp 3700w",
-        "jpg": "/assets/banners/alumni-desktop-3700.jpg 3700w",
-        "fallback": "/assets/banners/alumni-desktop-3700.jpg",
-        "width": 3700,
-        "height": 407,
-        "sizes": "max(100vw, 3636px)",
+        "webp": "/assets/banners/about-desktop-4100.webp 4100w",
+        "jpg": "/assets/banners/about-desktop-4100.jpg 4100w",
+        "fallback": "/assets/banners/about-desktop-4100.jpg",
+        "width": 4100,
+        "height": 408,
+        "sizes": "max(100vw, 4019px)",
         "window": "25.0-50.0%"
       },
       "mobile": {
-        "webp": "/assets/banners/alumni-mobile-1080.webp 1080w, /assets/banners/alumni-mobile-720.webp 720w",
-        "jpg": "/assets/banners/alumni-mobile-1080.jpg 1080w, /assets/banners/alumni-mobile-720.jpg 720w",
-        "fallback": "/assets/banners/alumni-mobile-1080.jpg",
+        "webp": "/assets/banners/about-mobile-1080.webp 1080w, /assets/banners/about-mobile-720.webp 720w",
+        "jpg": "/assets/banners/about-mobile-1080.jpg 1080w, /assets/banners/about-mobile-720.jpg 720w",
+        "fallback": "/assets/banners/about-mobile-1080.jpg",
         "width": 1080,
-        "height": 475,
-        "sizes": "max(100vw, 636px)",
+        "height": 430,
+        "sizes": "max(100vw, 703px)",
         "window": "0.0-100.0%"
       }
     }
-  },
-  "/about/": {
-    "photo": false,
-    "source": "aboutimage",
-    "tint": 0.78
   },
   "/join/prepare/": {
     "photo": false,
@@ -210,9 +255,54 @@
     "tint": 0.78
   },
   "/work-with-us/": {
-    "photo": false,
-    "source": "workwithusimage",
-    "tint": 0.78
+    "photo": true,
+    "source": "assets/photos/workwithusimage.jpeg",
+    "band": 2,
+    "focal": "50% 50%",
+    "tint": 0.78,
+    "windows": {
+      "desktop": [
+        25,
+        50
+      ],
+      "tablet": [
+        25,
+        50
+      ],
+      "mobile": [
+        0,
+        100
+      ]
+    },
+    "files": {
+      "desktop": {
+        "webp": "/assets/banners/work-with-us-desktop-4000.webp 4000w",
+        "jpg": "/assets/banners/work-with-us-desktop-4000.jpg 4000w",
+        "fallback": "/assets/banners/work-with-us-desktop-4000.jpg",
+        "width": 4000,
+        "height": 400,
+        "sizes": "max(100vw, 4000px)",
+        "window": "25.0-50.0%"
+      },
+      "tablet": {
+        "webp": "/assets/banners/work-with-us-desktop-4000.webp 4000w",
+        "jpg": "/assets/banners/work-with-us-desktop-4000.jpg 4000w",
+        "fallback": "/assets/banners/work-with-us-desktop-4000.jpg",
+        "width": 4000,
+        "height": 400,
+        "sizes": "max(100vw, 4000px)",
+        "window": "25.0-50.0%"
+      },
+      "mobile": {
+        "webp": "/assets/banners/work-with-us-mobile-1080.webp 1080w, /assets/banners/work-with-us-mobile-720.webp 720w",
+        "jpg": "/assets/banners/work-with-us-mobile-1080.jpg 1080w, /assets/banners/work-with-us-mobile-720.jpg 720w",
+        "fallback": "/assets/banners/work-with-us-mobile-1080.jpg",
+        "width": 1080,
+        "height": 432,
+        "sizes": "max(100vw, 700px)",
+        "window": "0.0-100.0%"
+      }
+    }
   },
   "/partners/": {
     "photo": false,
