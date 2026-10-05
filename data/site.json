@@ -98,22 +98,30 @@
     {
       "label": "Smith School News",
       "blurb": "Read what the Smith School says about SCG.",
-      "url": "https://www.rhsmith.umd.edu/news/applying-business-acumen-help-student-groups-thrive"
+      "url": "https://www.rhsmith.umd.edu/news/applying-business-acumen-help-student-groups-thrive",
+      "image": "group-smith-front",
+      "focal": "50% 70%"
     },
     {
       "label": "The Diamondback",
       "blurb": "Read about SCG in UMD's student newspaper.",
-      "url": "https://dbknews.com/2021/04/01/umd-school-of-business-snider-consulting-group-student-clubs-organizations/"
+      "url": "https://dbknews.com/2021/04/01/umd-school-of-business-snider-consulting-group-student-clubs-organizations/",
+      "image": "group-brick-path",
+      "focal": "50% 60%"
     },
     {
       "label": "Ed Snider Center",
       "blurb": "Learn about SCG and its benefactor.",
-      "url": "https://www.rhsmith.umd.edu/centers/snider-center/programs-curricula/snider-consulting-group"
+      "url": "https://www.rhsmith.umd.edu/centers/snider-center/programs-curricula/snider-consulting-group",
+      "image": "group-steps-brick",
+      "focal": "50% 55%"
     },
     {
       "label": "Smith Clubs",
       "blurb": "Learn about other Smith organizations.",
-      "url": "https://www.rhsmith.umd.edu/programs/undergraduate/community/clubs-and-organizations"
+      "url": "https://www.rhsmith.umd.edu/programs/undergraduate/community/clubs-and-organizations",
+      "image": "group-lakeside",
+      "focal": "50% 50%"
     }
   ],
   "partners": [
@@ -423,5 +431,6 @@
       "focal": "50% 55%",
       "alt": "SCG members in suits standing in two rows on a campus lawn in warm evening light."
     }
-  }
+  },
+  "press_readme": "'SCG elsewhere' cards on /about/. 'image' is a photo id from data/photos.json shown decoratively (alt=\"\") at 16:10; 'focal' (x% y%) is the point kept in the crop."
 }

@@ -271,6 +271,13 @@ main:focus { outline: none; }
 }
 .press-link:hover { border-color: var(--scg-red); background: var(--paper-2); color: var(--ink); }
 .press-link__label { font-family: var(--font-head); font-weight: 700; color: var(--scg-red); }
+/* Cards with a decorative 16:10 photo on top (site.json → press[].image). */
+.press-link--photo { padding: 0; overflow: hidden; border-radius: var(--radius); background: var(--paper); }
+.press-link--photo .press-link__label { padding: 16px 20px 0; }
+.press-link--photo .press-link__blurb { padding: 0 20px 18px; }
+.press-link__photo { display: block; }
+.press-link__photo img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; }
+.press-link--photo:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 .press-link__label::after { content: " ↗"; }
 .press-link__blurb { color: var(--ink-2); font-size: var(--step--1); }
 .chips--clients .chip { font-size: 0.9375rem; }
@@ -856,7 +863,7 @@ html.dialog-open { overflow: hidden; }
    as Home/Projects. Contrast notes next to each text colour pairing.
    ========================================================================== */
 /* List items used as cards/panels are not prose: no 70ch cap. */
-.stepper__panel, .stepper__body, .story__item, .pillar, .qcard, .star__item, .photo-wall__item, .resource-grid > li, .doc-card, .press-list > li { max-width: none; }
+.stepper__panel, .stepper__body, .story__item, .pillar, .qcard, .star__item, .gallery__item, .resource-grid > li, .doc-card, .press-list > li { max-width: none; }
 /* ---- Inner-page photo banner (components/page-banner.njk; site.json → page_banners) ----
    Same flat maroon-black tint as the Home hero (--hero-tint colour; opacity per page via
    --banner-tint, 0.72-0.8). Text bottom-left in the normal container. Min heights
@@ -1082,17 +1089,17 @@ html.dialog-open { overflow: hidden; }
 .partners-band__more { margin: clamp(28px, 4vw, 40px) 0 0; }
 
 /* ---- About: photo mosaic + lightbox ---- */
-.photo-wall { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 150px; grid-auto-flow: dense; }
-@media (min-width: 640px) { .photo-wall { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 180px; gap: 12px; } }
-@media (min-width: 1024px) { .photo-wall { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 200px; gap: 14px; } }
-.photo-wall__item--wide { grid-column: span 2; }
-.photo-wall__item--tall { grid-row: span 2; }
-.photo-wall__link { position: relative; display: block; width: 100%; height: 100%; border-radius: 12px; overflow: hidden; background: var(--ph-bg); }
-.photo-wall__link picture { display: contents; }
-.photo-wall__link img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
-.photo-wall__zoom { position: absolute; right: 10px; bottom: 10px; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: rgb(20 20 20 / .7); color: #FFFFFF; opacity: 0; transition: opacity .2s; }
-.photo-wall__link:hover .photo-wall__zoom, .photo-wall__link:focus-visible .photo-wall__zoom { opacity: 1; }
-@media (hover: hover) and (prefers-reduced-motion: no-preference) { .photo-wall__link:hover img { transform: scale(1.04); } }
+/* Gallery: justified rows. Without JS a flex-wrap fallback (flex-grow = aspect ratio, 200px
+   rows, a filler keeps the last row from stretching). With JS (lightbox.js) each item gets an
+   exact width and its row's height, so every row fills the width exactly. */
+.gallery { display: flex; flex-wrap: wrap; gap: var(--gap, 8px); }
+.gallery::after { content: ""; flex: 999 1 0; }
+.gallery__item { flex: var(--ar) 1 calc(var(--ar) * 200px); height: 200px; min-width: 0; max-width: none; }
+.gallery.is-justified::after { display: none; }
+.gallery__link { display: block; width: 100%; height: 100%; padding: 0; border: 0; border-radius: 6px; overflow: hidden; background: var(--ph-bg); cursor: zoom-in; }
+.gallery__link img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) { .gallery__link:hover img { transform: scale(1.03); } }
+.gallery__link:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 .lightbox { padding: 0; border: 0; margin: 0; width: 100%; height: 100%; max-width: none; max-height: none; background: rgb(12 12 12 / .96); color: var(--on-ink); --focus: var(--scg-gold); }
 .lightbox::backdrop { background: rgb(12 12 12 / .7); }
 .lightbox[open] { display: grid; grid-template-rows: auto 1fr; }

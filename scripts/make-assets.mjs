@@ -262,6 +262,40 @@ for (const s of readJson("process.json").steps || []) {
   if (e) manifest.steps[key] = e;
 }
 
+// "SCG elsewhere" card photos (site.json → press): 16:10 crops.
+manifest.press = {};
+for (const [i, pr] of (site.press || []).entries()) {
+  const e = await focalCrops("press", `press-${i + 1}`, pr.image, pr.focal, [["card", 16 / 10]]);
+  if (e) manifest.press[i + 1] = e;
+}
+
+// "Life in SCG" gallery (data/gallery.json): a 640px thumbnail (WebP, < 60KB) and a 1600px
+// lightbox copy (WebP, < 250KB) per photo, aspect ratio kept (nothing cropped). Missing
+// width/height in the data are read from the file.
+manifest.gallery = {};
+fs.mkdirSync(path.join(GEN_DIR, "gallery"), { recursive: true });
+const galleryFile = path.join(ROOT, "data/gallery.json");
+for (const g of fs.existsSync(galleryFile) ? JSON.parse(fs.readFileSync(galleryFile, "utf8")).photos || [] : []) {
+  const src = path.join(ROOT, g.file || "");
+  if (!g.file || !fs.existsSync(src)) continue;
+  const meta = await sharp(src).rotate().metadata();
+  const key = path.basename(g.file, path.extname(g.file));
+  const out = { width: meta.width, height: meta.height };
+  for (const [kind, w, limit] of [["thumb", 640, 60], ["full", 1600, 250]]) {
+    // Step quality down to 50; if still too large, step the width down by 10% (keeps detail).
+    let q = 78, width = Math.min(w, meta.width), buf;
+    for (;;) {
+      buf = await sharp(src).rotate().resize({ width, withoutEnlargement: true }).webp({ quality: q }).toBuffer();
+      if (buf.length <= limit * 1024) break;
+      if (q > 50) q -= 5; else if (width > w * 0.6) width = Math.round(width * 0.9); else break;
+    }
+    const info = await sharp(buf).metadata();
+    fs.writeFileSync(path.join(GEN_DIR, "gallery", `${key}-${kind}.webp`), buf);
+    out[kind] = { src: `/assets/generated/gallery/${key}-${kind}.webp`, width: info.width, height: info.height, kb: Math.round(buf.length / 1024) };
+  }
+  manifest.gallery[g.file] = out;
+}
+
 // Employer logos (downloaded once by `npm run logos`): small WebP + PNG copies,
 // resized proportionally to at most 360x120 (3x the largest display size). No recoloring.
 const logoManifest = path.join(ROOT, "assets/logos/logos.json");

@@ -61,6 +61,9 @@ Everything on `/join/` that changes each semester lives in `data/site.json`:
 ## How to change the photos (About and Join)
 Photos are listed in `data/photos.json` (`id`, `source`, `alt`, `caption`, `pages`). To add one, put the original in `reference/old-site/_photo-candidates/` (or name an image from the old site in `source`), add an entry with honest alt text, and run `npm run old-photos`; it writes `assets/photos/<id>.jpg` (max 1600px, about 250KB, location data removed). `npm run old-photos -- --scan` downloads every candidate photo from the old site for review (logos, screenshots and individual portraits are skipped). Group, event and activity photos only; never individual portraits without consent.
 
+## The "Life in SCG" gallery (/about/)
+Photos are listed in `data/gallery.json`: `file` (an image under `assets/`, usually `assets/photos/`), `width`, `height` (pixels; filled in by the build if left out), `alt` (what is visible) and optional `order`. To add one, put the file in `assets/photos/` and add an entry; `npm run build` makes the 640px thumbnail and the 1600px lightbox copy. Remove an entry to take a photo down. The rows are laid out automatically.
+
 ## Interview prep downloads and About figures
 - `site.json → downloads`: the PDFs on `/join/prepare/` (files in `assets/downloads/`). Remove an entry to hide it; an entry whose file is missing is skipped automatically.
   - **Hiding a PDF:** add `"published": false` to its entry. It disappears from the cards and the viewer, gets no cover and is not copied to the site, but the file and entry stay in the repo. The SICC December 2023 case prompt is hidden this way; delete its `"published": false` and run `npm run build` to bring it back.

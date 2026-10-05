@@ -1,0 +1,159 @@
+{
+  "_readme": "\"Life in SCG\" gallery on /about/ (justified rows + lightbox). One entry per photo: file (an image under assets/), width and height in pixels (filled in by npm run build if left out), alt (what is visible; no invented events or names), order (optional; lower comes first). To add a photo: put the file in assets/photos/ and add an entry. npm run assets makes the 640px thumbnail and 1600px lightbox WebP copies. Group, event and activity photos only, never individual portraits.",
+  "photos": [
+    {
+      "file": "assets/photos/group-smith-entrance.jpg",
+      "width": 1600,
+      "height": 1066,
+      "alt": "About forty SCG members in business attire standing together in front of the Robert H. Smith School of Business entrance.",
+      "order": 1
+    },
+    {
+      "file": "assets/photos/workshop-data.jpg",
+      "width": 1600,
+      "height": 1200,
+      "alt": "Members in business attire with laptops around a conference table while a slide titled Data Collection is shown on a screen.",
+      "order": 2
+    },
+    {
+      "file": "assets/photos/group-trees.jpg",
+      "width": 1600,
+      "height": 1067,
+      "alt": "SCG members in business attire standing in two rows on a paved area in front of tall trees.",
+      "order": 3
+    },
+    {
+      "file": "assets/photos/hike.jpg",
+      "width": 1600,
+      "height": 1200,
+      "alt": "A group of SCG members in casual clothes standing on large rocks above a river on a sunny autumn hike.",
+      "order": 4
+    },
+    {
+      "file": "assets/photos/group-indoor-masks.jpg",
+      "width": 1600,
+      "height": 1200,
+      "alt": "Members in casual clothes, most wearing face masks, gathered for a group photo in a bright hallway; one wears a red SCG sweatshirt.",
+      "order": 5
+    },
+    {
+      "file": "assets/photos/painting-social.jpg",
+      "width": 1600,
+      "height": 1200,
+      "alt": "Members in aprons painting small canvases together at a long, paint-spattered art studio table.",
+      "order": 6
+    },
+    {
+      "file": "assets/photos/group-campus-lawn.jpg",
+      "width": 1600,
+      "height": 1067,
+      "alt": "SCG members in suits standing in two rows on a campus lawn in warm evening light.",
+      "order": 7
+    },
+    {
+      "file": "assets/photos/ey-site-visit.jpg",
+      "width": 1200,
+      "height": 1600,
+      "alt": "SCG members in business attire seated along a long conference table in a bright office during a site visit to EY.",
+      "order": 8
+    },
+    {
+      "file": "assets/photos/group-steps-brick.jpg",
+      "width": 1600,
+      "height": 1066,
+      "alt": "SCG members in business attire standing in two rows on the steps of a brick and glass campus building.",
+      "order": 9
+    },
+    {
+      "file": "assets/photos/whiteboard.jpg",
+      "width": 1200,
+      "height": 1600,
+      "alt": "Three members writing ideas on a large whiteboard in a meeting room.",
+      "order": 10
+    },
+    {
+      "file": "assets/photos/graduates.jpg",
+      "width": 1600,
+      "height": 1200,
+      "alt": "Graduating SCG members in white with red SCG stoles on the steps of a campus building.",
+      "order": 11
+    },
+    {
+      "file": "assets/photos/river-social.jpg",
+      "width": 1600,
+      "height": 1200,
+      "alt": "Members in casual clothes gathered by a river in spring, some sitting on tree stumps.",
+      "order": 12
+    },
+    {
+      "file": "assets/photos/group-smith-front.jpg",
+      "width": 1600,
+      "height": 1068,
+      "alt": "Six members in business attire standing in front of the Robert H. Smith School of Business entrance.",
+      "order": 13
+    },
+    {
+      "file": "assets/photos/group-office.jpg",
+      "width": 1600,
+      "height": 1200,
+      "alt": "A large group of SCG members in business attire with name tags in an open-plan office.",
+      "order": 14
+    },
+    {
+      "file": "assets/photos/five-members-outdoors.jpg",
+      "width": 1600,
+      "height": 1066,
+      "alt": "Five members in business attire standing together on a paved path in front of green trees.",
+      "order": 15
+    },
+    {
+      "file": "assets/photos/painting-trio.jpg",
+      "width": 1600,
+      "height": 1200,
+      "alt": "Three members in aprons smiling at the camera while painting at a social.",
+      "order": 16
+    },
+    {
+      "file": "assets/photos/group-lakeside.jpg",
+      "width": 1600,
+      "height": 924,
+      "alt": "SCG members in suits posing together on a lakeside boardwalk, with autumn trees across the water.",
+      "order": 17
+    },
+    {
+      "file": "assets/photos/painting-table.jpg",
+      "width": 1600,
+      "height": 1200,
+      "alt": "Members painting small canvases at a paint-spattered table, one in an SCG sweatshirt painting the SCG letters.",
+      "order": 18
+    },
+    {
+      "file": "assets/photos/group-brick-path.jpg",
+      "width": 1600,
+      "height": 1066,
+      "alt": "SCG members in business attire standing in two rows on a brick path under autumn trees.",
+      "order": 19
+    },
+    {
+      "file": "assets/photos/group-hallway.jpg",
+      "width": 1600,
+      "height": 1200,
+      "alt": "SCG members in business attire lined up in a wide building hallway under a skylight.",
+      "order": 20
+    },
+    {
+      "file": "assets/photos/group-steps-spring.jpg",
+      "width": 1600,
+      "height": 1068,
+      "alt": "SCG members in business attire gathered on the front steps of the Robert H. Smith School of Business.",
+      "order": 21
+    },
+    {
+      "file": "assets/photos/group-large-trees.jpg",
+      "width": 1600,
+      "height": 1066,
+      "alt": "A large group of SCG members in business attire standing in rows on a paved area in front of trees.",
+      "order": 22
+    }
+  ]
+}

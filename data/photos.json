@@ -157,6 +157,51 @@
       "pages": [
         "about-step"
       ]
+    },
+    {
+      "id": "group-steps-brick",
+      "source": "A60378DB-E07E-49F2-A424-5B7C05C2F8BF.jpeg",
+      "alt": "SCG members in business attire standing in two rows on the steps of a brick and glass campus building.",
+      "caption": "",
+      "pages": [
+        "about"
+      ]
+    },
+    {
+      "id": "group-indoor-masks",
+      "source": "A6A2878B-5370-4C4C-92AA-FC7A34A61CB9.jpeg",
+      "alt": "Members in casual clothes, most wearing face masks, gathered for a group photo in a bright hallway; one wears a red SCG sweatshirt.",
+      "caption": "",
+      "pages": [
+        "about"
+      ]
+    },
+    {
+      "id": "group-brick-path",
+      "source": "IMG_6063 (1).JPG",
+      "alt": "SCG members in business attire standing in two rows on a brick path under autumn trees.",
+      "caption": "",
+      "pages": [
+        "about"
+      ]
+    },
+    {
+      "id": "group-large-trees",
+      "source": "small size high res.jpg",
+      "alt": "A large group of SCG members in business attire standing in rows on a paved area in front of trees.",
+      "caption": "",
+      "pages": [
+        "about"
+      ]
+    },
+    {
+      "id": "group-smith-front",
+      "source": "IMG_3893.JPG",
+      "alt": "Six members in business attire standing in front of the Robert H. Smith School of Business entrance.",
+      "caption": "",
+      "pages": [
+        "about"
+      ]
     }
   ]
 }

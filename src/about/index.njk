@@ -30,8 +30,6 @@ bodyClass: page-about
 {%- set csvc = site.partners | findBy("name", "Center for Social Value Creation") -%}
 {%- set eyYears = (site.facts | findBy("label", "EY partnership")) -%}
 {%- set verifiedStats = site.stats | selectattr("verified") -%}
-{%- set aboutPhotos = [] -%}
-{%- for p in photos %}{% if "about" in p.pages %}{% set aboutPhotos = (aboutPhotos.push(p), aboutPhotos) %}{% endif %}{% endfor -%}
 {%- set dialogProjects = [] -%}
 {%- for s in processSteps %}{% if s.example and s.example.project %}{% set dialogProjects = (dialogProjects.push(s.example.project), dialogProjects) %}{% endif %}{% endfor -%}
 
@@ -169,7 +167,7 @@ bodyClass: page-about
 </section>
 
 {# Photo wall #}
-{%- if aboutPhotos.length %}
+{%- if gallery.length %}
 <section class="section" aria-labelledby="life-title">
   <div class="container">
     <header class="section__head section__head--split">
@@ -179,7 +177,7 @@ bodyClass: page-about
       </div>
       <p class="section__hint">Select a photo to see it larger.</p>
     </header>
-    {{ photoWall(aboutPhotos, "about-photos") }}
+    {{ photoWall(gallery, "about-photos") }}
   </div>
 </section>
 {%- endif %}
@@ -221,8 +219,10 @@ bodyClass: page-about
       <h2 class="section__title" id="press-title">SCG elsewhere</h2>
     </header>
     <ul class="press-list">
-      {%- for p in site.press %}
-      <li><a class="press-link" href="{{ p.url }}" target="_blank" rel="noopener noreferrer"><span class="press-link__label">{{ p.label }}</span><span class="press-link__blurb">{{ p.blurb }}</span><span class="visually-hidden"> (opens in a new tab)</span></a></li>
+      {%- for p in press %}
+      <li><a class="press-link{% if p.photo %} press-link--photo{% endif %}" href="{{ p.url }}" target="_blank" rel="noopener noreferrer">
+        {%- if p.photo %}<picture class="press-link__photo"><source type="image/webp" srcset="{{ p.photo.card.webpSrcset }}" sizes="(min-width: 1024px) 290px, (min-width: 640px) 46vw, 92vw"><img src="{{ p.photo.card.src }}" srcset="{{ p.photo.card.jpgSrcset }}" sizes="(min-width: 1024px) 290px, (min-width: 640px) 46vw, 92vw" width="{{ p.photo.card.width }}" height="{{ p.photo.card.height }}" alt="" loading="lazy" decoding="async"></picture>{% endif %}
+        <span class="press-link__label">{{ p.label }}</span><span class="press-link__blurb">{{ p.blurb }}</span><span class="visually-hidden"> (opens in a new tab)</span></a></li>
       {%- endfor %}
     </ul>
   </div>

@@ -845,3 +845,43 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - keyboard, roving tabindex, progress states, fill, announcements, hash, deep link, swipe, reduced motion, no-JS
   - text colours are existing tokens (`--ink`, `--ink-2`, red ≥ 7.24:1 on white)
   - ui-check, build and check:notes pass
+
+## /about/: "Life in SCG" justified gallery and "SCG elsewhere" photo cards
+
+- **Data.** The gallery now reads `data/gallery.json` (`file`, `width`, `height`, `alt`, `order`); width and height are filled in from the file by the build if missing.
+  - **22 photos.** The 14 earlier ones, plus 3 imported for other sections (five members outdoors, painting at a table, group in front of trees) and 5 newly imported group photos from the old site:
+    - A60378DB: group on the steps of a brick and glass building
+    - A6A2878B: group in a hallway, mostly masked, one in an SCG sweatshirt
+    - IMG_6063: group on a brick path under autumn trees
+    - "small size high res": large group in front of trees
+    - IMG_3893: six members in front of the Smith School
+  - **Skipped:** IMG_7012 (near-duplicate of the group-in-front-of-trees shot), individual portraits and headshots, screenshots and logos.
+  - The order interleaves group photos with workshops, site visits, socials and the hike. Alt text describes only what is visible.
+- **Layout: equal-height justified rows** (`src/js/lightbox.js`). From 600px the script picks one row height H within ±15% of the target (220px desktop, 170px tablet; breakpoints follow the viewport) and the row breaks (dynamic programming, at most 8 photos a row) that need the least centred crop to make every row exactly H tall and exactly the container width, with an 8px gap.
+  - The last row keeps its natural height, required to be within 25% of H.
+  - Strictly equal rows, exact width and zero crop cannot all hold for arbitrary photos (their natural row heights vary 10–20%), so the largest crop is about **7% of one dimension (≈3.5% per side)**, centred, and no faces are cut.
+  - Measured:
+
+    | Width | Rows | Row height | Last row |
+    |---|---|---|---|
+    | 1440 | 4+5+5+4+4 | 194 | 202 |
+    | 1024 | 3+3+4+3+3+3+3 | 224 | 222 |
+    | 768 | 3+3+4+3+3+3+3 | 164 | 162.5 |
+
+  - Phones: two photos a row at their natural height (no crop), so the rows differ in height (104–142px).
+  - Edges are straight to within 0.5px and gaps are 8px. Re-laid out with a ResizeObserver; CLS 0.0000.
+  - Without JS a CSS flex-wrap fallback (flex-grow = aspect ratio, 200px rows, a filler so the last row does not stretch) shows all 22 photos as links to the large image.
+- **Images.** 640px WebP thumbnails (lazy, width and height set, each ≤ 60KB) and 1600px WebP lightbox copies (each ≤ 250KB; three portrait or busy photos step down to 1200–1296px wide to stay under the limit). All made by `npm run assets`.
+  - **Gallery payload: 386KB before (14 photos) → 1,046KB after (22 photos)**, the same at 360 and 1440 since all thumbnails are 640px. A smaller phone thumbnail would cut this if needed.
+- **Lightbox.** Native `<dialog>`: page inert, Tab trapped, Esc / backdrop / X close, focus returns to the clicked thumbnail, scroll lock.
+  - Navigation: Previous/Next, Left/Right keys (wrapping), swipe; the "3 / 22" counter; both neighbours preloaded.
+  - Screen readers: the large image carries the alt text, the dialog is labelled "Photo n of 22", and changes are announced politely.
+  - Thumbnails become real buttons labelled "Open photo n of 22: <alt>". No captions. Reduced motion drops the hover zoom and the open animation.
+- **SCG elsewhere.** Each card has one of our own photos on top: 16:10, focal point in `site.json → press[].image/focal`, decorative `alt=""`, the same size on every card.
+  - Smith School News: six members at the Smith School entrance
+  - The Diamondback: group on a brick path
+  - Ed Snider Center: group on building steps
+  - Smith Clubs: group by a lake
+  - Card titles with ↗, descriptions and links are unchanged; links keep `target="_blank" rel="noopener noreferrer"` and "(opens in a new tab)" text. One link per card with a focus ring; equal heights; 4 / 2 / 1 columns.
+- **TODO** adds "Confirm members in gallery photos are OK with being shown on the site; remove any photo on request."
+- **Verified** at 360/768/1024/1440: no horizontal scroll, console clean. Lightbox keyboard and swipe, labels, focus return, the no-JS fallback, ui-check (axe clean), build and check:notes pass. Text colours are existing tokens (red 7.24:1, ink-2 10.9:1 on white).
