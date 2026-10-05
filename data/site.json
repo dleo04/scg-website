@@ -311,51 +311,70 @@
       "published": "2023-12"
     }
   ],
-  "page_banners_readme": "Photo banners behind the page headers of the inner pages (components/page-banner.njk), keyed by URL. 'image' is a photo in the repo (assets/photos/… or assets/…); 'position' is the CSS object-position (x% y%) that picks the crop; 'position_mobile' (optional) is used below 768px; 'tint' is the flat maroon-black overlay opacity: 0.78 on every banner (the Home hero uses 0.72), the lowest value that keeps the small gold eyebrow at 4.5:1 even over a white sky; keep it between 0.78 and 0.8 and run npm run banner-contrast after changing a photo. Pages not listed use 'default'. Images are decorative (alt=\"\") and resized by npm run assets (800/1600px WebP + JPEG). Change a page's photo by editing its entry and rebuilding.",
+  "page_banners_readme": "Banners behind the inner-page headers (components/page-banner.njk), keyed by URL. 'source': a bare file name looked up anywhere under assets/ (case-insensitive, any extension) or a path. If no file is found the page shows the plain maroon-black gradient banner, so dropping e.g. assets/photos/aboutimage.jpg in later is enough. 'band': which quarter of the photo's height to use (1 = top 0-25%, 2 = 25-50%, 3 = 50-75%, 4 = 75-100%); phones get the same band expanded to 16:9. 'focal': CSS object-position for the crop inside the banner. 'windows' (optional): exact [top%, bottom%] windows per breakpoint when a band would cut something off (see /team/). 'tint': maroon-black overlay opacity, 0.78-0.8 (0.78 keeps the gold eyebrow at 4.5:1 over a white sky). After a change: npm run build, then npm run banner-contrast.",
   "page_banners": {
-    "default": {
-      "image": "assets/photos/hike.jpg",
-      "position": "50% 20%",
+    "/projects/": {
+      "source": "projectsimage",
+      "band": 3,
+      "focal": "50% 50%",
       "tint": 0.78
     },
     "/join/": {
-      "image": "assets/photos/group-lakeside.jpg",
-      "position": "50% 8%",
-      "position_mobile": "50% 10%",
-      "tint": 0.78
-    },
-    "/join/prepare/": {
-      "image": "assets/photos/ey-site-visit.jpg",
-      "position": "50% 12%",
-      "tint": 0.78
-    },
-    "/about/": {
-      "image": "assets/photos/hike.jpg",
-      "position": "50% 20%",
-      "position_mobile": "62% 25%",
+      "source": "joinscgimage",
+      "band": 2,
+      "focal": "50% 50%",
       "tint": 0.78
     },
     "/team/": {
-      "image": "assets/photos/group-campus-lawn.jpg",
-      "position": "50% 12%",
-      "tint": 0.78
+      "source": "assets/placeholder-group-photo.jpg",
+      "band": 3,
+      "focal": "50% 30%",
+      "tint": 0.78,
+      "windows": {
+        "desktop": [
+          39.3,
+          85.8
+        ],
+        "tablet": [
+          36.7,
+          88.3
+        ],
+        "mobile": [
+          0,
+          100
+        ]
+      },
+      "windows_note": "Band 3 (50-75%) cuts the back row's heads (hair starts at ~46%) and, as banners get narrower, the people at the left and right edges (faces span 7-93% of the width). Each window keeps band 3 as its centre (62.5%) and is just tall enough that every face stays visible at 1024-1440px (desktop), 768-1023px (tablet) and below 768px (mobile, whole photo)."
     },
     "/alumni/": {
-      "image": "assets/photos/graduates.jpg",
-      "position": "50% 22%",
+      "source": "alumniimage",
+      "band": 2,
+      "focal": "50% 50%",
+      "tint": 0.78
+    },
+    "/about/": {
+      "source": "aboutimage",
+      "band": 2,
+      "focal": "50% 50%",
+      "tint": 0.78
+    },
+    "/join/prepare/": {
+      "source": "prepareimage",
+      "band": 2,
+      "focal": "50% 50%",
       "tint": 0.78
     },
     "/work-with-us/": {
-      "image": "assets/placeholder-hero-quad.jpg",
-      "position": "50% 6%",
-      "tint": 0.78,
-      "position_mobile": "100% 0%"
+      "source": "workwithusimage",
+      "band": 2,
+      "focal": "50% 50%",
+      "tint": 0.78
     },
     "/partners/": {
-      "image": "assets/placeholder-hero-quad.jpg",
-      "position": "0% 62%",
-      "tint": 0.78,
-      "position_mobile": "0% 100%"
+      "source": "partnersimage",
+      "band": 2,
+      "focal": "50% 50%",
+      "tint": 0.78
     }
   }
 }

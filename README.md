@@ -68,12 +68,16 @@ Photos are listed in `data/photos.json` (`id`, `source`, `alt`, `caption`, `page
 - `data/process.json`: "How a project works" on `/about/`. A step with `"text": null` is hidden on the live site; `example` links a step to a project (it opens that project's dialog) or a page.
 - `data/tracks.json`: the four tracks in the `/join/` matcher. The matcher searches each track's `fits` and `skills`; every "What you'd do" item must name a real project.
 
-## How to change a page's banner photo
-The photo behind the header of `/join/`, `/join/prepare/`, `/about/`, `/team/`, `/alumni/`, `/work-with-us/` and `/partners/` is set in `data/site.json → page_banners`, keyed by the page's URL (pages not listed use `"default"`):
+## How to change a page banner
+The header of `/projects/`, `/join/`, `/join/prepare/`, `/about/`, `/team/`, `/alumni/`, `/work-with-us/` and `/partners/` is a banner: a photo under a maroon-black tint, or, while a page has no photo, a plain maroon-black gradient. Settings live in `data/site.json → page_banners`, keyed by the page's URL:
 ```json
-"/team/": { "image": "assets/photos/group-campus-lawn.jpg", "position": "50% 12%", "position_mobile": "50% 20%", "tint": 0.78 }
+"/about/": { "source": "aboutimage", "band": 2, "focal": "50% 50%", "tint": 0.78 }
 ```
-- `image`: any photo in the repo (calm area where the text sits, no legible text or logos). For a new photo, add it to `assets/photos/` (or `data/photos.json` + `npm run old-photos`) and list its source in `assets/PHOTO-CREDITS.md`.
-- `position`: which part of the photo shows (x% y%; `50% 0%` = top centre). `position_mobile` (optional) for phones.
-- `tint`: the maroon-black overlay, 0.78 to 0.8. Lower values make the small gold label fail contrast over bright skies.
-- Then run `npm run build` (it makes the 800/1600px WebP and JPEG files under 200KB) and `npm run banner-contrast`, which must say OK.
+- **Add a photo to a page that has none yet:** save it anywhere under `assets/` (for example `assets/photos/`) named `aboutimage`, `prepareimage`, `workwithusimage` or `partnersimage` (any extension, any capitalisation) and run `npm run build`. It is picked up automatically.
+- **Replace a photo:** drop in a new file with the same name (`projectsimage`, `joinscgimage`, `alumniimage`), or point `source` at another file name or path.
+- `band`: which quarter of the photo's height becomes the banner: 1 = top (0–25%), 2 = 25–50%, 3 = 50–75%, 4 = bottom (75–100%). Phones get the same band widened evenly to 16:9.
+- `focal`: which part of that strip stays visible when the screen crops it (`"50% 30%"` = centre, a bit above the middle).
+- `windows` (optional, used on `/team/`): exact `[top%, bottom%]` crops for `desktop`, `tablet` and `mobile` when a band would cut off people's faces.
+- `tint`: keep it between 0.78 and 0.8.
+- `npm run build` runs `scripts/make-banners.mjs`, which crops the original (it is never changed) into `assets/banners/` as WebP and JPEG under 220KB. Then run `npm run banner-contrast`; it must say OK.
+- Record where every photo comes from in `assets/PHOTO-CREDITS.md`.

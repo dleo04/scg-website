@@ -6,7 +6,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "assets": "node scripts/make-assets.mjs",
+    "assets": "node scripts/make-assets.mjs && node scripts/make-banners.mjs",
+    "banners": "node scripts/make-banners.mjs",
     "dev": "npm run assets && eleventy --serve --port 8080",
     "build": "npm run clean && npm run assets && eleventy && node scripts/check-output.mjs && node scripts/check-notes.mjs && node scripts/check-contrast.mjs > /dev/null",
     "build:prod": "SCG_ENV=production npm run build",

@@ -42,6 +42,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets/*.{png,jpg,jpeg,webp,avif,svg,pdf}");
   eleventyConfig.addPassthroughCopy("assets/placeholders/**/*.{png,jpg,jpeg,webp,svg}");
   eleventyConfig.addPassthroughCopy("assets/generated/**/*.{png,jpg,jpeg,webp,avif,svg}");
+  eleventyConfig.addPassthroughCopy("assets/banners/*.{webp,jpg}");  // page banners (npm run banners)
   eleventyConfig.addPassthroughCopy("assets/photos/*.jpg");      // data/photos.json (npm run old-photos)
   eleventyConfig.addPassthroughCopy("assets/downloads/*.pdf");   // site.json → downloads
   eleventyConfig.addPassthroughCopy({ "src/css": "css", "src/js": "js" });

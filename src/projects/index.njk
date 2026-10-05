@@ -6,6 +6,7 @@ bodyClass: page-projects
 ---
 {%- from "components/work-card.njk" import workCard with context -%}
 {%- from "components/project-dialog.njk" import projectDialog with context -%}
+{%- from "components/page-banner.njk" import pageBanner with context -%}
 {#- Projects explorer (SPEC 6). Cards are the shared Home card (components/work-card.njk),
     rendered from data/projects.json. Filters are progressive enhancement: the bar is hidden
     until projects-filter.js runs, and every card is a plain link without JavaScript.
@@ -17,13 +18,7 @@ bodyClass: page-projects
 {%- set types = projectsSorted | distinct("client_type") -%}
 {%- set fits = projectsSorted | distinct("fits") -%}
 
-<section class="section projects-head" aria-labelledby="projects-title">
-  <div class="container projects-explorer__inner">
-    <p class="eyebrow eyebrow--accent">Our work</p>
-    <h1 class="page-title" id="projects-title">Projects</h1>
-    <p class="lede">Client engagements led by SCG student teams, with guidance from consultants and partners at EY.</p>
-  </div>
-</section>
+{{ pageBanner({ id: "projects-title", eyebrow: "Our work", title: "Projects", lede: "Client engagements led by SCG student teams, with guidance from consultants and partners at EY." }) }}
 
 <section class="projects-explorer" aria-label="Project explorer">
   <div class="container projects-explorer__inner">

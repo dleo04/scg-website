@@ -72,6 +72,19 @@ for (const f of fs.readdirSync(OUT, { recursive: true })) {
   if (/layout-reference|docs[\\/]reference/i.test(String(f))) problems.push(`${f}: reference material must not be published.`);
 }
 
+// Every page whose banner has a photo (assets/banners/banners.json) must render it, and the
+// gradient pages must not reference a photo.
+const bannersFile = path.join(ROOT, "assets/banners/banners.json");
+if (fs.existsSync(bannersFile)) {
+  for (const [url, b] of Object.entries(JSON.parse(fs.readFileSync(bannersFile, "utf8")))) {
+    const file = path.join(OUT, url, "index.html");
+    if (!fs.existsSync(file)) continue;
+    const html = fs.readFileSync(file, "utf8");
+    if (b.photo && !html.includes("page-banner__bg")) problems.push(`${url}: banner photo (${b.source}) is missing from the page.`);
+    if (!b.photo && !html.includes("page-banner--plain")) problems.push(`${url}: expected the gradient banner (no photo found for "${b.source}").`);
+  }
+}
+
 if (problems.length) {
   console.error(`\n[check] FAILED: ${problems.length} problem(s) in _site/:\n  - ${problems.join("\n  - ")}\n`);
   process.exit(1);

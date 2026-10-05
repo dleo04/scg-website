@@ -558,3 +558,32 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - Dropdown test, all passing: hover, pointer into the panel, panel above the banner and in view, no flicker, close delay, caret click, click outside, Tab order, Enter/Space, arrows, Esc with focus return, and a visible 3px focus ring.
   - Also: current states, the three anchors, header at 1024/1280/1440, touch accordion at 360 and 768, no-JS, and banner seams on all 7 pages at 4 widths (no border, shadow or gap, no horizontal scroll).
   - ui-check: 24 routes × 4 widths, axe clean. Contrast 40 pairings. banner-contrast OK. check:notes OK.
+
+## Banners from supplied photos, gradient banners, shorter Join SCG menu
+
+- **Join SCG sub-menu.** Now three entries: Recruiting timeline, FAQ and Interview prep. Overview and Find your seat were removed, since "Join SCG" itself links to /join/. Behaviour, accordion, highlighting and the `#find-your-seat` / `#timeline` / `#faq` anchors are unchanged. ui-check and the dropdown test now expect "Recruiting timeline" first.
+- **Supplied photos** were found by name under `assets/photos/`: `projectsimage.jpeg` → /projects/, `joinscgimage.jpeg` → /join/, `alumniimage.jpeg` → /alumni/. The /team/ banner uses the Home "Our Community" photo, `assets/placeholder-group-photo.jpg`. The originals are untouched and never copied to `_site`. /projects/ now uses the shared banner in place of its old plain header; the filter bar and everything below are unchanged, and project detail pages are unchanged.
+- **`scripts/make-banners.mjs`** runs in `npm run assets`, so in dev and build. It replaces the earlier per-page crops in `make-assets.mjs`; the old generated banner files are deleted. The 14 old-site photos and the plaza aerial stay, because they are used elsewhere (About photo wall, Join bento, Home).
+  - Bands are quarters of the height, full width.
+  - Phones (<768px) get the band widened evenly to 16:9, clamped to the photo. The Join photo (1.78:1) and the Alumni panorama (2.27:1) are shorter than 16:9 at full height, so their phone crop is the whole photo.
+  - `<picture>` serves desktop (≥1024), tablet (768–1023) and mobile crops.
+  - **Sizes.** You suggested 1600–2000px wide, but a 6:1 to 9:1 band at 2000px is only 220–330px tall, and the banner is 360–400px tall with `object-fit: cover` scaling by height. Desktop strips are therefore sized to at least 400px tall: Projects 2400×400, Join 2900×406, Alumni 3700×407 (Team 2000×620). All files are under 220KB; the largest is Join's JPEG at 182KB.
+  - **`sizes`.** Each `<source>` declares `sizes="max(100vw, banner height × strip aspect)"` so the browser never picks a strip that is too short.
+- **Team: band 3 widened, as requested.**
+  - Faces span 46–64% of the height (back-row hair to front-row chins) and 7–93% of the width, so the exact band 3 (50–75%) cuts the back row's heads.
+  - Because cover also crops the sides as banners get narrower, each breakpoint has its own window, all centred on band 3 (62.5%), with focal point `50% 30%`:
+    - desktop 39.3–85.8%
+    - tablet 36.7–88.3%
+    - mobile 0–100% (the whole photo; a 16:9 window would cut the people at both ends at 360px)
+  - Checked at 360, 600, 768, 1024, 1280, 1440 and 1920px: every face is visible.
+  - On phones the whole photo includes the "Robert H. Smith School of Business" lettering above the door (under the tint).
+- **Gradient banners** on /about/, /join/prepare/, /work-with-us/ and /partners/: #26080A → #2E0B0E → #3D1418 at 115°, with a 1.8%-white diagonal line pattern. They have the same min heights and text, and switch to a photo automatically when `aboutimage`, `prepareimage`, `workwithusimage` or `partnersimage` appears under `assets/` (default band 2, tint 0.78).
+- **Contrast** (`npm run banner-contrast`, brightest background pixel, 360/768/1280/1440), worst values:
+  - /projects/: eyebrow 5.98, title 9.79, intro 9.80
+  - /join/: eyebrow 4.93, title 9.77, intro 9.90; card label 8.66, status 17.13, note 10.43
+  - /team/: eyebrow 4.92, title 9.73
+  - /alumni/: eyebrow 4.93, title 9.73
+  - Gradient pages: eyebrow ≥ 7.95, title and intro ≥ 15.38, breadcrumb link 8.94
+  - All pass at tint 0.78; no page needed 0.8.
+- **Build quirk seen once.** One full build rendered the photo pages as gradients even though the data was correct; it has not reproduced since. `scripts/check-output.mjs` (part of `npm run build`) now fails the build if a page that has a banner photo renders without it, or a gradient page references one.
+- **Size of the originals.** The three supplied originals total about 39MB in the repo; the 28MB Alumni panorama is the biggest. They are kept because the crop script needs them. A 6000px copy would be enough if repo size matters.

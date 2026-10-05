@@ -1,0 +1,222 @@
+{
+  "/projects/": {
+    "photo": true,
+    "source": "assets/photos/projectsimage.jpeg",
+    "band": 3,
+    "focal": "50% 50%",
+    "tint": 0.78,
+    "windows": {
+      "desktop": [
+        50,
+        75
+      ],
+      "tablet": [
+        50,
+        75
+      ],
+      "mobile": [
+        15.708111702127653,
+        100
+      ]
+    },
+    "files": {
+      "desktop": {
+        "webp": "/assets/banners/projects-desktop-2400.webp 2400w",
+        "jpg": "/assets/banners/projects-desktop-2400.jpg 2400w",
+        "fallback": "/assets/banners/projects-desktop-2400.jpg",
+        "width": 2400,
+        "height": 400,
+        "sizes": "max(100vw, 2398px)",
+        "window": "50.0-75.0%"
+      },
+      "tablet": {
+        "webp": "/assets/banners/projects-desktop-2400.webp 2400w",
+        "jpg": "/assets/banners/projects-desktop-2400.jpg 2400w",
+        "fallback": "/assets/banners/projects-desktop-2400.jpg",
+        "width": 2400,
+        "height": 400,
+        "sizes": "max(100vw, 2398px)",
+        "window": "50.0-75.0%"
+      },
+      "mobile": {
+        "webp": "/assets/banners/projects-mobile-1080.webp 1080w, /assets/banners/projects-mobile-720.webp 720w",
+        "jpg": "/assets/banners/projects-mobile-1080.jpg 1080w, /assets/banners/projects-mobile-720.jpg 720w",
+        "fallback": "/assets/banners/projects-mobile-1080.jpg",
+        "width": 1080,
+        "height": 607,
+        "sizes": "max(100vw, 498px)",
+        "window": "15.7-100.0%"
+      }
+    }
+  },
+  "/join/": {
+    "photo": true,
+    "source": "assets/photos/joinscgimage.jpeg",
+    "band": 2,
+    "focal": "50% 50%",
+    "tint": 0.78,
+    "windows": {
+      "desktop": [
+        25,
+        50
+      ],
+      "tablet": [
+        25,
+        50
+      ],
+      "mobile": [
+        0,
+        100
+      ]
+    },
+    "files": {
+      "desktop": {
+        "webp": "/assets/banners/join-desktop-2900.webp 2900w",
+        "jpg": "/assets/banners/join-desktop-2900.jpg 2900w",
+        "fallback": "/assets/banners/join-desktop-2900.jpg",
+        "width": 2900,
+        "height": 406,
+        "sizes": "max(100vw, 2855px)",
+        "window": "25.0-50.0%"
+      },
+      "tablet": {
+        "webp": "/assets/banners/join-desktop-2900.webp 2900w",
+        "jpg": "/assets/banners/join-desktop-2900.jpg 2900w",
+        "fallback": "/assets/banners/join-desktop-2900.jpg",
+        "width": 2900,
+        "height": 406,
+        "sizes": "max(100vw, 2855px)",
+        "window": "25.0-50.0%"
+      },
+      "mobile": {
+        "webp": "/assets/banners/join-mobile-1080.webp 1080w, /assets/banners/join-mobile-720.webp 720w",
+        "jpg": "/assets/banners/join-mobile-1080.jpg 1080w, /assets/banners/join-mobile-720.jpg 720w",
+        "fallback": "/assets/banners/join-mobile-1080.jpg",
+        "width": 1080,
+        "height": 605,
+        "sizes": "max(100vw, 500px)",
+        "window": "0.0-100.0%"
+      }
+    }
+  },
+  "/team/": {
+    "photo": true,
+    "source": "assets/placeholder-group-photo.jpg",
+    "band": 3,
+    "focal": "50% 30%",
+    "tint": 0.78,
+    "windows": {
+      "desktop": [
+        39.3,
+        85.8
+      ],
+      "tablet": [
+        36.7,
+        88.3
+      ],
+      "mobile": [
+        0,
+        100
+      ]
+    },
+    "files": {
+      "desktop": {
+        "webp": "/assets/banners/team-desktop-2000.webp 2000w, /assets/banners/team-desktop-1280.webp 1280w",
+        "jpg": "/assets/banners/team-desktop-2000.jpg 2000w, /assets/banners/team-desktop-1280.jpg 1280w",
+        "fallback": "/assets/banners/team-desktop-2000.jpg",
+        "width": 2000,
+        "height": 620,
+        "sizes": "max(100vw, 1291px)",
+        "window": "39.3-85.8%"
+      },
+      "tablet": {
+        "webp": "/assets/banners/team-tablet-1536.webp 1536w",
+        "jpg": "/assets/banners/team-tablet-1536.jpg 1536w",
+        "fallback": "/assets/banners/team-tablet-1536.jpg",
+        "width": 1536,
+        "height": 528,
+        "sizes": "max(100vw, 930px)",
+        "window": "36.7-88.3%"
+      },
+      "mobile": {
+        "webp": "/assets/banners/team-mobile-1080.webp 1080w, /assets/banners/team-mobile-720.webp 720w",
+        "jpg": "/assets/banners/team-mobile-1080.jpg 1080w, /assets/banners/team-mobile-720.jpg 720w",
+        "fallback": "/assets/banners/team-mobile-1080.jpg",
+        "width": 1080,
+        "height": 720,
+        "sizes": "max(100vw, 420px)",
+        "window": "0.0-100.0%"
+      }
+    }
+  },
+  "/alumni/": {
+    "photo": true,
+    "source": "assets/photos/alumniimage.jpeg",
+    "band": 2,
+    "focal": "50% 50%",
+    "tint": 0.78,
+    "windows": {
+      "desktop": [
+        25,
+        50
+      ],
+      "tablet": [
+        25,
+        50
+      ],
+      "mobile": [
+        0,
+        100
+      ]
+    },
+    "files": {
+      "desktop": {
+        "webp": "/assets/banners/alumni-desktop-3700.webp 3700w",
+        "jpg": "/assets/banners/alumni-desktop-3700.jpg 3700w",
+        "fallback": "/assets/banners/alumni-desktop-3700.jpg",
+        "width": 3700,
+        "height": 407,
+        "sizes": "max(100vw, 3636px)",
+        "window": "25.0-50.0%"
+      },
+      "tablet": {
+        "webp": "/assets/banners/alumni-desktop-3700.webp 3700w",
+        "jpg": "/assets/banners/alumni-desktop-3700.jpg 3700w",
+        "fallback": "/assets/banners/alumni-desktop-3700.jpg",
+        "width": 3700,
+        "height": 407,
+        "sizes": "max(100vw, 3636px)",
+        "window": "25.0-50.0%"
+      },
+      "mobile": {
+        "webp": "/assets/banners/alumni-mobile-1080.webp 1080w, /assets/banners/alumni-mobile-720.webp 720w",
+        "jpg": "/assets/banners/alumni-mobile-1080.jpg 1080w, /assets/banners/alumni-mobile-720.jpg 720w",
+        "fallback": "/assets/banners/alumni-mobile-1080.jpg",
+        "width": 1080,
+        "height": 475,
+        "sizes": "max(100vw, 636px)",
+        "window": "0.0-100.0%"
+      }
+    }
+  },
+  "/about/": {
+    "photo": false,
+    "source": "aboutimage",
+    "tint": 0.78
+  },
+  "/join/prepare/": {
+    "photo": false,
+    "source": "prepareimage",
+    "tint": 0.78
+  },
+  "/work-with-us/": {
+    "photo": false,
+    "source": "workwithusimage",
+    "tint": 0.78
+  },
+  "/partners/": {
+    "photo": false,
+    "source": "partnersimage",
+    "tint": 0.78
+  }
+}

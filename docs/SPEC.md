@@ -46,7 +46,7 @@ Status: v1 for build. Audience for this document: the engineer (Claude Code) bui
 
 ## 3. Pages and navigation
 
-Primary nav (as built, see DECISIONS.md): **Projects · Join SCG · About · Team · Alumni · Work With Us**, plus a persistent **Join SCG** button (state driven by `site.json → recruiting`). Partners and Interview prep are in the footer, which lists every page. Footer: logo, affiliation line ("In direct affiliation with the Ed Snider Center for Enterprise and Markets"), nav, social links, contact placeholder, "© year Snider Consulting Group".
+Primary nav (as built, see DECISIONS.md): **Projects · Join SCG ▾ (Recruiting timeline, FAQ, Interview prep) · About · Team · Alumni · Work With Us**, plus a persistent **Join SCG** button (state driven by `site.json → recruiting`). Partners and Interview prep are in the footer, which lists every page. Footer: logo, affiliation line ("In direct affiliation with the Ed Snider Center for Enterprise and Markets"), nav, social links, contact placeholder, "© year Snider Consulting Group".
 
 | Route | Purpose |
 |---|---|
@@ -94,8 +94,11 @@ Rules: Gold is **not** used for text on white (fails contrast); use gold on `--i
 - Chips for tags/majors; stat tiles; accordion (native `<details>` is fine) for FAQ; tabs for role tracks; timeline for process.
 - Motion: subtle reveal-on-scroll and hover transitions only; respect `prefers-reduced-motion`.
 
-### Inner-page photo banner (component)
-`components/page-banner.njk`, used by /join/, /join/prepare/, /about/ and every page on `layouts/stub.njk` (team, alumni, work-with-us, partners); not by /projects/, project pages or the Home hero. A full-width photo behind the eyebrow (gold), H1 and intro (white), with the Home hero's flat maroon-black tint at 0.78 opacity (enough for the 13px gold eyebrow to stay ≥ 4.5:1 over a white sky). Text bottom-left in the normal container; min heights 260 / 300 / 360px at 360 / 768 / 1024+ (taller only when content needs it, e.g. the /join/ status card on phones). A side card (the /join/ status card) keeps its dark surface with a 1px `rgba(255,255,255,.14)` border and a soft shadow. Straight bottom edge with no border, shadow or fade. Photo, crop and tint per page in `site.json → page_banners`; images are decorative (`alt=""`), a 2.4:1 strip for ≥768px and the full photo for phones, WebP/JPEG under 200KB, loaded eagerly (above the fold). `npm run banner-contrast` measures every banner text element over its brightest background pixel at 360/768/1280/1440.
+### Inner-page banner (component)
+`components/page-banner.njk`, used by /projects/, /join/, /join/prepare/, /about/ and every page on `layouts/stub.njk` (team, alumni, work-with-us, partners); not by project detail pages or the Home hero. Eyebrow (gold), H1 and intro (white), bottom-left in the normal container; min heights 260 / 300 / 360px at 360 / 768 / 1024+ (taller only when content needs it, e.g. the /join/ status card). Straight bottom edge, no border, shadow or fade.
+- **With a photo** (`site.json → page_banners → source` found under `assets/`): the photo under the Home hero's flat maroon-black tint at 0.78 opacity (enough for the 13px gold eyebrow to stay ≥ 4.5:1 over a white sky). `scripts/make-banners.mjs` crops one horizontal band (quarter of the height: `band` 1-4) at full width for desktop and tablet, and the band widened to 16:9 for phones (<768px); `windows` can override a crop per breakpoint (used on /team/ so no face is cut). Served with `<picture>` (three media queries) and `object-fit: cover` at `focal`; decorative (`alt=""`), eager (above the fold); WebP/JPEG under 220KB.
+- **Without a photo**: a subtle maroon-black gradient (#26080A → #3D1418) with a very faint diagonal line pattern; same height and text. A file named `aboutimage`, `prepareimage`, `workwithusimage` or `partnersimage` dropped anywhere under `assets/` switches that page to a photo on the next build.
+- `npm run banner-contrast` measures every banner text element over its brightest background pixel at 360/768/1280/1440.
 
 ### Logo usage
 Use `assets/scg-logo.png` on light backgrounds as supplied. On dark sections, place it on a white or `--paper-2` rounded plate rather than recoloring. Provide a clear-space equal to the height of the "S" on all sides. Do not alter. (If a one-color or reversed logo is later supplied, swap it in.)
