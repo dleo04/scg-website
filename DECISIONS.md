@@ -669,3 +669,39 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 - **Measured.** All four tiles are equal and in one row from 768px, at 288×149 (1280/1440, was 288×193) and 168×207 (768). On phones they are 158×108 in a 2×2 grid. There is no horizontal scroll, and the panel height is stable across tracks.
 - **Section height at 1440:** 1884 → 1840px.
 - **Checks.** Seat test (tabs, matcher, deep links, no-JS, dialog), ui-check, build and check:notes all pass.
+
+## "What you get" on /join/: five photo cards
+
+- **Layout.** Five identical cards replace the bento (dark featured tile, mixed sizes, captioned side photo). Each card has a 16:10 photo, a 40px red rounded-square icon overlapping the photo's bottom-left edge (with a 4px white ring), the title and the description. White surface, 1px `--line` border, `--shadow`, `--radius` corners like the project cards, 28px padding, and a 4px hover lift (pointer devices, motion allowed only).
+- **Text is unchanged:** eyebrow, heading, the five titles and descriptions. It already lived in `site.json → benefits`. Icons are the same five SVGs.
+- **Grid.** Flex-wrap with a fixed card basis, so a short last row is centred at the same card width:
+  - 3 + 2 from 1024px
+  - 2 + 2 + 1 from 640px
+  - 1 column below 640px
+  - Gaps are 20–30px (`clamp`). Cards in a row are equal height. Between 1024 and 1279px titles reserve two lines, so every description in a row starts at the same height.
+- **Photos** follow the old site's own pairing in its Recruitment "Membership Benefits" section. They match your suggestions, and none is in the /join/ banner (`joinscgimage`).
+
+  | Benefit | Photo | Old-site file | Focal |
+  |---|---|---|---|
+  | Career readiness program | five members in business attire outdoors | IMG_6911.JPG | 50% 35% |
+  | Alumni network | large group in an office | IMG-1013.jpg | 50% 35% |
+  | Projects with real clients | members at a whiteboard | IMG_5159.jpeg | 50% 50% |
+  | EY partnership | the EY site visit | EY Site Visit.jpg | 50% 55% |
+  | Community | painting at a table | IMG_6909.jpg | 50% 25% |
+
+  - IMG_6911 and IMG_6909 were newly imported (`data/photos.json` → `five-members-outdoors`, `painting-table`; pages: join).
+  - `focal` and `alt` are stored per benefit in `site.json`. Alt text describes only what is visible; "EY site visit" comes from the file name.
+  - Every visible face stays in frame. In the painting photo, people standing at the top edge are already cut off in the original.
+- **Images.** `npm run assets` cuts each photo to 16:10 around its focal point at 600 and 1000px wide, WebP and JPEG, each under 120KB (largest 107KB). They are lazy-loaded with width/height set; none load before the section is scrolled near. No captions.
+- **Accessibility.** The cards are not links, so there are no focus stops in the section. Text is `--ink` on white (18.4:1) and `--ink-2` on white (10.9:1). No horizontal scroll at 360/768/1024/1280/1440.
+- **Removed:** the bento markup and CSS (`.bento*`) and the "Painting social" caption chip.
+- **Section height** (it grows because every card now has a photo):
+
+  | Width | Before | After |
+  |---|---|---|
+  | 1440 | 1244 | 1365 |
+  | 1280 | 1234 | 1355 |
+  | 768 | 1197 | 1698 |
+  | 360 | 1954 | 2634 |
+
+- **Checks.** Build, check:notes, ui-check (24 routes × 4 widths, axe clean), contrast, and the Find-your-seat test pass.

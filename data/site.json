@@ -252,32 +252,47 @@
       "text": "We work collaboratively within SCG and with outside stakeholders, share knowledge and support one another, and take on work whose impact reaches beyond business outcomes."
     }
   ],
-  "benefits_readme": "'What you get' on /join/, reworded from the old Recruitment page's five membership benefits. {ey_years} is replaced with facts → 'EY partnership'.",
+  "benefits_readme": "'What you get' on /join/: five equal photo cards, text reworded from the old Recruitment page's membership benefits. {ey_years} is replaced with facts → 'EY partnership'. 'image' is a photo id from data/photos.json (assets/photos/<id>.jpg); 'focal' is the vertical/horizontal point (x% y%) kept when the photo is cut to 16:10 (npm run assets); 'alt' describes what is visible. Photos follow the old site's own pairing in its Membership Benefits section (IMG_6911, IMG-1013, IMG_5159, EY Site Visit, IMG_6909).",
   "benefits": [
     {
       "icon": "growth",
       "title": "Career readiness program",
-      "text": "Every analyst completes an intensive 10-week professional development program, originally designed by SCG members and alumni at Bain and Capital One, with small-group and one-on-one training."
+      "text": "Every analyst completes an intensive 10-week professional development program, originally designed by SCG members and alumni at Bain and Capital One, with small-group and one-on-one training.",
+      "image": "five-members-outdoors",
+      "focal": "50% 35%",
+      "alt": "Five SCG members in business attire standing together on a paved path in front of green trees."
     },
     {
       "icon": "network",
       "title": "Alumni network",
-      "text": "Each semester, members meet SCG alumni from EY, Deloitte, Capital One, Bain and other firms through site visits, workshops, socials, mentorship and informal conversations."
+      "text": "Each semester, members meet SCG alumni from EY, Deloitte, Capital One, Bain and other firms through site visits, workshops, socials, mentorship and informal conversations.",
+      "image": "group-office",
+      "focal": "50% 35%",
+      "alt": "A large group of SCG members in business attire, with name tags, gathered in an open-plan office."
     },
     {
       "icon": "projects",
       "title": "Projects with real clients",
-      "text": "Members choose from on- and off-campus projects each semester for nonprofit clubs, institutions and companies, picked for the skills they build and the lasting impact they leave."
+      "text": "Members choose from on- and off-campus projects each semester for nonprofit clubs, institutions and companies, picked for the skills they build and the lasting impact they leave.",
+      "image": "whiteboard",
+      "focal": "50% 50%",
+      "alt": "Three members writing ideas on a large whiteboard in a meeting room."
     },
     {
       "icon": "partner",
       "title": "EY partnership",
-      "text": "SCG has partnered with EY for {ey_years}. Members get career advice, project support and mentorship, plus workshops and events hosted with EY."
+      "text": "SCG has partnered with EY for {ey_years}. Members get career advice, project support and mentorship, plus workshops and events hosted with EY.",
+      "image": "ey-site-visit",
+      "focal": "50% 55%",
+      "alt": "SCG members in business attire seated along a long conference table in a bright office during the EY site visit."
     },
     {
       "icon": "community",
       "title": "Community",
-      "text": "Every semester includes community activities, from hikes to socials, to unwind and get to know each other."
+      "text": "Every semester includes community activities, from hikes to socials, to unwind and get to know each other.",
+      "image": "painting-table",
+      "focal": "50% 25%",
+      "alt": "Members painting small canvases at a paint-spattered table, one in an SCG sweatshirt painting the SCG letters."
     }
   ],
   "downloads_readme": "Interview-prep downloads on /join/prepare/ (files in assets/downloads/, copied unaltered from the old Interview Resources and Our Partners pages). Remove an entry to hide it. The three SCG guides credit their student authors by name and photo, as originally published.",

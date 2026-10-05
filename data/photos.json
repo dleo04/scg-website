@@ -130,6 +130,24 @@
       "pages": [
         "about"
       ]
+    },
+    {
+      "id": "five-members-outdoors",
+      "source": "IMG_6911.JPG",
+      "alt": "Five members in business attire standing together on a paved path in front of green trees.",
+      "caption": "Members in business attire",
+      "pages": [
+        "join"
+      ]
+    },
+    {
+      "id": "painting-table",
+      "source": "IMG_6909.jpg",
+      "alt": "Members painting small canvases at a paint-spattered table, one in an SCG sweatshirt painting the SCG letters.",
+      "caption": "Painting at a member social",
+      "pages": [
+        "join"
+      ]
     }
   ]
 }

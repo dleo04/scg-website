@@ -65,6 +65,7 @@ Photos are listed in `data/photos.json` (`id`, `source`, `alt`, `caption`, `page
 - `site.json → downloads`: the PDFs on `/join/prepare/` (files in `assets/downloads/`). Remove an entry to hide it; an entry whose file is missing is skipped automatically.
 - `site.json → member_stats`: the "Leaders across campus" numbers on `/about/` (count-up). Update the values when they change.
 - `site.json → mission`, `pillars`, `benefits`, `press`: About text, the three pillars, the five "What you get" cards on `/join/` and the four "SCG elsewhere" links.
+- Each `benefits` entry has `image` (a photo id from `data/photos.json`, i.e. `assets/photos/<id>.jpg`), `focal` (`"50% 35%"`: the point kept when the photo is cut to 16:10, so faces stay in frame) and `alt` (what the photo shows). Change them and run `npm run build`; the 16:10 crops are made automatically.
 - `data/process.json`: "How a project works" on `/about/`. A step with `"text": null` is hidden on the live site; `example` links a step to a project (it opens that project's dialog) or a page.
 - `data/tracks.json`: the four tracks in **Find your seat** on `/join/`.
   - Tile: icon, `name`, `short` (one line) and logos of up to three recent projects tagged with that discipline in `projects.json`. The logos are picked automatically, avoiding repeats across tracks.

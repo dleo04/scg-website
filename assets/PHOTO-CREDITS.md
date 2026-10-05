@@ -18,7 +18,7 @@ No photos downloaded from the internet are used on the site.
 
 | File | Used for | Source |
 |---|---|---|
-| `assets/photos/*.jpg` (14 photos) | /about/ photo wall, /join/ bento | SCG's old GoDaddy website, imported with `npm run old-photos` (original names in `data/photos.json → source`). |
+| `assets/photos/*.jpg` (16 photos) | /about/ photo wall, /join/ "What you get" cards | SCG's old GoDaddy website, imported with `npm run old-photos` (original names in `data/photos.json → source`). |
 | `assets/placeholder-hero-quad.jpg` | Home hero and Home EY band | Starter package (aerial of a campus plaza). Photographer and license not recorded; confirm before launch or replace. |
 | `assets/placeholder-group-photo.jpg` | Home "Our Community", /team/ banner | Starter package (the old site's group photo). |
 

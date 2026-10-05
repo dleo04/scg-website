@@ -856,7 +856,7 @@ html.dialog-open { overflow: hidden; }
    as Home/Projects. Contrast notes next to each text colour pairing.
    ========================================================================== */
 /* List items used as cards/panels are not prose: no 70ch cap. */
-.stepper__panel, .story__item, .pillar, .qcard, .star__item, .photo-wall__item, .bento__item, .resource-grid > li, .press-list > li { max-width: none; }
+.stepper__panel, .story__item, .pillar, .qcard, .star__item, .photo-wall__item, .resource-grid > li, .press-list > li { max-width: none; }
 /* ---- Inner-page photo banner (components/page-banner.njk; site.json → page_banners) ----
    Same flat maroon-black tint as the Home hero (--hero-tint colour; opacity per page via
    --banner-tint, 0.72-0.8). Text bottom-left in the normal container. Min heights
@@ -1180,28 +1180,33 @@ html.dialog-open { overflow: hidden; }
 @media (min-width: 1024px) { .seat-panel__cards, .seat:not(.is-enhanced) .seat-panel__cards { grid-auto-flow: row; grid-auto-columns: auto; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; gap: 20px; padding-bottom: 0; } }
 .seat-panel__more { margin: 14px 0 0; }
 
-/* ---- Join: What you get (bento) ---- */
-.bento { display: grid; gap: var(--gutter); grid-template-columns: minmax(0, 1fr); }
-@media (min-width: 640px) { .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1024px) {
-  .bento { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-areas: "growth growth photo" "network projects photo" "partner community community"; }
-  .bento__item--growth { grid-area: growth; } .bento__item--network { grid-area: network; } .bento__item--projects { grid-area: projects; }
-  .bento__item--partner { grid-area: partner; } .bento__item--community { grid-area: community; } .bento__item--photo { grid-area: photo; }
+/* ---- Join: What you get (five identical photo cards) ----
+   Flex-wrap with a fixed card basis, so a short last row is centred at the same card width
+   (3 + 2 from 1024px, 2 + 2 + 1 from 640px, 1 column below). Cards in a row stretch to equal
+   height; every card has the same structure, so titles and descriptions start at the same y. */
+.benefits { --gap: clamp(20px, 2.4vw, 30px); display: flex; flex-wrap: wrap; justify-content: center; gap: var(--gap); }
+.benefit {
+  flex: 0 0 100%; max-width: none; display: flex; flex-direction: column; background: var(--paper);
+  border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden;
+  transition: transform .2s ease, box-shadow .2s ease;
 }
-.bento__item { position: relative; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(20px, 3vw, 28px); }
-.bento__item--growth { background: var(--ink); color: var(--on-ink); border-color: var(--ink); }
-.bento__item--growth .bento__text { color: var(--on-ink-2); }
-.bento__icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: var(--scg-red); margin-bottom: 18px; }
-.bento__item--growth .bento__icon { background: var(--scg-gold); }
-.bento__icon svg { width: 26px; height: 26px; fill: none; stroke: #FFFFFF; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.bento__item--growth .bento__icon svg { stroke: var(--ink); }
-.bento__title { font-size: var(--step-1); margin-bottom: .4em; }
-.bento__text { margin: 0; color: var(--ink-2); }
-.bento__item--photo { padding: 0; overflow: hidden; min-height: 260px; }
-.bento__item--photo figure { margin: 0; height: 100%; position: relative; }
-.bento__item--photo picture { display: contents; }
-.bento__item--photo img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
-.bento__item--photo figcaption { position: absolute; left: 12px; bottom: 12px; padding: 4px 10px; border-radius: 6px; background: rgb(20 20 20 / .78); color: #FFFFFF; font-size: .8125rem; font-weight: 700; }   /* ≥ 12:1 */
+@media (min-width: 640px) { .benefit { flex-basis: calc((100% - var(--gap)) / 2); } }
+@media (min-width: 1024px) { .benefit { flex-basis: calc((100% - 2 * var(--gap)) / 3); } }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) { .benefit:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); } }
+.benefit__media { display: block; aspect-ratio: 16 / 10; background: var(--ph-bg); }
+.benefit__media img { width: 100%; height: 100%; object-fit: cover; }
+.benefit__body { position: relative; flex: 1; padding: 36px 28px 28px; }
+/* Red rounded-square icon overlapping the photo's bottom-left edge. */
+.benefit__icon {
+  position: absolute; left: 28px; top: -20px; display: grid; place-items: center; width: 40px; height: 40px;
+  border-radius: 12px; background: var(--scg-red); box-shadow: 0 0 0 4px var(--paper);
+}
+.benefit__icon svg { width: 22px; height: 22px; fill: none; stroke: #FFFFFF; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.benefit__title { font-size: var(--step-1); margin-bottom: .4em; }
+/* 1024-1279px: three narrow columns, where some titles wrap; reserve two lines so every
+   description in a row starts at the same height. */
+@media (min-width: 1024px) and (max-width: 1279px) { .benefit__title { min-height: 2.3em; } }
+.benefit__text { margin: 0; color: var(--ink-2); }   /* 10.9:1 on white */
 
 /* ---- Join: interview process + FAQ ---- */
 .join-process { display: grid; gap: clamp(32px, 5vw, 64px); }
