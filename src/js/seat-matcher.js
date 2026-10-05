@@ -1,157 +1,161 @@
-// "Find your seat" matcher (components/seat-matcher.njk). Progressive enhancement: without
-// this file the four tracks are a static list. The vocabulary is read from the tracks' own
-// chips (data-term), so it always matches data/tracks.json.
-// Combobox: WAI-ARIA 1.2 pattern (list autocomplete). Up/Down move, Enter picks, Esc closes,
-// Backspace in an empty field removes the last pick.
+// "Find your seat" (components/seat-matcher.njk). Without this file the four tracks are plain
+// stacked sections. With it: four selector tiles (WAI-ARIA tabs, automatic activation), one
+// visible panel, a search box that matches majors, interests and skills, and deep links
+// (/join/#track=<slug>, kept in sync with replaceState so Back is not filled with entries).
 (() => {
   "use strict";
   const root = document.querySelector("[data-seat]");
   if (!root) return;
-  const finder = root.querySelector("[data-seat-finder]");
+  const tablist = root.querySelector("[data-seat-tiles]");
+  const tabs = [...root.querySelectorAll("[data-seat-tab]")];
+  const panels = tabs.map((t) => document.getElementById(t.getAttribute("aria-controls")));
+  const panelsWrap = root.querySelector("[data-seat-panels]");
+  const search = root.querySelector("[data-seat-search]");
   const input = root.querySelector("[data-seat-input]");
-  const listbox = root.querySelector("[data-seat-options]");
-  const pickedList = root.querySelector("[data-seat-picked]");
+  const clearBtn = root.querySelector("[data-seat-clear]");
   const status = root.querySelector("[data-seat-status]");
-  const results = root.querySelector("[data-seat-results]");
-  const tracks = [...root.querySelectorAll("[data-seat-track]")];
-  const showAllWrap = root.querySelector("[data-seat-showall-wrap]");
-  const MAX = 3;
+  const chips = [...root.querySelectorAll("[data-seat-suggest]")];
+  if (!tablist || !tabs.length || panels.some((p) => !p)) return;
 
-  // Terms per track, and the combined vocabulary with the kind of each term.
-  const termsOf = new Map(tracks.map((t) => [t, new Set([...t.querySelectorAll("[data-term]")].map((c) => c.dataset.term))]));
-  const kind = new Map();
-  tracks.forEach((t) => t.querySelectorAll("[data-term]").forEach((c) => {
-    kind.set(c.dataset.term, c.classList.contains("chip--gold") ? "Major or interest" : "Skill");
-  }));
-  const vocabulary = [...kind.keys()].sort((a, b) => a.localeCompare(b));
-  const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9+#& ]+/g, " ").replace(/\s+/g, " ").trim();
+  const terms = tabs.map((t) => {
+    const d = JSON.parse(t.dataset.terms || "{}");
+    return { track: (d.track || []).map((x) => [x, norm(x)]), project: (d.project || []).map((x) => [x, norm(x)]) };
+  });
 
-  let picked = [];
-  let showAll = false;
-  let options = [];
-  let active = -1;
-
-  function render() {
-    // Picked chips with remove buttons.
-    pickedList.replaceChildren(...picked.map((term) => {
-      const li = document.createElement("li");
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "seat__picked-chip";
-      b.innerHTML = `<span></span><span aria-hidden="true" class="seat__x">×</span>`;
-      b.firstChild.textContent = term;
-      b.setAttribute("aria-label", `Remove ${term}`);
-      b.addEventListener("click", () => { remove(term); input.focus(); });
-      li.append(b);
-      return li;
-    }));
-    pickedList.hidden = !picked.length;
-    input.disabled = picked.length >= MAX;
-    input.placeholder = picked.length >= MAX ? "Three picks: remove one to change" : (picked.length ? "Add another" : "e.g. Psychology, SQL, Design");
-    root.querySelectorAll("[data-seat-add]").forEach((b) => b.setAttribute("aria-pressed", String(picked.includes(b.dataset.seatAdd))));
-
-    // Score tracks; show the matching ones, best first.
-    const scored = tracks.map((t, i) => {
-      const hits = picked.filter((term) => termsOf.get(t).has(term));
-      return { t, i, hits };
+  // ---- Tabs -------------------------------------------------------------------
+  root.classList.add("is-enhanced");
+  tablist.hidden = false;
+  search.hidden = false;
+  panels.forEach((p, i) => {
+    p.setAttribute("role", "tabpanel");
+    p.setAttribute("aria-labelledby", tabs[i].id);
+    p.tabIndex = 0;
+  });
+  let current = 0;
+  function select(i, { focus = false, sync = true } = {}) {
+    current = i;
+    tabs.forEach((t, n) => {
+      const on = n === i;
+      t.setAttribute("aria-selected", String(on));
+      t.tabIndex = on ? 0 : -1;
+      panels[n].classList.toggle("is-active", on);
+      panels[n].inert = !on;               // hidden panels stay in the grid (stable height) but are inert
+      panels[n].setAttribute("aria-hidden", String(!on));
     });
-    const filtering = picked.length > 0 && !showAll;
-    const order = filtering ? [...scored].sort((a, b) => b.hits.length - a.hits.length || a.i - b.i) : scored;
-    order.forEach(({ t, hits }) => {
-      results.append(t);
-      t.hidden = filtering && hits.length === 0;
-      const match = t.querySelector("[data-seat-match]");
-      match.hidden = hits.length === 0;
-      match.textContent = hits.length ? `Matches ${list(hits)}` : "";
-      t.querySelectorAll("[data-term]").forEach((c) => c.classList.toggle("is-match", picked.includes(c.dataset.term)));
-      t.classList.toggle("is-match", hits.length > 0);
-    });
-    const shown = order.filter(({ t }) => !t.hidden).length;
-    showAllWrap.hidden = !(filtering && shown < tracks.length);
-    status.textContent = !picked.length
-      ? (showAll ? "Showing all four tracks." : "")
-      : filtering
-        ? `${shown === 1 ? "1 track matches" : `${shown} tracks match`} ${list(picked)}.`
-        : `Showing all four tracks; matches for ${list(picked)} are marked.`;
+    if (focus) tabs[i].focus();
+    if (sync) history.replaceState(history.state, "", `${location.pathname}${location.search}#track=${tabs[i].dataset.seatTab}`);
+  }
+  tablist.addEventListener("click", (e) => {
+    const i = tabs.indexOf(e.target.closest("[data-seat-tab]"));
+    if (i >= 0) select(i);
+  });
+  tablist.addEventListener("keydown", (e) => {
+    const i = tabs.indexOf(document.activeElement);
+    if (i < 0) return;
+    const n = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+    if (n === undefined) return;
+    e.preventDefault();
+    select((n + tabs.length) % tabs.length, { focus: true });
+  });
+
+  // ---- Matching -----------------------------------------------------------------
+  // Up to three terms, split on commas or " and ". Score per track: 3 for an exact match with
+  // one of the track's own fits/skills/name, 2 for a partial match there, 1 for a match with
+  // the fits/skills of the track's projects.
+  const splitTerms = (text) => text.split(/,|\band\b|;/i).map(norm).filter((t) => t.length >= 2).slice(0, 3);
+  // Partial = equal, a word of the term starts with the query ("ux" → "UX evaluation"), or
+  // (3+ characters) either contains the other ("psych" → "Psychology", "data science" → "Data").
+  const partial = (a, b) => a === b || b.split(" ").some((w) => w.startsWith(a)) || (a.length >= 3 && b.includes(a)) || (b.length >= 3 && a.includes(b));
+  function score(i, q) {
+    const own = terms[i].track.filter(([, n]) => partial(q, n));
+    if (own.some(([, n]) => n === q)) return { s: 3, hits: own.map(([x]) => x) };
+    if (own.length) return { s: 2, hits: own.map(([x]) => x) };
+    if (terms[i].project.some(([, n]) => partial(q, n))) return { s: 1, hits: [] };
+    return { s: 0, hits: [] };
   }
 
   const list = (a) => (a.length < 2 ? a.join("") : `${a.slice(0, -1).join(", ")} and ${a.at(-1)}`);
-
-  function add(term) {
-    if (!term || picked.includes(term) || picked.length >= MAX) return;
-    picked = [...picked, term];
-    showAll = false;
-    input.value = "";
-    closeOptions();
-    render();
-  }
-  function remove(term) {
-    picked = picked.filter((t) => t !== term);
-    render();
+  let announceTimer = 0;
+  function announce(text) {
+    clearTimeout(announceTimer);
+    announceTimer = setTimeout(() => { status.textContent = text; }, 400); // debounced: final result only
   }
 
-  // ---- Listbox ----------------------------------------------------------------
-  function openOptions() {
-    const q = norm(input.value.trim());
-    options = vocabulary.filter((t) => !picked.includes(t) && (!q || norm(t).includes(q)))
-      .sort((a, b) => (q ? (norm(b).startsWith(q) - norm(a).startsWith(q)) : 0) || a.localeCompare(b))
-      .slice(0, 8);
-    listbox.replaceChildren(...(options.length ? options.map((term, i) => {
-      const li = document.createElement("li");
-      li.id = `seat-opt-${i}`;
-      li.setAttribute("role", "option");
-      li.className = "seat__option";
-      li.innerHTML = `<span></span><span class="seat__option-kind"></span>`;
-      li.firstChild.textContent = term;
-      li.lastChild.textContent = kind.get(term);
-      li.addEventListener("mousedown", (e) => e.preventDefault()); // keep focus in the input
-      li.addEventListener("click", () => { add(term); input.focus(); });
-      return li;
-    }) : [Object.assign(document.createElement("li"), { className: "seat__option seat__option--empty", textContent: "No match. Try a broader word, or pick “I'm not sure”." })]));
-    active = -1;
-    listbox.hidden = false;
-    input.setAttribute("aria-expanded", "true");
-    input.removeAttribute("aria-activedescendant");
-  }
-  function closeOptions() {
-    listbox.hidden = true;
-    input.setAttribute("aria-expanded", "false");
-    input.removeAttribute("aria-activedescendant");
-    active = -1;
-  }
-  function move(delta) {
-    if (listbox.hidden) openOptions();
-    if (!options.length) return;
-    active = (active + delta + options.length) % options.length;
-    [...listbox.children].forEach((li, i) => li.setAttribute("aria-selected", String(i === active)));
-    input.setAttribute("aria-activedescendant", `seat-opt-${active}`);
-    listbox.children[active].scrollIntoView({ block: "nearest" });
+  function reset({ keepInput = false } = {}) {
+    tabs.forEach((t) => {
+      const b = t.querySelector("[data-seat-badge]");
+      b.hidden = true;
+      b.textContent = "";
+      t.classList.remove("is-best", "is-also");
+    });
+    root.querySelectorAll("[data-term].is-hit").forEach((el) => el.classList.remove("is-hit"));
+    if (!keepInput) input.value = "";
+    clearBtn.hidden = !input.value;
+    chips.forEach((c) => c.setAttribute("aria-pressed", String(splitTerms(input.value).includes(norm(c.dataset.seatSuggest)))));
   }
 
-  input.addEventListener("input", openOptions);
-  input.addEventListener("focus", () => { if (input.value) openOptions(); });
-  input.addEventListener("blur", () => setTimeout(closeOptions, 120));
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowDown") { e.preventDefault(); move(1); }
-    else if (e.key === "ArrowUp") { e.preventDefault(); move(-1); }
-    else if (e.key === "Enter") {
-      if (!listbox.hidden && active >= 0) { e.preventDefault(); add(options[active]); }
-      else if (!listbox.hidden && options.length === 1) { e.preventDefault(); add(options[0]); }
-    } else if (e.key === "Escape") {
-      if (!listbox.hidden) { e.preventDefault(); closeOptions(); } else input.value = "";
-    } else if (e.key === "Backspace" && !input.value && picked.length) {
-      remove(picked.at(-1));
+  function run() {
+    reset({ keepInput: true });
+    const qs = splitTerms(input.value);
+    if (!qs.length) { status.textContent = ""; return; }
+    const results = tabs.map((t, i) => {
+      const per = qs.map((q) => score(i, q));
+      return { i, total: per.reduce((a, r) => a + r.s, 0), hits: per.flatMap((r) => r.hits) };
+    });
+    const matched = results.filter((r) => r.total > 0).sort((a, b) => b.total - a.total || a.i - b.i);
+    if (!matched.length) {
+      status.textContent = "";
+      announce("No exact match yet. Here are all four tracks.");
+      return;
     }
-  });
+    const [best, ...also] = matched;
+    const badge = (r, text, cls) => {
+      const b = tabs[r.i].querySelector("[data-seat-badge]");
+      b.textContent = text;
+      b.hidden = false;
+      tabs[r.i].classList.add(cls);
+    };
+    badge(best, "Best match", "is-best");
+    also.forEach((r) => badge(r, "Also relevant", "is-also"));
+    // Highlight matched skills / fits in every matching panel.
+    matched.forEach((r) => panels[r.i].querySelectorAll("[data-term]").forEach((el) => {
+      if (r.hits.includes(el.dataset.term)) el.classList.add("is-hit");
+    }));
+    select(best.i);
+    announce(`Best match: ${tabs[best.i].querySelector(".seat-tile__name").textContent}.` +
+      (also.length ? ` Also relevant: ${list(also.map((r) => tabs[r.i].querySelector(".seat-tile__name").textContent))}.` : ""));
+  }
 
-  root.querySelectorAll("[data-seat-add]").forEach((b) => b.addEventListener("click", () => {
-    const term = b.dataset.seatAdd;
-    if (picked.includes(term)) remove(term); else add(term);
+  let typingTimer = 0;
+  input.addEventListener("input", () => { clearTimeout(typingTimer); typingTimer = setTimeout(run, 180); clearBtn.hidden = !input.value; });
+  input.addEventListener("keydown", (e) => { if (e.key === "Escape" && input.value) { e.preventDefault(); clear(); } });
+  chips.forEach((c) => c.addEventListener("click", () => {
+    const parts = input.value.split(",").map((s) => s.trim()).filter(Boolean);
+    const term = c.dataset.seatSuggest;
+    const at = parts.findIndex((p) => norm(p) === norm(term));
+    if (at >= 0) parts.splice(at, 1);
+    else if (parts.length < 3) parts.push(term);
+    input.value = parts.join(", ");
+    run();
   }));
-  root.querySelector("[data-seat-unsure]").addEventListener("click", () => { picked = []; showAll = true; render(); status.textContent = "Showing all four tracks."; });
-  root.querySelector("[data-seat-showall]").addEventListener("click", () => { showAll = true; render(); });
+  function clear() {
+    reset();
+    status.textContent = "";
+    announce("Search cleared. Showing all four tracks.");
+    select(0);
+    input.focus();
+  }
+  clearBtn.addEventListener("click", clear);
 
-  finder.hidden = false;
-  root.classList.add("is-enhanced");
-  render();
+  // ---- Initial state + deep links ------------------------------------------------
+  const fromHash = () => {
+    const m = location.hash.match(/^#track=([a-z0-9-]+)/);
+    return m ? tabs.findIndex((t) => t.dataset.seatTab === m[1]) : -1;
+  };
+  const start = fromHash();
+  select(start >= 0 ? start : 0, { sync: false });
+  if (start >= 0) requestAnimationFrame(() => document.getElementById("find-your-seat")?.scrollIntoView());
+  window.addEventListener("hashchange", () => { const i = fromHash(); if (i >= 0) select(i, { sync: false }); });
+  panelsWrap.classList.add("is-ready");
 })();

@@ -15,11 +15,12 @@
   const full = dialog.querySelector("[data-dialog-full]");
   const templates = [...document.querySelectorAll("template[data-project-template]")];
   const ids = templates.map((t) => t.dataset.projectTemplate);
-  // Prev/next follow the cards currently visible on the page (so filters on /projects/ are
-  // respected); if the open project is not among them (e.g. deep-linked), use all projects.
+  // Prev/next follow the cards currently visible on the page (so filters on /projects/ and the
+  // selected track on /join/ are respected); if the open project is not among them
+  // (e.g. deep-linked), use all projects.
   const order = () => {
     const visible = [...document.querySelectorAll("[data-project-open]")]
-      .filter((a) => !a.closest("[hidden]"))
+      .filter((a) => !a.closest("[hidden], [inert]"))
       .map((a) => a.dataset.projectOpen)
       .filter((id, i, arr) => byId[id] && arr.indexOf(id) === i);
     return current && visible.includes(current) ? visible : ids;

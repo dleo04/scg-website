@@ -66,7 +66,12 @@ Photos are listed in `data/photos.json` (`id`, `source`, `alt`, `caption`, `page
 - `site.json → member_stats`: the "Leaders across campus" numbers on `/about/` (count-up). Update the values when they change.
 - `site.json → mission`, `pillars`, `benefits`, `press`: About text, the three pillars, the five "What you get" cards on `/join/` and the four "SCG elsewhere" links.
 - `data/process.json`: "How a project works" on `/about/`. A step with `"text": null` is hidden on the live site; `example` links a step to a project (it opens that project's dialog) or a page.
-- `data/tracks.json`: the four tracks in the `/join/` matcher. The matcher searches each track's `fits` and `skills`; every "What you'd do" item must name a real project.
+- `data/tracks.json`: the four tracks in **Find your seat** on `/join/`.
+  - Tile: icon, `name`, `short` (one line) and logos of up to three recent projects tagged with that discipline in `projects.json`. The logos are picked automatically, avoiding repeats across tracks.
+  - Panel: the three `what_you_do` items marked `"panel": true`, the first 5 `skills`, the first 5 `fits` (so order both lists by importance), and the same projects as cards. Keep the longer lists; they are still used for matching.
+  - Every `what_you_do` item must name a real project (`project`).
+  - Matching: what a visitor types is compared (partial, case-insensitive, up to three comma-separated terms) with each track's name, `fits` and `skills`, and more weakly with the fits and skills of its projects. To make a word find a track, add it to that track's `fits` or `skills`.
+  - The five suggestion chips are set in `src/join/index.njk`.
 
 ## How to change a page banner
 The header of `/projects/`, `/join/`, `/join/prepare/`, `/about/`, `/team/`, `/alumni/`, `/work-with-us/` and `/partners/` is a banner: a photo under a maroon-black tint, or, while a page has no photo, a plain maroon-black gradient. Settings live in `data/site.json → page_banners`, keyed by the page's URL:

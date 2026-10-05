@@ -1,5 +1,5 @@
 {
-  "_readme": "'Find your seat' role tracks (SPEC 5.2). Each 'name' must match an entry in projects.json -> disciplines; the projects shown under a track are pulled automatically from projects tagged with that discipline. 'what_you_do' items are written ONLY from the scope of real projects and name the project they come from ('project' = project id). 'fits' is a SUGGESTED mapping of majors and interests, taken from the inferred 'fits' of the projects in this track (projects.json, fit_inferred: true); it does not mean members of those majors have done this work. Officers: correct it to match who actually worked on these projects. The /join/ matcher searches each track's 'fits' and 'skills' only. A what_you_do item without a real project is not allowed (officers: add design-focused work such as user research or prototyping here once a project has done it).",
+  "_readme": "'Find your seat' role tracks (SPEC 5.2). Each 'name' must match an entry in projects.json -> disciplines; the projects shown under a track are pulled automatically from projects tagged with that discipline. 'what_you_do' items are written ONLY from the scope of real projects and name the project they come from ('project' = project id). 'fits' is a SUGGESTED mapping of majors and interests, taken from the inferred 'fits' of the projects in this track (projects.json, fit_inferred: true); it does not mean members of those majors have done this work. Officers: correct it to match who actually worked on these projects. The /join/ matcher searches each track's 'fits' and 'skills' only. A what_you_do item without a real project is not allowed (officers: add design-focused work such as user research or prototyping here once a project has done it). Find your seat (/join/): each tile shows 'short' (one line); the panel shows the three what_you_do items marked \"panel\": true, the first 5 'skills', the first 5 'fits' (so order them by importance) and up to 3 recent projects in the track (automatic). The full lists stay here and are all used for matching.",
   "tracks": [
     {
       "name": "Data & Engineering",
@@ -12,11 +12,13 @@
         },
         {
           "text": "Refine and benchmark forecasting models, including a time-series model and an LSTM.",
-          "project": "alliom"
+          "project": "alliom",
+          "panel": true
         },
         {
           "text": "Configure a Google Cloud SQL database and connect it to Looker Studio.",
-          "project": "school-harbor"
+          "project": "school-harbor",
+          "panel": true
         },
         {
           "text": "Rebuild a test-score dashboard segmented by demographics, district and state.",
@@ -24,18 +26,19 @@
         },
         {
           "text": "Build a Python ETL pipeline and a REST API that make public school data queryable.",
-          "project": "school-harbor"
+          "project": "school-harbor",
+          "panel": true
         }
       ],
       "skills": [
         "Machine learning",
-        "Time-series forecasting",
         "Python",
         "SQL",
-        "ETL pipelines",
         "REST API design",
-        "Looker Studio",
-        "Data visualization"
+        "Data visualization",
+        "Time-series forecasting",
+        "ETL pipelines",
+        "Looker Studio"
       ],
       "fits": [
         "Computer Science",
@@ -44,7 +47,8 @@
         "Mathematics",
         "Information Systems"
       ],
-      "illustration": "assets/placeholders/track-data-engineering.jpg"
+      "illustration": "assets/placeholders/track-data-engineering.jpg",
+      "short": "Models, databases and dashboards for client decisions."
     },
     {
       "name": "Strategy & Research",
@@ -53,11 +57,13 @@
       "what_you_do": [
         {
           "text": "Develop monetization and legal-compliance strategy for a machine-learning startup.",
-          "project": "alliom"
+          "project": "alliom",
+          "panel": true
         },
         {
           "text": "Benchmark best practices from organizations comparable to the client.",
-          "project": "product-space"
+          "project": "product-space",
+          "panel": true
         },
         {
           "text": "Recommend a marketing approach to strengthen campus presence and outreach.",
@@ -65,7 +71,8 @@
         },
         {
           "text": "Build a five-year financial plan and pricing strategy for a school-safety startup.",
-          "project": "defenx-financial-management"
+          "project": "defenx-financial-management",
+          "panel": true
         },
         {
           "text": "Plan a two-year client outreach strategy, target list and playbook.",
@@ -89,7 +96,8 @@
         "Communication",
         "Pre-law interest"
       ],
-      "illustration": "assets/placeholders/track-strategy-research.jpg"
+      "illustration": "assets/placeholders/track-strategy-research.jpg",
+      "short": "Research, benchmarks and plans a client can act on."
     },
     {
       "name": "Product & Design",
@@ -98,15 +106,18 @@
       "what_you_do": [
         {
           "text": "Build a client-outreach process for a new product-design organization.",
-          "project": "product-space"
+          "project": "product-space",
+          "panel": true
         },
         {
           "text": "Map a timeline and process flow so the organization can grow and handle leadership turnover.",
-          "project": "product-space"
+          "project": "product-space",
+          "panel": true
         },
         {
           "text": "Write a user-experience and product opportunity brief from hands-on use of an AI public-speaking platform.",
-          "project": "speechpundit"
+          "project": "speechpundit",
+          "panel": true
         }
       ],
       "skills": [
@@ -124,7 +135,8 @@
         "Business",
         "Marketing"
       ],
-      "illustration": "assets/placeholders/track-product-design.jpg"
+      "illustration": "assets/placeholders/track-product-design.jpg",
+      "short": "Scoping and processes for product teams."
     },
     {
       "name": "Operations & People",
@@ -133,11 +145,13 @@
       "what_you_do": [
         {
           "text": "Design an E-Board role-delegation framework.",
-          "project": "umd-dynamic-dance"
+          "project": "umd-dynamic-dance",
+          "panel": true
         },
         {
           "text": "Set up a knowledge-management system so documentation survives leadership changes.",
-          "project": "umd-dynamic-dance"
+          "project": "umd-dynamic-dance",
+          "panel": true
         },
         {
           "text": "Plan how senior members stay engaged and how presentation quality improves.",
@@ -149,7 +163,8 @@
         },
         {
           "text": "Write a leadership framework and a semester-to-semester transition guide.",
-          "project": "business-beyond-borders"
+          "project": "business-beyond-borders",
+          "panel": true
         }
       ],
       "skills": [
@@ -168,7 +183,8 @@
         "Business",
         "Marketing"
       ],
-      "illustration": "assets/placeholders/track-operations-people.jpg"
+      "illustration": "assets/placeholders/track-operations-people.jpg",
+      "short": "Roles, documentation and processes that last."
     }
   ]
 }

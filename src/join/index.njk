@@ -14,6 +14,7 @@ bodyClass: page-join
 {%- from "components/seat-matcher.njk" import seatMatcher with context -%}
 {%- from "components/stepper.njk" import stepper with context -%}
 {%- from "components/page-banner.njk" import pageBanner with context -%}
+{%- from "components/project-dialog.njk" import projectDialog with context -%}
 {%- set cta = site.recruiting | ctaState -%}
 {%- set initialStep = 0 -%}
 {%- for s in recruitingSteps %}{% if s.status == "current" %}{% set initialStep = loop.index0 %}{% endif %}{% endfor -%}
@@ -38,7 +39,7 @@ bodyClass: page-join
       <h2 class="section__title" id="seat-title">Where would you fit on a project team?</h2>
       <p class="section__lede">SCG projects need four kinds of work. Each track below is written from real client projects.</p>
     </header>
-    {{ seatMatcher(tracks) }}
+    {{ seatMatcher(tracks, ["Computer Science", "Economics", "Design", "Psychology", "Finance"]) }}
   </div>
 </section>
 
@@ -171,3 +172,7 @@ bodyClass: page-join
 {%- endif %}{% endfor %}{% endfor %}
 <script type="application/ld+json">{{ faqLd | jsonLd | safe }}</script>
 <script src="{{ '/js/faq-search.js' | versioned }}" defer></script>
+{#- Dialog for the project cards in Find your seat (one template per project shown). -#}
+{%- set seatProjects = [] -%}
+{%- for t in tracks %}{% for p in t.showcase %}{% if p not in seatProjects %}{% set seatProjects = (seatProjects.push(p), seatProjects) %}{% endif %}{% endfor %}{% endfor -%}
+{{ projectDialog(seatProjects) }}

@@ -61,7 +61,10 @@ for (const route of routes) {
 
     const overflow = await page.evaluate(() => {
       const w = document.documentElement.clientWidth;
-      const wide = [...document.querySelectorAll("body *")].filter((el) => { const r = el.getBoundingClientRect(); return r.width && r.right > w + 1; })
+      // Elements inside a horizontal scroller (e.g. the swipe row of project cards on /join/)
+      // are clipped by it, not by the page, so they are not page overflow.
+      const inScroller = (el) => { for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) { const o = getComputedStyle(a).overflowX; if ((o === "auto" || o === "scroll" || o === "hidden" || o === "clip") && a.getBoundingClientRect().right <= w + 1) return true; } return false; };
+      const wide = [...document.querySelectorAll("body *")].filter((el) => { const r = el.getBoundingClientRect(); return r.width && r.right > w + 1 && !inScroller(el); })
         .slice(0, 5).map((el) => `${el.tagName.toLowerCase()}.${[...el.classList].join(".")} right=${Math.round(el.getBoundingClientRect().right)}`);
       return { scroll: document.documentElement.scrollWidth > w, wide };
     });

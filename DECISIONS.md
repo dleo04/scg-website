@@ -618,3 +618,46 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - /work-with-us/: eyebrow 4.92, title 9.73
   - /alumni/: eyebrow 4.93, title 9.73
 - **Checked** at 360/768/1280/1440: no seam, no horizontal scroll, every head visible. Heights 260px at 360 and 360px at 1440 on both pages.
+
+## Find your seat redesign (/join/)
+
+- **Structure.** One search bar, four equal selector tiles and ONE detail panel replace the earlier combobox, the "Try" chip row, the "I'm not sure" button and the four tall track cards. The rest of /join/ is unchanged.
+- **Data kept intact.** `tracks.json` only gained `short` (one line per track) and `"panel": true` on three `what_you_do` items per track. `skills` were reordered so the five shown first are the most representative; none were removed. Full lists stay and are all used for matching.
+- **Panel picks:**
+  - Data & Engineering: benchmark forecasting models, configure Cloud SQL + Looker Studio, Python ETL + REST API.
+  - Strategy & Research: monetization strategy, benchmarking, five-year financial plan.
+  - Product & Design: client-outreach process, timeline and process flow, UX opportunity brief.
+  - Operations & People: E-Board role delegation, knowledge management, leadership/transition guide.
+- **Project-name pills** were removed from the bullets. The projects appear as up to three /projects/ cards per track, opening the project dialog, with prev/next limited to the visible track.
+- **Projects per track.** Projects are the newest per track, one per client, skipping projects an earlier track already shows, so the four tiles show different logos. Without that rule, MPDS and SER would appear on both Strategy and Operations.
+  - Data & Engineering: School Harbor, Alliom
+  - Strategy & Research: DefenX Client Outreach, MPDS, SER
+  - Product & Design: SpeechPundit, Product Space
+  - Operations & People: FBLA, ULR, BBB
+- **Tiles.**
+  - Line icons (1.75 stroke, red): database + bars, magnifier with a trend line, layout + pencil, person + gear.
+  - One accent: the selected tile gets a red border, a 3px red top bar, a 2px lift (pointer devices, motion allowed) and a notch to the panel.
+  - At 1280/1440 the tiles are 288px wide, not 260–270: that is the 1200px container minus three 16px gaps. A narrower row would no longer line up with the panel's edges.
+  - Below 768px: 2×2, icon and name only, at least 108px tall.
+- **Stable height.** All four panels share one grid cell; hidden ones are `visibility: hidden` and `inert`. The section is therefore always as tall as the tallest panel, and switching never moves anything below it: measured equal at all four widths.
+  - Below 1024px the project cards scroll sideways inside the panel (scroll snap), so a track with two projects is not followed by an empty gap. The page itself never scrolls sideways.
+  - ui-check's overflow test now ignores content clipped by a scrolling or clipping ancestor that itself fits the viewport. Previously the off-screen cards in the swipe row counted as page overflow.
+- **Matching** (`src/js/seat-matcher.js`).
+  - Up to three terms (comma, "and" or ";"). Per track: 3 points for an exact match with the track's name, fits or skills, 2 for a partial match there, 1 for a match with its projects' fits or skills.
+  - Partial means a word starts with the term ("ux" → "UX evaluation") or either contains the other (3+ characters).
+  - Results: "Best match" plus auto-select, "Also relevant" on other matches, highlighted skill and fit text, and a debounced `role=status` announcement. Clear (or Esc) resets to Data & Engineering.
+  - Wording stays "Good fit if you study or enjoy", taken from projects' inferred fits.
+- **Accessibility.** Tabs pattern (role=tablist/tab/tabpanel, aria-selected, aria-controls, roving tabindex, Left/Right/Home/End). Tab moves from the selected tile into its panel. 3px focus ring. Chips and Clear are at least 44px tall. Reduced motion: no fade or lift.
+- **Deep links.** `/join/#track=<slug>` selects the track and scrolls to the section; `#find-your-seat` still lands under the header. Selecting a tile updates the hash with `replaceState`, so no history entries are added.
+- **Removed.** The old matcher and track-card CSS (`seat__*`, `seat-track*`), plus the unused `find-your-seat.njk` and `how-it-works.njk` components and their `tracks__*` and `timeline__*` styles.
+- **Height at 1440** (section): **2298 → 1884px** (−414). Page 6790 → 6376px. Other widths:
+  - 1280: 2294 → 1873
+  - 768: 3334 → 2026
+  - 360: 4968 → 2335
+- **Verified** (new seat test, all passing):
+  - tiles equal and one row (two rows below 768) at 360/768/1280/1440; panel height constant across tracks; no horizontal scroll
+  - keyboard, ARIA and roving tabindex; Tab into the panel; deep links; no history spam
+  - matcher states: empty, one match (Computer Science), skill (SQL), track name, multi-term ("finance, ux, psych"), no match ("astronomy"), Clear
+  - live region; mobile tiles; card → dialog; sticky CTA; reduced motion; no-JS (four stacked sections with 3 bullets, 5 skills, fit line, cards and link)
+  - the Join dropdown still works
+  - ui-check: 24 routes × 4 widths, axe clean. Contrast and banner contrast OK; check:notes OK.
