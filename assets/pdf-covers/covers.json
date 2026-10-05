@@ -1,0 +1,38 @@
+{
+  "assets/downloads/scg-introduction-to-case-frameworks.pdf": {
+    "slug": "scg-introduction-to-case-frameworks",
+    "src": "/assets/pdf-covers/scg-introduction-to-case-frameworks.webp",
+    "width": 640,
+    "height": 400,
+    "pages": 19,
+    "kb": 14,
+    "stamp": "762796-1791162043496"
+  },
+  "assets/downloads/scg-guided-practice-case-fear-the-e-turtle.pdf": {
+    "slug": "scg-guided-practice-case-fear-the-e-turtle",
+    "src": "/assets/pdf-covers/scg-guided-practice-case-fear-the-e-turtle.webp",
+    "width": 640,
+    "height": 400,
+    "pages": 15,
+    "kb": 16,
+    "stamp": "822716-1791162043500"
+  },
+  "assets/downloads/scg-practice-case-cvh-blood-bank.pdf": {
+    "slug": "scg-practice-case-cvh-blood-bank",
+    "src": "/assets/pdf-covers/scg-practice-case-cvh-blood-bank.webp",
+    "width": 640,
+    "height": 400,
+    "pages": 12,
+    "kb": 15,
+    "stamp": "295002-1791162043498"
+  },
+  "assets/downloads/sicc-december-2023-case-prompt.pdf": {
+    "slug": "sicc-december-2023-case-prompt",
+    "src": "/assets/pdf-covers/sicc-december-2023-case-prompt.webp",
+    "width": 640,
+    "height": 400,
+    "pages": 4,
+    "kb": 12,
+    "stamp": "986212-1791162043502"
+  }
+}

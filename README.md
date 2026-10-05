@@ -63,6 +63,8 @@ Photos are listed in `data/photos.json` (`id`, `source`, `alt`, `caption`, `page
 
 ## Interview prep downloads and About figures
 - `site.json → downloads`: the PDFs on `/join/prepare/` (files in `assets/downloads/`). Remove an entry to hide it; an entry whose file is missing is skipped automatically.
+  - **Adding a PDF:** put the file in `assets/downloads/`, then add `{ "title", "file": "assets/downloads/<name>.pdf", "kind", "description" }` to `downloads` and run `npm run build`. The build (`scripts/make-pdf-covers.mjs`) renders page 1 into a cover (`assets/pdf-covers/<name>.webp`) and counts the pages. The card then gets the cover, a **Preview** button (in-page viewer, deep link `/join/prepare/#preview=<name>`) and **Download PDF**. The PDF itself is never changed.
+- `site.json → links.resume_guide`: shown as the "Resume guide" card on `/join/` and embedded on `/join/prepare/`. A Google Slides link is embedded automatically (`/embed` form) and must be shared as "Anyone with the link can view"; any other link becomes a plain card.
 - `site.json → member_stats`: the "Leaders across campus" numbers on `/about/` (count-up). Update the values when they change.
 - `site.json → mission`, `pillars`, `benefits`, `press`: About text, the three pillars, the five "What you get" cards on `/join/` and the four "SCG elsewhere" links.
 - Each `benefits` entry has `image` (a photo id from `data/photos.json`, i.e. `assets/photos/<id>.jpg`), `focal` (`"50% 35%"`: the point kept when the photo is cut to 16:10, so faces stay in frame) and `alt` (what the photo shows). Change them and run `npm run build`; the 16:10 crops are made automatically.

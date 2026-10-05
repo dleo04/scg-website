@@ -100,14 +100,25 @@ bodyClass: page-prepare
       <h2 class="section__title" id="downloads-title">Guides and practice cases</h2>
       <p class="section__lede">SCG's own guides and practice cases, plus a past case competition prompt. Free to download.</p>
     </header>
-    <ul class="resource-grid">
+    {#- Each card: cover of page 1 (scripts/make-pdf-covers.mjs), text, then Preview (opens the
+        built-in viewer; without JS a plain link to the PDF) and Download PDF. -#}
+    <ul class="resource-grid doc-grid">
       {%- for d in downloads %}
-      <li><a class="resource-card resource-card--download" href="{{ d.url }}" download>
-        <span class="resource-card__kind">{{ d.kind }}</span>
-        <span class="resource-card__title">{{ d.title }}</span>
-        <span class="resource-card__text">{{ d.description }}</span>
-        <span class="resource-card__meta">PDF, {{ d.size }}<span class="visually-hidden">, download</span></span>
-      </a></li>
+      <li class="doc-card">
+        {%- if d.cover %}
+        <div class="doc-card__cover"><img src="{{ d.cover.src }}" width="{{ d.cover.width }}" height="{{ d.cover.height }}" alt="First page of {{ d.title }}" loading="lazy" decoding="async"></div>
+        {%- endif %}
+        <div class="doc-card__body">
+          <p class="resource-card__kind">{{ d.kind }}</p>
+          <h3 class="resource-card__title">{{ d.title }}</h3>
+          <p class="resource-card__text">{{ d.description }}</p>
+          <p class="resource-card__meta">PDF, {{ d.size }}{% if d.pages %} · {{ d.pages }} pages{% endif %}</p>
+          <div class="doc-card__actions">
+            <a class="btn btn--sm btn--primary" href="{{ d.url }}" data-pdf-preview="{{ d.slug }}" data-pdf-title="{{ d.title }}" data-pdf-url="{{ d.url }}" data-pdf-size="{{ d.size }}">Preview<span class="visually-hidden">: {{ d.title }}</span></a>
+            <a class="btn btn--sm btn--secondary" href="{{ d.url }}" download>Download PDF<span class="visually-hidden">: {{ d.title }}, {{ d.size }}</span></a>
+          </div>
+        </div>
+      </li>
       {%- endfor %}
     </ul>
   </div>
@@ -116,6 +127,51 @@ bodyClass: page-prepare
 <section class="section section--paper-2"><div class="container">{{ tbdBlock("Case guides", "[TBD: case framework PDF, practice cases and SICC prompt (site.json → downloads)]") }}</div></section>
 {%- endif %}
 
+{#- Resume guide: the same link as the "Resume guide" card on /join/ (site.json → links.resume_guide).
+    Google Slides links are embedded (/embed form); anything else becomes a plain card. The deck
+    must be shared "Anyone with the link can view" for the embed to show. -#}
+{%- set resumeEmbed = site.links.resume_guide | slidesEmbed %}
+{%- if site.links.resume_guide %}
+<section class="section" aria-labelledby="resume-title">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Resume</p>
+      <h2 class="section__title" id="resume-title">Resume guide</h2>
+      <p class="section__lede">SCG's guide to building a strong resume.</p>
+    </header>
+    {%- if resumeEmbed %}
+    <div class="embed-frame">
+      <iframe src="{{ resumeEmbed }}" title="SCG resume guide (Google Slides)" loading="lazy" allowfullscreen
+        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+    <p class="embed-frame__link"><a class="link-arrow" href="{{ site.links.resume_guide }}" target="_blank" rel="noopener noreferrer">Open in a new tab<span class="visually-hidden">: SCG resume guide</span> <span aria-hidden="true">↗</span></a></p>
+    {%- else %}
+    <ul class="resource-grid"><li><a class="resource-card" href="{{ site.links.resume_guide }}" target="_blank" rel="noopener noreferrer"><span class="resource-card__kind">Guide</span><span class="resource-card__title">Resume guide</span><span class="resource-card__text">SCG's guide to building a strong resume.</span><span class="visually-hidden"> (opens in a new tab)</span></a></li></ul>
+    {%- endif %}
+  </div>
+</section>
+{%- endif %}
+
+<section class="section section--paper-2" aria-labelledby="more-title">
+  <div class="container">
+    <header class="section__head">
+      <h2 class="section__title" id="more-title">More ways to prepare</h2>
+    </header>
+    <ul class="resource-grid">
+      <li><a class="resource-card" href="/projects/">
+        <span class="resource-card__kind">Explore</span>
+        <span class="resource-card__title">Past projects</span>
+        <span class="resource-card__text">Client stories from recent semesters, and the skills each team used.</span>
+      </a></li>
+      <li><a class="resource-card" href="/join/#timeline">
+        <span class="resource-card__kind">Recruitment</span>
+        <span class="resource-card__title">Recruiting timeline and FAQ</span>
+        <span class="resource-card__text">How recruiting works, step by step, and answers to frequently asked questions.</span>
+      </a></li>
+    </ul>
+  </div>
+</section>
+
 <section class="section section--tight cta-strip" aria-labelledby="prep-cta-title">
   <div class="container cta-strip__inner">
     <h2 class="cta-strip__title" id="prep-cta-title">Ready when you are</h2>
@@ -123,3 +179,42 @@ bodyClass: page-prepare
   </div>
 </section>
 <script src="{{ '/js/practice.js' | versioned }}" defer></script>
+
+{#- PDF viewer (pdf-viewer.js). PDF.js itself (js/vendor/pdfjs/) is imported only on the first
+    Preview click. Same dialog pattern as the project detail dialog. -#}
+{%- if downloads.length %}
+<dialog class="pdf-viewer" id="pdf-viewer" aria-labelledby="pdf-viewer-title" data-pdf-viewer>
+  <div class="pdf-viewer__panel">
+    <div class="pdf-viewer__bar">
+      <h2 class="pdf-viewer__title" id="pdf-viewer-title" data-pdf-title tabindex="-1"></h2>
+      <div class="pdf-viewer__tools">
+        <div class="pdf-viewer__group" role="group" aria-label="Pages">
+          <button class="icon-btn" type="button" data-pdf-prev aria-label="Previous page"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <span class="pdf-viewer__page" data-pdf-page aria-hidden="true"></span>
+          <button class="icon-btn" type="button" data-pdf-next aria-label="Next page"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div class="pdf-viewer__group" role="group" aria-label="Zoom">
+          <button class="icon-btn" type="button" data-pdf-zoom-out aria-label="Zoom out"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 12h12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+          <span class="pdf-viewer__zoom" data-pdf-zoom aria-hidden="true">100%</span>
+          <button class="icon-btn" type="button" data-pdf-zoom-in aria-label="Zoom in"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 6v12M6 12h12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+        </div>
+        <a class="btn btn--sm btn--gold pdf-viewer__download" href="#" download data-pdf-download>Download PDF</a>
+        <button class="icon-btn" type="button" data-pdf-close aria-label="Close preview"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+      </div>
+    </div>
+    <p class="visually-hidden" role="status" aria-live="polite" data-pdf-status></p>
+    <div class="pdf-viewer__stage" data-pdf-stage>
+      <p class="pdf-viewer__loading" data-pdf-loading>Loading preview…</p>
+      <div class="pdf-viewer__error" data-pdf-error hidden>
+        <p>This preview could not be shown.</p>
+        <p><a class="btn btn--sm btn--primary" href="#" download data-pdf-error-link>Download PDF</a></p>
+      </div>
+      <div class="pdf-viewer__page-wrap" data-pdf-wrap hidden>
+        <canvas class="pdf-viewer__canvas" data-pdf-canvas aria-hidden="true"></canvas>
+        <div class="textLayer" data-pdf-text></div>
+      </div>
+    </div>
+  </div>
+</dialog>
+<script src="{{ '/js/pdf-viewer.js' | versioned }}" defer></script>
+{%- endif %}

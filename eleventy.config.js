@@ -36,6 +36,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("clockTime", filters.clockTime);
   eleventyConfig.addFilter("icsText", filters.icsText);
   eleventyConfig.addFilter("findBy", filters.findBy);
+  eleventyConfig.addFilter("slidesEmbed", filters.slidesEmbed);
 
   // Static files. Brand assets are copied as-is (never transformed).
   // Originals in assets/logos/ are not published; pages use the small copies in assets/generated/logos/.
@@ -45,6 +46,12 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets/banners/*.{webp,jpg}");  // page banners (npm run banners)
   eleventyConfig.addPassthroughCopy("assets/photos/*.jpg");      // data/photos.json (npm run old-photos)
   eleventyConfig.addPassthroughCopy("assets/downloads/*.pdf");   // site.json → downloads
+  eleventyConfig.addPassthroughCopy("assets/pdf-covers/*.webp");  // npm run pdf-covers
+  // PDF.js for the /join/prepare/ viewer, self-hosted; loaded only on the first Preview click.
+  eleventyConfig.addPassthroughCopy({
+    "node_modules/pdfjs-dist/build/pdf.min.mjs": "js/vendor/pdfjs/pdf.min.mjs",
+    "node_modules/pdfjs-dist/build/pdf.worker.min.mjs": "js/vendor/pdfjs/pdf.worker.min.mjs",
+  });
   eleventyConfig.addPassthroughCopy({ "src/css": "css", "src/js": "js" });
   eleventyConfig.addPassthroughCopy({
     "node_modules/@fontsource/lato/files/lato-latin-400-normal.woff2": "fonts/lato-latin-400-normal.woff2",

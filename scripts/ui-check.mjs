@@ -19,7 +19,7 @@ const VIEWPORTS = (process.env.UI_WIDTHS || "360,768,1280,1440").split(",").map(
 const AXE_WIDTHS = [VIEWPORTS[0], VIEWPORTS.at(-1)];
 fs.mkdirSync(OUT, { recursive: true });
 
-const TYPES = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".png": "image/png", ".jpg": "image/jpeg", ".webp": "image/webp", ".woff2": "font/woff2", ".svg": "image/svg+xml", ".webmanifest": "application/manifest+json", ".json": "application/json" };
+const TYPES = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".mjs": "text/javascript", ".pdf": "application/pdf", ".png": "image/png", ".jpg": "image/jpeg", ".webp": "image/webp", ".woff2": "font/woff2", ".svg": "image/svg+xml", ".webmanifest": "application/manifest+json", ".json": "application/json" };
 const server = http.createServer((req, res) => {
   let p = decodeURIComponent(new URL(req.url, "http://x").pathname);
   if (p.endsWith("/")) p += "index.html";
@@ -52,7 +52,9 @@ for (const route of routes) {
     const errors = [];
     page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
     page.on("pageerror", (e) => errors.push(e.message));
-    page.on("requestfailed", (r) => errors.push(`request failed ${r.url()}`));
+    // Failed requests made inside third-party iframes (e.g. the Google Slides embed probing a
+    // chrome-extension:// URL) are not this site's; only the main frame's requests count.
+    page.on("requestfailed", (r) => { if (r.frame() === page.mainFrame()) errors.push(`request failed ${r.url()}`); });
     page.on("response", (r) => r.status() >= 400 && r.url().startsWith(BASE) && errors.push(`${r.status()} ${r.url()}`));
     await page.goto(BASE + route, { waitUntil: "networkidle0" });
     // Trigger reveal-on-scroll, then return to top.

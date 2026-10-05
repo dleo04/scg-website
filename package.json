@@ -6,8 +6,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "assets": "node scripts/make-assets.mjs && node scripts/make-banners.mjs",
+    "assets": "node scripts/make-assets.mjs && node scripts/make-banners.mjs && node scripts/make-pdf-covers.mjs",
     "banners": "node scripts/make-banners.mjs",
+    "pdf-covers": "node scripts/make-pdf-covers.mjs",
     "dev": "npm run assets && eleventy --serve --port 8080",
     "build": "npm run clean && npm run assets && eleventy && node scripts/check-output.mjs && node scripts/check-notes.mjs && node scripts/check-contrast.mjs > /dev/null",
     "build:prod": "SCG_ENV=production npm run build",
@@ -29,7 +30,9 @@
     "@11ty/eleventy": "^3.1.6",
     "@fontsource/lato": "^5.3.0",
     "@fontsource/montserrat": "^5.3.0",
+    "@napi-rs/canvas": "^1.0.10",
     "axe-core": "^4.13.0",
+    "pdfjs-dist": "^6.4.299",
     "puppeteer-core": "^25.12.0",
     "sharp": "^0.35.5"
   },

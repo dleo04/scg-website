@@ -734,3 +734,42 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - deck: Next/Prev by mouse and keyboard, ArrowLeft, focus kept
   - timer runs; ring static under reduced motion
 - **Checks.** ui-check (24 routes × 4 widths, axe clean), banner-contrast, build and check:notes pass.
+
+## /join/prepare/: PDF covers and viewer, resume guide, "More ways to prepare"
+
+- **Covers** (`scripts/make-pdf-covers.mjs`, run by `npm run assets`).
+  - Renders page 1 of every PDF in `site.json → downloads` with `pdfjs-dist` (legacy build) and `@napi-rs/canvas`. Both are dev dependencies with prebuilt binaries, so nothing is installed system-wide.
+  - Renders at 2x, keeps the top of the page at 16:10 and writes a 640×400 WebP: 12–16KB each, under the 60KB cap. It also records the page count (19, 15, 12, 4).
+  - A cover is rebuilt only when its PDF changes; covers of removed PDFs are deleted. The PDFs are only read.
+- **Cards.** Same text as before (kind, title, description, "PDF, size"), plus the page count. On top is the cover as a sheet of paper on a warm surface (`--line` border, soft shadow; alt "First page of <title>"; lazy, width and height set). At the bottom are **Preview** (primary) and **Download PDF** (secondary, `download`). The grid is the resource grid: 3 columns with the 4th card on row 2 at the same width, 2 on tablet, 1 on mobile. Covers are equal height at every width.
+- **Viewer** (`src/js/pdf-viewer.js`, 3KB gzip on page load).
+  - PDF.js is self-hosted (`/js/vendor/pdfjs/`, copied from node_modules at build) and dynamically imported on the first Preview. That adds **129KB gzip (`pdf.min.mjs`) + 368KB gzip (worker)**, loaded only then; tested, none of it loads with the page.
+  - Native `<dialog>` with the project-dialog pattern: Tab loop, Esc / backdrop / X close, focus returns to the Preview link, page inert, scroll lock. A side sheet (960px) on desktop, full screen on phones.
+  - Controls:
+    - title and "Page n of N"
+    - Previous/Next plus Left/Right keys
+    - fit-to-width default, zoom 50–300%
+    - Download PDF, a loading state, and an error message with a download link
+  - Rendering: one page on a canvas at the device pixel ratio (1856px for 928 CSS px at 2x), with the next page prefetched.
+  - The **text layer works**: PDF.js `TextLayer` with its CSS flattened into main.css, so text is selectable and readable by screen readers.
+  - Page and zoom changes are announced in a polite `role=status`. Labelled buttons; reduced motion drops the slide-in.
+  - Deep link `#preview=<slug>`.
+  - Without JS, Preview is a plain link to the PDF (the browser's own viewer).
+  - Links inside the PDFs are not clickable in the preview (no annotation layer); Download PDF keeps them.
+- **Test servers** now serve `.mjs` as JavaScript (`ui-check`), as static hosts do.
+- **Resume guide.** Same URL as the /join/ card (`site.json → links.resume_guide`), a Google Slides deck. A new `slidesEmbed` filter turns it into the `/embed` URL, shown in a 16:9 rounded, bordered frame with a `title`, `loading="lazy"`, a sandbox (scripts, same-origin, popups) and an "Open in a new tab" link. Copy is the /join/ wording.
+  - Google serves the embed without a sign-in ("[2026] SCG Resume Resource"), so the deck is already shared publicly. It must stay "Anyone with the link can view".
+  - The iframe makes a failing `chrome-extension://` probe request inside Google's own player. ui-check now ignores failed requests from child frames (only the main frame's count).
+- **More ways to prepare.** Two cards in the /join/ resource-card style:
+  - **Past projects:** the /join/ description, linking to /projects/.
+  - **Recruiting timeline and FAQ:** "How recruiting works, step by step, and answers to frequently asked questions.", built from the /join/ section headings, linking to /join/#timeline.
+  - No Interview prep card.
+- **/join/ "Get ready to apply"** is unchanged (tested).
+- **Privacy note.** The covers show page 1 of SCG's guides, which includes student authors' names and headshots, as originally published. The PDFs were already public downloads, but the faces are now visible on the page. This remains flagged in TODO-CONTENT.md for the authors' confirmation.
+- **Verified** (pdf test, all real checks passing):
+  - no PDF.js on initial load; Enter on Preview opens it with focus on the title
+  - arrows and buttons page through and are announced; zoom; Tab trapped; Esc, X and backdrop close with focus return
+  - error path; deep link on mobile, full screen with no sideways scroll
+  - 2x canvas; text layer present
+  - layouts at 360/768/1024/1440 with equal cards and covers and no horizontal scroll; no-JS links; console clean
+  - ui-check (24 routes × 4 widths, axe clean), build and check:notes pass
