@@ -912,6 +912,19 @@ html.dialog-open { overflow: hidden; }
 .story__when { margin: 0; font-family: var(--font-head); font-weight: 800; font-size: var(--step-2); line-height: 1.1; color: var(--scg-red); }   /* 6.58:1 on paper-2 */
 .story__card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(18px, 3vw, 28px); box-shadow: var(--shadow); }
 .story__card p { color: var(--ink-2); margin-bottom: 0; }
+/* Cards with a photo: text left (≤ 60ch), photo right (38%, 3:2) from 640px; photo on top
+   at 16:9 below 640px. Same photo size on every card at a given width. */
+.story__card--photo { display: grid; gap: 18px; }
+.story__text { max-width: 60ch; }
+.story__text p { max-width: 60ch; }
+.story__photo { --pad: clamp(18px, 3vw, 28px); display: block; order: -1; width: calc(100% + 2 * var(--pad)); max-width: none; margin: calc(-1 * var(--pad)) calc(-1 * var(--pad)) 0; }
+.story__photo img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius) var(--radius) 0 0; }
+@media (min-width: 640px) {
+  .story__card--photo { grid-template-columns: minmax(0, 1fr) 38%; align-items: center; gap: clamp(20px, 3vw, 32px); }
+  .story__photo { grid-column: 2; grid-row: 1; margin: 0; width: auto; }
+  .story__card--photo .story__text { grid-column: 1; grid-row: 1; }
+  .story__photo img { aspect-ratio: 3 / 2; border-radius: 10px; }
+}
 .story__title { font-size: var(--step-1); margin-bottom: .4em; }
 .story__facts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 4px 0 12px !important; }
 .story__facts li { color: var(--ink-2); }

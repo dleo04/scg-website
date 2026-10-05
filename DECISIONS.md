@@ -789,3 +789,20 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - The tablet and desktop rules also centre a lone or paired last row if more PDFs are published later.
 - **Restore:** delete `"published": false` (or set it to true) and run `npm run build` (README and TODO-CONTENT.md).
 - **Build note.** A long-running `npm run dev` (started 2026-10-03) kept rewriting `_site` with its old in-memory config, putting the hidden PDF and card back after my builds. This also explains the one-off "banner photo missing" build seen earlier. Restart `npm run dev` after config or `lib/` changes. Verification here used a separate output folder plus a clean `_site` build.
+
+## /about/ "Since 2020" timeline: photos on the cards
+
+- **Photos** (`site.json → story_photos`: image id, focal point, alt). All are existing old-site photos; none is the /about/ banner (`aboutimage`).
+  - **Founded:** `group-smith-entrance` (members in front of the Robert H. Smith School of Business entrance), focal 50% 70%. The campus/building match: the building sign is in frame.
+  - **EY partnership:** `ey-site-visit` ("EY Site Visit.jpg"), focal 50% 58%.
+  - **Today:** `group-campus-lawn` ("SCG Team Photo.jpg"), focal 50% 55%.
+  - **Smith Impact Case Competition: text-only.** The old site has no case-competition photo; its Partners page shows only the CSVC logo lockup next to that section. Listed in TODO-CONTENT.md.
+  - Rejected: the "SCG Lamp Post w Snider Center" image from the old home page (mock-up banners with logos and legible text).
+- **Crops.** `npm run assets` makes a 3:2 crop for 640px and up and a 16:9 crop for phones, at 480 and 800px, WebP + JPEG. The largest file is 63KB. Lazy-loaded with width and height set.
+  - The task asked for 4:3. A 38% column at 4:3 makes each card taller than its text (about 258px at 1440 vs ~170px of text), so I used 3:2, which keeps the text and photo heights balanced. Changing `aspect-ratio` back to 4:3 is a one-line change in CSS and make-assets.
+  - At 3:2 and 16:9 the group photos keep everyone at the edges: they lose about 0–90px of empty wall or lawn per side at full size. Checked by eye at all widths.
+- **Layout.** From 640px: text left (`max-width: 60ch`), photo right in a 38% column (about 35–36% of the card after the gap), vertically centred, 10px radius. The photo shrinks with the card on tablet. Below 640px: the photo sits on top at 16:9 and full card width, with the card's top corners.
+  - Photo sizes are equal on all three cards at every width: 344×230 at 1440, 259×173 at 1024, 239×159 at 768, 282×159 at 360.
+- **Unchanged.** The copy, the labels (2020, 4+ years, Every year, Today), the vertical line, dots, gold Today marker, card styling and the stats row. Reveal-on-scroll is still skipped under `prefers-reduced-motion` (tested).
+- **TODO** adds "Confirm the year the EY partnership started so the label can be 'Since 20XX' instead of '4+ years' (which goes stale each year)" and the missing competition photo.
+- **Verified** at 360/768/1024/1440: no horizontal scroll, no console errors, no faces cut. Text colours are unchanged (`--ink-2` on white, 10.9:1). Build and check:notes pass.

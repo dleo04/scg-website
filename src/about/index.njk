@@ -11,6 +11,20 @@ bodyClass: page-about
 {%- from "components/photo-wall.njk" import photoWall with context -%}
 {%- from "components/project-dialog.njk" import projectDialog with context -%}
 {%- from "components/page-banner.njk" import pageBanner with context -%}
+{#- Photo on a timeline card (site.json → story_photos; crops made by npm run assets):
+    3:2 beside the text from 640px, 16:9 on top below 640px. Lazy, decorative alt from data. -#}
+{%- macro storyPhoto(key) -%}
+{%- set sp = site.story_photos[key] if site.story_photos else null -%}
+{%- set img = generatedImages.story[key] if generatedImages.story else null -%}
+{%- if sp and img %}
+<picture class="story__photo">
+  <source media="(max-width: 639px)" type="image/webp" srcset="{{ img.mobile.webpSrcset }}" sizes="92vw">
+  <source media="(max-width: 639px)" srcset="{{ img.mobile.jpgSrcset }}" sizes="92vw">
+  <source type="image/webp" srcset="{{ img.wide.webpSrcset }}" sizes="(min-width: 1024px) 380px, 34vw">
+  <img src="{{ img.wide.src }}" srcset="{{ img.wide.jpgSrcset }}" sizes="(min-width: 1024px) 380px, 34vw" width="{{ img.wide.width }}" height="{{ img.wide.height }}" alt="{{ sp.alt }}" loading="lazy" decoding="async">
+</picture>
+{%- endif %}
+{%- endmacro -%}
 {%- set ey = site.partners | findBy("name", "EY") -%}
 {%- set snider = site.partners | findBy("role", "Affiliation and primary funder") -%}
 {%- set csvc = site.partners | findBy("name", "Center for Social Value Creation") -%}
@@ -33,17 +47,23 @@ bodyClass: page-about
     <ol class="story__list">
       <li class="story__item" data-reveal>
         <p class="story__when">{{ site.established }}</p>
-        <div class="story__card">
-          <h3 class="story__title">Founded</h3>
-          <p>SCG was founded at the {{ site.established_at }}, in direct affiliation with the Ed Snider Center for Enterprise and Markets.</p>
+        <div class="story__card story__card--photo">
+          {{ storyPhoto("founded") }}
+          <div class="story__text">
+            <h3 class="story__title">Founded</h3>
+            <p>SCG was founded at the {{ site.established_at }}, in direct affiliation with the Ed Snider Center for Enterprise and Markets.</p>
+          </div>
         </div>
       </li>
       {%- if ey %}
       <li class="story__item" data-reveal>
         <p class="story__when">{% if eyYears and eyYears.verified %}{{ eyYears.value }}{% else %}Partner{% endif %}</p>
-        <div class="story__card">
-          <h3 class="story__title">EY partnership</h3>
-          <p>{{ ey.blurb }}</p>
+        <div class="story__card story__card--photo">
+          {{ storyPhoto("ey") }}
+          <div class="story__text">
+            <h3 class="story__title">EY partnership</h3>
+            <p>{{ ey.blurb }}</p>
+          </div>
         </div>
       </li>
       {%- endif %}
@@ -51,21 +71,26 @@ bodyClass: page-about
       <li class="story__item" data-reveal>
         <p class="story__when">Every year</p>
         <div class="story__card">
-          <h3 class="story__title">Smith Impact Case Competition</h3>
-          <p>{{ csvc.blurb }}</p>
+          <div class="story__text">
+            <h3 class="story__title">Smith Impact Case Competition</h3>
+            <p>{{ csvc.blurb }}</p>
+          </div>
         </div>
       </li>
       {%- endif %}
       <li class="story__item story__item--now" data-reveal>
         <p class="story__when">Today</p>
-        <div class="story__card">
-          <h3 class="story__title">UMD's student-run consulting group</h3>
-          {%- if verifiedStats.length %}
-          <ul class="story__facts">
-            {%- for s in verifiedStats %}<li><strong>{{ s.value }}</strong> {{ s.label | lower }}</li>{% endfor %}
-          </ul>
-          {%- endif %}
-          <p>Student teams work with campus organizations, nonprofits and startups. <a href="/projects/">See the projects</a>.</p>
+        <div class="story__card story__card--photo">
+          {{ storyPhoto("today") }}
+          <div class="story__text">
+            <h3 class="story__title">UMD's student-run consulting group</h3>
+            {%- if verifiedStats.length %}
+            <ul class="story__facts">
+              {%- for s in verifiedStats %}<li><strong>{{ s.value }}</strong> {{ s.label | lower }}</li>{% endfor %}
+            </ul>
+            {%- endif %}
+            <p>Student teams work with campus organizations, nonprofits and startups. <a href="/projects/">See the projects</a>.</p>
+          </div>
         </div>
       </li>
     </ol>

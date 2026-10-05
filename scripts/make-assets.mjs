@@ -180,6 +180,41 @@ for (const b of site.benefits || []) {
   };
 }
 
+// About timeline photos (site.json → story_photos): 3:2 (desktop/tablet) and 16:9 (phones)
+// crops around each focal point, 800px wide (and 480px), WebP + JPEG under 100KB.
+manifest.story = {};
+fs.mkdirSync(path.join(GEN_DIR, "story"), { recursive: true });
+for (const [key, sp] of Object.entries(site.story_photos || {})) {
+  const src = sp.image && path.join(ROOT, "assets/photos", `${sp.image}.jpg`);
+  if (!src || !fs.existsSync(src)) continue;
+  const meta = await sharp(src).metadata();
+  const [fx, fy] = (sp.focal || "50% 50%").split(/\s+/).map((v) => parseFloat(v) / 100);
+  const entry = {};
+  for (const [kind, ar] of [["wide", 3 / 2], ["mobile", 16 / 9]]) {
+    let w = meta.width, h = Math.round(meta.width / ar);
+    if (h > meta.height) { h = meta.height; w = Math.round(h * ar); }
+    const crop = { left: Math.round((meta.width - w) * fx), top: Math.round((meta.height - h) * fy), width: w, height: h };
+    const set = { webp: [], jpg: [] };
+    for (const size of [480, 800].filter((s) => s <= w)) {
+      for (const fmt of ["webp", "jpg"]) {
+        let q = fmt === "webp" ? 76 : 78, buf;
+        do {
+          const img = sharp(src).extract(crop).resize({ width: size });
+          buf = await (fmt === "webp" ? img.webp({ quality: q }) : img.jpeg({ quality: q, mozjpeg: true, progressive: true })).toBuffer();
+          q -= 5;
+        } while (buf.length > 100 * 1024 && q > 40);
+        const name = `${key}-${kind}-${size}.${fmt}`;
+        fs.writeFileSync(path.join(GEN_DIR, "story", name), buf);
+        set[fmt].push(`/assets/generated/story/${name} ${size}w`);
+        if (fmt === "jpg") entry[kind] = { src: `/assets/generated/story/${name}`, width: size, height: Math.round(size / ar), kb: Math.round(buf.length / 1024) };
+      }
+    }
+    entry[kind].webpSrcset = set.webp.join(", ");
+    entry[kind].jpgSrcset = set.jpg.join(", ");
+  }
+  manifest.story[key] = entry;
+}
+
 // Employer logos (downloaded once by `npm run logos`): small WebP + PNG copies,
 // resized proportionally to at most 360x120 (3x the largest display size). No recoloring.
 const logoManifest = path.join(ROOT, "assets/logos/logos.json");

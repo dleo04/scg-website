@@ -396,5 +396,23 @@
       "focal": "50% 50%",
       "tint": 0.78
     }
+  },
+  "story_photos_readme": "Photos on the /about/ 'Since 2020' timeline cards, keyed by card (founded, ey, competition, today). 'image' is a photo id from data/photos.json; 'focal' (x% y%) is the point kept when it is cut to 3:2 (desktop/tablet) and 16:9 (phones); 'alt' describes what is visible. A card without an entry stays text-only (no case competition photo exists in the old site).",
+  "story_photos": {
+    "founded": {
+      "image": "group-smith-entrance",
+      "focal": "50% 70%",
+      "alt": "About forty SCG members in business attire standing together in front of the Robert H. Smith School of Business entrance."
+    },
+    "ey": {
+      "image": "ey-site-visit",
+      "focal": "50% 58%",
+      "alt": "SCG members in business attire seated along a long conference table in a bright office during the EY site visit."
+    },
+    "today": {
+      "image": "group-campus-lawn",
+      "focal": "50% 55%",
+      "alt": "SCG members in suits standing in two rows on a campus lawn in warm evening light."
+    }
   }
 }
