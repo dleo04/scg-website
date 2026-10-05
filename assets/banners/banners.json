@@ -152,17 +152,17 @@
   "/alumni/": {
     "photo": true,
     "source": "assets/photos/alumniimage.jpeg",
-    "band": 3,
+    "band": 2,
     "focal": "50% 50%",
     "tint": 0.78,
     "windows": {
       "desktop": [
-        50,
-        75
+        25,
+        50
       ],
       "tablet": [
-        50,
-        75
+        25,
+        50
       ],
       "mobile": [
         0,
@@ -177,7 +177,7 @@
         "width": 3700,
         "height": 407,
         "sizes": "max(100vw, 3636px)",
-        "window": "50.0-75.0%"
+        "window": "25.0-50.0%"
       },
       "tablet": {
         "webp": "/assets/banners/alumni-desktop-3700.webp 3700w",
@@ -186,7 +186,7 @@
         "width": 3700,
         "height": 407,
         "sizes": "max(100vw, 3636px)",
-        "window": "50.0-75.0%"
+        "window": "25.0-50.0%"
       },
       "mobile": {
         "webp": "/assets/banners/alumni-mobile-1080.webp 1080w, /assets/banners/alumni-mobile-720.webp 720w",
@@ -257,17 +257,17 @@
   "/work-with-us/": {
     "photo": true,
     "source": "assets/photos/workwithusimage.jpeg",
-    "band": 2,
+    "band": 3,
     "focal": "50% 50%",
     "tint": 0.78,
     "windows": {
       "desktop": [
-        25,
-        50
+        40,
+        85
       ],
       "tablet": [
-        25,
-        50
+        40,
+        85
       ],
       "mobile": [
         0,
@@ -276,22 +276,22 @@
     },
     "files": {
       "desktop": {
-        "webp": "/assets/banners/work-with-us-desktop-4000.webp 4000w",
-        "jpg": "/assets/banners/work-with-us-desktop-4000.jpg 4000w",
-        "fallback": "/assets/banners/work-with-us-desktop-4000.jpg",
-        "width": 4000,
-        "height": 400,
-        "sizes": "max(100vw, 4000px)",
-        "window": "25.0-50.0%"
+        "webp": "/assets/banners/work-with-us-desktop-2300.webp 2300w",
+        "jpg": "/assets/banners/work-with-us-desktop-2300.jpg 2300w",
+        "fallback": "/assets/banners/work-with-us-desktop-2300.jpg",
+        "width": 2300,
+        "height": 414,
+        "sizes": "max(100vw, 2222px)",
+        "window": "40.0-85.0%"
       },
       "tablet": {
-        "webp": "/assets/banners/work-with-us-desktop-4000.webp 4000w",
-        "jpg": "/assets/banners/work-with-us-desktop-4000.jpg 4000w",
-        "fallback": "/assets/banners/work-with-us-desktop-4000.jpg",
-        "width": 4000,
-        "height": 400,
-        "sizes": "max(100vw, 4000px)",
-        "window": "25.0-50.0%"
+        "webp": "/assets/banners/work-with-us-desktop-2300.webp 2300w",
+        "jpg": "/assets/banners/work-with-us-desktop-2300.jpg 2300w",
+        "fallback": "/assets/banners/work-with-us-desktop-2300.jpg",
+        "width": 2300,
+        "height": 414,
+        "sizes": "max(100vw, 2222px)",
+        "window": "40.0-85.0%"
       },
       "mobile": {
         "webp": "/assets/banners/work-with-us-mobile-1080.webp 1080w, /assets/banners/work-with-us-mobile-720.webp 720w",

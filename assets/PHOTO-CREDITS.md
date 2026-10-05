@@ -8,10 +8,10 @@ No photos downloaded from the internet are used on the site.
 |---|---|---|---|
 | /projects/ | `assets/photos/projectsimage.jpeg` (5071×3384) | band 3 (50–75%) | Supplied by the site owner (Washington D.C. skyline at dusk). Photographer and license: please record here. |
 | /join/ | `assets/photos/joinscgimage.jpeg` (5824×3264) | band 2 (25–50%) | Supplied by the site owner (aerial of a campus mall). Photographer and license: please record here. |
-| /alumni/ | `assets/photos/alumniimage.jpeg` (14046×6181) | band 3 (50–75%) | Supplied by the site owner (Manhattan skyline panorama). Photographer and license: please record here. |
+| /alumni/ | `assets/photos/alumniimage.jpeg` (14046×6181) | band 2 (25–50%) | Supplied by the site owner (Manhattan skyline panorama). Photographer and license: please record here. |
 | /team/ | `assets/placeholder-group-photo.jpg` (2558×1705), the Home "Our Community" photo | band 3, widened so every face shows (see DECISIONS.md) | Starter package (the old site's group photo). |
 | /about/ | `assets/photos/aboutimage.jpeg` (6912×2752) | band 2 (25–50%) | Supplied by the site owner (students walking through a campus arcade, motion-blurred). Photographer and license: please record here. |
-| /work-with-us/ | `assets/photos/workwithusimage.jpeg` (8160×3264) | band 2 (25–50%) | Supplied by the site owner (students walking past a campus building, motion-blurred). Photographer and license: please record here. |
+| /work-with-us/ | `assets/photos/workwithusimage.jpeg` (8160×3264) | band 3, widened to 40–85% so no head is cut | Supplied by the site owner (students walking past a campus building, motion-blurred). Photographer and license: please record here. |
 | /join/prepare/, /partners/ | none yet (gradient) | | Add `prepareimage` or `partnersimage` under `assets/`. |
 
 ## Other photos

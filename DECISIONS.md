@@ -604,3 +604,17 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - /alumni/: eyebrow 4.92, title 9.73
 - **Checked** at 360/768/1280/1440: finished look, no seam (no border, shadow or gap under the banner) and no horizontal scroll. Heights at 360 / 1440: /about/ 307 / 360, /work-with-us/ 260 / 360, /alumni/ 260 / 360.
 - **Still on the gradient:** /join/prepare/ and /partners/.
+
+## Work With Us band 3, Alumni back to band 2
+
+- **/alumni/:** `alumniimage.jpeg` is back on band 2 (25–50%), the skyline with the Empire State Building. Desktop strip 3700×407; phones get the whole photo.
+- **/work-with-us/:** `workwithusimage.jpeg` is now band 3, **widened to 40–85% of the height** on desktop and tablet.
+  - The exact band 3 (50–75%) cuts through the walkers' heads. They are motion-blurred, but still heads: the tallest reaches about 40.5% of the height, the rest about 46–50%.
+  - The window keeps band 3's centre (62.5%) and is just tall enough to include every head (`page_banners → windows.desktop`, with a note).
+  - Phones get the whole photo, since it is wider than 16:9.
+  - Desktop strip 2300×414 (the taller window needs less width to reach 400px of height); largest file 126KB.
+- **Unused files.** The previous Work With Us band-2 strip (4000px) and the Alumni band-3 strip were deleted when `assets/banners/` was rebuilt. The originals are untouched.
+- **Contrast** at tint 0.78 (worst over 360/768/1280/1440, brightest background pixel). Neither page needed 0.8.
+  - /work-with-us/: eyebrow 4.92, title 9.73
+  - /alumni/: eyebrow 4.93, title 9.73
+- **Checked** at 360/768/1280/1440: no seam, no horizontal scroll, every head visible. Heights 260px at 360 and 360px at 1440 on both pages.

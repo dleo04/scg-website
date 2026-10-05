@@ -348,7 +348,7 @@
     },
     "/alumni/": {
       "source": "alumniimage",
-      "band": 3,
+      "band": 2,
       "focal": "50% 50%",
       "tint": 0.78
     },
@@ -366,9 +366,16 @@
     },
     "/work-with-us/": {
       "source": "workwithusimage",
-      "band": 2,
+      "band": 3,
       "focal": "50% 50%",
-      "tint": 0.78
+      "tint": 0.78,
+      "windows": {
+        "desktop": [
+          40,
+          85
+        ]
+      },
+      "windows_note": "Band 3 (50-75%) cuts the walkers' heads (motion-blurred; the tallest reaches ~40.5% of the height, the rest ~46-50%). The window keeps band 3's centre (62.5%) and is widened just enough to 40-85% on desktop and tablet; phones get the whole photo (it is wider than 16:9)."
     },
     "/partners/": {
       "source": "partnersimage",
