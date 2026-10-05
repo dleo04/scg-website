@@ -374,10 +374,8 @@
       "tint": 0.78
     },
     "/join/prepare/": {
-      "source": "prepareimage",
-      "band": 2,
-      "focal": "50% 50%",
-      "tint": 0.78
+      "same_as": "/join/",
+      "note": "Uses the /join/ banner exactly (same image, band, focal, tint and crop files). To give Prepare its own photo, replace this entry with { \"source\": \"prepareimage\", \"band\": 2, \"focal\": \"50% 50%\", \"tint\": 0.78 }."
     },
     "/work-with-us/": {
       "source": "workwithusimage",

@@ -21,7 +21,7 @@ bodyClass: page-prepare
     link: { label: "Browse projects to answer this one", url: "/projects/" } }
 ] -%}
 
-{{ pageBanner({ id: "prep-title", eyebrow: "Recruitment", title: "Prepare for your interview", lede: "Practice the sample questions out loud, time yourself, and read SCG's own case guides.", before: '<nav class="breadcrumbs page-banner__crumbs" aria-label="Breadcrumb"><ol><li><a href="/join/">Join SCG</a></li><li aria-current="page">Prepare</li></ol></nav>' }) }}
+{{ pageBanner({ id: "prep-title", title: "Prepare for your interview", lede: "Practice the sample questions out loud, time yourself, and read SCG's own case guides.", before: '<nav class="breadcrumbs page-banner__crumbs" aria-label="Breadcrumb"><ol><li><a href="/join/">Join SCG</a></li><li aria-current="page">Prepare</li></ol></nav>' }) }}
 
 <section class="section section--paper-2" aria-labelledby="practice-title">
   <div class="container practice">
@@ -53,6 +53,7 @@ bodyClass: page-prepare
           </li>
           {%- endfor %}
         </ol>
+        {#- With JS the arrows are moved into the visible card's footer (right side). -#}
         <div class="deck__nav" data-deck-nav hidden>
           <button class="icon-btn" type="button" data-deck-prev aria-label="Previous question"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <button class="icon-btn" type="button" data-deck-next aria-label="Next question"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -62,7 +63,7 @@ bodyClass: page-prepare
       <aside class="timer" data-timer hidden aria-labelledby="timer-title">
         <h3 class="timer__title" id="timer-title">Practice timer</h3>
         <p class="timer__hint">Two minutes per answer. No sound.</p>
-        <div class="timer__dial" style="--progress: 0">
+        <div class="timer__dial" style="--progress: 0" aria-hidden="true">
           <p class="timer__time" data-timer-time aria-hidden="true">2:00</p>
         </div>
         <p class="visually-hidden" role="status" data-timer-status></p>

@@ -29,9 +29,14 @@
       });
     });
 
+    const nav = deck.querySelector("[data-deck-nav]");
     const show = (i, focus = false) => {
       index = (i + cards.length) % cards.length;
       cards.forEach((c, n) => { c.hidden = n !== index; });
+      // The arrows live in the visible card's footer, right of "Show answer structure".
+      const had = nav.contains(document.activeElement) ? document.activeElement : null;
+      cards[index].querySelector(".qcard__actions").append(nav);
+      had?.focus();
       pos.textContent = `Question ${index + 1} of ${cards.length}`;
       if (focus) cards[index].querySelector(".qcard__q").focus();
     };
@@ -78,9 +83,11 @@
     let left = TOTAL, running = false, last = 0, raf = 0;
     const label = (s) => { const c = Math.ceil(s); return `${Math.floor(c / 60)}:${String(c % 60).padStart(2, "0")}`; };
 
+    // The gold ring fills as time elapses; with reduced motion it stays static (time text only).
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const draw = () => {
       time.textContent = label(left);
-      dial.style.setProperty("--progress", String(1 - left / TOTAL));
+      if (!still) dial.style.setProperty("--progress", String(1 - left / TOTAL));
       timer.classList.toggle("is-done", left <= 0);
     };
     const tick = (now) => {

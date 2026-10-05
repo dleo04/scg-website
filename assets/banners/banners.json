@@ -249,11 +249,6 @@
       }
     }
   },
-  "/join/prepare/": {
-    "photo": false,
-    "source": "prepareimage",
-    "tint": 0.78
-  },
   "/work-with-us/": {
     "photo": true,
     "source": "assets/photos/workwithusimage.jpeg",
@@ -308,5 +303,56 @@
     "photo": false,
     "source": "partnersimage",
     "tint": 0.78
+  },
+  "/join/prepare/": {
+    "photo": true,
+    "source": "assets/photos/joinscgimage.jpeg",
+    "band": 2,
+    "focal": "50% 50%",
+    "tint": 0.78,
+    "windows": {
+      "desktop": [
+        25,
+        50
+      ],
+      "tablet": [
+        25,
+        50
+      ],
+      "mobile": [
+        0,
+        100
+      ]
+    },
+    "files": {
+      "desktop": {
+        "webp": "/assets/banners/join-desktop-2900.webp 2900w",
+        "jpg": "/assets/banners/join-desktop-2900.jpg 2900w",
+        "fallback": "/assets/banners/join-desktop-2900.jpg",
+        "width": 2900,
+        "height": 406,
+        "sizes": "max(100vw, 2855px)",
+        "window": "25.0-50.0%"
+      },
+      "tablet": {
+        "webp": "/assets/banners/join-desktop-2900.webp 2900w",
+        "jpg": "/assets/banners/join-desktop-2900.jpg 2900w",
+        "fallback": "/assets/banners/join-desktop-2900.jpg",
+        "width": 2900,
+        "height": 406,
+        "sizes": "max(100vw, 2855px)",
+        "window": "25.0-50.0%"
+      },
+      "mobile": {
+        "webp": "/assets/banners/join-mobile-1080.webp 1080w, /assets/banners/join-mobile-720.webp 720w",
+        "jpg": "/assets/banners/join-mobile-1080.jpg 1080w, /assets/banners/join-mobile-720.jpg 720w",
+        "fallback": "/assets/banners/join-mobile-1080.jpg",
+        "width": 1080,
+        "height": 605,
+        "sizes": "max(100vw, 500px)",
+        "window": "0.0-100.0%"
+      }
+    },
+    "sameAs": "/join/"
   }
 }

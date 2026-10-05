@@ -705,3 +705,32 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   | 360 | 1954 | 2634 |
 
 - **Checks.** Build, check:notes, ui-check (24 routes × 4 widths, axe clean), contrast, and the Find-your-seat test pass.
+
+## /join/prepare/: Join banner, practice room polish
+
+- **Banner.** `page_banners["/join/prepare/"]` is now `{ "same_as": "/join/" }`. That is a new option in `make-banners.mjs`: the page gets exactly the Join banner entry (`joinscgimage`, band 2, focal 50% 50%, tint 0.78, the same desktop, tablet and mobile crops) and reuses its files. No new image is made; `assets/banners/` has no `join-prepare-*` files.
+  - The banner component now omits the eyebrow when none is passed, so the gold "RECRUITMENT" label is gone from this page only. The breadcrumb, headline and subhead are unchanged.
+  - Contrast (brightest pixel; 360 / 768 / 1280 / 1440):
+    - breadcrumb link 5.08 / 5.28 / 5.25 / 5.25
+    - breadcrumb 9.81+
+    - title 10.20+
+    - intro 10.23 / 10.27 / 10.31 / 10.31
+  - The `srcset`s match /join/ at every width (tested).
+  - /partners/ is now the only page waiting for a banner photo.
+- **Equal heights.** From 900px the practice room is one grid. Row 1 holds "Question n of 3" + Shuffle above the card; row 2 holds the card and the timer, stretched to the same height. `.deck` becomes `display: contents`, so its bar and card list are grid items.
+  - Measured equal: 321 / 321 at 1024, 323 / 323 at 1440, and 577 / 577 with the answer structure open.
+  - Below 900px they stack.
+- **Card footer.** "Show answer structure" (and the Projects link on question 3) sits on the left. The previous/next arrows sit on the right: JS moves the one arrow pair into the visible card's footer, and focus stays on the pressed arrow.
+  - The 320px minimum height is gone; the footer sits at the bottom of the card. On desktop the card is as tall as the timer, so some space remains under short questions, as the equal-height rule requires.
+  - At 360px the button and two 44px arrows don't fit on one line, so the arrows wrap to a right-aligned line just below.
+- **Timer.**
+  - The dial is 136px (was 168) with a thin 4px gold ring that fills as time elapses. With `prefers-reduced-motion` the ring stays static and only the time text changes.
+  - The dial is `aria-hidden`. Announcements stay in the existing `role=status` ("Timer started", "Paused with …", "Time's up."), not every second.
+  - Dark panel, Start/Reset unchanged; no sound.
+- **STAR section width.** Already in the same container as the practice room. Measured: left edges match (120 at 1440, 24 at 768/1024), and the fourth card's right edge equals the timer's right edge (1320 at 1440, 1000 at 1024).
+- **Questions: still 3.** The old site lists exactly three sample behavioural questions, all on the Interview Resources page and all already used. The other old pages have none. The linked PDFs are case-interview material (frameworks and case questions), not behavioural questions, so nothing was added.
+- **Verified** at 360/768/1024/1440:
+  - no horizontal scroll, no console errors, banner = Join, eyebrow absent
+  - deck: Next/Prev by mouse and keyboard, ArrowLeft, focus kept
+  - timer runs; ring static under reduced motion
+- **Checks.** ui-check (24 routes × 4 widths, axe clean), banner-contrast, build and check:notes pass.

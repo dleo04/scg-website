@@ -25,7 +25,7 @@
   <div class="container page-banner__inner">
     <div class="page-banner__text">
       {%- if opts.before %}{{ opts.before | safe }}{% endif %}
-      <p class="eyebrow page-banner__eyebrow">{{ opts.eyebrow }}</p>
+      {%- if opts.eyebrow %}<p class="eyebrow page-banner__eyebrow">{{ opts.eyebrow }}</p>{% endif %}
       <h1 class="page-title page-banner__title" id="{{ opts.id }}">{{ opts.title }}</h1>
       {%- if opts.lede %}<p class="lede page-banner__lede">{{ opts.lede }}</p>{% endif %}
     </div>
