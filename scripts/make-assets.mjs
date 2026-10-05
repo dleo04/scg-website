@@ -147,6 +147,57 @@ for (const photo of photoList) {
   };
 }
 
+// Page banners (site.json → page_banners), one set per page:
+// - wide: a 2.4:1 strip cut at the page's focus (position y), 800 and 1600px wide, for ≥768px;
+// - full: the whole photo at 800 and 1200px wide, for phones (taller banners).
+// WebP + JPEG, quality stepped down until each file is under 200KB. Never upscaled.
+manifest.banners = {};
+fs.mkdirSync(path.join(GEN_DIR, "banners"), { recursive: true });
+async function underLimit(pipeline, fmt) {
+  let q = fmt === "webp" ? 74 : 78, buf;
+  do {
+    const img = pipeline();
+    buf = await (fmt === "webp" ? img.webp({ quality: q }) : img.jpeg({ quality: q, mozjpeg: true, progressive: true })).toBuffer();
+    q -= 5;
+  } while (buf.length > 200 * 1024 && q > 35);
+  return buf;
+}
+for (const [pageUrl, b] of Object.entries(site.page_banners || {})) {
+  if (pageUrl.startsWith("_") || !b?.image) continue;
+  const src = path.join(ROOT, b.image);
+  if (!fs.existsSync(src)) continue;
+  const slugName = pageUrl === "default" ? "default" : pageUrl.replace(/^\/|\/$/g, "").replace(/\//g, "-");
+  const meta = await sharp(src).rotate().metadata();
+  const py = parseFloat((b.position || "50% 50%").split(/\s+/)[1]) / 100;
+  const entry = { position: b.position || "50% 50%", positionMobile: b.position_mobile || b.position || "50% 50%", tint: b.tint ?? 0.72, sizes: [] };
+  const set = async (kind, widths, crop) => {
+    const out = { webp: [], jpg: [] };
+    for (const w of widths) {
+      for (const fmt of ["webp", "jpg"]) {
+        const buf = await underLimit(() => {
+          let img = sharp(src).rotate();
+          if (crop) img = img.extract(crop);
+          return img.resize({ width: w, withoutEnlargement: true });
+        }, fmt);
+        const info = await sharp(buf).metadata();
+        const name = `${slugName}-${kind}-${w}.${fmt}`;
+        fs.writeFileSync(path.join(GEN_DIR, "banners", name), buf);
+        out[fmt].push(`/assets/generated/banners/${name} ${info.width}w`);
+        entry.sizes.push(`${kind}-${info.width}.${fmt}:${Math.round(buf.length / 1024)}KB`);
+        if (fmt === "jpg") entry[kind] = { src: `/assets/generated/banners/${name}`, width: info.width, height: info.height };
+      }
+    }
+    entry[kind].webpSrcset = out.webp.join(", ");
+    entry[kind].jpgSrcset = out.jpg.join(", ");
+  };
+  // Wide strip: full width, height = width / 2.4, placed at the focus point.
+  const cropH = Math.min(meta.height, Math.round(meta.width / 2.4));
+  const top = Math.round((meta.height - cropH) * (isNaN(py) ? 0.5 : py));
+  await set("wide", [800, Math.min(1600, meta.width)].filter((w, i, a) => a.indexOf(w) === i), { left: 0, top, width: meta.width, height: cropH });
+  await set("full", [800, Math.min(1200, meta.width)].filter((w, i, a) => a.indexOf(w) === i), null);
+  manifest.banners[pageUrl] = entry;
+}
+
 // Employer logos (downloaded once by `npm run logos`): small WebP + PNG copies,
 // resized proportionally to at most 360x120 (3x the largest display size). No recoloring.
 const logoManifest = path.join(ROOT, "assets/logos/logos.json");

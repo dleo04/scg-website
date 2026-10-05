@@ -8,6 +8,7 @@ bodyClass: page-prepare
     the hints are general interview advice, not facts about SCG. Downloads come from
     site.json → downloads and only render for files that exist in assets/downloads/. -#}
 {%- from "components/ui.njk" import tbdBlock with context -%}
+{%- from "components/page-banner.njk" import pageBanner with context -%}
 {%- set questions = [
   { q: "Tell me about yourself.",
     hints: ["Present: who you are now, your major and what you are working on.", "Past: one or two experiences that explain how you got here.", "Future: why SCG, and what you want to learn next.", "Keep it to about a minute and a half."],
@@ -20,14 +21,7 @@ bodyClass: page-prepare
     link: { label: "Browse projects to answer this one", url: "/projects/" } }
 ] -%}
 
-<section class="section page-head" aria-labelledby="prep-title">
-  <div class="container">
-    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/join/">Join SCG</a></li><li aria-current="page">Prepare</li></ol></nav>
-    <p class="eyebrow eyebrow--accent">Recruitment</p>
-    <h1 class="page-title" id="prep-title">Prepare for your interview</h1>
-    <p class="lede">Practice the sample questions out loud, time yourself, and read SCG's own case guides.</p>
-  </div>
-</section>
+{{ pageBanner({ id: "prep-title", eyebrow: "Recruitment", title: "Prepare for your interview", lede: "Practice the sample questions out loud, time yourself, and read SCG's own case guides.", before: '<nav class="breadcrumbs page-banner__crumbs" aria-label="Breadcrumb"><ol><li><a href="/join/">Join SCG</a></li><li aria-current="page">Prepare</li></ol></nav>' }) }}
 
 <section class="section section--paper-2" aria-labelledby="practice-title">
   <div class="container practice">

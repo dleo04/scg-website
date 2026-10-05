@@ -310,5 +310,52 @@
       "description": "The prompt from the case competition SCG co-hosts with the Center for Social Value Creation.",
       "published": "2023-12"
     }
-  ]
+  ],
+  "page_banners_readme": "Photo banners behind the page headers of the inner pages (components/page-banner.njk), keyed by URL. 'image' is a photo in the repo (assets/photos/… or assets/…); 'position' is the CSS object-position (x% y%) that picks the crop; 'position_mobile' (optional) is used below 768px; 'tint' is the flat maroon-black overlay opacity: 0.78 on every banner (the Home hero uses 0.72), the lowest value that keeps the small gold eyebrow at 4.5:1 even over a white sky; keep it between 0.78 and 0.8 and run npm run banner-contrast after changing a photo. Pages not listed use 'default'. Images are decorative (alt=\"\") and resized by npm run assets (800/1600px WebP + JPEG). Change a page's photo by editing its entry and rebuilding.",
+  "page_banners": {
+    "default": {
+      "image": "assets/photos/hike.jpg",
+      "position": "50% 20%",
+      "tint": 0.78
+    },
+    "/join/": {
+      "image": "assets/photos/group-lakeside.jpg",
+      "position": "50% 8%",
+      "position_mobile": "50% 10%",
+      "tint": 0.78
+    },
+    "/join/prepare/": {
+      "image": "assets/photos/ey-site-visit.jpg",
+      "position": "50% 12%",
+      "tint": 0.78
+    },
+    "/about/": {
+      "image": "assets/photos/hike.jpg",
+      "position": "50% 20%",
+      "position_mobile": "62% 25%",
+      "tint": 0.78
+    },
+    "/team/": {
+      "image": "assets/photos/group-campus-lawn.jpg",
+      "position": "50% 12%",
+      "tint": 0.78
+    },
+    "/alumni/": {
+      "image": "assets/photos/graduates.jpg",
+      "position": "50% 22%",
+      "tint": 0.78
+    },
+    "/work-with-us/": {
+      "image": "assets/placeholder-hero-quad.jpg",
+      "position": "50% 6%",
+      "tint": 0.78,
+      "position_mobile": "100% 0%"
+    },
+    "/partners/": {
+      "image": "assets/placeholder-hero-quad.jpg",
+      "position": "0% 62%",
+      "tint": 0.78,
+      "position_mobile": "0% 100%"
+    }
+  }
 }

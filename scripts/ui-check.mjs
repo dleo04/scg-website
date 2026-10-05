@@ -137,15 +137,18 @@ async function keyboard(width) {
     if (!closed) fail(`@${width} Escape did not close the menu and return focus to the toggle`);
   }
 
-  // Dropdown (only if the header has one).
+  // "Join SCG" sub-menu (disclosure): caret toggles, first entry is "Overview", Esc closes
+  // and returns focus to the caret (desktop dropdown and mobile accordion).
   await page.goto(BASE + "/", { waitUntil: "networkidle0" });
-  if (await page.$(".nav-group__toggle")) {
+  if (await page.$("[data-nav-sub-toggle]")) {
     if (width < 1024) await page.click(".nav-toggle");
-    await page.focus(".nav-group__toggle");
+    await page.focus("[data-nav-sub-toggle]");
     await page.keyboard.press("Enter");
     await page.keyboard.press("Tab");
-    if ((await active()).text !== "About") fail(`@${width} first dropdown item is not "About"`);
+    if ((await active()).text !== "Overview") fail(`@${width} first Join SCG entry is not "Overview"`);
     await page.keyboard.press("Escape");
+    const back = await page.evaluate(() => document.activeElement.matches("[data-nav-sub-toggle]") && document.activeElement.getAttribute("aria-expanded") === "false");
+    if (!back) fail(`@${width} Escape did not close the Join SCG sub-menu and return focus to its button`);
   }
 
   // Tabs (only on pages that have them).

@@ -67,3 +67,13 @@ Photos are listed in `data/photos.json` (`id`, `source`, `alt`, `caption`, `page
 - `site.json → mission`, `pillars`, `benefits`, `press`: About text, the three pillars, the five "What you get" cards on `/join/` and the four "SCG elsewhere" links.
 - `data/process.json`: "How a project works" on `/about/`. A step with `"text": null` is hidden on the live site; `example` links a step to a project (it opens that project's dialog) or a page.
 - `data/tracks.json`: the four tracks in the `/join/` matcher. The matcher searches each track's `fits` and `skills`; every "What you'd do" item must name a real project.
+
+## How to change a page's banner photo
+The photo behind the header of `/join/`, `/join/prepare/`, `/about/`, `/team/`, `/alumni/`, `/work-with-us/` and `/partners/` is set in `data/site.json → page_banners`, keyed by the page's URL (pages not listed use `"default"`):
+```json
+"/team/": { "image": "assets/photos/group-campus-lawn.jpg", "position": "50% 12%", "position_mobile": "50% 20%", "tint": 0.78 }
+```
+- `image`: any photo in the repo (calm area where the text sits, no legible text or logos). For a new photo, add it to `assets/photos/` (or `data/photos.json` + `npm run old-photos`) and list its source in `assets/PHOTO-CREDITS.md`.
+- `position`: which part of the photo shows (x% y%; `50% 0%` = top centre). `position_mobile` (optional) for phones.
+- `tint`: the maroon-black overlay, 0.78 to 0.8. Lower values make the small gold label fail contrast over bright skies.
+- Then run `npm run build` (it makes the 800/1600px WebP and JPEG files under 200KB) and `npm run banner-contrast`, which must say OK.

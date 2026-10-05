@@ -1,0 +1,32 @@
+{#- Photo banner behind an inner page's header (eyebrow, H1, intro). Shared by /join/,
+    /join/prepare/, /about/ and the pages that still use layouts/stub.njk (team, alumni,
+    work-with-us, partners); /projects/, project pages and the Home hero do not use it.
+    The photo, its crop (object-position) and the tint come from site.json → page_banners
+    (keyed by URL, else "default"). The image is decorative (alt=""), above the fold, so it
+    is not lazy-loaded. Phones get the full photo, 768px+ a wide strip cut at the focus.
+    Optional caller() content (e.g. the /join/ status card) sits in a side column; `before`
+    renders above the eyebrow (e.g. breadcrumbs). -#}
+{% macro pageBanner(opts) -%}
+{%- set cfg = site.page_banners[page.url] or site.page_banners["default"] -%}
+{%- set img = (generatedImages.banners[page.url] or generatedImages.banners["default"]) if generatedImages.banners else null -%}
+{%- set tint = img.tint if img else 0.72 -%}
+<section class="page-banner{% if caller %} page-banner--aside{% endif %}" aria-labelledby="{{ opts.id }}" style="--banner-tint: {{ tint }}; --banner-pos: {{ img.position if img else '50% 50%' }}; --banner-pos-mobile: {{ img.positionMobile if img else '50% 50%' }}">
+  {%- if img %}
+  <picture class="page-banner__bg">
+    <source media="(min-width: 768px)" type="image/webp" srcset="{{ img.wide.webpSrcset }}" sizes="100vw">
+    <source media="(min-width: 768px)" srcset="{{ img.wide.jpgSrcset }}" sizes="100vw">
+    <source type="image/webp" srcset="{{ img.full.webpSrcset }}" sizes="100vw">
+    <img src="{{ img.full.src }}" srcset="{{ img.full.jpgSrcset }}" sizes="100vw" width="{{ img.full.width }}" height="{{ img.full.height }}" alt="" fetchpriority="high" decoding="async">
+  </picture>
+  {%- endif %}
+  <div class="container page-banner__inner">
+    <div class="page-banner__text">
+      {%- if opts.before %}{{ opts.before | safe }}{% endif %}
+      <p class="eyebrow page-banner__eyebrow">{{ opts.eyebrow }}</p>
+      <h1 class="page-title page-banner__title" id="{{ opts.id }}">{{ opts.title }}</h1>
+      {%- if opts.lede %}<p class="lede page-banner__lede">{{ opts.lede }}</p>{% endif %}
+    </div>
+    {%- if caller %}<div class="page-banner__aside">{{ caller() }}</div>{% endif %}
+  </div>
+</section>
+{%- endmacro %}

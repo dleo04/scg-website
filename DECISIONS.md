@@ -506,3 +506,55 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - It also covers "I'm not sure" (all four), the Finance quick chip (Strategy & Research), the track link, FAQ search, JSON-LD, the calendar opening on the current step, the deck, timer and shuffle, and the four PDFs served.
   - No-JS: all steps, tracks, cards, hints, pillar texts and photo links are visible.
   - ui-check: 24 routes × 4 widths, axe clean. Contrast: 40 pairings (10 new). check:notes passes. No horizontal scroll at 360, 768 or 1440.
+
+## Inner-page banners and the Join SCG sub-menu
+
+- **Banner component** (`components/page-banner.njk`). It is used by /join/, /join/prepare/, /about/ and `layouts/stub.njk`, so /team/, /alumni/, /work-with-us/ and /partners/ (and any future page on that layout) get it automatically. /projects/, project pages and the Home hero are unchanged.
+  - Photo, crop and tint are per page in `site.json → page_banners`, keyed by URL, with a `"default"`.
+  - `npm run assets` builds, per page, a 2.4:1 strip cut at the page's focus (800/1600px) for ≥768px and the full photo (800/1200px) for phones, as WebP and JPEG, quality stepped down to stay under 200KB. Largest files: 200KB for the plaza aerial and 196KB for the hike.
+  - The image is decorative (`alt=""`) and above the fold, so it is eager with `fetchpriority=high`, not lazy. No parallax.
+- **Tint 0.78, not 0.72.** At 0.72 the 13px gold eyebrow measured 3.9 to 4.2:1 over sky and bright foliage on every page. 0.78 is the lowest opacity that keeps gold at 4.5:1 even over pure white (4.93:1 computed).
+  - Measured with the new `npm run banner-contrast` (text hidden, brightest pixel inside each element's box, 360/768/1280/1440). Worst values over all seven pages:
+    - eyebrow 4.92:1
+    - breadcrumb link 4.92:1
+    - intro 9.73:1
+    - title 9.73:1
+    - /join/ card: label 8.59, status 17.0, notes 10.43
+  - Full table in the run output.
+- **Heights (measured).**
+
+  | Page | 360 | 768 | 1280 | 1440 |
+  |---|---|---|---|---|
+  | /join/ (status card) | 560 | 524 | 391 | 393 |
+  | /join/prepare/ (breadcrumb + intro) | 358 | 319 | 360 | 360 |
+  | /about/ (intro) | 307 | 300 | 360 | 360 |
+  | title-only pages (team, alumni, work-with-us, partners) | 260 | 300 | 360 | 360 |
+
+  - On /join/ the status card stacks under the text below 900px, so the banner grows to fit it.
+  - Text sits bottom-left. Text column max 900px, so "Prepare for your interview" stays on one line from 1280px.
+- **Photos.** All from the repo, none external (`assets/PHOTO-CREDITS.md`). I chose crops with calm areas behind the text:
+  - /join/: lakeside group, sky and treeline
+  - /join/prepare/: EY site visit ceiling
+  - /about/: hike treeline
+  - /team/: campus lawn group, trees and sky
+  - /alumni/: graduates, building facade
+  - /work-with-us/: top of the plaza aerial
+  - /partners/: left/lower trees of the aerial, so no two pages share a desktop crop
+  - Skipped: whiteboard, workshop and Smith entrance photos (legible text or signage) and the old site's "UMD 1/4/8" campus images (UMD marketing photography).
+  - On phones the two aerial crops look alike, because a 4:3 photo in a roughly 1.4:1 banner shows almost the whole frame. That is two pages with the same crop, within the limit, and listed in TODO.
+- **Join status card on the photo.** Surface `rgb(26 26 26 / .94)`, a 1px `rgba(255,255,255,.14)` border and a soft shadow. Text contrast is measured above.
+- **Join SCG sub-menu.** Disclosure pattern: link plus a separate caret button (`aria-expanded`, `aria-controls`, "Show Join SCG menu"), not role=menu. Entries: Overview, Find your seat (`#find-your-seat`), Recruiting timeline (`#timeline`, renamed from `#calendar`), FAQ (`#faq`, new id) and Interview prep. The anchors land exactly under the 72px header (global `scroll-margin-top`).
+  - **Desktop.**
+    - Opens on hover with a 200ms close delay and an invisible bridge, and when keyboard focus enters the item. Esc closes and returns focus to the caret; that refocus does not reopen it.
+    - A click outside closes. Up/Down/Home/End move between entries, and Tab walks link → caret → entries.
+    - A caret click on a panel that hover just opened keeps it open (no open-then-close).
+    - The panel sits at z-index 60 inside the sticky header, so it layers over the banners and is never clipped.
+  - **Mobile.** An accordion with 44px rows; picking a same-page anchor closes the menu.
+  - **Current state.** On /join/, "Join SCG" has `aria-current=page` and Overview is marked. On /join/prepare/, "Join SCG" has `aria-current=true`, styled the same, and Interview prep is marked.
+  - **Spacing.** Unchanged: 27px clear at 1024 (was 39) and 91px at 1280/1440. Header height and actions are unchanged.
+  - **No JS.** The caret is hidden, the list is not shown, and "Join SCG" is a plain link. The footer still lists Join SCG and Interview prep.
+  - The old unused `.nav-group` dropdown script was removed, and ui-check now tests the new sub-menu.
+- **Verified.**
+  - Dropdown test, all passing: hover, pointer into the panel, panel above the banner and in view, no flicker, close delay, caret click, click outside, Tab order, Enter/Space, arrows, Esc with focus return, and a visible 3px focus ring.
+  - Also: current states, the three anchors, header at 1024/1280/1440, touch accordion at 360 and 768, no-JS, and banner seams on all 7 pages at 4 widths (no border, shadow or gap, no horizontal scroll).
+  - ui-check: 24 routes × 4 widths, axe clean. Contrast 40 pairings. banner-contrast OK. check:notes OK.

@@ -1,4 +1,4 @@
-// Site-wide progressive enhancement: mobile menu, accessible tabs (also the step-by-step
+// Site-wide progressive enhancement: mobile menu, the "Join SCG" sub-menu, accessible tabs (also the step-by-step
 // steppers on /about/ and /join/), expandable pillar cards, stat count-up and
 // reveal-on-scroll. Everything works without this file.
 (() => {
@@ -19,32 +19,79 @@
   toggle?.addEventListener("click", () => setMenu(toggle.getAttribute("aria-expanded") !== "true"));
   desktop.addEventListener("change", () => setMenu(false));
 
-  // ---- Dropdown groups ---------------------------------------------------
-  const groups = [...document.querySelectorAll(".nav-group")].map((group) => {
-    const button = group.querySelector(".nav-group__toggle");
-    const list = group.querySelector(".nav-group__menu");
-    const set = (open, focusButton = false) => {
+  // ---- "Join SCG" sub-menu (disclosure pattern, not role=menu) ---------------
+  // "Join SCG" stays a plain link; the caret button next to it toggles the list.
+  // Desktop (≥1024px): opens on hover (200ms close delay) and when keyboard focus enters the
+  // item; Esc closes and returns focus to the caret; a click outside closes; Up/Down move
+  // between entries; Tab walks link → caret → entries. Mobile menu: the caret is an
+  // accordion toggle. Without JS the caret stays hidden and the sub-list is not shown.
+  const hoverDesktop = window.matchMedia("(min-width: 1024px) and (hover: hover)");
+  const subs = [...document.querySelectorAll("[data-nav-sub]")].map((item) => {
+    const button = item.querySelector("[data-nav-sub-toggle]");
+    const list = item.querySelector("[data-nav-sub-list]");
+
+    const entries = () => [...list.querySelectorAll("a")];
+    let closeTimer = 0;
+    let openedByHover = false;
+    let refocusing = false;   // Esc returns focus to the caret; that must not re-open the panel
+    const isOpen = () => button.getAttribute("aria-expanded") === "true";
+    const set = (open, { focusButton = false, hover = false } = {}) => {
+      clearTimeout(closeTimer);
+      openedByHover = open && hover;
       button.setAttribute("aria-expanded", String(open));
-      list.classList.toggle("is-open", open);
-      if (!open && focusButton) button.focus();
+      item.classList.toggle("is-open", open);
+      if (!open && focusButton) { refocusing = true; button.focus(); refocusing = false; }
     };
-    button.addEventListener("click", () => set(button.getAttribute("aria-expanded") !== "true"));
-    // Close the desktop dropdown when focus leaves it.
-    group.addEventListener("focusout", (e) => {
-      if (desktop.matches && !group.contains(e.relatedTarget)) set(false);
+    button.hidden = false;
+    item.classList.add("is-enhanced");
+
+    // A click on the caret of a panel that hover just opened keeps it open (no open-then-close).
+    button.addEventListener("click", () => set(openedByHover ? true : !isOpen()));
+    item.addEventListener("mouseenter", () => { if (hoverDesktop.matches && !isOpen()) set(true, { hover: true }); });
+    item.addEventListener("mouseleave", () => {
+      if (!hoverDesktop.matches) return;
+      clearTimeout(closeTimer);
+      closeTimer = setTimeout(() => { if (!item.contains(document.activeElement)) set(false); }, 200);
     });
-    return { group, button, set };
+    item.addEventListener("focusin", (e) => {
+      if (desktop.matches && !refocusing && e.target.matches(":focus-visible") && !isOpen()) set(true);
+    });
+    item.addEventListener("focusout", (e) => {
+      if (desktop.matches && !item.contains(e.relatedTarget)) set(false);
+    });
+    item.addEventListener("keydown", (e) => {
+      const list_ = entries();
+      const i = list_.indexOf(document.activeElement);
+      if (e.key === "Escape" && isOpen()) {
+        e.stopPropagation();
+        set(false, { focusButton: true });
+      } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        if (!isOpen()) set(true);
+        const n = i < 0 ? (e.key === "ArrowDown" ? 0 : list_.length - 1) : (i + (e.key === "ArrowDown" ? 1 : -1) + list_.length) % list_.length;
+        list_[n].focus();
+      } else if ((e.key === "Home" || e.key === "End") && i >= 0) {
+        e.preventDefault();
+        list_[e.key === "Home" ? 0 : list_.length - 1].focus();
+      }
+    });
+    // Same-page anchors (/join/#faq): close the dropdown and the mobile menu after choosing.
+    list.addEventListener("click", (e) => {
+      if (!e.target.closest("a")) return;
+      set(false);
+      setMenu(false);
+    });
+    return { item, set, isOpen };
   });
+  desktop.addEventListener("change", () => subs.forEach((s) => s.set(false)));
 
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Escape") return;
-    const openGroup = groups.find((g) => g.button.getAttribute("aria-expanded") === "true" && g.group.contains(document.activeElement));
-    if (openGroup) return openGroup.set(false, true);
     if (toggle?.getAttribute("aria-expanded") === "true") setMenu(false, { focusToggle: true });
   });
 
   document.addEventListener("click", (e) => {
-    groups.forEach((g) => { if (desktop.matches && !g.group.contains(e.target)) g.set(false); });
+    subs.forEach((s) => { if (desktop.matches && s.isOpen() && !s.item.contains(e.target)) s.set(false); });
     if (menu?.classList.contains("is-open") && !e.target.closest(".site-header")) setMenu(false);
   });
 

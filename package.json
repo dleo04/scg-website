@@ -19,6 +19,7 @@
     "old-photos": "node scripts/fetch-old-photos.mjs",
     "clean": "node -e \"require('fs').rmSync('_site',{recursive:true,force:true})\"",
     "hero-contrast": "node scripts/hero-contrast.mjs",
+    "banner-contrast": "node scripts/banner-contrast.mjs",
     "dev:notes": "npm run assets && SHOW_PLACEHOLDERS=1 eleventy --serve --port 8080",
     "check:notes": "node scripts/check-notes.mjs"
   },

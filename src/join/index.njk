@@ -13,18 +13,13 @@ bodyClass: page-join
 {%- from "components/ui.njk" import applyCta, tbdBlock with context -%}
 {%- from "components/seat-matcher.njk" import seatMatcher with context -%}
 {%- from "components/stepper.njk" import stepper with context -%}
+{%- from "components/page-banner.njk" import pageBanner with context -%}
 {%- set cta = site.recruiting | ctaState -%}
 {%- set initialStep = 0 -%}
 {%- for s in recruitingSteps %}{% if s.status == "current" %}{% set initialStep = loop.index0 %}{% endif %}{% endfor -%}
 {%- set faqCount = 0 -%}{%- for g in faq %}{% set faqCount = faqCount + g.items.length %}{% endfor -%}
 
-<section class="section page-head join-head" aria-labelledby="join-title">
-  <div class="container join-head__grid">
-    <div>
-      <p class="eyebrow eyebrow--accent">Recruitment</p>
-      <h1 class="page-title" id="join-title">Join SCG</h1>
-      <p class="lede">Take on real client projects with guidance from EY, and build consulting skills from your first semester.</p>
-    </div>
+{% call pageBanner({ id: "join-title", eyebrow: "Recruitment", title: "Join SCG", lede: "Take on real client projects with guidance from EY, and build consulting skills from your first semester." }) %}
     <aside class="status-card" aria-label="Recruiting status">
       <p class="status-card__label"><span class="status-dot{% if site.recruiting.open or cta.kind == 'interest' %} status-dot--live{% endif %}" aria-hidden="true"></span>{{ site.recruiting.banner_label }}</p>
       <p class="status-card__text">{% if site.recruiting.open %}Applications are open.{% else %}{{ site.recruiting.banner_text }}{% endif %}</p>
@@ -34,8 +29,7 @@ bodyClass: page-join
       {%- else %}{{ applyCta("gold") }}{% endif %}
       {%- if site.recruiting.cycle_note %}<p class="status-card__note">{{ site.recruiting.cycle_note }}</p>{% endif %}
     </aside>
-  </div>
-</section>
+{% endcall %}
 
 <section class="section section--paper-2" aria-labelledby="seat-title" id="find-your-seat">
   <div class="container">
@@ -84,7 +78,7 @@ bodyClass: page-join
   </div>
 </section>
 
-<section class="section section--ink" aria-labelledby="calendar-title" id="calendar">
+<section class="section section--ink" aria-labelledby="calendar-title" id="timeline">
   <div class="container">
     <header class="section__head">
       <p class="eyebrow">Recruiting calendar</p>
@@ -107,7 +101,7 @@ bodyClass: page-join
       <p class="join-process__eligibility">SCG recruits new analysts at the start of each fall and spring semester from University of Maryland undergraduates in good academic standing.</p>
       {%- if env.showPlaceholders %}{{ tbdBlock("Eligibility details", "[TBD: confirm the five-semesters-remaining rule before publishing it (faq.json → needs_decision)]") }}{% endif %}
     </div>
-    <div class="faq" data-faq>
+    <div class="faq" id="faq" data-faq>
       <h3 class="faq__title" id="faq-title">Frequently asked questions</h3>
       <div class="faq__search" data-faq-search-wrap hidden>
         <label for="faq-q">Search the FAQ</label>

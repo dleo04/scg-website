@@ -94,6 +94,9 @@ Rules: Gold is **not** used for text on white (fails contrast); use gold on `--i
 - Chips for tags/majors; stat tiles; accordion (native `<details>` is fine) for FAQ; tabs for role tracks; timeline for process.
 - Motion: subtle reveal-on-scroll and hover transitions only; respect `prefers-reduced-motion`.
 
+### Inner-page photo banner (component)
+`components/page-banner.njk`, used by /join/, /join/prepare/, /about/ and every page on `layouts/stub.njk` (team, alumni, work-with-us, partners); not by /projects/, project pages or the Home hero. A full-width photo behind the eyebrow (gold), H1 and intro (white), with the Home hero's flat maroon-black tint at 0.78 opacity (enough for the 13px gold eyebrow to stay ≥ 4.5:1 over a white sky). Text bottom-left in the normal container; min heights 260 / 300 / 360px at 360 / 768 / 1024+ (taller only when content needs it, e.g. the /join/ status card on phones). A side card (the /join/ status card) keeps its dark surface with a 1px `rgba(255,255,255,.14)` border and a soft shadow. Straight bottom edge with no border, shadow or fade. Photo, crop and tint per page in `site.json → page_banners`; images are decorative (`alt=""`), a 2.4:1 strip for ≥768px and the full photo for phones, WebP/JPEG under 200KB, loaded eagerly (above the fold). `npm run banner-contrast` measures every banner text element over its brightest background pixel at 360/768/1280/1440.
+
 ### Logo usage
 Use `assets/scg-logo.png` on light backgrounds as supplied. On dark sections, place it on a white or `--paper-2` rounded plate rather than recoloring. Provide a clear-space equal to the height of the "S" on all sides. Do not alter. (If a one-color or reversed logo is later supplied, swap it in.)
 

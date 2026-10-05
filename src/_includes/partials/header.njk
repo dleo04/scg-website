@@ -8,6 +8,15 @@
   { label: "Alumni", url: "/alumni/" },
   { label: "Work With Us", url: "/work-with-us/" }
 ] -%}
+{#- Sub-pages under "Join SCG" (disclosure dropdown on desktop, accordion in the mobile menu).
+    The same destinations are linked from /join/ itself and the footer, so nothing depends on JS. -#}
+{%- set joinSub = [
+  { label: "Overview", url: "/join/" },
+  { label: "Find your seat", url: "/join/#find-your-seat" },
+  { label: "Recruiting timeline", url: "/join/#timeline" },
+  { label: "FAQ", url: "/join/#faq" },
+  { label: "Interview prep", url: "/join/prepare/" }
+] -%}
 {#- "Join SCG" goes straight to the application while it is open, otherwise to /join/. -#}
 {%- set joinHref = site.recruiting.application_url if (site.recruiting.open and site.recruiting.application_url) else "/join/" -%}
 <header class="site-header" data-header>
@@ -22,7 +31,26 @@
       </button>
       <ul id="nav-menu" class="nav-menu">
         {%- for item in nav %}
-        <li><a class="nav-link" href="{{ item.url }}" {% if page.url.startsWith(item.url) %}aria-current="page"{% endif %}>{{ item.label }}</a></li>
+        {%- set inSection = page.url.startsWith(item.url) %}
+        {#- aria-current: "page" on the page itself, "true" on a parent section (e.g. Join SCG on /join/prepare/). -#}
+        {%- set current = ("page" if page.url == item.url else "true") if inSection else "" %}
+        {%- if item.url == "/join/" %}
+        <li class="nav-item nav-item--sub" data-nav-sub>
+          <div class="nav-item__row">
+            <a class="nav-link" href="{{ item.url }}"{% if current %} aria-current="{{ current }}"{% endif %}>{{ item.label }}</a>
+            <button class="nav-sub-toggle" type="button" aria-expanded="false" aria-controls="nav-sub-join" aria-label="Show Join SCG menu" data-nav-sub-toggle hidden>
+              <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2.5 4.5L6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <ul class="nav-sub" id="nav-sub-join" data-nav-sub-list>
+            {%- for sub in joinSub %}
+            <li><a class="nav-sub__link" href="{{ sub.url }}"{% if page.url == sub.url %} aria-current="page"{% endif %}>{{ sub.label }}</a></li>
+            {%- endfor %}
+          </ul>
+        </li>
+        {%- else %}
+        <li class="nav-item"><a class="nav-link" href="{{ item.url }}"{% if current %} aria-current="{{ current }}"{% endif %}>{{ item.label }}</a></li>
+        {%- endif %}
         {%- endfor %}
         <li class="nav-menu__social">{% include "partials/social-links.njk" %}</li>
       </ul>

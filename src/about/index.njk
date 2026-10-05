@@ -10,6 +10,7 @@ bodyClass: page-about
 {%- from "components/stepper.njk" import stepper with context -%}
 {%- from "components/photo-wall.njk" import photoWall with context -%}
 {%- from "components/project-dialog.njk" import projectDialog with context -%}
+{%- from "components/page-banner.njk" import pageBanner with context -%}
 {%- set ey = site.partners | findBy("name", "EY") -%}
 {%- set snider = site.partners | findBy("role", "Affiliation and primary funder") -%}
 {%- set csvc = site.partners | findBy("name", "Center for Social Value Creation") -%}
@@ -20,13 +21,7 @@ bodyClass: page-about
 {%- set dialogProjects = [] -%}
 {%- for s in processSteps %}{% if s.example and s.example.project %}{% set dialogProjects = (dialogProjects.push(s.example.project), dialogProjects) %}{% endif %}{% endfor -%}
 
-<section class="section page-head" aria-labelledby="about-title">
-  <div class="container">
-    <p class="eyebrow eyebrow--accent">Who we are</p>
-    <h1 class="page-title" id="about-title">About SCG</h1>
-    <p class="lede">{{ site.mission }}</p>
-  </div>
-</section>
+{{ pageBanner({ id: "about-title", eyebrow: "Who we are", title: "About SCG", lede: site.mission }) }}
 
 {# Story: built only from site.json (established, partners, facts, stats) #}
 <section class="section section--paper-2 story" aria-labelledby="story-title">
