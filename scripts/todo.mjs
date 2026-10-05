@@ -70,6 +70,18 @@ for (const p of projects) {
   data.push(`projects.json → ${p.id}: ${parts.join(". ")}.`);
 }
 data.push("Logos: confirm assets/logos/windterpineslogo.png is Wind Terpines' official logo (the brief said none was supplied yet; it is shown because the file is in the folder). Ask Smith Equity Research for a transparent or flat-background logo (the current file's grey gradient shows as a lighter box on its tile). Optional: a flat-background MPDS logo (faint shell-texture fragments around the cropped artwork) and a larger SpeechPundit file (451x172 after trimming; slightly soft on retina in the dialog/page banner).");
+// Stage 3A: About / Join / Prepare.
+data.push(`site.json → member_stats: ${(site.member_stats || []).map((m) => `${m.value} ${m.label}`).join(", ")} come from the old About page; confirm the figures are current and set member_stats_as_of.`);
+data.push("site.json → recruiting: interest_form_url and the status ('Spring 2027 recruitment · Interest form is open', 'Fall 2026 applications are closed') come from the old Recruitment page; confirm the form is the current one. links.resume_guide is a Google Slides link: confirm it is shared publicly.");
+(site.timeline?.steps || []).forEach((st) => { if (!st.description) data.push(`site.json → timeline: "${st.name}" has no description (none is shown); add what applicants do at this step.`); });
+data.push("site.json → timeline: confirm the five steps (Interest form, Application, Interviews, Decision, Onboarding), mark any optional ones (optional: true), and add dates for the 'Add to calendar' downloads.");
+data.push("/join/ interview process: number of rounds, format and length of each interview (not shown until supplied).");
+const processFile = readJson("process.json");
+for (const st of processFile.steps || []) if (st.todo) data.push(`process.json → "${st.name}": ${st.todo}${st.text ? "" : " (step hidden on the live site until text is added)"}.`);
+data.push("Photos (data/photos.json): 14 group, event and activity photos imported from the old site; confirm SCG may keep using them and that the captions are right (for example 'EY site visit', 'Semester hike').");
+data.push("Downloads (site.json → downloads): the three SCG case guides credit their student authors by name and photo on page 1, as originally published on the old site; confirm the authors are happy for them to stay public (or supply versions without photos). The guided case also links to sniderconsultinggroup.com/case-prep, which the new site does not have.");
+data.push("assets/logos/snider-center-smith.jpg (About partnership band) is the 576x178 lockup from the old site; a larger or vector version from the Snider Center would be sharper.");
+data.push("faq.json → 'What makes SCG different…' is from the old Recruitment page with the 2021 Vault ranking removed; confirm the wording.");
 data.push("Semester labels: confirm 'SCG Internal Project' (Spring 2025 + Fall 2025) and 'Business Beyond Borders' (Fall 2025) are listed in the right semesters.");
 for (const g of faq.groups) for (const item of g.items) {
   if (item.needs_decision) data.push(`faq.json → "${item.q}" NEEDS DECISION (hidden in production): ${item.decision}`);

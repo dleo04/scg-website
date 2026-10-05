@@ -119,6 +119,34 @@ async function responsive(key, widths) {
 await responsive("hero", [640, 1024, 1600, 2000]);
 await responsive("community", [480, 800, 1200]);
 
+// SCG photos (data/photos.json → assets/photos/<id>.jpg, made by npm run old-photos):
+// WebP + JPEG thumbnails at 480 and 960px wide for grids; the 1600px JPEG itself is the
+// full-size image (lightbox, no-JS link). Never upscaled.
+manifest.photos = {};
+const photoList = fs.existsSync(path.join(ROOT, "data/photos.json")) ? readJson("photos.json").photos || [] : [];
+fs.mkdirSync(path.join(GEN_DIR, "photos"), { recursive: true });
+for (const photo of photoList) {
+  const src = path.join(ROOT, "assets/photos", `${photo.id}.jpg`);
+  if (!fs.existsSync(src)) continue;
+  const meta = await sharp(src).metadata();
+  const variants = [];
+  for (const w of [480, 960].filter((w) => w < meta.width)) {
+    for (const fmt of ["webp", "jpg"]) {
+      const name = `${photo.id}-${w}.${fmt}`;
+      const img = sharp(src).resize({ width: w });
+      await (fmt === "webp" ? img.webp({ quality: 72 }) : img.jpeg({ quality: 76, mozjpeg: true })).toFile(path.join(GEN_DIR, "photos", name));
+      variants.push({ w, fmt, src: `/assets/generated/photos/${name}` });
+    }
+  }
+  const full = `/assets/photos/${photo.id}.jpg`;
+  manifest.photos[photo.id] = {
+    full, width: meta.width, height: meta.height,
+    src: variants.filter((v) => v.fmt === "jpg").at(-1)?.src || full,
+    webpSrcset: variants.filter((v) => v.fmt === "webp").map((v) => `${v.src} ${v.w}w`).join(", "),
+    jpgSrcset: [...variants.filter((v) => v.fmt === "jpg").map((v) => `${v.src} ${v.w}w`), `${full} ${meta.width}w`].join(", "),
+  };
+}
+
 // Employer logos (downloaded once by `npm run logos`): small WebP + PNG copies,
 // resized proportionally to at most 360x120 (3x the largest display size). No recoloring.
 const logoManifest = path.join(ROOT, "assets/logos/logos.json");

@@ -1,5 +1,6 @@
-// Site-wide progressive enhancement: mobile menu, "Who We Are" dropdown,
-// accessible tabs and reveal-on-scroll. Everything works without this file.
+// Site-wide progressive enhancement: mobile menu, accessible tabs (also the step-by-step
+// steppers on /about/ and /join/), expandable pillar cards, stat count-up and
+// reveal-on-scroll. Everything works without this file.
 (() => {
   "use strict";
 
@@ -63,13 +64,25 @@
       panels[i].tabIndex = 0;
     });
 
+    const controls = root.querySelector("[data-tab-controls]");
+    const prev = root.querySelector("[data-tab-prev]");
+    const next = root.querySelector("[data-tab-next]");
+    // Steppers mark their panels up as a list (role=list/listitem) for the no-JS view; once
+    // they become tab panels the list roles are removed.
+    const panelList = panels[0].parentElement;
+    if (panelList.getAttribute("role") === "list") panelList.removeAttribute("role");
+
+    let currentIndex = 0;
     const select = (index, focus = false) => {
+      currentIndex = index;
       tabs.forEach((tab, i) => {
         const on = i === index;
         tab.setAttribute("aria-selected", String(on));
         tab.tabIndex = on ? 0 : -1;
         panels[i].hidden = !on;
       });
+      if (prev) prev.disabled = index === 0;
+      if (next) next.disabled = index === tabs.length - 1;
       if (focus) tabs[index].focus();
     };
 
@@ -81,14 +94,47 @@
       const current = tabs.indexOf(document.activeElement);
       if (current < 0) return;
       const last = tabs.length - 1;
-      const next = { ArrowRight: current + 1, ArrowDown: current + 1, ArrowLeft: current - 1, ArrowUp: current - 1, Home: 0, End: last }[e.key];
-      if (next === undefined) return;
+      const n = { ArrowRight: current + 1, ArrowDown: current + 1, ArrowLeft: current - 1, ArrowUp: current - 1, Home: 0, End: last }[e.key];
+      if (n === undefined) return;
       e.preventDefault();
-      select((next + tabs.length) % tabs.length, true);
+      select((n + tabs.length) % tabs.length, true);
     });
+    // Previous / Next buttons (steppers). Focus stays on the button that was pressed.
+    prev?.addEventListener("click", () => select(Math.max(0, currentIndex - 1)));
+    next?.addEventListener("click", () => select(Math.min(tabs.length - 1, currentIndex + 1)));
+    if (controls) controls.hidden = false;
+
+    // Horizontal swipe on touch screens moves one step (vertical scrolling is untouched).
+    if (root.hasAttribute("data-swipe")) {
+      let x0 = null, y0 = null;
+      root.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+      root.addEventListener("touchend", (e) => {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+        x0 = null;
+        if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+        select(Math.min(tabs.length - 1, Math.max(0, currentIndex + (dx < 0 ? 1 : -1))));
+      }, { passive: true });
+    }
 
     root.classList.add("is-tabs");
-    select(0);
+    select(Math.max(0, tabs.findIndex((t) => t.hasAttribute("data-tab-initial"))));
+  });
+
+  // ---- Expandable cards (About pillars): button toggles the details --------
+  // Without JS the details are simply visible. Hover also reveals them on pointer devices (CSS).
+  document.querySelectorAll("[data-expand]").forEach((card) => {
+    const button = card.querySelector("[data-expand-toggle]");
+    const label = button?.querySelector("[data-expand-label]");
+    if (!button) return;
+    card.classList.add("is-enhanced");
+    button.hidden = false;
+    button.addEventListener("click", () => {
+      const open = button.getAttribute("aria-expanded") !== "true";
+      button.setAttribute("aria-expanded", String(open));
+      card.classList.toggle("is-open", open);
+      if (label) label.textContent = open ? "Show less" : "Read more";
+    });
   });
 
   // ---- Testimonial carousel: one quote at a time, dot buttons, no autoplay --
@@ -119,9 +165,9 @@
   // Final values are already in the HTML. With motion allowed, the aria-hidden digits are
   // reset to 0 and count up (easeOutCubic, 1600ms, staggered 120ms) the first time the strip
   // is ≥ 40% visible; once per page load. Screen readers read the static visually-hidden copy.
-  const countStrip = document.querySelector("[data-countup]");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (countStrip && !reduceMotion && "IntersectionObserver" in window && "requestAnimationFrame" in window) {
+  document.querySelectorAll("[data-countup]").forEach((countStrip) => {
+  if (!reduceMotion && "IntersectionObserver" in window && "requestAnimationFrame" in window) {
     const nums = [...countStrip.querySelectorAll("[data-count-to]")];
     const fmt = new Intl.NumberFormat("en-US");
     const DURATION = 1600, STAGGER = 120;
@@ -159,6 +205,7 @@
     }, { threshold: 0.4 });
     io.observe(countStrip);
   }
+  });
 
   // ---- Reveal on scroll (skipped under reduced motion) --------------------
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

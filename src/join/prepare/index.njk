@@ -1,7 +1,130 @@
 ---
-layout: layouts/stub.njk
+layout: layouts/base.njk
 title: "Prepare for your interview"
-eyebrow: "Recruitment"
-stage: 3
-description: "Sample interview questions and practice cases for SCG applicants."
+description: "Practice for an SCG interview: sample behavioral questions with a timer, the STAR method, and SCG's case framework guide and practice cases to download."
+bodyClass: page-prepare
 ---
+{#- Prepare (SPEC 5.5). The three sample questions are the old Interview Resources page's;
+    the hints are general interview advice, not facts about SCG. Downloads come from
+    site.json → downloads and only render for files that exist in assets/downloads/. -#}
+{%- from "components/ui.njk" import tbdBlock with context -%}
+{%- set questions = [
+  { q: "Tell me about yourself.",
+    hints: ["Present: who you are now, your major and what you are working on.", "Past: one or two experiences that explain how you got here.", "Future: why SCG, and what you want to learn next.", "Keep it to about a minute and a half."],
+    link: null },
+  { q: "Can you tell me about a time when you were on a team and faced conflict or disagreement on a project? How did you approach resolving the issue, and what was the outcome?",
+    hints: ["Use STAR: Situation, Task, Action, Result.", "Spend most of your time on your own actions, and say “I”, not only “we”.", "Show that you listened and understood the other view.", "End with the outcome and what you would do the same or differently."],
+    link: null },
+  { q: "Which client that SCG has worked with in the past interests you the most? Is there anything you are curious to learn about that project?",
+    hints: ["Pick one project and name the client's challenge in a sentence.", "Explain why it interests you: a skill you have, or one you want to build.", "Ask a real question about it, such as how the team approached one deliverable."],
+    link: { label: "Browse projects to answer this one", url: "/projects/" } }
+] -%}
+
+<section class="section page-head" aria-labelledby="prep-title">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/join/">Join SCG</a></li><li aria-current="page">Prepare</li></ol></nav>
+    <p class="eyebrow eyebrow--accent">Recruitment</p>
+    <h1 class="page-title" id="prep-title">Prepare for your interview</h1>
+    <p class="lede">Practice the sample questions out loud, time yourself, and read SCG's own case guides.</p>
+  </div>
+</section>
+
+<section class="section section--paper-2" aria-labelledby="practice-title">
+  <div class="container practice">
+    <header class="section__head">
+      <p class="eyebrow">Practice room</p>
+      <h2 class="section__title" id="practice-title">Sample behavioral questions</h2>
+      <p class="section__lede">Read a question, answer it out loud, then reveal a structure to check your answer.</p>
+    </header>
+
+    <div class="practice__layout">
+      <div class="deck" data-deck>
+        <div class="deck__bar" data-deck-bar hidden>
+          <p class="deck__pos" data-deck-pos aria-live="polite"></p>
+          <button class="btn btn--sm btn--secondary" type="button" data-deck-shuffle>Shuffle</button>
+        </div>
+        <ol class="deck__cards">
+          {%- for item in questions %}
+          <li class="qcard" data-card id="q-{{ loop.index }}">
+            <p class="qcard__num">Question {{ loop.index }}</p>
+            <h3 class="qcard__q">{{ item.q }}</h3>
+            <div class="qcard__hints" id="q-{{ loop.index }}-hints" data-card-hints>
+              <h4 class="qcard__hints-title">A structure that works</h4>
+              <ul class="checklist">{% for h in item.hints %}<li>{{ h }}</li>{% endfor %}</ul>
+            </div>
+            <div class="qcard__actions">
+              <button class="btn btn--sm btn--primary" type="button" data-card-reveal aria-expanded="false" aria-controls="q-{{ loop.index }}-hints" hidden>Show answer structure</button>
+              {%- if item.link %}<a class="link-arrow" href="{{ item.link.url }}">{{ item.link.label }} <span aria-hidden="true">→</span></a>{% endif %}
+            </div>
+          </li>
+          {%- endfor %}
+        </ol>
+        <div class="deck__nav" data-deck-nav hidden>
+          <button class="icon-btn" type="button" data-deck-prev aria-label="Previous question"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="icon-btn" type="button" data-deck-next aria-label="Next question"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+
+      <aside class="timer" data-timer hidden aria-labelledby="timer-title">
+        <h3 class="timer__title" id="timer-title">Practice timer</h3>
+        <p class="timer__hint">Two minutes per answer. No sound.</p>
+        <div class="timer__dial" style="--progress: 0">
+          <p class="timer__time" data-timer-time aria-hidden="true">2:00</p>
+        </div>
+        <p class="visually-hidden" role="status" data-timer-status></p>
+        <div class="btn-row btn-row--center">
+          <button class="btn btn--sm btn--primary" type="button" data-timer-toggle>Start</button>
+          <button class="btn btn--sm btn--secondary" type="button" data-timer-reset>Reset</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="star-title">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">A simple framework</p>
+      <h2 class="section__title" id="star-title">The STAR method</h2>
+      <p class="section__lede">For “tell me about a time when…” questions, walk through four parts in order.</p>
+    </header>
+    <ol class="star">
+      <li class="star__item"><span class="star__letter" aria-hidden="true">S</span><h3 class="star__name">Situation</h3><p>Set the scene in one or two sentences: where you were and what was going on.</p></li>
+      <li class="star__item"><span class="star__letter" aria-hidden="true">T</span><h3 class="star__name">Task</h3><p>Your goal or responsibility in that situation.</p></li>
+      <li class="star__item"><span class="star__letter" aria-hidden="true">A</span><h3 class="star__name">Action</h3><p>What you did, step by step. This should be the longest part.</p></li>
+      <li class="star__item"><span class="star__letter" aria-hidden="true">R</span><h3 class="star__name">Result</h3><p>What happened, with a number if you have one, and what you learned.</p></li>
+    </ol>
+  </div>
+</section>
+
+{%- if downloads.length %}
+<section class="section section--paper-2" aria-labelledby="downloads-title">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Case interview prep</p>
+      <h2 class="section__title" id="downloads-title">Guides and practice cases</h2>
+      <p class="section__lede">SCG's own guides and practice cases, plus a past case competition prompt. Free to download.</p>
+    </header>
+    <ul class="resource-grid">
+      {%- for d in downloads %}
+      <li><a class="resource-card resource-card--download" href="{{ d.url }}" download>
+        <span class="resource-card__kind">{{ d.kind }}</span>
+        <span class="resource-card__title">{{ d.title }}</span>
+        <span class="resource-card__text">{{ d.description }}</span>
+        <span class="resource-card__meta">PDF, {{ d.size }}<span class="visually-hidden">, download</span></span>
+      </a></li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+{%- elif env.showPlaceholders %}
+<section class="section section--paper-2"><div class="container">{{ tbdBlock("Case guides", "[TBD: case framework PDF, practice cases and SICC prompt (site.json → downloads)]") }}</div></section>
+{%- endif %}
+
+<section class="section section--tight cta-strip" aria-labelledby="prep-cta-title">
+  <div class="container cta-strip__inner">
+    <h2 class="cta-strip__title" id="prep-cta-title">Ready when you are</h2>
+    <a class="btn btn--primary" href="/join/">Back to Join SCG</a>
+  </div>
+</section>
+<script src="{{ '/js/practice.js' | versioned }}" defer></script>

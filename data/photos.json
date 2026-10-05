@@ -1,0 +1,135 @@
+{
+  "_readme": "Real SCG photos imported from the old site (npm run old-photos; see scripts/fetch-old-photos.mjs). 'source' is the old site's file name; the optimized copy is assets/photos/<id>.jpg (max 1600px wide, about 250KB or less). 'alt' describes what is visible; 'caption' is the short lightbox caption. 'pages' lists where the photo is used. Group, event and activity photos only: individual portraits are never imported here.",
+  "photos": [
+    {
+      "id": "group-smith-entrance",
+      "source": "IMG_20260905171142238.jpg",
+      "alt": "About forty SCG members in business attire standing together in front of the Robert H. Smith School of Business entrance.",
+      "caption": "SCG members at the Robert H. Smith School of Business",
+      "pages": [
+        "about"
+      ]
+    },
+    {
+      "id": "group-lakeside",
+      "source": "IMG_20260905173612267.jpg",
+      "alt": "SCG members in suits posing together on a lakeside boardwalk, with autumn trees across the water.",
+      "caption": "Members on a lakeside boardwalk in the fall",
+      "pages": [
+        "about"
+      ]
+    },
+    {
+      "id": "ey-site-visit",
+      "source": "EY Site Visit.jpg",
+      "alt": "SCG members in business attire seated along a long conference table in a bright office during a site visit to EY.",
+      "caption": "EY site visit",
+      "pages": [
+        "about",
+        "join"
+      ]
+    },
+    {
+      "id": "hike",
+      "source": "Hike.jpg",
+      "alt": "A group of SCG members in casual clothes standing on large rocks above a river on a sunny autumn hike.",
+      "caption": "Semester hike",
+      "pages": [
+        "about",
+        "join"
+      ]
+    },
+    {
+      "id": "workshop-data",
+      "source": "IMG_7157.jpeg",
+      "alt": "Members in business attire with laptops around a conference table while a slide titled Data Collection is shown on a screen.",
+      "caption": "A workshop in progress",
+      "pages": [
+        "about",
+        "join"
+      ]
+    },
+    {
+      "id": "painting-social",
+      "source": "IMG_6915.jpg",
+      "alt": "Members in aprons painting small canvases together at a long, paint-spattered art studio table.",
+      "caption": "Painting social",
+      "pages": [
+        "about",
+        "join"
+      ]
+    },
+    {
+      "id": "group-steps-spring",
+      "source": "4.18.25- SCGPhotos-2-4945cd4.jpg",
+      "alt": "SCG members in business attire gathered on the front steps of the Robert H. Smith School of Business.",
+      "caption": "SCG members on the Smith School steps",
+      "pages": [
+        "about"
+      ]
+    },
+    {
+      "id": "whiteboard",
+      "source": "IMG_5159.jpeg",
+      "alt": "Three members writing ideas on a large whiteboard in a meeting room.",
+      "caption": "Working through ideas on the whiteboard",
+      "pages": [
+        "about"
+      ]
+    },
+    {
+      "id": "graduates",
+      "source": "DSC_6568.jpg",
+      "alt": "Graduating SCG members in white with red SCG stoles on the steps of a campus building.",
+      "caption": "Graduating members in their SCG stoles",
+      "pages": [
+        "about"
+      ]
+    },
+    {
+      "id": "river-social",
+      "source": "IMG-9256.jpg",
+      "alt": "Members in casual clothes gathered by a river in spring, some sitting on tree stumps.",
+      "caption": "An afternoon outdoors",
+      "pages": [
+        "about"
+      ]
+    },
+    {
+      "id": "group-office",
+      "source": "IMG-1013.jpg",
+      "alt": "A large group of SCG members in business attire with name tags in an open-plan office.",
+      "caption": "Members on an office visit",
+      "pages": [
+        "about"
+      ]
+    },
+    {
+      "id": "painting-trio",
+      "source": "IMG_6925.jpg",
+      "alt": "Three members in aprons smiling at the camera while painting at a social.",
+      "caption": "Painting social",
+      "pages": [
+        "about"
+      ]
+    },
+    {
+      "id": "group-campus-lawn",
+      "source": "SCG Team Photo.jpg",
+      "alt": "SCG members in suits standing in two rows on a campus lawn in warm evening light.",
+      "caption": "SCG members on campus",
+      "pages": [
+        "about"
+      ]
+    },
+    {
+      "id": "group-hallway",
+      "source": "IMG_8345.jpg",
+      "alt": "SCG members in business attire lined up in a wide building hallway under a skylight.",
+      "caption": "SCG members together indoors",
+      "pages": [
+        "about"
+      ]
+    }
+  ]
+}

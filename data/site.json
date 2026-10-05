@@ -11,10 +11,12 @@
     "open": false,
     "banner_label": "Spring 2027 recruitment",
     "banner_text": "Interest form is open.",
-    "interest_form_url": null,
+    "interest_form_url": "https://docs.google.com/forms/d/e/1FAIpQLSdEQ_1mGylGkGav4ZhSExJhjiTKtnAeishbTvRN9cM2xY59Rw/viewform",
     "application_url": null,
     "closed_text": "Fall 2026 applications are closed.",
-    "note": "Set 'open' to true and fill the URLs when the cycle is live. When false, the site shows 'closed_text' and the interest form link if present."
+    "note": "Set 'open' to true and fill application_url when the cycle is live. While false, /join/ shows banner_label + banner_text, closed_text and the interest form button. 'current_step' must match a timeline step name; that step is highlighted on /join/. Source for the URLs and status: old Recruitment page (captured 2026-10).",
+    "current_step": "Interest form",
+    "cycle_note": "SCG recruits new analysts at the start of every fall and spring semester."
   },
   "hero": {
     "_readme": "Home hero copy. 'title' must fit on one line at every width (keep it short); 'subhead' is one line from 1024px. The full name stays in the page title, meta description, Open Graph and JSON-LD.",
@@ -32,33 +34,87 @@
   },
   "member_employers": {
     "_readme": "Shown on the home page under 'Our members work at…'. Source: the old homepage's 'Our Members Work At…' logo row. Text only until logo files are supplied; add 'logo' paths later if wanted.",
-    "names": ["EY", "Deloitte", "Capital One", "KPMG", "Bain & Company", "Boston Consulting Group", "Booz Allen Hamilton", "Johnson & Johnson", "JPMorgan Chase", "Strategy&", "Morgan Stanley", "Accenture"]
+    "names": [
+      "EY",
+      "Deloitte",
+      "Capital One",
+      "KPMG",
+      "Bain & Company",
+      "Boston Consulting Group",
+      "Booz Allen Hamilton",
+      "Johnson & Johnson",
+      "JPMorgan Chase",
+      "Strategy&",
+      "Morgan Stanley",
+      "Accenture"
+    ]
   },
   "forms": {
     "client_request_endpoint": null
   },
   "timeline": {
-    "_readme": "Recruitment timeline steps. Dates are unknown; render 'Dates TBD' until filled. Step names are suggestions modeled on a clear step-by-step pattern; officers must confirm which steps actually exist.",
+    "_readme": "Recruiting calendar on /join/ (stepper). Each step: name, optional (true shows an 'Optional' pill), description (null = no text), and optional dates. 'date' (YYYY-MM-DD) makes the step show its date and an 'Add to calendar' (.ics) download; add 'time' (24h 'HH:MM', local Eastern time), 'duration_minutes' and 'location' for a timed event. Unknown dates stay null: nothing is shown for them (no placeholder text). recruiting.current_step picks the highlighted step.",
     "steps": [
-      { "name": "Interest form", "date": null, "optional": false, "description": "Tell us who you are. Takes five minutes." },
-      { "name": "Info session", "date": null, "optional": true, "description": "[TBD]" },
-      { "name": "Application deadline", "date": null, "optional": false, "description": "[TBD: what to submit]" },
-      { "name": "Interviews", "date": null, "optional": false, "description": "[TBD: rounds, format, length]" },
-      { "name": "Decisions", "date": null, "optional": false, "description": "[TBD]" }
+      {
+        "name": "Interest form",
+        "optional": false,
+        "date": null,
+        "description": "Fill out the interest form to hear when the next application opens."
+      },
+      {
+        "name": "Application",
+        "optional": false,
+        "date": null,
+        "description": null
+      },
+      {
+        "name": "Interviews",
+        "optional": false,
+        "date": null,
+        "description": "Prepare with SCG's sample behavioral questions, case framework guide and practice cases."
+      },
+      {
+        "name": "Decision",
+        "optional": false,
+        "date": null,
+        "description": null
+      },
+      {
+        "name": "Onboarding",
+        "optional": false,
+        "date": null,
+        "description": "New analysts join faculty- and EY-led workshops and complete a benchmarking analysis for the rest of the semester, then take on client projects the following term."
+      }
     ]
   },
   "links": {
     "instagram": "https://www.instagram.com/scgumd/",
     "linkedin": "https://www.linkedin.com/company/sniderconsultinggroup",
     "snider_center": "https://www.rhsmith.umd.edu/centers/snider-center/programs-curricula/snider-consulting-group",
-    "resume_guide": null,
+    "resume_guide": "https://docs.google.com/presentation/d/1DiF_Ao0D3uHiXuraPdyiig2I0MsyImVZXG_pZByCAMM/edit",
     "contact_email": null
   },
   "press": [
-    { "label": "Smith School News", "blurb": "Read what the Smith School says about SCG.", "url": "https://www.rhsmith.umd.edu/news/applying-business-acumen-help-student-groups-thrive" },
-    { "label": "The Diamondback", "blurb": "Read about SCG in UMD's student newspaper.", "url": "https://dbknews.com/2021/04/01/umd-school-of-business-snider-consulting-group-student-clubs-organizations/" },
-    { "label": "Ed Snider Center", "blurb": "Learn about SCG and its benefactor.", "url": "https://www.rhsmith.umd.edu/centers/snider-center/programs-curricula/snider-consulting-group" },
-    { "label": "Smith Clubs", "blurb": "Learn about other Smith organizations.", "url": "https://www.rhsmith.umd.edu/programs/undergraduate/community/clubs-and-organizations" }
+    {
+      "label": "Smith School News",
+      "blurb": "Read what the Smith School says about SCG.",
+      "url": "https://www.rhsmith.umd.edu/news/applying-business-acumen-help-student-groups-thrive"
+    },
+    {
+      "label": "The Diamondback",
+      "blurb": "Read about SCG in UMD's student newspaper.",
+      "url": "https://dbknews.com/2021/04/01/umd-school-of-business-snider-consulting-group-student-clubs-organizations/"
+    },
+    {
+      "label": "Ed Snider Center",
+      "blurb": "Learn about SCG and its benefactor.",
+      "url": "https://www.rhsmith.umd.edu/centers/snider-center/programs-curricula/snider-consulting-group"
+    },
+    {
+      "label": "Smith Clubs",
+      "blurb": "Learn about other Smith organizations.",
+      "url": "https://www.rhsmith.umd.edu/programs/undergraduate/community/clubs-and-organizations"
+    }
   ],
   "partners": [
     {
@@ -84,21 +140,175 @@
       "name": "Ed Snider Center for Enterprise and Markets",
       "role": "Affiliation and primary funder",
       "blurb": "SCG operates in direct affiliation with the Ed Snider Center and is funded by its generous support and by alumni.",
-      "url": "https://www.rhsmith.umd.edu/centers/snider-center/programs-curricula/snider-consulting-group"
+      "url": "https://www.rhsmith.umd.edu/centers/snider-center/programs-curricula/snider-consulting-group",
+      "band": {
+        "_readme": "Logo for the /about/ partnership band: the University of Maryland / Robert H. Smith School / Ed Snider Center lockup from the old site, unaltered (full color on white, so it sits on a white plate on dark backgrounds).",
+        "logo": "assets/logos/snider-center-smith.jpg",
+        "logo_alt": "Robert H. Smith School of Business, Ed Snider Center for Enterprise and Markets",
+        "url": "https://www.rhsmith.umd.edu/centers/snider-center/programs-curricula/snider-consulting-group",
+        "on_plate": true
+      }
     }
   ],
   "stats_readme": "Home page stat strip: every verified entry is shown (max 4), in this order. Figures supplied by SCG leadership on 2026-10-03; update them here when they change.",
   "stats": [
-    { "label": "Alumni", "value": "50+", "verified": true },
-    { "label": "Client projects", "value": "40+", "verified": true },
-    { "label": "Placements each year", "value": "15+", "verified": true }
+    {
+      "label": "Alumni",
+      "value": "50+",
+      "verified": true
+    },
+    {
+      "label": "Client projects",
+      "value": "40+",
+      "verified": true
+    },
+    {
+      "label": "Placements each year",
+      "value": "15+",
+      "verified": true
+    }
   ],
   "facts_readme": "Other verified facts, kept for /about/ and /join/ (not shown on the home stat strip).",
   "facts": [
-    { "label": "Founded", "value": "2020", "verified": true },
-    { "label": "Cost to join", "value": "Free", "verified": true },
-    { "label": "EY partnership", "value": "4+ years", "verified": true },
-    { "label": "Majors represented", "value": "[TBD]", "verified": false }
+    {
+      "label": "Founded",
+      "value": "2020",
+      "verified": true
+    },
+    {
+      "label": "Cost to join",
+      "value": "Free",
+      "verified": true
+    },
+    {
+      "label": "EY partnership",
+      "value": "4+ years",
+      "verified": true
+    },
+    {
+      "label": "Majors represented",
+      "value": "[TBD]",
+      "verified": false
+    }
   ],
-  "analytics": { "enabled": false, "ga_measurement_id": "G-PRGQGFM60M", "note": "This ID is from the old site. Keep only if officers still own it. If enabled, load only after the visitor consents." }
+  "analytics": {
+    "enabled": false,
+    "ga_measurement_id": "G-PRGQGFM60M",
+    "note": "This ID is from the old site. Keep only if officers still own it. If enabled, load only after the visitor consents."
+  },
+  "member_stats_readme": "About page 'Member statistics' (count-up). Source: the old About page (captured 2026-10). Officers: confirm the figures are current and update 'as_of'.",
+  "member_stats": [
+    {
+      "label": "Graduation speakers",
+      "value": "2",
+      "verified": true
+    },
+    {
+      "label": "ODK members",
+      "label_abbr": {
+        "ODK": "Omicron Delta Kappa"
+      },
+      "value": "7",
+      "verified": true
+    },
+    {
+      "label": "QUEST Honors Program members",
+      "value": "13",
+      "verified": true
+    },
+    {
+      "label": "Teaching assistants",
+      "value": "9",
+      "verified": true
+    },
+    {
+      "label": "Club presidents",
+      "value": "4",
+      "verified": true
+    },
+    {
+      "label": "Club vice presidents",
+      "value": "11",
+      "verified": true
+    }
+  ],
+  "member_stats_as_of": null,
+  "mission": "SCG helps organizations achieve their vision of success through sustainable strategies, research, management and process improvement.",
+  "pillars_readme": "The three pillars on /about/, tightened from the old About page.",
+  "pillars": [
+    {
+      "name": "Commitment to Excellence in Service",
+      "summary": "Client-focused work, executed well.",
+      "text": "Every engagement starts from the client's specific needs and is delivered to a high standard. We aim for long-term relationships by consistently meeting expectations and supporting clients after the work is handed over."
+    },
+    {
+      "name": "Upholding Professionalism",
+      "summary": "Integrity, expertise and accountability.",
+      "text": "We hold every client interaction to high standards of integrity, expertise and accountability, and build a culture of continuous learning, ethical decisions and respect, so clients can trust the work."
+    },
+    {
+      "name": "Fostering a Strong Sense of Community",
+      "summary": "Collaboration inside SCG and beyond it.",
+      "text": "We work collaboratively within SCG and with outside stakeholders, share knowledge and support one another, and take on work whose impact reaches beyond business outcomes."
+    }
+  ],
+  "benefits_readme": "'What you get' on /join/, reworded from the old Recruitment page's five membership benefits. {ey_years} is replaced with facts → 'EY partnership'.",
+  "benefits": [
+    {
+      "icon": "growth",
+      "title": "Career readiness program",
+      "text": "Every analyst completes an intensive 10-week professional development program, originally designed by SCG members and alumni at Bain and Capital One, with small-group and one-on-one training."
+    },
+    {
+      "icon": "network",
+      "title": "Alumni network",
+      "text": "Each semester, members meet SCG alumni from EY, Deloitte, Capital One, Bain and other firms through site visits, workshops, socials, mentorship and informal conversations."
+    },
+    {
+      "icon": "projects",
+      "title": "Projects with real clients",
+      "text": "Members choose from on- and off-campus projects each semester for nonprofit clubs, institutions and companies, picked for the skills they build and the lasting impact they leave."
+    },
+    {
+      "icon": "partner",
+      "title": "EY partnership",
+      "text": "SCG has partnered with EY for {ey_years}. Members get career advice, project support and mentorship, plus workshops and events hosted with EY."
+    },
+    {
+      "icon": "community",
+      "title": "Community",
+      "text": "Every semester includes community activities, from hikes to socials, to unwind and get to know each other."
+    }
+  ],
+  "downloads_readme": "Interview-prep downloads on /join/prepare/ (files in assets/downloads/, copied unaltered from the old Interview Resources and Our Partners pages). Remove an entry to hide it. The three SCG guides credit their student authors by name and photo, as originally published.",
+  "downloads": [
+    {
+      "title": "Introduction to Case Frameworks",
+      "file": "assets/downloads/scg-introduction-to-case-frameworks.pdf",
+      "kind": "Guide",
+      "description": "What frameworks are, how to build one, and worked examples for market entry, product launch and profitability cases.",
+      "published": "2023-08-26"
+    },
+    {
+      "title": "Fear the E-Turtle: Terps Transition to Digital",
+      "file": "assets/downloads/scg-guided-practice-case-fear-the-e-turtle.pdf",
+      "kind": "Guided practice case",
+      "description": "A case you can work through alone, with interview tips and example answers after each question.",
+      "published": "2023-09-23"
+    },
+    {
+      "title": "CVH Blood Bank: Launching a Campus Partnership for Blood Drives",
+      "file": "assets/downloads/scg-practice-case-cvh-blood-bank.pdf",
+      "kind": "Interviewer-led practice case",
+      "description": "For two people: one reads the prompts and exhibits, the other solves the case.",
+      "published": "2024-02-27"
+    },
+    {
+      "title": "Smith Impact Case Competition: December 2023 case prompt",
+      "file": "assets/downloads/sicc-december-2023-case-prompt.pdf",
+      "kind": "Case competition prompt",
+      "description": "The prompt from the case competition SCG co-hosts with the Center for Social Value Creation.",
+      "published": "2023-12"
+    }
+  ]
 }

@@ -1,7 +1,218 @@
 ---
-layout: layouts/stub.njk
+layout: layouts/base.njk
 title: "About SCG"
-eyebrow: "Who we are"
-stage: 4
-description: "SCG's mission, values and how a client project works."
+description: "Snider Consulting Group's mission, values, how a client project works, and SCG's partnership with EY and the Ed Snider Center at the University of Maryland."
+bodyClass: page-about
 ---
+{#- About (SPEC 5.6). Every fact comes from data/site.json (mission, established,
+    partners, facts, stats, member_stats, pillars, press), data/process.json and
+    data/photos.json. Section rhythm: white → paper-2 → white → paper-2 → ink → white → paper-2 → white. -#}
+{%- from "components/stepper.njk" import stepper with context -%}
+{%- from "components/photo-wall.njk" import photoWall with context -%}
+{%- from "components/project-dialog.njk" import projectDialog with context -%}
+{%- set ey = site.partners | findBy("name", "EY") -%}
+{%- set snider = site.partners | findBy("role", "Affiliation and primary funder") -%}
+{%- set csvc = site.partners | findBy("name", "Center for Social Value Creation") -%}
+{%- set eyYears = (site.facts | findBy("label", "EY partnership")) -%}
+{%- set verifiedStats = site.stats | selectattr("verified") -%}
+{%- set aboutPhotos = [] -%}
+{%- for p in photos %}{% if "about" in p.pages %}{% set aboutPhotos = (aboutPhotos.push(p), aboutPhotos) %}{% endif %}{% endfor -%}
+{%- set dialogProjects = [] -%}
+{%- for s in processSteps %}{% if s.example and s.example.project %}{% set dialogProjects = (dialogProjects.push(s.example.project), dialogProjects) %}{% endif %}{% endfor -%}
+
+<section class="section page-head" aria-labelledby="about-title">
+  <div class="container">
+    <p class="eyebrow eyebrow--accent">Who we are</p>
+    <h1 class="page-title" id="about-title">About SCG</h1>
+    <p class="lede">{{ site.mission }}</p>
+  </div>
+</section>
+
+{# Story: built only from site.json (established, partners, facts, stats) #}
+<section class="section section--paper-2 story" aria-labelledby="story-title">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Our story</p>
+      <h2 class="section__title" id="story-title">Since 2020</h2>
+    </header>
+    <ol class="story__list">
+      <li class="story__item" data-reveal>
+        <p class="story__when">{{ site.established }}</p>
+        <div class="story__card">
+          <h3 class="story__title">Founded</h3>
+          <p>SCG was founded at the {{ site.established_at }}, in direct affiliation with the Ed Snider Center for Enterprise and Markets.</p>
+        </div>
+      </li>
+      {%- if ey %}
+      <li class="story__item" data-reveal>
+        <p class="story__when">{% if eyYears and eyYears.verified %}{{ eyYears.value }}{% else %}Partner{% endif %}</p>
+        <div class="story__card">
+          <h3 class="story__title">EY partnership</h3>
+          <p>{{ ey.blurb }}</p>
+        </div>
+      </li>
+      {%- endif %}
+      {%- if csvc %}
+      <li class="story__item" data-reveal>
+        <p class="story__when">Every year</p>
+        <div class="story__card">
+          <h3 class="story__title">Smith Impact Case Competition</h3>
+          <p>{{ csvc.blurb }}</p>
+        </div>
+      </li>
+      {%- endif %}
+      <li class="story__item story__item--now" data-reveal>
+        <p class="story__when">Today</p>
+        <div class="story__card">
+          <h3 class="story__title">UMD's student-run consulting group</h3>
+          {%- if verifiedStats.length %}
+          <ul class="story__facts">
+            {%- for s in verifiedStats %}<li><strong>{{ s.value }}</strong> {{ s.label | lower }}</li>{% endfor %}
+          </ul>
+          {%- endif %}
+          <p>Student teams work with campus organizations, nonprofits and startups. <a href="/projects/">See the projects</a>.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+{# Pillars #}
+<section class="section pillars-section" aria-labelledby="pillars-title">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">What we stand for</p>
+      <h2 class="section__title" id="pillars-title">Our pillars</h2>
+    </header>
+    <ul class="pillars">
+      {%- for p in site.pillars %}
+      <li class="pillar" data-expand>
+        <div class="pillar__face">
+          <span class="pillar__num" aria-hidden="true">0{{ loop.index }}</span>
+          <h3 class="pillar__name">{{ p.name }}</h3>
+          <p class="pillar__summary">{{ p.summary }}</p>
+        </div>
+        <div class="pillar__more" id="pillar-{{ loop.index }}-more">
+          <p>{{ p.text }}</p>
+        </div>
+        <button class="pillar__toggle" type="button" data-expand-toggle aria-expanded="false" aria-controls="pillar-{{ loop.index }}-more" hidden>
+          <span data-expand-label>Read more</span><span class="visually-hidden"> about {{ p.name }}</span>
+          <span class="pillar__icon" aria-hidden="true"></span>
+        </button>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+
+{# How a project works #}
+{%- if processSteps.length %}
+<section class="section section--paper-2" aria-labelledby="process-title">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Client work</p>
+      <h2 class="section__title" id="process-title">How a project works</h2>
+      <p class="section__lede">From a client's first request to the final deliverables, each semester.</p>
+    </header>
+    {{ stepper(processSteps, { id: "process", label: "Steps of a client project", headingLevel: 3 }) }}
+  </div>
+</section>
+{%- endif %}
+
+{# Partnership band (dark): EY + Ed Snider Center #}
+<section class="section section--ink partners-band" aria-labelledby="partners-title">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Partners</p>
+      <h2 class="section__title" id="partners-title">Backed by EY and the Ed Snider Center</h2>
+    </header>
+    <div class="partners-band__grid">
+      {%- for partner in [ey, snider] %}
+      {%- if partner %}
+      {%- set logo = generatedImages.partnerBands[partner.name] if generatedImages.partnerBands else null %}
+      <article class="partners-band__item">
+        <div class="partners-band__logo{% if partner.band and partner.band.on_plate %} partners-band__logo--plate{% endif %}">
+          {%- if logo %}
+          <picture><source type="image/webp" srcset="{{ logo.webp }}"><img src="{{ logo.png }}" width="{{ logo.width }}" height="{{ logo.height }}" alt="{{ partner.band.logo_alt }}" loading="lazy" decoding="async"></picture>
+          {%- else %}<span class="partners-band__name">{{ partner.name }}</span>{% endif %}
+        </div>
+        <p class="partners-band__role">{{ partner.role }}</p>
+        <p>{{ partner.blurb }}</p>
+        {%- if partner.url %}<p><a class="link-arrow" href="{{ partner.url }}" target="_blank" rel="noopener noreferrer">Visit {{ "EY Consulting" if partner.name == "EY" else "the Ed Snider Center" }}<span class="visually-hidden"> (opens in a new tab)</span> <span aria-hidden="true">↗</span></a></p>{% endif %}
+      </article>
+      {%- endif %}
+      {%- endfor %}
+    </div>
+    <p class="partners-band__more"><a href="/partners/">All partners, including the Center for Social Value Creation</a></p>
+  </div>
+</section>
+
+{# Photo wall #}
+{%- if aboutPhotos.length %}
+<section class="section" aria-labelledby="life-title">
+  <div class="container">
+    <header class="section__head section__head--split">
+      <div>
+        <p class="eyebrow">Life in SCG</p>
+        <h2 class="section__title" id="life-title">Workshops, site visits and the occasional hike</h2>
+      </div>
+      <p class="section__hint">Select a photo to see it larger.</p>
+    </header>
+    {{ photoWall(aboutPhotos, "about-photos") }}
+  </div>
+</section>
+{%- endif %}
+
+{# Member statistics (count-up, reusing the Home stat strip) #}
+{%- set memberStats = site.member_stats | selectattr("verified") -%}
+{%- if memberStats.length %}
+<section class="section section--paper-2 member-stats" aria-labelledby="member-stats-title">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Members</p>
+      <h2 class="section__title" id="member-stats-title">Leaders across campus</h2>
+      <p class="section__lede">Among SCG's members are</p>
+    </header>
+    <div class="stat-strip stat-strip--grid" data-countup>
+      <dl class="stat-strip__list">
+        {%- for s in memberStats %}
+        {%- set n = s.value | parseStat %}
+        <div class="stat-strip__item"><dt>
+          {%- if s.label_abbr %}{% for abbr, full in s.label_abbr %}<abbr title="{{ full }}">{{ abbr }}</abbr>{{ s.label | replace(abbr, "") }}{% endfor %}{% else %}{{ s.label }}{% endif -%}
+        </dt><dd>
+          {%- if n -%}
+          <span class="visually-hidden">{{ s.value }}</span><span class="stat-strip__value" aria-hidden="true">{{ n.prefix }}<span class="stat-strip__num" data-count-to="{{ n.target }}" style="--chars: {{ n.chars }}">{{ n.formatted }}</span>{{ n.suffix }}</span>
+          {%- else -%}{{ s.value }}{%- endif -%}
+        </dd></div>
+        {%- endfor %}
+      </dl>
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+{# Learn more (press) #}
+{%- if site.press.length %}
+<section class="section" aria-labelledby="press-title">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Learn more</p>
+      <h2 class="section__title" id="press-title">SCG elsewhere</h2>
+    </header>
+    <ul class="press-list">
+      {%- for p in site.press %}
+      <li><a class="press-link" href="{{ p.url }}" target="_blank" rel="noopener noreferrer"><span class="press-link__label">{{ p.label }}</span><span class="press-link__blurb">{{ p.blurb }}</span><span class="visually-hidden"> (opens in a new tab)</span></a></li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+{%- endif %}
+
+<section class="section section--tight cta-strip" aria-labelledby="about-cta-title">
+  <div class="container cta-strip__inner">
+    <h2 class="cta-strip__title" id="about-cta-title">Want to be part of it?</h2>
+    <a class="btn btn--primary" href="/join/">Join SCG</a>
+  </div>
+</section>
+
+{%- if dialogProjects.length %}{{ projectDialog(dialogProjects) }}{% endif %}

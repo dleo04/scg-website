@@ -49,3 +49,21 @@ Projects live in `data/projects.json`, one object per **client tile**; the card,
 
 ### A returning client (a second semester)
 Do not create a new tile. Add another object to that client's `"engagements"` list with its own `semester`, optional `title` (e.g. "Colorado school data API"), `tagline`, `challenge`, `scope`, `skills` and `outcome`. The card switches to the newest engagement, the title reads e.g. "(Spring & Fall 2025)", the dialog and page show one section per semester (newest first), and the Semester filter finds the tile under every semester. Two separate projects for the same client in the **same** semester are separate tiles instead; they link to each other automatically.
+
+## How to update the recruiting status and calendar
+Everything on `/join/` that changes each semester lives in `data/site.json`:
+- `recruiting.banner_label` / `banner_text` / `closed_text`: the status card at the top of `/join/` (for example "Spring 2027 recruitment · Interest form is open. · Fall 2026 applications are closed.").
+- `recruiting.interest_form_url`, `recruiting.application_url`, `recruiting.open`: the button. While `open` is true **and** `application_url` is set, it says **Apply**; otherwise, if `interest_form_url` is set, **Join the interest list**. The same button sits in the mobile sticky bar.
+- `recruiting.current_step`: the name of the calendar step that is happening now (it is highlighted and opens first).
+- `timeline.steps`: the recruiting calendar. Give a step a `date` (`"2027-01-20"`) and it shows the date and an **Add to calendar** (.ics) download; add `time` (`"18:00"`, Eastern), `duration_minutes` and `location` for a timed event. Steps without a date show no date text. `optional: true` adds an "Optional" pill. `description: null` shows no text.
+- `links.resume_guide`: the Resume guide link under Resources.
+
+## How to change the photos (About and Join)
+Photos are listed in `data/photos.json` (`id`, `source`, `alt`, `caption`, `pages`). To add one, put the original in `reference/old-site/_photo-candidates/` (or name an image from the old site in `source`), add an entry with honest alt text, and run `npm run old-photos`; it writes `assets/photos/<id>.jpg` (max 1600px, about 250KB, location data removed). `npm run old-photos -- --scan` downloads every candidate photo from the old site for review (logos, screenshots and individual portraits are skipped). Group, event and activity photos only; never individual portraits without consent.
+
+## Interview prep downloads and About figures
+- `site.json → downloads`: the PDFs on `/join/prepare/` (files in `assets/downloads/`). Remove an entry to hide it; an entry whose file is missing is skipped automatically.
+- `site.json → member_stats`: the "Leaders across campus" numbers on `/about/` (count-up). Update the values when they change.
+- `site.json → mission`, `pillars`, `benefits`, `press`: About text, the three pillars, the five "What you get" cards on `/join/` and the four "SCG elsewhere" links.
+- `data/process.json`: "How a project works" on `/about/`. A step with `"text": null` is hidden on the live site; `example` links a step to a project (it opens that project's dialog) or a page.
+- `data/tracks.json`: the four tracks in the `/join/` matcher. The matcher searches each track's `fits` and `skills`; every "What you'd do" item must name a real project.

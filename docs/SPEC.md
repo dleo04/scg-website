@@ -46,7 +46,7 @@ Status: v1 for build. Audience for this document: the engineer (Claude Code) bui
 
 ## 3. Pages and navigation
 
-Primary nav: **Projects · Join SCG · Who We Are ▾ (About, Team, Alumni, Partners) · Work With Us**, plus a persistent **Apply** button (state driven by `site.json → recruiting`). Footer: logo, affiliation line ("In direct affiliation with the Ed Snider Center for Enterprise and Markets"), nav, social links, contact placeholder, "© year Snider Consulting Group".
+Primary nav (as built, see DECISIONS.md): **Projects · Join SCG · About · Team · Alumni · Work With Us**, plus a persistent **Join SCG** button (state driven by `site.json → recruiting`). Partners and Interview prep are in the footer, which lists every page. Footer: logo, affiliation line ("In direct affiliation with the Ed Snider Center for Enterprise and Markets"), nav, social links, contact placeholder, "© year Snider Consulting Group".
 
 | Route | Purpose |
 |---|---|
@@ -123,16 +123,24 @@ Horizontal (mobile: vertical) step timeline. Steps are grounded in what SCG says
 5. **Deliverables.** The team delivers the items agreed in the SoW (see any project's "Scope").
 6. **Handoff.** [TBD: how outcomes are presented/handed off.]
 
+**As built (stage 3A):** a type-ahead matcher on `/join/` (`components/seat-matcher.njk`, `src/js/seat-matcher.js`). Visitors pick up to three majors, interests or skills (combobox or quick chips) from the tracks' own `fits` and `skills`; matching tracks are shown best first with the matching chips highlighted, each with "What you'd do" (from real projects, linked), "Skills you'd build", "Good fit if you study or enjoy… (suggested)" and a link to `/projects/?track=<name>`. "I'm not sure yet" shows all four. Without JS: the four tracks as a static list.
+
 ### 5.4 Join SCG `/join/`
 Order: recruiting status banner → **Who belongs here** (open to all UMD undergrads; major-agnostic message; link to tracks) → **Find your seat** → **What you get** (the five existing benefits: career readiness program, alumni networking, impactful projects, EY partnership, community; reword for non-business readers and keep factual) → **Timeline** (from `site.json → timeline`, with "optional" pills; supports a "Dates TBD" state) → **Interview process** [TBD details] → **Eligibility** (from FAQ; show `needs_decision` items only after resolved) → **FAQ** (`faq.json`, accordion, searchable if > 12 items) → **Resources** (resume guide, interview prep) → sticky bottom CTA on mobile.
 
 CTA logic: if `recruiting.open` and `application_url` → "Apply"; else if `interest_form_url` → "Join the interest list"; else show a visible `[TBD link]` placeholder.
 
+**As built (stage 3A):** status card (label, status, closed note, CTA, "recruits each fall and spring") → Find your seat matcher → What you get (bento of the five benefits from `site.json → benefits` plus one photo) → recruiting calendar (interactive stepper from `site.json → timeline`, current step from `recruiting.current_step`, "Optional" pills, "Add to calendar" .ics per dated step; undated steps show no date text) → interview process (links to Prepare) + one eligibility sentence + FAQ accordion with live search (`needs_decision` items and answers still containing `[TBD` render only with `npm run dev:notes`; FAQPage JSON-LD from published items) → Resources (Resume guide, Prepare, Projects) → sticky bottom CTA under 768px.
+
 ### 5.5 Prepare `/join/prepare/`
 Sample behavioral questions (use the three existing ones: "Tell me about yourself"; a team-conflict question; "Which client that SCG has worked with in the past interests you the most?"). Add a note linking that third question to the Projects explorer ("Browse projects to answer this one"). Download slots for the case framework PDF, interviewer-led practice case and guided individual practice case (placeholders until files are supplied).
 
+**As built (stage 3A):** practice room (one card at a time, Previous/Next, Shuffle, "Show answer structure", 2-minute silent timer; question 3 links to `/projects/`), STAR explainer, and four downloads from the old site (`site.json → downloads`: case framework guide, guided practice case, interviewer-led practice case, SICC December 2023 prompt).
+
 ### 5.6 About `/about/`
 Mission (existing: "help organizations achieve their vision of success through sustainable strategies, research, management, and process improvement"), three pillars (Commitment to Excellence in Service; Upholding Professionalism; Fostering a Strong Sense of Community) with the existing descriptions tightened, how a project works, EY + Snider Center, founding story ("Founded at the Robert H. Smith School of Business in 2020") placed here rather than in the hero.
+
+**As built (stage 3A):** page header → story timeline (from `site.json`: established, partners, facts, stats; scroll reveal) → three expandable pillar cards → "How a project works" stepper (`data/process.json`; the Deliverables step opens School Harbor's dialog) → dark partnership band (reversed EY logo; Smith/Ed Snider Center lockup on a white plate) → photo mosaic + lightbox (`data/photos.json`) → member statistics with count-up (`site.json → member_stats`) → four "SCG elsewhere" links → Join SCG CTA.
 
 ### 5.7 Team `/team/` and Alumni `/alumni/`
 - Team: levels from `team.json`. Card = photo (placeholder), name, title, **major(s)**, optional "Worked on" project chips linking to project pages. Filter by level and major. Do not show anyone without `consent_to_publish: true`.

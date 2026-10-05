@@ -1,0 +1,57 @@
+{%- from "components/ui.njk" import tbdBlock with context -%}
+{#- Interactive stepper, shared by "How a project works" (/about/, data/process.json) and the
+    recruiting calendar (/join/, site.json → timeline).
+    Without JS: a numbered list (role=list) with every step's details (nothing hidden).
+    With JS (site.js, [data-tabs]): a row of step buttons (WAI-ARIA tabs: arrow keys, Home/End),
+    one detail panel at a time, Previous/Next buttons and swipe on touch screens.
+    steps: [{ name, slug, text|description, status?, optional?, date?, example? }]
+    opts: { id, label, headingLevel, initial (index), calendar (bool) } -#}
+{% macro stepper(steps, opts) -%}
+{%- set h = opts.headingLevel or 3 -%}
+{%- set initial = opts.initial if opts.initial is defined else 0 -%}
+<div class="stepper{% if opts.dark %} stepper--dark{% endif %}" data-tabs data-swipe>
+  <div class="stepper__rail" data-tablist aria-label="{{ opts.label }}">
+    {%- for s in steps %}
+    <button class="stepper__tab{% if s.status %} is-{{ s.status }}{% endif %}" type="button" id="{{ opts.id }}-tab-{{ s.slug }}" data-tab="{{ opts.id }}-panel-{{ s.slug }}"{% if loop.index0 == initial %} data-tab-initial{% endif %}>
+      <span class="stepper__num" aria-hidden="true">{% if s.status == "done" %}✓{% else %}{{ loop.index }}{% endif %}</span>
+      <span class="stepper__name">{{ s.name }}</span>
+      {%- if s.status == "current" %}<span class="stepper__flag">Now</span>{% endif %}
+    </button>
+    {%- endfor %}
+  </div>
+  <div class="stepper__panels" role="list">
+    {%- for s in steps %}
+    {%- set body = s.text if s.text is defined else s.description %}
+    <div class="stepper__panel{% if s.status %} is-{{ s.status }}{% endif %}" id="{{ opts.id }}-panel-{{ s.slug }}" role="listitem">
+      <p class="stepper__count"><span class="visually-hidden">Step </span>{{ loop.index }}<span aria-hidden="true"> / </span><span class="visually-hidden"> of </span>{{ steps.length }}</p>
+      <h{{ h }} class="stepper__title">{{ s.name }}
+        {%- if s.optional %} <span class="pill pill--optional">Optional</span>{% endif %}
+        {%- if s.status == "current" %} <span class="pill pill--now">Happening now</span>{% endif %}
+      </h{{ h }}>
+      {%- if s.date %}
+      <p class="stepper__date"><time datetime="{{ s.date }}{% if s.time %}T{{ s.time }}{% endif %}">{{ s.date | longDate }}{% if s.time %}, {{ s.time | clockTime }}{% endif %}</time>{% if s.location %} · {{ s.location }}{% endif %}</p>
+      {%- endif %}
+      {%- if body %}<p class="stepper__text">{{ body }}</p>
+      {%- elif env.showPlaceholders and s.todo %}{{ tbdBlock(s.name ~ ": details coming soon", "[TBD: " ~ s.todo ~ "]") }}{% endif %}
+      {%- if env.showPlaceholders and s.todo and body %}{{ tbdBlock("Also needed", "[TBD: " ~ s.todo ~ "]") }}{% endif %}
+      {%- if s.example %}
+      <p class="stepper__example">
+        <a class="link-arrow" href="{{ s.example.url }}"{% if s.example.project %} data-project-open="{{ s.example.project.id }}"{% endif %}>{{ s.example.label }} <span aria-hidden="true">→</span></a>
+      </p>
+      {%- endif %}
+      {%- if opts.calendar and s.date %}
+      <p class="stepper__example"><a class="btn btn--sm btn--secondary{% if opts.dark %}-light{% endif %}" href="/join/calendar/{{ s.slug }}.ics" download>Add to calendar<span class="visually-hidden">: {{ s.name }}</span></a></p>
+      {%- endif %}
+    </div>
+    {%- endfor %}
+  </div>
+  <div class="stepper__controls" data-tab-controls hidden>
+    <button class="icon-btn" type="button" data-tab-prev aria-label="Previous step">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="icon-btn" type="button" data-tab-next aria-label="Next step">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+{%- endmacro %}

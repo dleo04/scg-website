@@ -1,0 +1,40 @@
+---
+pagination:
+  data: datedSteps
+  size: 1
+  alias: step
+permalink: "/join/calendar/{{ step.slug }}.ics"
+eleventyExcludeFromCollections: true
+---
+{#- One iCalendar file per recruiting step that has a date (site.json → timeline). No date,
+    no file and no "Add to calendar" button. All-day unless 'time' is set (Eastern time). -#}
+{%- set d = step.date | replace("-", "") -%}
+{%- set mins = step.duration_minutes or 60 -%}
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Snider Consulting Group//Recruiting//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:scg-{{ step.slug }}-{{ d }}@sniderconsultinggroup.com
+DTSTAMP:{{ d }}T000000Z
+{%- if step.time %}
+{%- set hm = step.time | replace(":", "") %}
+DTSTART;TZID=America/New_York:{{ d }}T{{ hm }}00
+DURATION:PT{{ mins }}M
+{%- else %}
+DTSTART;VALUE=DATE:{{ d }}
+DURATION:P1D
+{%- endif %}
+SUMMARY:{{ ("SCG recruiting: " ~ step.name) | icsText | safe }}
+{%- if step.description %}
+DESCRIPTION:{{ (step.description ~ " " ~ site.domain ~ "/join/") | icsText | safe }}
+{%- else %}
+DESCRIPTION:{{ (site.domain ~ "/join/") | icsText | safe }}
+{%- endif %}
+{%- if step.location %}
+LOCATION:{{ step.location | icsText | safe }}
+{%- endif %}
+URL:{{ site.domain }}/join/
+END:VEVENT
+END:VCALENDAR

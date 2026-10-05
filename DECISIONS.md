@@ -447,3 +447,62 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 - **Sizing (CSS only; no card/dialog/page layout change).** Square/tall logos are now 50% of the tile height (was 55%); wide logos stay at 55% of the width, max 55% of the height. The cap is now 1x the file's pixel height (was ½ for 2x crispness); no logo is enlarged past its own size.
 - **Resolution.** On the dialog/page banner (210px tall), SpeechPundit (451×172 after trimming) shows at 303×116, so 1.5 device pixels per CSS pixel. That is sharp on standard screens and slightly soft on 2x/retina screens. Alliom (200×200) shows at 1.9x. All other logos have 2x or more everywhere. A larger SpeechPundit file would help.
 - **Measured centring** of the visible artwork (pixels > 40 levels from `logo_bg`, from 2x captures) for all 15 tiles on the /projects/ cards, the dialog banner and the project page banner at 768, 1280 and 1440: worst offset 0.88px (requirement: 2px). The measurement script reads the dialog from viewport crops; element screenshots of the top-layer dialog are unreliable.
+
+## Stage 3A (header, About, Join, Prepare)
+
+- **Old site export.** The six archives in `reference/old-site/` (names without `.zip`) are unzipped into `about-us/`, `alumni/`, `home/`, `interviews/`, `partners/` and `recruitment/`, with no `__MACOSX` folders. One alumni-page screenshot whose file name has an invalid byte could not be extracted; it is a screenshot, so it would have been skipped anyway. `reference/` is git-ignored, ignored by Eleventy (input is `src/`, plus an explicit ignore), never copied and never linked.
+- **Header.** The order is Projects, Join SCG, About, Team, Alumni, Work With Us. This supersedes SPEC's "Who We Are ▾" dropdown; Partners and Interview prep live in the footer sitemap.
+  - At 1024px six links left only 8px before the icons, so between 1024 and 1279px the link padding is 9px with a 2px gap: 39px of clearance on each side.
+  - At 1280px and up the spacing is unchanged (101px clearance). Measured as one row at 1024, 1280 and 1440, and the mobile menu has six 48px links.
+- **Photos** (`npm run old-photos`, `scripts/fetch-old-photos.mjs`).
+  - `--scan` parses the old HTML for `img1.wsimg.com` images and downloads the **original** (largest) file of each candidate into the git-ignored `reference/old-site/_photo-candidates/`.
+  - It skips logos, screenshots, `blob-*`, favicons, PNG/WebP graphics, files named "headshot" and alumni-page-only images. About 20 of the 54 candidates were still individual team headshots from the old About page; they stay out of the repo and the site.
+  - I reviewed every candidate and chose **14 group, event and activity photos** (`data/photos.json`, with old filenames). They are optimized to at most 1600px on the long edge, JPEG of about 250KB or less (river-social is 279KB at the quality floor), with EXIF and GPS removed, plus 480/960px WebP and JPEG thumbnails.
+  - Alt text describes what is visible. Captions use only what the photo or the old filename shows ("EY site visit", "Semester hike"). None is used as the home hero.
+- **About.**
+  - The story timeline uses only `site.json`: established and established_at, the EY partner blurb with "4+ years" from facts, the CSVC/SICC blurb ("Every year"), and today's verified stats. No years were invented for the EY partnership.
+  - The pillars are tightened from the old text (`site.json → pillars`) as expandable cards. The face and the details share one grid cell, so opening never changes the height. Hover reveals the details on pointer devices; the button works by keyboard and touch; without JS all text is visible.
+  - "How a project works" is an interactive stepper (`data/process.json`). It shows the five grounded steps; "Handoff" is hidden until officers describe it, and "Team forms" keeps a TODO for team size and roles. The Deliverables step opens School Harbor's dialog (both engagements' Scope); Client request links to Work With Us.
+  - The dark band shows EY (reversed logo, now also approved for this band in CLAUDE.md) and the Smith/Ed Snider Center lockup from the old site, unaltered on a white plate. The text is the partner blurbs.
+  - The photo mosaic has an accessible lightbox: native modal, Tab loop, Esc, Left/Right arrows, swipe, caption plus "n of N", and focus returns to the tile. Without JS, each tile links to the 1600px JPEG.
+  - Member statistics come from the old About page (2 / 7 / 13 / 9 / 4 / 11) in `site.json → member_stats`, with the Home count-up (now supports several strips per page). "Confirm figures are current" is in TODO.
+  - The four learn-more links have no ranking or superlative language.
+- **Join.**
+  - **Status card.** From the old Recruitment page: "Spring 2027 recruitment", "Interest form is open.", "Fall 2026 applications are closed." The Spring 2027 interest form URL is now `recruiting.interest_form_url`, so the CTA follows SPEC 5.4: "Join the interest list". The Resume guide link comes from the same page. `recruiting.current_step: "Interest form"` drives the calendar highlight.
+  - **Matcher.**
+    - It is a combobox with type-ahead (WAI-ARIA 1.2), a maximum of three picks, quick chips, and an "I'm not sure yet: show all four tracks" path.
+    - Vocabulary is each track's own `fits` (from projects' inferred fits) and `skills`. Matching tracks show best first, with the matched chips highlighted and a polite status line. Without JS it is the four tracks as a static list.
+    - Wording is "Good fit if you study or enjoy… (suggested)"; no major is said to have done a track. Each track links to `/projects/?track=<name>`.
+    - `tracks.json` gained what-you-do items from the new projects (School Harbor's API, DefenX FM and Outreach, SpeechPundit's UX brief, BBB's transition guide). The Product & Design `[TBD]` item was removed (noted in `_readme`).
+  - **What you get.** A bento of the five old benefits, reworded. The EY years come from the verified fact. "Semester hikes" matches the approved Home copy. One photo (painting social) fills the bento.
+  - **Recruiting calendar.**
+    - The steps are Interest form, Application, Interviews, Decision and Onboarding. It uses the same stepper as About, on the dark band, opening on the current step.
+    - No dates are known, so no date text and no .ics files appear. Adding `date` (plus optional `time`, `duration_minutes` and `location`) generates `/join/calendar/<step>.ics` and an "Add to calendar" button.
+    - No step is marked optional, because nothing on the old site says which are; that is in TODO.
+    - Application and Decision have no description (none is shown).
+  - **Interview process.** One factual paragraph, since the old material covers behavioral and case interviews, plus a link to Prepare. Rounds and format are in TODO.
+  - **Eligibility sentence.** "SCG recruits new analysts at the start of each fall and spring semester from University of Maryland undergraduates in good academic standing." The five-semester rule stays flagged (`needs_decision`).
+  - **FAQ.**
+    - A `needs_decision` item, or any answer still containing `[TBD`, now renders only with `npm run dev:notes`, not in a normal or production build (previously only production hid needs_decision).
+    - Added the old "What makes SCG different…?" answer without the 2021 Vault ranking.
+    - Live search matches from the start of words ("EY" no longer matches "they").
+    - FAQPage JSON-LD covers published items only (8).
+  - **Sticky CTA.** Below 768px, a `position: sticky` bar at the end of `<main>`: it sticks to the bottom while reading and rests above the footer, so it never covers it.
+- **Prepare.**
+  - The deck has the three questions from the old Interview Resources page; that page has no others. It shows one card at a time with Previous/Next, Left/Right, Shuffle and "Show answer structure".
+  - The hints are general interview structure (present-past-future, STAR), not claims about SCG. Question 3 links to `/projects/`.
+  - The timer is 2:00 with Start/Pause/Resume/Reset and no sound. Screen readers hear start, pause and "time's up" only.
+  - STAR explainer.
+- **Downloads.** The old site linked real files, all reachable. The three interview PDFs were in the export, and the SICC December 2023 prompt (linked from the old Partners page) was downloaded. They are copied unaltered to `assets/downloads/` and listed in `site.json → downloads` with type, description and size.
+  - I read all four. No emails or phone numbers.
+  - The three SCG guides show student author names and headshots on page 1, as SCG originally published them; that is flagged in TODO for confirmation.
+- **Shared fixes.**
+  - Nunjucks' `selectattr(attr, "equalto", v)` silently ignores the test, so About first showed EY three times. There is a new `findBy` filter, and Home's EY lookup uses it (same result there, since EY was first).
+  - List items used as panels or cards are exempt from the global 70ch cap.
+  - The stepper shows numbered buttons only below 560px (names stay in the accessible name), so five steps fit at 360px.
+  - Step panels are a `role=list` div (axe flagged `role=tabpanel` on `<li>`).
+- **Verified.**
+  - Interaction test, all passing: header at three widths, mobile menu, pillar toggle by keyboard, stepper arrows, the Deliverables step opening and closing the dialog with focus returned, and the lightbox (opens on photo 3, arrow to next, Tab trapped, Esc returns focus). Also member stats counting up to final values, and the matcher at 360/768/1440 (Psychology + SQL gives Data & Engineering and Operations & People).
+  - It also covers "I'm not sure" (all four), the Finance quick chip (Strategy & Research), the track link, FAQ search, JSON-LD, the calendar opening on the current step, the deck, timer and shuffle, and the four PDFs served.
+  - No-JS: all steps, tracks, cards, hints, pillar texts and photo links are visible.
+  - ui-check: 24 routes × 4 widths, axe clean. Contrast: 40 pairings (10 new). check:notes passes. No horizontal scroll at 360, 768 or 1440.

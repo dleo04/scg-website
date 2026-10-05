@@ -1,11 +1,39 @@
 {
-  "_readme": "'How a project works' steps (SPEC 5.3), reused on Home, About and Work With Us. Steps are based on what SCG says today; officers must confirm details and replace each [TBD].",
+  "_readme": "'How a project works' steps (SPEC 5.3), used on /about/ (and later Work With Us). 'text' is what the site shows; a step with text null is omitted on the live site and its 'todo' is listed in TODO-CONTENT.md. 'example' links the step to a real project (opens its dialog) or a page; it only appears when it is grounded in project data.",
   "steps": [
-    { "name": "Client request", "text": "A client submits a request, and SCG scopes it into a Statement of Work (SoW)." },
-    { "name": "Team forms", "text": "Members choose from the semester's projects and teams are formed. [TBD: typical team size and roles]" },
-    { "name": "Weekly rhythm", "text": "Teams meet weekly on their project, alongside general body meetings or workshops." },
-    { "name": "EY guidance", "text": "Each client team is paired with EY consultants, senior managers and partners for direction." },
-    { "name": "Deliverables", "text": "The team delivers the items agreed in the SoW. Each project's Scope lists them." },
-    { "name": "Handoff", "text": "[TBD: how outcomes are presented and handed off to the client]" }
+    {
+      "name": "Client request",
+      "text": "A client submits a request, and SCG scopes it into a Statement of Work (SoW).",
+      "example": {
+        "label": "Work with SCG",
+        "url": "/work-with-us/"
+      }
+    },
+    {
+      "name": "Team forms",
+      "text": "Each semester, members choose from that semester's client projects and teams are formed.",
+      "todo": "Typical team size and roles"
+    },
+    {
+      "name": "Weekly rhythm",
+      "text": "Teams meet weekly on their project, alongside general body meetings or workshops."
+    },
+    {
+      "name": "EY guidance",
+      "text": "Each client team is paired with EY consultants, senior managers and partners for direction."
+    },
+    {
+      "name": "Deliverables",
+      "text": "The team delivers the items agreed in the SoW. Every project's Scope lists them.",
+      "example": {
+        "label": "See School Harbor's deliverables",
+        "project": "school-harbor"
+      }
+    },
+    {
+      "name": "Handoff",
+      "text": null,
+      "todo": "How outcomes are presented and handed off to the client"
+    }
   ]
 }

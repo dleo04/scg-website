@@ -46,7 +46,21 @@ const pairs = [
   ["ph-border", "ink", 3, "carousel dots (non-text)"],
   ["scg-gold", "ink", 3, "focus ring on dark (non-text)"],
   ["scg-red", "paper", 3, "focus ring on light (non-text)"],
+  // Stage 3A (About, Join, Prepare)
+  ["scg-red", "paper-2", 4.5, "story years, FAQ group titles, resource kinds on warm sections"],
+  ["on-ink-2", "ink", 4.5, "pillar details, status card notes, timer hint"],
+  ["on-ink-2", "panel-dark", 4.5, "recruiting calendar step text (#1E1E1E panel)"],
+  ["scg-gold", "panel-dark", 4.5, "recruiting calendar step count"],
+  ["on-ink", "panel-dark", 4.5, "recruiting calendar step title"],
+  ["ink", "scg-gold", 4.5, "'Happening now' pill, timer and status buttons, selected calendar step"],
+  ["placeholder-text", "paper", 4.5, "matcher input placeholder"],
+  ["on-ink", "caption-wash", 4.5, "photo caption chip (78% ink over a white pixel, worst case)"],
+  ["ph-border", "ink", 3, "calendar step circle borders (non-text)"],
+  ["ink-2", "paper", 3, "matcher field, chip and search borders (non-text)"],
 ];
+C["panel-dark"] = hex("#1E1E1E");
+C["placeholder-text"] = hex("#6B6760");
+C["caption-wash"] = mix(C.ink, 0.78, [255, 255, 255]);
 
 const failures = [];
 const rows = [];

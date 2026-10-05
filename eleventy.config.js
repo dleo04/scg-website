@@ -14,6 +14,10 @@ export default function (eleventyConfig) {
   }
   eleventyConfig.addWatchTarget("./data/");
   eleventyConfig.addWatchTarget("./lib/");
+  // The old GoDaddy site export (reference/) is research material only: never built,
+  // copied or linked. Input is src/, so this is a second guard.
+  eleventyConfig.ignores.add("reference/**");
+  eleventyConfig.watchIgnores.add("reference/**");
 
   eleventyConfig.setNunjucksEnvironmentOptions({ autoescape: true, throwOnUndefined: false });
 
@@ -28,12 +32,18 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("logoBox", filters.logoBox);
   eleventyConfig.addFilter("parseStat", filters.parseStat);
   eleventyConfig.addFilter("distinct", filters.distinct);
+  eleventyConfig.addFilter("longDate", filters.longDate);
+  eleventyConfig.addFilter("clockTime", filters.clockTime);
+  eleventyConfig.addFilter("icsText", filters.icsText);
+  eleventyConfig.addFilter("findBy", filters.findBy);
 
   // Static files. Brand assets are copied as-is (never transformed).
   // Originals in assets/logos/ are not published; pages use the small copies in assets/generated/logos/.
   eleventyConfig.addPassthroughCopy("assets/*.{png,jpg,jpeg,webp,avif,svg,pdf}");
   eleventyConfig.addPassthroughCopy("assets/placeholders/**/*.{png,jpg,jpeg,webp,svg}");
   eleventyConfig.addPassthroughCopy("assets/generated/**/*.{png,jpg,jpeg,webp,avif,svg}");
+  eleventyConfig.addPassthroughCopy("assets/photos/*.jpg");      // data/photos.json (npm run old-photos)
+  eleventyConfig.addPassthroughCopy("assets/downloads/*.pdf");   // site.json → downloads
   eleventyConfig.addPassthroughCopy({ "src/css": "css", "src/js": "js" });
   eleventyConfig.addPassthroughCopy({
     "node_modules/@fontsource/lato/files/lato-latin-400-normal.woff2": "fonts/lato-latin-400-normal.woff2",

@@ -16,6 +16,7 @@
     "contrast": "node scripts/check-contrast.mjs",
     "logos": "node scripts/fetch-logos.mjs",
     "trim-logos": "node scripts/trim-logos.mjs",
+    "old-photos": "node scripts/fetch-old-photos.mjs",
     "clean": "node -e \"require('fs').rmSync('_site',{recursive:true,force:true})\"",
     "hero-contrast": "node scripts/hero-contrast.mjs",
     "dev:notes": "npm run assets && SHOW_PLACEHOLDERS=1 eleventy --serve --port 8080",
