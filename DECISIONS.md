@@ -773,3 +773,19 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - 2x canvas; text layer present
   - layouts at 360/768/1024/1440 with equal cards and covers and no horizontal scroll; no-JS links; console clean
   - ui-check (24 routes × 4 widths, axe clean), build and check:notes pass
+
+## SICC case prompt hidden ("published": false)
+
+- `site.json → downloads` has `"published": false` on the SICC December 2023 case prompt. The entry and `assets/downloads/sicc-december-2023-case-prompt.pdf` stay in the repo. Everything that renders or processes downloads respects the flag:
+  - the loader (`downloads`): no card, no Preview, no viewer entry, no `#preview=` deep link
+  - `make-pdf-covers.mjs`: no cover (it is regenerated when the flag is removed)
+  - Eleventy passthrough: only published PDFs are copied, so `/assets/downloads/sicc-…pdf` is a 404 on the built site
+  - The site has no sitemap, search index or structured data for downloads.
+- The guides intro now reads "SCG's own guides and practice cases. Free to download."
+- **Grid.** CSS grid, so cards in a row are equal height (the flex-wrap version left them at 542/518/575px).
+  - 1440: three equal cards (384×575) in one row
+  - 768: 2 + 1, the third centred at the same width (348px)
+  - 360: one column
+  - The tablet and desktop rules also centre a lone or paired last row if more PDFs are published later.
+- **Restore:** delete `"published": false` (or set it to true) and run `npm run build` (README and TODO-CONTENT.md).
+- **Build note.** A long-running `npm run dev` (started 2026-10-03) kept rewriting `_site` with its old in-memory config, putting the hidden PDF and card back after my builds. This also explains the one-off "banner photo missing" build seen earlier. Restart `npm run dev` after config or `lib/` changes. Verification here used a separate output folder plus a clean `_site` build.

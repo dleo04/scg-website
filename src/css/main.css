@@ -1301,7 +1301,24 @@ a.resource-card[target="_blank"] .resource-card__title::after { content: " ↗";
 
 
 /* ---- Prepare: case guide cards with cover + PDF viewer ---- */
-/* Same grid as the resource cards (3 / 2 / 1 columns; a 4th card starts row 2 at the same width). */
+/* Equal cards (grid rows equalize heights): 3 per row from 1024px, 2 from 640px, 1 below.
+   A short last row is centred at the same card width: tablet uses 4 half-tracks (each card
+   spans 2; a lone last card starts at track 2); desktop uses 6 (each card spans 2; a lone
+   last card starts at track 3, a last pair at tracks 2 and 4). */
+.doc-grid { display: grid; gap: var(--gutter); grid-template-columns: minmax(0, 1fr); }
+.doc-grid > li { display: flex; }
+.doc-grid > li > .doc-card { flex: 1; }
+@media (min-width: 640px) and (max-width: 1023px) {
+  .doc-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .doc-grid > li { grid-column: span 2; }
+  .doc-grid > li:last-child:nth-child(odd) { grid-column: 2 / span 2; }
+}
+@media (min-width: 1024px) {
+  .doc-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .doc-grid > li { grid-column: span 2; }
+  .doc-grid > li:last-child:nth-child(3n + 1) { grid-column: 3 / span 2; }
+  .doc-grid > li:nth-last-child(2):nth-child(3n + 1) { grid-column: 2 / span 2; }
+}
 .doc-card { display: flex; flex-direction: column; height: 100%; max-width: none; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
 /* Cover: the top of page 1 at 16:10, framed as a sheet of paper on the warm surface. */
 .doc-card__cover { padding: 20px 20px 0; background: var(--paper-2); border-bottom: 1px solid var(--line); }

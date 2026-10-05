@@ -63,6 +63,7 @@ Photos are listed in `data/photos.json` (`id`, `source`, `alt`, `caption`, `page
 
 ## Interview prep downloads and About figures
 - `site.json → downloads`: the PDFs on `/join/prepare/` (files in `assets/downloads/`). Remove an entry to hide it; an entry whose file is missing is skipped automatically.
+  - **Hiding a PDF:** add `"published": false` to its entry. It disappears from the cards and the viewer, gets no cover and is not copied to the site, but the file and entry stay in the repo. The SICC December 2023 case prompt is hidden this way; delete its `"published": false` and run `npm run build` to bring it back.
   - **Adding a PDF:** put the file in `assets/downloads/`, then add `{ "title", "file": "assets/downloads/<name>.pdf", "kind", "description" }` to `downloads` and run `npm run build`. The build (`scripts/make-pdf-covers.mjs`) renders page 1 into a cover (`assets/pdf-covers/<name>.webp`) and counts the pages. The card then gets the cover, a **Preview** button (in-page viewer, deep link `/join/prepare/#preview=<name>`) and **Download PDF**. The PDF itself is never changed.
 - `site.json → links.resume_guide`: shown as the "Resume guide" card on `/join/` and embedded on `/join/prepare/`. A Google Slides link is embedded automatically (`/embed` form) and must be shared as "Anyone with the link can view"; any other link becomes a plain card.
 - `site.json → member_stats`: the "Leaders across campus" numbers on `/about/` (count-up). Update the values when they change.

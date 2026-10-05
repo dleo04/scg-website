@@ -1,4 +1,4 @@
-import { loadData } from "./lib/load-data.js";
+import { loadData, readJson } from "./lib/load-data.js";
 import * as filters from "./lib/filters.js";
 
 export default function (eleventyConfig) {
@@ -45,7 +45,11 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets/generated/**/*.{png,jpg,jpeg,webp,avif,svg}");
   eleventyConfig.addPassthroughCopy("assets/banners/*.{webp,jpg}");  // page banners (npm run banners)
   eleventyConfig.addPassthroughCopy("assets/photos/*.jpg");      // data/photos.json (npm run old-photos)
-  eleventyConfig.addPassthroughCopy("assets/downloads/*.pdf");   // site.json → downloads
+  // site.json → downloads: only published PDFs are copied to the site ("published": false keeps
+  // the file in the repo but off the site).
+  for (const d of readJson("site.json").downloads || []) {
+    if (d.file && d.published !== false) eleventyConfig.addPassthroughCopy(d.file);
+  }
   eleventyConfig.addPassthroughCopy("assets/pdf-covers/*.webp");  // npm run pdf-covers
   // PDF.js for the /join/prepare/ viewer, self-hosted; loaded only on the first Preview click.
   eleventyConfig.addPassthroughCopy({

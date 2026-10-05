@@ -23,7 +23,7 @@ const manifest = {};
 const site = readJson("site.json");
 
 for (const d of site.downloads || []) {
-  if (!d.file || !d.file.toLowerCase().endsWith(".pdf")) continue;
+  if (!d.file || !d.file.toLowerCase().endsWith(".pdf") || d.published === false) continue; // unpublished: no cover
   const src = path.join(ROOT, d.file);
   if (!fs.existsSync(src)) { console.warn(`  ! ${d.file} not found; no cover`); continue; }
   const slug = slugOf(d.file);

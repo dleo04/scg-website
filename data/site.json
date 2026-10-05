@@ -295,7 +295,7 @@
       "alt": "Members painting small canvases at a paint-spattered table, one in an SCG sweatshirt painting the SCG letters."
     }
   ],
-  "downloads_readme": "Interview-prep downloads on /join/prepare/ (files in assets/downloads/, copied unaltered from the old Interview Resources and Our Partners pages). Remove an entry to hide it. The three SCG guides credit their student authors by name and photo, as originally published.",
+  "downloads_readme": "Interview-prep downloads on /join/prepare/ (files in assets/downloads/, copied unaltered from the old Interview Resources and Our Partners pages). Remove an entry to hide it. The three SCG guides credit their student authors by name and photo, as originally published. \"published\": false hides an entry everywhere (cards, viewer, cover, the PDF is not copied to the site) while keeping the file and entry; delete the flag (or set it to true) to bring it back.",
   "downloads": [
     {
       "title": "Introduction to Case Frameworks",
@@ -323,7 +323,7 @@
       "file": "assets/downloads/sicc-december-2023-case-prompt.pdf",
       "kind": "Case competition prompt",
       "description": "The prompt from the case competition SCG co-hosts with the Center for Social Value Creation.",
-      "published": "2023-12"
+      "published": false
     }
   ],
   "page_banners_readme": "Banners behind the inner-page headers (components/page-banner.njk), keyed by URL. 'source': a bare file name looked up anywhere under assets/ (case-insensitive, any extension) or a path. If no file is found the page shows the plain maroon-black gradient banner, so dropping e.g. assets/photos/aboutimage.jpg in later is enough. 'band': which quarter of the photo's height to use (1 = top 0-25%, 2 = 25-50%, 3 = 50-75%, 4 = 75-100%); phones get the same band expanded to 16:9. 'focal': CSS object-position for the crop inside the banner. 'windows' (optional): exact [top%, bottom%] windows per breakpoint when a band would cut something off (see /team/). 'tint': maroon-black overlay opacity, 0.78-0.8 (0.78 keeps the gold eyebrow at 4.5:1 over a white sky). After a change: npm run build, then npm run banner-contrast.",

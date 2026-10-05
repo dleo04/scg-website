@@ -85,6 +85,7 @@ data.push("faq.json → 'What makes SCG different…' is from the old Recruitmen
 data.push("Banners waiting for a photo (gradient until then): /partners/ (partnersimage). /join/prepare/ shares the /join/ banner (same_as). Drop a file with that name anywhere under assets/ and rebuild (see README → How to change a page banner).");
 data.push("assets/PHOTO-CREDITS.md: record the photographer and license of the five supplied banner photos (projectsimage, joinscgimage, alumniimage, aboutimage, workwithusimage) and of the starter-package photos (placeholder-hero-quad.jpg, placeholder-group-photo.jpg).");
 data.push("tracks.json: confirm the one-line 'short' descriptions, the three 'panel: true' What-you'd-do items per track, and the order of 'skills' and 'fits' (the first 5 of each are shown on /join/). Product & Design has only two projects (SpeechPundit, Product Space).");
+data.push("Hidden for now: the SICC December 2023 case prompt (site.json → downloads, \"published\": false). The PDF and entry stay in the repo; remove the flag and rebuild to show it on /join/prepare/ again.");
 data.push("Semester labels: confirm 'SCG Internal Project' (Spring 2025 + Fall 2025) and 'Business Beyond Borders' (Fall 2025) are listed in the right semesters.");
 for (const g of faq.groups) for (const item of g.items) {
   if (item.needs_decision) data.push(`faq.json → "${item.q}" NEEDS DECISION (hidden in production): ${item.decision}`);
