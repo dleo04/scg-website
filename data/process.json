@@ -1,5 +1,5 @@
 {
-  "_readme": "'How a project works' steps (SPEC 5.3), used on /about/ (and later Work With Us). 'text' is what the site shows; a step with text null is omitted on the live site and its 'todo' is listed in TODO-CONTENT.md. 'example' links the step to a real project (opens its dialog) or a page; it only appears when it is grounded in project data.",
+  "_readme": "'How a project works' steps (SPEC 5.3), used on /about/ (and later Work With Us). 'text' is what the site shows; a step with text null is omitted on the live site and its 'todo' is listed in TODO-CONTENT.md. 'example' links the step to a real project (opens its dialog) or a page; it only appears when it is grounded in project data. 'visual' is either a photo ({image, focal, alt}; 4:3 beside the text, 16:9 on phones) or {graphic: request|deliverables|handoff}, an on-brand icon panel used where no honest photo exists.",
   "steps": [
     {
       "name": "Client request",
@@ -7,20 +7,38 @@
       "example": {
         "label": "Work with SCG",
         "url": "/work-with-us/"
+      },
+      "visual": {
+        "graphic": "request"
       }
     },
     {
       "name": "Team forms",
       "text": "Each semester, members choose from that semester's client projects and teams are formed.",
-      "todo": "Typical team size and roles"
+      "todo": "Typical team size and roles",
+      "visual": {
+        "image": "group-trees",
+        "focal": "50% 55%",
+        "alt": "SCG members in business attire standing in two rows on a paved area in front of tall trees."
+      }
     },
     {
       "name": "Weekly rhythm",
-      "text": "Teams meet weekly on their project, alongside general body meetings or workshops."
+      "text": "Teams meet weekly on their project, alongside general body meetings or workshops.",
+      "visual": {
+        "image": "workshop-data",
+        "focal": "50% 50%",
+        "alt": "Members in business attire with laptops around a conference table while a slide titled Data Collection is shown on a screen."
+      }
     },
     {
       "name": "EY guidance",
-      "text": "Each client team is paired with EY consultants, senior managers and partners for direction."
+      "text": "Each client team is paired with EY consultants, senior managers and partners for direction.",
+      "visual": {
+        "image": "ey-site-visit",
+        "focal": "50% 62%",
+        "alt": "SCG members in business attire seated along a long conference table in a bright office during the EY site visit."
+      }
     },
     {
       "name": "Deliverables",
@@ -28,12 +46,18 @@
       "example": {
         "label": "See School Harbor's deliverables",
         "project": "school-harbor"
+      },
+      "visual": {
+        "graphic": "deliverables"
       }
     },
     {
       "name": "Handoff",
       "text": null,
-      "todo": "How outcomes are presented and handed off to the client"
+      "todo": "How outcomes are presented and handed off to the client",
+      "visual": {
+        "graphic": "handoff"
+      }
     }
   ]
 }

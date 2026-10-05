@@ -5,12 +5,35 @@
     With JS (site.js, [data-tabs]): a row of step buttons (WAI-ARIA tabs: arrow keys, Home/End),
     one detail panel at a time, Previous/Next buttons and swipe on touch screens.
     steps: [{ name, slug, text|description, status?, optional?, date?, example? }]
-    opts: { id, label, headingLevel, initial (index), calendar (bool) } -#}
+    opts: { id, label, headingLevel, initial (index), calendar (bool), visuals (bool) }
+    visuals (About "How a project works"): each step has a photo (4:3 right of the text, 16:9
+    on top on phones) or an on-brand graphic panel; the panels crossfade in one shared card with
+    Previous/Next in its footer; the rail shows progress (filled line, checks for done steps);
+    #step=<n> opens a step and a polite status line announces changes. -#}
+{% macro stepVisual(v) -%}
+{%- if v.photo %}
+<picture class="stepper__visual">
+  <source media="(max-width: 639px)" type="image/webp" srcset="{{ v.photo.mobile.webpSrcset }}" sizes="92vw">
+  <source media="(max-width: 639px)" srcset="{{ v.photo.mobile.jpgSrcset }}" sizes="92vw">
+  <source type="image/webp" srcset="{{ v.photo.wide.webpSrcset }}" sizes="(min-width: 1024px) 420px, 36vw">
+  <img src="{{ v.photo.wide.src }}" srcset="{{ v.photo.wide.jpgSrcset }}" sizes="(min-width: 1024px) 420px, 36vw" width="{{ v.photo.wide.width }}" height="{{ v.photo.wide.height }}" alt="{{ v.alt }}" loading="lazy" decoding="async">
+</picture>
+{%- elif v.graphic %}
+<div class="stepper__visual stepper__visual--graphic" aria-hidden="true">
+  <svg viewBox="0 0 48 48" width="72" height="72" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    {%- if v.graphic == "request" %}<rect x="6" y="12" width="36" height="26" rx="3"/><path d="M6 15l18 13 18-13"/><path d="M30 6v10M25 11l5-5 5 5"/>
+    {%- elif v.graphic == "deliverables" %}<path d="M12 6h17l9 9v27H12z"/><path d="M29 6v9h9"/><path d="M18 29l5 5 9-10"/>
+    {%- else %}<path d="M6 26l9-9 7 3 6-3 8 8"/><path d="M15 17l-9 9 9 9 5-3"/><path d="M36 25l6-6M28 32l4 4M24 34l3 3M32 28l4 4"/>{% endif -%}
+  </svg>
+</div>
+{%- endif %}
+{%- endmacro %}
 {% macro stepper(steps, opts) -%}
 {%- set h = opts.headingLevel or 3 -%}
 {%- set initial = opts.initial if opts.initial is defined else 0 -%}
-<div class="stepper{% if opts.dark %} stepper--dark{% endif %}" data-tabs data-swipe>
+<div class="stepper{% if opts.dark %} stepper--dark{% endif %}{% if opts.visuals %} stepper--visual{% endif %}" data-tabs data-swipe{% if opts.visuals %} data-step-fade data-step-progress data-step-hash="step" style="--steps: {{ steps.length }}"{% endif %}>
   <div class="stepper__rail" data-tablist aria-label="{{ opts.label }}">
+    {%- if opts.visuals %}<span class="stepper__fill" aria-hidden="true" data-step-fill></span>{% endif %}
     {%- for s in steps %}
     <button class="stepper__tab{% if s.status %} is-{{ s.status }}{% endif %}" type="button" id="{{ opts.id }}-tab-{{ s.slug }}" data-tab="{{ opts.id }}-panel-{{ s.slug }}"{% if loop.index0 == initial %} data-tab-initial{% endif %}>
       <span class="stepper__num" aria-hidden="true">{% if s.status == "done" %}✓{% else %}{{ loop.index }}{% endif %}</span>
@@ -19,10 +42,16 @@
     </button>
     {%- endfor %}
   </div>
+  {%- if opts.visuals %}
+  <p class="stepper__current" aria-hidden="true" data-step-current></p>
+  <p class="visually-hidden" role="status" data-step-status></p>
+  <div class="stepper__card">
+  {%- endif %}
   <div class="stepper__panels" role="list">
     {%- for s in steps %}
     {%- set body = s.text if s.text is defined else s.description %}
     <div class="stepper__panel{% if s.status %} is-{{ s.status }}{% endif %}" id="{{ opts.id }}-panel-{{ s.slug }}" role="listitem">
+      {%- if opts.visuals %}{{ stepVisual(s.visual) }}<div class="stepper__body">{% endif %}
       <p class="stepper__count"><span class="visually-hidden">Step </span>{{ loop.index }}<span aria-hidden="true"> / </span><span class="visually-hidden"> of </span>{{ steps.length }}</p>
       <h{{ h }} class="stepper__title">{{ s.name }}
         {%- if s.optional %} <span class="pill pill--optional">Optional</span>{% endif %}
@@ -42,6 +71,7 @@
       {%- if opts.calendar and s.date %}
       <p class="stepper__example"><a class="btn btn--sm btn--secondary{% if opts.dark %}-light{% endif %}" href="/join/calendar/{{ s.slug }}.ics" download>Add to calendar<span class="visually-hidden">: {{ s.name }}</span></a></p>
       {%- endif %}
+      {%- if opts.visuals %}</div>{% endif %}
     </div>
     {%- endfor %}
   </div>
@@ -53,5 +83,8 @@
       <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   </div>
+  {%- if opts.visuals %}
+  </div>
+  {%- endif %}
 </div>
 {%- endmacro %}

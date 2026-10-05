@@ -806,3 +806,42 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 - **Unchanged.** The copy, the labels (2020, 4+ years, Every year, Today), the vertical line, dots, gold Today marker, card styling and the stats row. Reveal-on-scroll is still skipped under `prefers-reduced-motion` (tested).
 - **TODO** adds "Confirm the year the EY partnership started so the label can be 'Since 20XX' instead of '4+ years' (which goes stale each year)" and the missing competition photo.
 - **Verified** at 360/768/1024/1440: no horizontal scroll, no console errors, no faces cut. Text colours are unchanged (`--ink-2` on white, 10.9:1). Build and check:notes pass.
+
+## /about/: pillars as photo cards; "How a project works" stepper with visuals
+
+- **Pillars.** The "Read more +" footer, the dark hover flip and the expand/collapse code are removed (pillar `data-expand` JS and CSS deleted). Each card always shows a 16:10 photo, the number, title, tagline (`summary`) and full description (`text`); both texts were already in `site.json → pillars` and are unchanged. Thin red top border, white card, border, radius and shadow as before; a 4px hover lift only on pointer devices with motion allowed; no links, so no focus stops.
+  - The cards are CSS subgrids spanning five rows, so number, title, tagline and description start at the same height across a row.
+  - Layout: 3 columns from 1024px; 2 from 640px with the third centred at the same width (4 half-tracks); 1 below.
+  - Measured: 3 × 384×640 at 1440; 3 × 309×646 at 1024; 2 + 1 centred at 768.
+- **Pillar photos** (`site.json → pillars[].image/focal/alt`; 16:10, 480/800px, under 100KB; the largest is the hike at 83KB). None appears in the banner (`aboutimage`) or the timeline (Smith entrance, EY site visit, campus lawn). The photo wall further down shows these photos too, since it shows all imported photos.
+  - 01, client-focused delivery: `whiteboard` (members working at a whiteboard)
+  - 02, professionalism: `group-steps-spring` (members in business attire on the Smith School steps)
+  - 03, community: `hike`
+- **Stepper visuals** (`process.json → steps[].visual`).
+  - **Photos:**
+    - Team forms: `group-trees`, newly imported IMG_7029 (members in business attire outdoors)
+    - Weekly rhythm: `workshop-data` (members at laptops while a slide is shown; the step mentions workshops)
+    - EY guidance: `ey-site-visit`, as you suggested. The timeline's EY card uses the same photo with a different crop, since the old site has no other EY photo.
+  - **Graphics** (maroon-black panel, gold line icon):
+    - Client request: an envelope with an upward arrow
+    - Deliverables: a document with a check
+    - The old site has no presentation photo; IMG_7029 and the other unused files are group portraits and headshots.
+  - The hidden Handoff step also has a graphic ready.
+  - Photos are 4:3 to the right of the text (38% column; 431×323 at 1440) and 16:9 on top below 640px. Crops are under 100KB, lazy, with width and height set.
+- **Stepper** (shared `stepper.njk`, new `visuals` option used only on /about/; the /join/ recruiting calendar is unchanged, tested).
+  - One white card holds the panels; they share a grid cell and crossfade (0.3s, none under reduced motion). The card keeps the height of the tallest step: 470px at 1440, constant across steps.
+  - "n / 5" stays at the top. Previous/Next sit in the card footer, right-aligned, disabled at the ends; focus stays on the pressed arrow.
+  - Progress rail: grey line between the first and last step centres, red fill up to the current step; done steps are filled red circles with ✓, the current one red with its number, future ones outlined.
+  - Below 560px the rail shows numbers only and the current step's name sits under it.
+  - Accessibility and interaction:
+    - ARIA tabs: tablist/tab/tabpanel, roving tabindex, Left/Right/Up/Down, Home/End; hidden panels are inert
+    - swipe on touch
+    - `#step=<n>` deep link, with the hash kept in sync via replaceState
+    - polite `role=status` announcement "Step n of 5: <name>" on changes (not on load)
+  - Without JS: all five steps stacked as a list, each with its visual; no arrows.
+- **Verified** at 360/768/1024/1440:
+  - equal pillar cards and photos, aligned text, centred third card on tablet
+  - step visuals equal in size; card height constant; no horizontal scroll; console clean
+  - keyboard, roving tabindex, progress states, fill, announcements, hash, deep link, swipe, reduced motion, no-JS
+  - text colours are existing tokens (`--ink`, `--ink-2`, red ≥ 7.24:1 on white)
+  - ui-check, build and check:notes pass

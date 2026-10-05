@@ -856,7 +856,7 @@ html.dialog-open { overflow: hidden; }
    as Home/Projects. Contrast notes next to each text colour pairing.
    ========================================================================== */
 /* List items used as cards/panels are not prose: no 70ch cap. */
-.stepper__panel, .story__item, .pillar, .qcard, .star__item, .photo-wall__item, .resource-grid > li, .doc-card, .press-list > li { max-width: none; }
+.stepper__panel, .stepper__body, .story__item, .pillar, .qcard, .star__item, .photo-wall__item, .resource-grid > li, .doc-card, .press-list > li { max-width: none; }
 /* ---- Inner-page photo banner (components/page-banner.njk; site.json → page_banners) ----
    Same flat maroon-black tint as the Home hero (--hero-tint colour; opacity per page via
    --banner-tint, 0.72-0.8). Text bottom-left in the normal container. Min heights
@@ -937,35 +937,30 @@ html.dialog-open { overflow: hidden; }
   .story__when { text-align: right; padding-top: 2px; }
 }
 
-/* ---- About: pillars (expandable cards) ---- */
-.pillars { display: grid; gap: var(--gutter); }
-@media (min-width: 900px) { .pillars { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* ---- About: pillars (three identical cards, everything visible) ----
+   Each card is a subgrid spanning 5 rows (photo, number, title, tagline, description), so
+   these line up across the cards in a row. 3 per row from 1024px; 2 from 640px with a lone
+   third card centred at the same width (4 half-tracks); 1 below. Not interactive. */
+.pillars { display: grid; grid-template-columns: minmax(0, 1fr); column-gap: var(--gutter); row-gap: var(--gutter); }
+@media (min-width: 640px) and (max-width: 1023px) {
+  .pillars { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pillar { grid-column: span 2; }
+  .pillar:last-child:nth-child(odd) { grid-column: 2 / span 2; }
+}
+@media (min-width: 1024px) { .pillars { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .pillar {
-  position: relative; display: grid; grid-template-rows: 1fr auto; border-radius: var(--radius); overflow: hidden;
-  background: var(--paper); border: 1px solid var(--line); border-top: 4px solid var(--scg-red); box-shadow: var(--shadow);
+  display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 0; max-width: none;
+  background: var(--paper); border: 1px solid var(--line); border-top: 4px solid var(--scg-red); border-radius: var(--radius);
+  box-shadow: var(--shadow); overflow: hidden; transition: transform .2s ease, box-shadow .2s ease;
 }
-.pillar__face, .pillar__more { padding: clamp(20px, 3vw, 28px); }
-.pillar__num { display: block; font-family: var(--font-head); font-weight: 800; font-size: var(--step-3); line-height: 1; color: var(--scg-red); margin-bottom: 16px; }
-.pillar__name { font-size: var(--step-1); margin-bottom: .35em; }
-.pillar__summary { margin: 0; color: var(--ink-2); font-size: var(--step-1); line-height: 1.4; }
-.pillar__more { padding-top: 0; color: var(--ink-2); }
-.pillar__more p { margin: 0; }
-/* Enhanced: face and details share one grid cell, so the card never changes height. */
-.pillar.is-enhanced { grid-template-rows: minmax(0, 1fr) auto; }
-.pillar.is-enhanced .pillar__face, .pillar.is-enhanced .pillar__more { grid-area: 1 / 1; }
-.pillar.is-enhanced .pillar__more { padding-top: clamp(20px, 3vw, 28px); background: var(--ink); color: var(--on-ink-2); visibility: hidden; opacity: 0; transition: opacity .25s, visibility .25s; }  /* 11.6:1 */
-.pillar.is-enhanced .pillar__more p { font-size: var(--step-0); }
-.pillar.is-open .pillar__more { visibility: visible; opacity: 1; }
-@media (hover: hover) { .pillar.is-enhanced:hover .pillar__more { visibility: visible; opacity: 1; } }
-.pillar__toggle {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 52px; padding: 0 clamp(20px, 3vw, 28px);
-  background: var(--paper-2); border: 0; border-top: 1px solid var(--line); cursor: pointer; font-family: var(--font-head); font-weight: 700; font-size: .9375rem; color: var(--scg-red);
-}
-.pillar__toggle:focus-visible { outline-offset: -4px; }
-.pillar__icon { position: relative; width: 14px; height: 14px; flex: none; }
-.pillar__icon::before, .pillar__icon::after { content: ""; position: absolute; left: 0; top: 6px; width: 14px; height: 2.5px; background: currentColor; border-radius: 2px; transition: transform .2s; }
-.pillar__icon::after { transform: rotate(90deg); }
-.pillar.is-open .pillar__icon::after { transform: rotate(0); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) { .pillar:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); } }
+.pillar__photo { display: block; }
+.pillar__photo img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; }
+.pillar > :not(.pillar__photo) { padding-inline: clamp(20px, 3vw, 28px); }
+.pillar__num { display: block; padding-top: 22px; font-family: var(--font-head); font-weight: 800; font-size: var(--step-3); line-height: 1; color: var(--scg-red); }   /* 7.24:1 */
+.pillar__name { font-size: var(--step-1); margin: 14px 0 0; }
+.pillar__summary { margin: 8px 0 0; color: var(--ink); font-size: var(--step-1); line-height: 1.4; font-weight: 700; font-family: var(--font-head); font-size: 1rem; }
+.pillar__text { margin: 10px 0 0; padding-bottom: clamp(20px, 3vw, 28px); color: var(--ink-2); }   /* 10.9:1 */
 
 /* ---- Stepper (How a project works, recruiting calendar) ---- */
 /* No JS: a numbered list with all details. With JS (.is-tabs): rail of step buttons + one panel. */
@@ -1013,6 +1008,50 @@ html.dialog-open { overflow: hidden; }
 @media (prefers-reduced-motion: no-preference) { .stepper.is-tabs .stepper__panel:not([hidden]) { animation: fade-in .3s ease-out; } }
 .stepper__controls { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
 .stepper__controls .icon-btn:disabled { opacity: .45; cursor: default; }
+/* Visual variant (About "How a project works"): one shared card holding the panels (they
+   crossfade in a single grid cell), a photo or graphic per step, Prev/Next in the card footer,
+   and a progress rail (red fill to the current step, ✓ on done steps). */
+.stepper--visual { --steps: 5; }
+.stepper--visual .stepper__panel { display: grid; gap: 18px; }
+.stepper__body { min-width: 0; max-width: 60ch; }
+.stepper__visual { display: block; order: -1; min-width: 0; max-width: 100%; line-height: 0; }
+.stepper__visual source { display: none; }
+.stepper__visual { aspect-ratio: 16 / 9; align-self: start; border-radius: 10px; overflow: hidden; }
+.stepper__visual img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.stepper__visual--graphic { display: grid; place-items: center; color: var(--scg-gold); background: linear-gradient(135deg, #26080A 0%, #3D1418 100%); }
+@media (min-width: 640px) {
+  .stepper--visual .stepper__panel { grid-template-columns: minmax(0, 1fr) 38%; align-items: center; gap: clamp(20px, 3vw, 36px); }
+  .stepper--visual .stepper__body { grid-column: 1; grid-row: 1; }
+  .stepper__visual { grid-column: 2; grid-row: 1; }
+  .stepper__visual { aspect-ratio: 4 / 3; align-self: center; }
+}
+.stepper.stepper--visual.is-tabs .stepper__card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: clamp(20px, 3.5vw, 32px); }
+.stepper.stepper--visual.is-tabs .stepper__panels { display: grid; }
+.stepper.stepper--visual.is-tabs .stepper__panel { grid-area: 1 / 1; background: none; border: 0; padding: 0; box-shadow: none; visibility: hidden; opacity: 0; animation: none; }
+.stepper.stepper--visual.is-tabs .stepper__panel.is-active { visibility: visible; opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .stepper.stepper--visual.is-tabs .stepper__panel { transition: opacity .3s ease, visibility 0s linear .3s; }
+  .stepper.stepper--visual.is-tabs .stepper__panel.is-active { transition: opacity .3s ease, visibility 0s; }
+}
+.stepper--visual .stepper__controls { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+/* Progress rail: grey line between the first and last step centres, red fill to the current one. */
+.stepper.stepper--visual.is-tabs .stepper__rail::before { left: calc(50% / var(--steps)); right: calc(50% / var(--steps)); }
+.stepper__fill { display: none; }
+.stepper.stepper--visual.is-tabs .stepper__fill {
+  display: block; position: absolute; z-index: 0; top: 27px; height: 2px; left: calc(50% / var(--steps));
+  width: calc((100% - 100% / var(--steps)) * var(--step-progress, 0)); background: var(--scg-red);
+}
+@media (prefers-reduced-motion: no-preference) { .stepper.stepper--visual.is-tabs .stepper__fill { transition: width .3s ease; } }
+@media (max-width: 559px) { .stepper.stepper--visual.is-tabs .stepper__fill { top: 26px; } }
+.stepper--visual .stepper__tab { z-index: 1; }
+.stepper--visual .stepper__tab.is-done .stepper__num { background: var(--scg-red); border-color: var(--scg-red); color: var(--paper); }   /* 7.24:1 */
+.stepper--visual .stepper__tab.is-done { color: var(--ink); }
+/* Phones: the rail shows numbers only; the current step's name is shown under it. */
+.stepper__current { display: none; }
+@media (max-width: 559px) {
+  .stepper.stepper--visual.is-tabs .stepper__current { display: block; margin: -6px 0 14px; text-align: center; font-family: var(--font-head); font-weight: 700; color: var(--ink); }
+}
+
 /* Dark variant (recruiting calendar on --ink). */
 .stepper--dark .stepper__panel { background: #1E1E1E; border-color: var(--line-ink); color: var(--on-ink); }
 .stepper--dark .stepper__text { color: var(--on-ink-2); }                       /* 11.6:1 on #1E1E1E ≥ 10.9:1 */

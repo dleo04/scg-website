@@ -104,21 +104,22 @@ bodyClass: page-about
       <p class="eyebrow">What we stand for</p>
       <h2 class="section__title" id="pillars-title">Our pillars</h2>
     </header>
+    {#- Three identical cards, all text always visible (site.json → pillars: name, summary,
+        text, image, focal, alt). Photos are 16:10 crops made by npm run assets. -#}
     <ul class="pillars">
       {%- for p in site.pillars %}
-      <li class="pillar" data-expand>
-        <div class="pillar__face">
-          <span class="pillar__num" aria-hidden="true">0{{ loop.index }}</span>
-          <h3 class="pillar__name">{{ p.name }}</h3>
-          <p class="pillar__summary">{{ p.summary }}</p>
-        </div>
-        <div class="pillar__more" id="pillar-{{ loop.index }}-more">
-          <p>{{ p.text }}</p>
-        </div>
-        <button class="pillar__toggle" type="button" data-expand-toggle aria-expanded="false" aria-controls="pillar-{{ loop.index }}-more" hidden>
-          <span data-expand-label>Read more</span><span class="visually-hidden"> about {{ p.name }}</span>
-          <span class="pillar__icon" aria-hidden="true"></span>
-        </button>
+      {%- set img = generatedImages.pillars[loop.index] if generatedImages.pillars else null %}
+      <li class="pillar">
+        {%- if img %}
+        <picture class="pillar__photo">
+          <source type="image/webp" srcset="{{ img.card.webpSrcset }}" sizes="(min-width: 1024px) 380px, (min-width: 640px) 46vw, 92vw">
+          <img src="{{ img.card.src }}" srcset="{{ img.card.jpgSrcset }}" sizes="(min-width: 1024px) 380px, (min-width: 640px) 46vw, 92vw" width="{{ img.card.width }}" height="{{ img.card.height }}" alt="{{ p.alt }}" loading="lazy" decoding="async">
+        </picture>
+        {%- endif %}
+        <span class="pillar__num" aria-hidden="true">0{{ loop.index }}</span>
+        <h3 class="pillar__name">{{ p.name }}</h3>
+        <p class="pillar__summary">{{ p.summary }}</p>
+        <p class="pillar__text">{{ p.text }}</p>
       </li>
       {%- endfor %}
     </ul>
@@ -134,7 +135,7 @@ bodyClass: page-about
       <h2 class="section__title" id="process-title">How a project works</h2>
       <p class="section__lede">From a client's first request to the final deliverables, each semester.</p>
     </header>
-    {{ stepper(processSteps, { id: "process", label: "Steps of a client project", headingLevel: 3 }) }}
+    {{ stepper(processSteps, { id: "process", label: "Steps of a client project", headingLevel: 3, visuals: true }) }}
   </div>
 </section>
 {%- endif %}

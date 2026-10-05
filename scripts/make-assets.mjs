@@ -215,6 +215,53 @@ for (const [key, sp] of Object.entries(site.story_photos || {})) {
   manifest.story[key] = entry;
 }
 
+// Generic focal-point crops: each kind is [name, aspect]; 480 and 800px wide, WebP + JPEG
+// under 100KB. Used for the /about/ pillar cards (16:10) and step visuals (4:3 + 16:9).
+async function focalCrops(dir, key, image, focal, kinds) {
+  const src = image && path.join(ROOT, "assets/photos", `${image}.jpg`);
+  if (!src || !fs.existsSync(src)) return null;
+  fs.mkdirSync(path.join(GEN_DIR, dir), { recursive: true });
+  const meta = await sharp(src).metadata();
+  const [fx, fy] = (focal || "50% 50%").split(/\s+/).map((v) => parseFloat(v) / 100);
+  const entry = {};
+  for (const [kind, ar] of kinds) {
+    let w = meta.width, h = Math.round(meta.width / ar);
+    if (h > meta.height) { h = meta.height; w = Math.round(h * ar); }
+    const crop = { left: Math.round((meta.width - w) * fx), top: Math.round((meta.height - h) * fy), width: w, height: h };
+    const set = { webp: [], jpg: [] };
+    for (const size of [480, 800].filter((s) => s <= w)) {
+      for (const fmt of ["webp", "jpg"]) {
+        let q = fmt === "webp" ? 76 : 78, buf;
+        do {
+          const img = sharp(src).extract(crop).resize({ width: size });
+          buf = await (fmt === "webp" ? img.webp({ quality: q }) : img.jpeg({ quality: q, mozjpeg: true, progressive: true })).toBuffer();
+          q -= 5;
+        } while (buf.length > 100 * 1024 && q > 40);
+        const name = `${key}-${kind}-${size}.${fmt}`;
+        fs.writeFileSync(path.join(GEN_DIR, dir, name), buf);
+        set[fmt].push(`/assets/generated/${dir}/${name} ${size}w`);
+        if (fmt === "jpg") entry[kind] = { src: `/assets/generated/${dir}/${name}`, width: size, height: Math.round(size / ar), kb: Math.round(buf.length / 1024) };
+      }
+    }
+    entry[kind].webpSrcset = set.webp.join(", ");
+    entry[kind].jpgSrcset = set.jpg.join(", ");
+  }
+  return entry;
+}
+manifest.pillars = {};
+for (const [i, p] of (site.pillars || []).entries()) {
+  const e = await focalCrops("pillars", `pillar-${i + 1}`, p.image, p.focal, [["card", 16 / 10]]);
+  if (e) manifest.pillars[i + 1] = e;
+}
+manifest.steps = {};
+for (const s of readJson("process.json").steps || []) {
+  const v = s.visual;
+  if (!v?.image) continue;
+  const key = s.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  const e = await focalCrops("steps", key, v.image, v.focal, [["wide", 4 / 3], ["mobile", 16 / 9]]);
+  if (e) manifest.steps[key] = e;
+}
+
 // Employer logos (downloaded once by `npm run logos`): small WebP + PNG copies,
 // resized proportionally to at most 360x120 (3x the largest display size). No recoloring.
 const logoManifest = path.join(ROOT, "assets/logos/logos.json");

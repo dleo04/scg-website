@@ -1,6 +1,5 @@
 // Site-wide progressive enhancement: mobile menu, the "Join SCG" sub-menu, accessible tabs (also the step-by-step
-// steppers on /about/ and /join/), expandable pillar cards, stat count-up and
-// reveal-on-scroll. Everything works without this file.
+// steppers on /about/ and /join/), stat count-up and reveal-on-scroll. Everything works without this file.
 (() => {
   "use strict";
 
@@ -119,6 +118,22 @@
     const panelList = panels[0].parentElement;
     if (panelList.getAttribute("role") === "list") panelList.removeAttribute("role");
 
+    // Optional stepper features (About "How a project works"):
+    //   data-step-fade      panels share one grid cell and crossfade (hidden ones are inert)
+    //   data-step-progress  done/current classes, red fill up to the current step, ✓ on done steps
+    //   data-step-hash="step"  #step=<n> opens step n on load; the hash follows (replaceState)
+    //   [data-step-status]  polite announcement "Step n of N: <name>" on user changes
+    //   [data-step-current] the current step's name under the rail (phones show numbers only)
+    const fade = root.hasAttribute("data-step-fade");
+    const progress = root.hasAttribute("data-step-progress");
+    const hashKey = root.dataset.stepHash;
+    const status = root.querySelector("[data-step-status]");
+    const currentLabel = root.querySelector("[data-step-current]");
+    const fill = root.querySelector("[data-step-fill]");
+    const names = tabs.map((t) => t.querySelector(".stepper__name")?.textContent.trim() || t.textContent.trim());
+    const nums = tabs.map((t) => t.querySelector(".stepper__num"));
+    let ready = false;
+
     let currentIndex = 0;
     const select = (index, focus = false) => {
       currentIndex = index;
@@ -126,11 +141,26 @@
         const on = i === index;
         tab.setAttribute("aria-selected", String(on));
         tab.tabIndex = on ? 0 : -1;
-        panels[i].hidden = !on;
+        if (fade) {
+          panels[i].classList.toggle("is-active", on);
+          panels[i].inert = !on;
+          panels[i].setAttribute("aria-hidden", String(!on));
+        } else {
+          panels[i].hidden = !on;
+        }
+        if (progress) {
+          tab.classList.toggle("is-done", i < index);
+          tab.classList.toggle("is-current", on);
+          if (nums[i]) nums[i].textContent = i < index ? "✓" : String(i + 1);
+        }
       });
+      if (fill) fill.style.setProperty("--step-progress", String(tabs.length > 1 ? index / (tabs.length - 1) : 0));
+      if (currentLabel) currentLabel.textContent = names[index];
       if (prev) prev.disabled = index === 0;
       if (next) next.disabled = index === tabs.length - 1;
       if (focus) tabs[index].focus();
+      if (hashKey && ready) history.replaceState(history.state, "", `${location.pathname}${location.search}#${hashKey}=${index + 1}`);
+      if (status && ready) status.textContent = `Step ${index + 1} of ${tabs.length}: ${names[index]}`;
     };
 
     tablist.addEventListener("click", (e) => {
@@ -165,23 +195,16 @@
     }
 
     root.classList.add("is-tabs");
-    select(Math.max(0, tabs.findIndex((t) => t.hasAttribute("data-tab-initial"))));
-  });
-
-  // ---- Expandable cards (About pillars): button toggles the details --------
-  // Without JS the details are simply visible. Hover also reveals them on pointer devices (CSS).
-  document.querySelectorAll("[data-expand]").forEach((card) => {
-    const button = card.querySelector("[data-expand-toggle]");
-    const label = button?.querySelector("[data-expand-label]");
-    if (!button) return;
-    card.classList.add("is-enhanced");
-    button.hidden = false;
-    button.addEventListener("click", () => {
-      const open = button.getAttribute("aria-expanded") !== "true";
-      button.setAttribute("aria-expanded", String(open));
-      card.classList.toggle("is-open", open);
-      if (label) label.textContent = open ? "Show less" : "Read more";
-    });
+    const fromHash = () => {
+      if (!hashKey) return -1;
+      const m = location.hash.match(new RegExp(`^#${hashKey}=(\\d+)$`));
+      return m ? Math.min(tabs.length, Math.max(1, Number(m[1]))) - 1 : -1;
+    };
+    const start = fromHash();
+    select(start >= 0 ? start : Math.max(0, tabs.findIndex((t) => t.hasAttribute("data-tab-initial"))));
+    if (start >= 0) requestAnimationFrame(() => root.scrollIntoView({ block: "start" }));
+    if (hashKey) window.addEventListener("hashchange", () => { const i = fromHash(); if (i >= 0) select(i); });
+    ready = true;
   });
 
   // ---- Testimonial carousel: one quote at a time, dot buttons, no autoplay --

@@ -234,22 +234,31 @@
   ],
   "member_stats_as_of": null,
   "mission": "SCG helps organizations achieve their vision of success through sustainable strategies, research, management and process improvement.",
-  "pillars_readme": "The three pillars on /about/, tightened from the old About page.",
+  "pillars_readme": "The three pillars on /about/, tightened from the old About page: 'summary' (tagline) and 'text' (full description) are both shown. 'image' is a photo id from data/photos.json, 'focal' (x% y%) the point kept in the 16:10 crop, 'alt' what the photo shows.",
   "pillars": [
     {
       "name": "Commitment to Excellence in Service",
       "summary": "Client-focused work, executed well.",
-      "text": "Every engagement starts from the client's specific needs and is delivered to a high standard. We aim for long-term relationships by consistently meeting expectations and supporting clients after the work is handed over."
+      "text": "Every engagement starts from the client's specific needs and is delivered to a high standard. We aim for long-term relationships by consistently meeting expectations and supporting clients after the work is handed over.",
+      "image": "whiteboard",
+      "focal": "50% 45%",
+      "alt": "Three members writing ideas on a large whiteboard in a meeting room."
     },
     {
       "name": "Upholding Professionalism",
       "summary": "Integrity, expertise and accountability.",
-      "text": "We hold every client interaction to high standards of integrity, expertise and accountability, and build a culture of continuous learning, ethical decisions and respect, so clients can trust the work."
+      "text": "We hold every client interaction to high standards of integrity, expertise and accountability, and build a culture of continuous learning, ethical decisions and respect, so clients can trust the work.",
+      "image": "group-steps-spring",
+      "focal": "50% 60%",
+      "alt": "SCG members in business attire gathered on the front steps of the Robert H. Smith School of Business."
     },
     {
       "name": "Fostering a Strong Sense of Community",
       "summary": "Collaboration inside SCG and beyond it.",
-      "text": "We work collaboratively within SCG and with outside stakeholders, share knowledge and support one another, and take on work whose impact reaches beyond business outcomes."
+      "text": "We work collaboratively within SCG and with outside stakeholders, share knowledge and support one another, and take on work whose impact reaches beyond business outcomes.",
+      "image": "hike",
+      "focal": "50% 45%",
+      "alt": "A group of SCG members in casual clothes standing on large rocks above a river on a sunny autumn hike."
     }
   ],
   "benefits_readme": "'What you get' on /join/: five equal photo cards, text reworded from the old Recruitment page's membership benefits. {ey_years} is replaced with facts → 'EY partnership'. 'image' is a photo id from data/photos.json (assets/photos/<id>.jpg); 'focal' is the vertical/horizontal point (x% y%) kept when the photo is cut to 16:10 (npm run assets); 'alt' describes what is visible. Photos follow the old site's own pairing in its Membership Benefits section (IMG_6911, IMG-1013, IMG_5159, EY Site Visit, IMG_6909).",
