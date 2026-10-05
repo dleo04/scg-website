@@ -885,3 +885,15 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - Card titles with ↗, descriptions and links are unchanged; links keep `target="_blank" rel="noopener noreferrer"` and "(opens in a new tab)" text. One link per card with a focus ring; equal heights; 4 / 2 / 1 columns.
 - **TODO** adds "Confirm members in gallery photos are OK with being shown on the site; remove any photo on request."
 - **Verified** at 360/768/1024/1440: no horizontal scroll, console clean. Lightbox keyboard and swipe, labels, focus return, the no-JS fallback, ui-check (axe clean), build and check:notes pass. Text colours are existing tokens (red 7.24:1, ink-2 10.9:1 on white).
+
+## /about/ stepper: tighter card, floating arrows
+
+- **Card.** The visual is now a 30% column at 3:2 with a 220px maximum height (photos keep their stored focal crop; graphic icons are 56px), vertically centred with the text. Card padding is 28px top and bottom (32px sides) from 768px and 20px on phones. Below 768px the visual sits on top at 16:9, max 170px.
+  - The divider and the footer row inside the card are gone.
+  - The panels still share one grid cell, so the card height is the same on all five steps: 278px at 1440 and 1920, 253 at 1024, 247 at 768, 441 at 360. No layout shift.
+- **Arrows.** Moved outside the card: two 44px white circles with a 1px border and a soft shadow, centred under the card (±0px at every width), 12px apart, 20px below the card.
+  - At the ends they use `aria-disabled` (40% opacity, no hover) and stay focusable, so focus is never dropped.
+  - Names follow the target step: "Previous step: EY guidance" and "Next step: Team forms"; just "Previous step" / "Next step" at the ends.
+  - Focus ring: 2px brand red with an offset. Hover: a small lift and scale, only with motion allowed.
+  - The /join/ calendar stepper keeps its own arrows (unchanged, tested).
+- **Unchanged.** Ribbon, copy, links, ARIA tabs, arrow keys, swipe, announcements and the `#step=` deep link (all tested). Verified at 360/768/1024/1440/1920: no horizontal scroll, console clean.

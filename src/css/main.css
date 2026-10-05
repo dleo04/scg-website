@@ -1019,20 +1019,22 @@ html.dialog-open { overflow: hidden; }
    crossfade in a single grid cell), a photo or graphic per step, Prev/Next in the card footer,
    and a progress rail (red fill to the current step, ✓ on done steps). */
 .stepper--visual { --steps: 5; }
-.stepper--visual .stepper__panel { display: grid; gap: 18px; }
+.stepper--visual .stepper__panel { display: grid; gap: 16px; }
 .stepper__body { min-width: 0; max-width: 60ch; }
-.stepper__visual { display: block; order: -1; min-width: 0; max-width: 100%; line-height: 0; }
+/* Visual: phones on top at 16:9 (max 170px); from 768px a 30% column at 3:2 (max 220px),
+   vertically centred with the text, so the text sets the card height. */
+.stepper__visual { display: block; order: -1; min-width: 0; max-width: 100%; line-height: 0; aspect-ratio: 16 / 9; max-height: 170px; width: 100%; border-radius: 10px; overflow: hidden; }
 .stepper__visual source { display: none; }
-.stepper__visual { aspect-ratio: 16 / 9; align-self: start; border-radius: 10px; overflow: hidden; }
 .stepper__visual img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .stepper__visual--graphic { display: grid; place-items: center; color: var(--scg-gold); background: linear-gradient(135deg, #26080A 0%, #3D1418 100%); }
-@media (min-width: 640px) {
-  .stepper--visual .stepper__panel { grid-template-columns: minmax(0, 1fr) 38%; align-items: center; gap: clamp(20px, 3vw, 36px); }
+.stepper__visual--graphic svg { width: 56px; height: 56px; }
+@media (min-width: 768px) {
+  .stepper--visual .stepper__panel { grid-template-columns: minmax(0, 1fr) 30%; align-items: center; gap: clamp(24px, 3vw, 40px); }
   .stepper--visual .stepper__body { grid-column: 1; grid-row: 1; }
-  .stepper__visual { grid-column: 2; grid-row: 1; }
-  .stepper__visual { aspect-ratio: 4 / 3; align-self: center; }
+  .stepper__visual { grid-column: 2; grid-row: 1; aspect-ratio: 3 / 2; max-height: 220px; align-self: center; }
 }
-.stepper.stepper--visual.is-tabs .stepper__card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: clamp(20px, 3.5vw, 32px); }
+.stepper.stepper--visual.is-tabs .stepper__card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; }
+@media (min-width: 768px) { .stepper.stepper--visual.is-tabs .stepper__card { padding: 28px 32px; } }
 .stepper.stepper--visual.is-tabs .stepper__panels { display: grid; }
 .stepper.stepper--visual.is-tabs .stepper__panel { grid-area: 1 / 1; background: none; border: 0; padding: 0; box-shadow: none; visibility: hidden; opacity: 0; animation: none; }
 .stepper.stepper--visual.is-tabs .stepper__panel.is-active { visibility: visible; opacity: 1; }
@@ -1040,7 +1042,14 @@ html.dialog-open { overflow: hidden; }
   .stepper.stepper--visual.is-tabs .stepper__panel { transition: opacity .3s ease, visibility 0s linear .3s; }
   .stepper.stepper--visual.is-tabs .stepper__panel.is-active { transition: opacity .3s ease, visibility 0s; }
 }
-.stepper--visual .stepper__controls { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+/* Arrows: two floating circles centred under the card (outside it), no bar or divider. */
+.stepper--visual .stepper__controls { justify-content: center; gap: 12px; margin-top: 20px; padding: 0; border: 0; }
+.stepper--visual .stepper__controls .icon-btn { width: 44px; height: 44px; background: var(--paper); border: 1px solid var(--ink-2); box-shadow: 0 2px 8px rgb(20 20 20 / .12); color: var(--ink); transition: transform .15s ease, box-shadow .15s ease; }
+.stepper--visual .stepper__controls .icon-btn:focus-visible { outline: 2px solid var(--scg-red); outline-offset: 3px; }
+.stepper--visual .stepper__controls .icon-btn[aria-disabled="true"] { opacity: .4; cursor: default; box-shadow: none; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .stepper--visual .stepper__controls .icon-btn:not([aria-disabled="true"]):hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 6px 14px rgb(20 20 20 / .16); color: var(--scg-red); border-color: var(--scg-red); }
+}
 /* Progress rail: grey line between the first and last step centres, red fill to the current one. */
 .stepper.stepper--visual.is-tabs .stepper__rail::before { left: calc(50% / var(--steps)); right: calc(50% / var(--steps)); }
 .stepper__fill { display: none; }

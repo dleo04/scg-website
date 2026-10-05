@@ -156,8 +156,16 @@
       });
       if (fill) fill.style.setProperty("--step-progress", String(tabs.length > 1 ? index / (tabs.length - 1) : 0));
       if (currentLabel) currentLabel.textContent = names[index];
-      if (prev) prev.disabled = index === 0;
-      if (next) next.disabled = index === tabs.length - 1;
+      if (fade) {
+        // Visual stepper: arrows stay focusable at the ends (aria-disabled), named after the target step.
+        prev?.setAttribute("aria-disabled", String(index === 0));
+        next?.setAttribute("aria-disabled", String(index === tabs.length - 1));
+        prev?.setAttribute("aria-label", index === 0 ? "Previous step" : `Previous step: ${names[index - 1]}`);
+        next?.setAttribute("aria-label", index === tabs.length - 1 ? "Next step" : `Next step: ${names[index + 1]}`);
+      } else {
+        if (prev) prev.disabled = index === 0;
+        if (next) next.disabled = index === tabs.length - 1;
+      }
       if (focus) tabs[index].focus();
       if (hashKey && ready) history.replaceState(history.state, "", `${location.pathname}${location.search}#${hashKey}=${index + 1}`);
       if (status && ready) status.textContent = `Step ${index + 1} of ${tabs.length}: ${names[index]}`;
@@ -177,8 +185,8 @@
       select((n + tabs.length) % tabs.length, true);
     });
     // Previous / Next buttons (steppers). Focus stays on the button that was pressed.
-    prev?.addEventListener("click", () => select(Math.max(0, currentIndex - 1)));
-    next?.addEventListener("click", () => select(Math.min(tabs.length - 1, currentIndex + 1)));
+    prev?.addEventListener("click", () => { if (prev.getAttribute("aria-disabled") !== "true") select(Math.max(0, currentIndex - 1)); });
+    next?.addEventListener("click", () => { if (next.getAttribute("aria-disabled") !== "true") select(Math.min(tabs.length - 1, currentIndex + 1)); });
     if (controls) controls.hidden = false;
 
     // Horizontal swipe on touch screens moves one step (vertical scrolling is untouched).
