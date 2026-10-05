@@ -1,6 +1,6 @@
 {%- from "components/work-card.njk" import workCard with context -%}
 {#- "Find your seat" (SPEC 5.2) for /join/, from data/tracks.json + data/projects.json.
-    With JS (src/js/seat-matcher.js): one search bar, four equal selector tiles (WAI-ARIA tabs:
+    With JS (src/js/seat-matcher.js): one search bar, four equal selector tiles (icon, name, one line; WAI-ARIA tabs:
     Left/Right, Home/End, roving tabindex) and ONE detail panel for the selected track.
     Typing or tapping a suggestion scores the tracks against their own fits/skills (strong) and
     their projects' fits/skills (weak); the best match is selected and badged "Best match",
@@ -41,15 +41,6 @@
       <span class="seat-tile__icon">{{ trackIcon(t.slug) }}</span>
       <span class="seat-tile__name">{{ t.name }}</span>
       <span class="seat-tile__short">{{ t.short }}</span>
-      {%- if t.showcase.length %}
-      <span class="seat-tile__logos" aria-hidden="true">
-        {%- for p in t.showcase %}
-        <span class="seat-logo" style="--tile-bg: {{ p.logo_bg or 'var(--paper-2)' }}">
-          {%- if p.logoImg %}<img src="{{ p.logoImg.png }}" width="{{ p.logoImg.width }}" height="{{ p.logoImg.height }}" alt="" loading="lazy" decoding="async">{% else %}<span class="seat-logo__name">{{ p.short_name or p.client }}</span>{% endif -%}
-        </span>
-        {%- endfor %}
-      </span>
-      {%- endif %}
     </button>
     {%- endfor %}
   </div>

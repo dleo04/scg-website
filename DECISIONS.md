@@ -661,3 +661,11 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - live region; mobile tiles; card → dialog; sticky CTA; reduced motion; no-JS (four stacked sections with 3 bullets, 5 skills, fit line, cards and link)
   - the Join dropdown still works
   - ui-check: 24 routes × 4 widths, axe clean. Contrast and banner contrast OK; check:notes OK.
+
+## Find your seat: tile logos removed
+
+- **What changed.** The row of small project logos at the bottom of the four selector tiles is gone, along with its markup in `seat-matcher.njk` and its CSS (`.seat-tile__logos`, `.seat-logo*`). The tile icon, name, one-line description, selected state, notch, hover, focus and keyboard behaviour are unchanged. The panel's "Work from this track" cards are unchanged. No data was touched: `showcase` in `load-data.js` still feeds the panel cards.
+- **Padding.** From 768px, the tile bottom padding is 24px (top and sides stay 20px), so the text block doesn't sit on the bottom edge. The phone 2×2 layout is unchanged.
+- **Measured.** All four tiles are equal and in one row from 768px, at 288×149 (1280/1440, was 288×193) and 168×207 (768). On phones they are 158×108 in a 2×2 grid. There is no horizontal scroll, and the panel height is stable across tracks.
+- **Section height at 1440:** 1884 → 1840px.
+- **Checks.** Seat test (tabs, matcher, deep links, no-JS, dialog), ui-check, build and check:notes all pass.
