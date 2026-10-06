@@ -180,26 +180,31 @@ for (const b of site.benefits || []) {
   };
 }
 
-// About timeline photos (site.json → story_photos): 3:2 (desktop/tablet) and 16:9 (phones)
-// crops around each focal point, 800px wide (and 480px), WebP + JPEG under 100KB.
+// About timeline photos (site.json → story_photos): 4:3 (desktop/tablet) and 16:9 (phones)
+// crops around each focal point, 800px wide (and 480px), WebP + JPEG under 100KB; smaller
+// sources are used at their own width (never upscaled). 'image' may have any extension.
 manifest.story = {};
 fs.mkdirSync(path.join(GEN_DIR, "story"), { recursive: true });
+for (const f of fs.readdirSync(path.join(GEN_DIR, "story"))) fs.rmSync(path.join(GEN_DIR, "story", f));
 for (const [key, sp] of Object.entries(site.story_photos || {})) {
-  const src = sp.image && path.join(ROOT, "assets/photos", `${sp.image}.jpg`);
-  if (!src || !fs.existsSync(src)) continue;
-  const meta = await sharp(src).metadata();
+  const file = sp.image && fs.readdirSync(path.join(ROOT, "assets/photos")).find((f) => path.basename(f, path.extname(f)).toLowerCase() === sp.image.toLowerCase() && /\.(jpe?g|png|webp)$/i.test(f));
+  if (!file) continue;
+  const src = path.join(ROOT, "assets/photos", file);
+  const meta = await sharp(src).rotate().metadata();
   const [fx, fy] = (sp.focal || "50% 50%").split(/\s+/).map((v) => parseFloat(v) / 100);
   const entry = {};
-  for (const [kind, ar] of [["wide", 3 / 2], ["mobile", 16 / 9]]) {
+  for (const [kind, ar] of [["wide", 4 / 3], ["mobile", 16 / 9]]) {
     let w = meta.width, h = Math.round(meta.width / ar);
     if (h > meta.height) { h = meta.height; w = Math.round(h * ar); }
     const crop = { left: Math.round((meta.width - w) * fx), top: Math.round((meta.height - h) * fy), width: w, height: h };
+    const sizes = [480, 800].filter((s) => s <= w);
+    if (!sizes.length) sizes.push(w);
     const set = { webp: [], jpg: [] };
-    for (const size of [480, 800].filter((s) => s <= w)) {
+    for (const size of sizes) {
       for (const fmt of ["webp", "jpg"]) {
         let q = fmt === "webp" ? 76 : 78, buf;
         do {
-          const img = sharp(src).extract(crop).resize({ width: size });
+          const img = sharp(src).rotate().extract(crop).resize({ width: size });
           buf = await (fmt === "webp" ? img.webp({ quality: q }) : img.jpeg({ quality: q, mozjpeg: true, progressive: true })).toBuffer();
           q -= 5;
         } while (buf.length > 100 * 1024 && q > 40);

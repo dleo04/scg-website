@@ -910,39 +910,49 @@ html.dialog-open { overflow: hidden; }
 .cta-strip__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; }
 .cta-strip__title { font-size: var(--step-2); margin: 0; }
 
-/* ---- About: story timeline (scroll reveal via [data-reveal]) ---- */
+/* ---- About: story timeline ----
+   Phones (<768px): label above each card, line on the left, photo on top (16:9, max 180px).
+   768px+: label column | card. Every card is the same grid (text | 32% photo at 4:3), the same
+   padding and height (grid-auto-rows: 1fr), text top-aligned at 56ch; the label baseline and
+   the dot line up with the card title. Progress (story.js): the line fills red top to bottom
+   and dots fill as cards come into view; without JS or with reduced motion: final state. */
+.story { --card-pad: 28px; --dot: 16px; --label: 150px; }
+@media (min-width: 1024px) { .story { --label: 180px; } }
 .story__list { position: relative; display: grid; gap: 28px; }
 .story__list::before { content: ""; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(var(--scg-red), var(--scg-gold)); border-radius: 2px; }
-.story__item { position: relative; padding-left: 44px; display: grid; gap: 8px; }
-.story__item::before { content: ""; position: absolute; left: 4px; top: 6px; width: 16px; height: 16px; border-radius: 50%; background: var(--paper); border: 4px solid var(--scg-red); }
-.story__item--now::before { border-color: var(--scg-gold); background: var(--ink); }
+.story__fill { display: none; }
+.story__item { position: relative; padding-left: 44px; display: grid; gap: 8px; max-width: none; }
+.story__item::before { content: ""; position: absolute; left: 4px; top: 6px; width: var(--dot); height: var(--dot); border-radius: 50%; box-sizing: border-box; background: var(--scg-red); border: 4px solid var(--scg-red); z-index: 1; }
+.story__item--now::before { border-color: var(--scg-gold); background: var(--scg-gold); }
 .story__when { margin: 0; font-family: var(--font-head); font-weight: 800; font-size: var(--step-2); line-height: 1.1; color: var(--scg-red); }   /* 6.58:1 on paper-2 */
-.story__card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(18px, 3vw, 28px); box-shadow: var(--shadow); }
+.story__card { display: grid; gap: 16px; align-content: start; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
 .story__card p { color: var(--ink-2); margin-bottom: 0; }
-/* Cards with a photo: text left (≤ 60ch), photo right (38%, 3:2) from 640px; photo on top
-   at 16:9 below 640px. Same photo size on every card at a given width. */
-.story__card--photo { display: grid; gap: 18px; }
-.story__text { max-width: 60ch; }
-.story__text p { max-width: 60ch; }
-.story__photo { --pad: clamp(18px, 3vw, 28px); display: block; order: -1; width: calc(100% + 2 * var(--pad)); max-width: none; margin: calc(-1 * var(--pad)) calc(-1 * var(--pad)) 0; }
-.story__photo img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius) var(--radius) 0 0; }
-@media (min-width: 640px) {
-  .story__card--photo { grid-template-columns: minmax(0, 1fr) 38%; align-items: center; gap: clamp(20px, 3vw, 32px); }
-  .story__photo { grid-column: 2; grid-row: 1; margin: 0; width: auto; }
-  .story__card--photo .story__text { grid-column: 1; grid-row: 1; }
-  .story__photo img { aspect-ratio: 3 / 2; border-radius: 10px; }
+.story__text, .story__text p { max-width: 56ch; }
+.story__photo { display: block; order: -1; max-width: none; border-radius: 10px; overflow: hidden; aspect-ratio: 16 / 9; max-height: 180px; }
+.story__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.story__title { font-size: var(--step-1); line-height: 1.15; margin: 0 0 .4em; }
+/* Today stats: one even row of three; numbers shrink on narrow screens, labels may wrap. */
+.story__facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 6px 0 14px !important; }
+.story__facts li { display: flex; flex-direction: column; gap: 2px; color: var(--ink-2); font-size: .875rem; line-height: 1.3; max-width: none; }
+.story__facts strong { font-family: var(--font-head); font-weight: 800; font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem); line-height: 1.1; color: var(--ink); }
+@media (min-width: 768px) {
+  .story__list { gap: 32px; grid-auto-rows: 1fr; }
+  .story__list::before { left: calc(var(--label) + 21px); }
+  .story__item { grid-template-columns: var(--label) minmax(0, 1fr); gap: 0 48px; padding-left: 0; align-items: stretch; }
+  /* Title baseline = card border + padding + title baseline offset; the label is padded so its
+     baseline matches (Montserrat baseline ≈ (line-height / 2 + 0.36) × font size). */
+  .story__when { text-align: right; padding-top: calc(1px + var(--card-pad) + 0.9335 * var(--step-1) - 0.9085 * var(--step-2)); }
+  .story__item::before { left: calc(var(--label) + 14px); top: calc(1px + var(--card-pad) + 0.575 * var(--step-1) - var(--dot) / 2); }
+  .story__card { grid-template-columns: minmax(0, 1fr) 32%; align-items: start; gap: clamp(24px, 3vw, 40px); padding: var(--card-pad); }
+  .story__photo { grid-column: 2; grid-row: 1; order: 0; aspect-ratio: 4 / 3; max-height: none; }
+  .story__card .story__text { grid-column: 1; grid-row: 1; }
 }
-.story__title { font-size: var(--step-1); margin-bottom: .4em; }
-.story__facts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 4px 0 12px !important; }
-.story__facts li { color: var(--ink-2); }
-.story__facts strong { font-family: var(--font-head); font-weight: 800; font-size: var(--step-1); color: var(--ink); margin-right: .2em; }
-@media (min-width: 900px) {
-  .story__list { gap: 36px; }
-  .story__list::before { left: calc(180px + 21px); }
-  .story__item { grid-template-columns: 180px minmax(0, 1fr); gap: 0 56px; padding-left: 0; align-items: start; }
-  .story__item::before { left: calc(180px + 14px); top: 10px; }
-  .story__when { text-align: right; padding-top: 2px; }
-}
+/* Progress state (JS, motion allowed): grey track, red-to-gold fill, hollow dots until reached. */
+.story__list.is-progress::before { background: var(--line); }
+.story__list.is-progress .story__fill { display: block; position: absolute; left: 11px; top: 8px; width: 2px; height: var(--story-progress, 0px); background: linear-gradient(var(--scg-red), var(--scg-gold)); border-radius: 2px; transition: height .6s ease; }
+@media (min-width: 768px) { .story__list.is-progress .story__fill { left: calc(var(--label) + 21px); } }
+.story__list.is-progress .story__item:not(.is-reached)::before { background: var(--paper); }
+.story__list.is-progress .story__item::before { transition: background-color .3s ease; }
 
 /* ---- About: pillars (three identical cards, everything visible) ----
    Each card is a subgrid spanning 5 rows (photo, number, title, tagline, description), so

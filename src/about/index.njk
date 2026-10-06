@@ -12,16 +12,16 @@ bodyClass: page-about
 {%- from "components/project-dialog.njk" import projectDialog with context -%}
 {%- from "components/page-banner.njk" import pageBanner with context -%}
 {#- Photo on a timeline card (site.json → story_photos; crops made by npm run assets):
-    3:2 beside the text from 640px, 16:9 on top below 640px. Lazy, decorative alt from data. -#}
+    4:3 beside the text from 768px, 16:9 on top below 768px. Lazy, decorative alt from data. -#}
 {%- macro storyPhoto(key) -%}
 {%- set sp = site.story_photos[key] if site.story_photos else null -%}
 {%- set img = generatedImages.story[key] if generatedImages.story else null -%}
 {%- if sp and img %}
 <picture class="story__photo">
-  <source media="(max-width: 639px)" type="image/webp" srcset="{{ img.mobile.webpSrcset }}" sizes="92vw">
-  <source media="(max-width: 639px)" srcset="{{ img.mobile.jpgSrcset }}" sizes="92vw">
-  <source type="image/webp" srcset="{{ img.wide.webpSrcset }}" sizes="(min-width: 1024px) 380px, 34vw">
-  <img src="{{ img.wide.src }}" srcset="{{ img.wide.jpgSrcset }}" sizes="(min-width: 1024px) 380px, 34vw" width="{{ img.wide.width }}" height="{{ img.wide.height }}" alt="{{ sp.alt }}" loading="lazy" decoding="async">
+  <source media="(max-width: 767px)" type="image/webp" srcset="{{ img.mobile.webpSrcset }}" sizes="92vw">
+  <source media="(max-width: 767px)" srcset="{{ img.mobile.jpgSrcset }}" sizes="92vw">
+  <source type="image/webp" srcset="{{ img.wide.webpSrcset }}" sizes="(min-width: 1024px) 320px, 28vw">
+  <img src="{{ img.wide.src }}" srcset="{{ img.wide.jpgSrcset }}" sizes="(min-width: 1024px) 320px, 28vw" width="{{ img.wide.width }}" height="{{ img.wide.height }}" alt="{{ sp.alt }}" loading="lazy" decoding="async">
 </picture>
 {%- endif %}
 {%- endmacro -%}
@@ -42,7 +42,8 @@ bodyClass: page-about
       <p class="eyebrow">Our story</p>
       <h2 class="section__title" id="story-title">Since 2020</h2>
     </header>
-    <ol class="story__list">
+    <ol class="story__list" data-story>
+      <li class="story__fill" aria-hidden="true" role="presentation"></li>
       <li class="story__item" data-reveal>
         <p class="story__when">{{ site.established }}</p>
         <div class="story__card story__card--photo">
@@ -68,7 +69,8 @@ bodyClass: page-about
       {%- if csvc %}
       <li class="story__item" data-reveal>
         <p class="story__when">Every year</p>
-        <div class="story__card">
+        <div class="story__card story__card--photo">
+          {{ storyPhoto("competition") }}
           <div class="story__text">
             <h3 class="story__title">Smith Impact Case Competition</h3>
             <p>{{ csvc.blurb }}</p>
@@ -84,7 +86,7 @@ bodyClass: page-about
             <h3 class="story__title">UMD's student-run consulting group</h3>
             {%- if verifiedStats.length %}
             <ul class="story__facts">
-              {%- for s in verifiedStats %}<li><strong>{{ s.value }}</strong> {{ s.label | lower }}</li>{% endfor %}
+              {%- for s in verifiedStats %}<li><strong>{{ s.value }}</strong> <span>{{ s.label | lower }}</span></li>{% endfor %}
             </ul>
             {%- endif %}
             <p>Student teams work with campus organizations, nonprofits and startups. <a href="/projects/">See the projects</a>.</p>
@@ -237,3 +239,4 @@ bodyClass: page-about
 </section>
 
 {%- if dialogProjects.length %}{{ projectDialog(dialogProjects) }}{% endif %}
+<script src="{{ '/js/story.js' | versioned }}" defer></script>

@@ -897,3 +897,19 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - Focus ring: 2px brand red with an offset. Hover: a small lift and scale, only with motion allowed.
   - The /join/ calendar stepper keeps its own arrows (unchanged, tested).
 - **Unchanged.** Ribbon, copy, links, ARIA tabs, arrow keys, swipe, announcements and the `#step=` deep link (all tested). Verified at 360/768/1024/1440/1920: no horizontal scroll, console clean.
+
+## /about/ "Since 2020" timeline: identical cards
+
+- **Card structure.** From 768px every card is the same grid: text (flexible, max 56ch) and a photo column (32%, 4:3, the same size on all four). Padding is 28px, text is top-aligned, and titles sit 29px from the card top on every card.
+  - The four cards share one height (`grid-auto-rows: 1fr`): 277px at 1440, 237 at 1024, 313 at 768.
+  - Below 768px: the label sits above each card, the line on the left, the photo on top at 16:9 (max 180px), padding 20px. No horizontal scroll.
+- **Smith Impact Case Competition photo.** `assets/photos/smithbuilding.jpg` (found by name), focal 40% 50%. Alt: "A large brick and white campus building seen from above, with green lawns, brick paths and a brick clock tower in front." It is not described as being from the competition, and has no caption.
+  - Not a duplicate of any other About photo: the others are all group photos.
+  - The file is only 600×350, so its 4:3 crop is 467px wide rather than ~800 (never upscaled). It is shown at 292px at 1440, sharp on standard screens and slightly soft on 2x screens. A larger original would help.
+  - The other three keep their images and focal points; their crops are now 4:3 (desktop) and 16:9 (phones) to match the new column. `story_photos` accepts the file name without extension.
+- **Today stats.** One even row of three (grid), large numbers with small labels beneath; the numbers shrink on narrow screens and labels may wrap. One row at 360, 768, 1024 and 1440.
+- **Labels and dots.** The year label's baseline matches the card title's baseline (±0.6px). The dot is centred on the title's first line (±0px).
+  - The label column is 180px from 1024px (so "Every year" stays on one line) and 150px at 768–1023.
+  - Colours unchanged: a red-to-gold line; red dots, gold for Today. Dots are now filled in their final state.
+- **Scroll progress** (`src/js/story.js`, IntersectionObserver). With JS and motion allowed, the line starts grey and fills top to bottom, and each dot fills as its card enters the view. Without JS or with reduced motion, everything is shown in the final state (tested).
+- **Verified** at 360/768/1024/1440: identical card widths, text edges and photo sizes; equal heights (desktop); stats on one row; no cropped faces; console clean. Text colours unchanged (ink-2 on white 10.9:1, red labels 6.58:1 on paper-2).
