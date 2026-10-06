@@ -1,0 +1,27 @@
+---
+layout: layouts/base.njk
+permalink: /404.html
+title: "Page not found"
+description: "This page does not exist on the Snider Consulting Group site."
+noindex: true
+eleventyExcludeFromCollections: true
+bodyClass: page-404
+---
+{#- 404 (served by the host for any missing path). All asset and link URLs in the layout are
+    absolute, so it works at any path depth. noindex; not in the sitemap. -#}
+{%- from "components/page-banner.njk" import pageBanner with context -%}
+{{ pageBanner({ id: "page-title", eyebrow: "Error 404", title: "Page not found" }) }}
+<section class="section">
+  <div class="container narrow">
+    <p class="lede">Sorry, we couldn't find that page. It may have moved, or the link may be mistyped.</p>
+    <h2 class="nf-links__title">Try one of these</h2>
+    <ul class="nf-links">
+      <li><a class="link-arrow" href="/projects/">Projects <span aria-hidden="true">→</span></a></li>
+      <li><a class="link-arrow" href="/join/">Join SCG <span aria-hidden="true">→</span></a></li>
+      <li><a class="link-arrow" href="/about/">About <span aria-hidden="true">→</span></a></li>
+      <li><a class="link-arrow" href="/team/">Team <span aria-hidden="true">→</span></a></li>
+      <li><a class="link-arrow" href="/work-with-us/">Work With Us <span aria-hidden="true">→</span></a></li>
+    </ul>
+    <p><a href="/">Go to the home page</a></p>
+  </div>
+</section>

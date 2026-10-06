@@ -1,7 +1,91 @@
 ---
-layout: layouts/stub.njk
+layout: layouts/base.njk
 title: "Partners"
-eyebrow: "Who we are"
-stage: 4
-description: "SCG's partners: EY, the Center for Social Value Creation and the Ed Snider Center."
+description: "SCG's partners: EY, the Center for Social Value Creation and the Ed Snider Center for Enterprise and Markets."
+bodyClass: page-partners
 ---
+{#- Partners (SPEC 5.9), from site.json → partners and partners_intro (facts shortened from the
+    old Partners page). EY: a dark band in the Home EY band's style (reversed logo, text aligned
+    with it) beside the EY site-visit photo (data/photos.json). Other partners: equal cards.
+    The SICC case prompt download appears in the CSVC card only when its site.json → downloads
+    entry is published (the loader drops "published": false). -#}
+{%- from "components/page-banner.njk" import pageBanner with context -%}
+{%- set ey = site.partners | findBy("name", "EY") -%}
+{%- set others = [] -%}
+{%- for p in site.partners %}{% if p.name != "EY" %}{% set others = (others.push(p), others) %}{% endif %}{% endfor -%}
+{%- set eyLogo = generatedImages.partnerBands["EY"] if generatedImages.partnerBands else null -%}
+{%- set eyPhoto = photos | findBy("id", "ey-site-visit") -%}
+{%- set eyImg = generatedImages.photos["ey-site-visit"] if generatedImages.photos else null -%}
+{%- set sicc = downloads | findBy("file", "assets/downloads/sicc-december-2023-case-prompt.pdf") -%}
+
+{{ pageBanner({ id: "page-title", eyebrow: "Who we are", title: "Partners" }) }}
+
+<section class="section section--tight partners-intro" aria-label="Introduction">
+  <div class="container">
+    <p class="lede partners-intro__lede">{{ site.partners_intro }}</p>
+    <ul class="partners-intro__jump" aria-label="On this page">
+      {%- if ey %}<li><a href="#ey-title">EY</a></li>{% endif %}
+      {%- for p in others %}<li><a href="#partner-{{ loop.index }}">{{ p.name }}</a></li>{% endfor %}
+    </ul>
+  </div>
+</section>
+
+{%- if ey %}
+{%- set hero = generatedImages.hero -%}
+<section class="partner-ey" aria-labelledby="ey-title">
+  {%- if hero %}
+  {#- Same treatment as the Home EY band: the hero photo, cropped low, under the maroon tint. -#}
+  <img class="ey-band__bg" src="{{ hero.src }}" srcset="{{ hero.jpgSrcset }}" sizes="100vw" width="{{ hero.width }}" height="{{ hero.height }}" alt="" loading="lazy" decoding="async">
+  {%- endif %}
+  <div class="container partner-ey__inner">
+    <div class="partner-ey__text">
+      <div class="partner-ey__head">
+        {%- if eyLogo %}
+        <span class="partner-ey__logo"><picture><source type="image/webp" srcset="{{ eyLogo.webp }}"><img src="{{ eyLogo.png }}" width="{{ eyLogo.width }}" height="{{ eyLogo.height }}" alt="" loading="lazy" decoding="async"></picture></span>
+        {%- endif %}
+        <div>
+          <p class="eyebrow eyebrow--gold">{{ ey.role }}</p>
+          <h2 class="partner-ey__title" id="ey-title">Ernst &amp; Young (EY)</h2>
+        </div>
+      </div>
+      <p>{{ ey.blurb }}</p>
+      {%- if ey.url %}<p><a class="link-arrow" href="{{ ey.url }}" target="_blank" rel="noopener noreferrer">Visit EY Consulting<span class="visually-hidden"> (opens in a new tab)</span> <span aria-hidden="true">↗</span></a></p>{% endif %}
+    </div>
+    {%- if eyPhoto and eyImg %}
+    <figure class="partner-ey__photo">
+      <picture>
+        <source type="image/webp" srcset="{{ eyImg.webpSrcset }}" sizes="(min-width: 1024px) 420px, (min-width: 768px) 40vw, 92vw">
+        <img src="{{ eyImg.src }}" srcset="{{ eyImg.jpgSrcset }}" sizes="(min-width: 1024px) 420px, (min-width: 768px) 40vw, 92vw" width="{{ eyImg.width }}" height="{{ eyImg.height }}" alt="{{ eyPhoto.alt }}" loading="lazy" decoding="async">
+      </picture>
+      <figcaption>{{ eyPhoto.caption }}</figcaption>
+    </figure>
+    {%- endif %}
+  </div>
+</section>
+{%- endif %}
+
+{%- if others.length %}
+<section class="section section--paper-2" aria-labelledby="campus-title">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">On campus</p>
+      <h2 class="section__title" id="campus-title">Campus partners</h2>
+    </header>
+    <ul class="partner-grid">
+      {%- for p in others %}
+      <li class="partner-card">
+        <p class="partner-card__role">{{ p.role }}</p>
+        <h3 class="partner-card__name" id="partner-{{ loop.index }}">{{ p.name }}</h3>
+        <p class="partner-card__text">{{ p.blurb }}</p>
+        <div class="partner-card__links">
+          {%- if p.name == "Center for Social Value Creation" and sicc %}
+          <a class="link-arrow" href="{{ sicc.url }}" download>Download the {{ sicc.title }} <span class="partner-card__meta">(PDF, {{ sicc.size }})</span></a>
+          {%- endif %}
+          {%- if p.url %}<a class="link-arrow" href="{{ p.url }}" target="_blank" rel="noopener noreferrer">Visit {{ "the Ed Snider Center" if p.name.indexOf("Snider") != -1 else "the " ~ p.name }}<span class="visually-hidden"> (opens in a new tab)</span> <span aria-hidden="true">↗</span></a>{% endif %}
+        </div>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+{%- endif %}

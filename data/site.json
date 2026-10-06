@@ -50,7 +50,10 @@
     ]
   },
   "forms": {
-    "client_request_endpoint": null
+    "_readme": "Client request form on /work-with-us/. 'client_request_endpoint': where the form POSTs (e.g. a Formspree or Netlify Forms URL); null = not connected: the form is hidden on the live site and the fallback below is shown instead (npm run dev:notes shows the form with a 'not connected' note). 'client_request_fallback_email': a shared club address only, never a personal one; it is the only email the build allows besides links.contact_email.",
+    "client_request_endpoint": null,
+    "client_request_fallback_email": "scgumd@gmail.com",
+    "client_request_fallback_source": "The organization address listed on the old site's public Contact Us page (sniderconsultinggroup.com/contact-us)."
   },
   "timeline": {
     "_readme": "Recruiting calendar on /join/ (stepper). Each step: name, optional (true shows an 'Optional' pill), description (null = no text), and optional dates. 'date' (YYYY-MM-DD) makes the step show its date and an 'Add to calendar' (.ics) download; add 'time' (24h 'HH:MM', local Eastern time), 'duration_minutes' and 'location' for a timed event. Unknown dates stay null: nothing is shown for them (no placeholder text). recruiting.current_step picks the highlighted step.",
@@ -142,7 +145,7 @@
       "name": "Center for Social Value Creation",
       "role": "Campus partner",
       "blurb": "Each year SCG collaborates with the Center for Social Value Creation to host the Smith Impact Case Competition. The winning team earns a cash prize and represents UMD at the Seattle Milgard Invitational Case Competition.",
-      "url": null
+      "url": "https://www.rhsmith.umd.edu/centers/center-social-value-creation"
     },
     {
       "name": "Ed Snider Center for Enterprise and Markets",
@@ -442,5 +445,48 @@
     "_readme": "Alumni Report download on /alumni/. Set 'file' to a PDF path (e.g. assets/downloads/scg-alumni-report-2026.pdf) to show the download; null hides it.",
     "title": "2026 Alumni Report",
     "file": null
-  }
+  },
+  "work_with_us": {
+    "_readme": "/work-with-us/. 'intro' is SPEC 5.8's sentence; the fee line is read from faq.json ('How much do SCG services cost?'), so it has one source. 'help': the 'What we can help with' cards, derived only from the skills in data/projects.json; 'icon' is one of research, data, ai, process, marketing, business; 'link' opens /projects/ filtered (q = search, track = discipline).",
+    "intro": "SCG works alongside your organization to create personalized and long-lasting solutions.",
+    "help": [
+      {
+        "title": "Research and benchmarking",
+        "text": "Market, stakeholder, legal and regulatory research, and benchmarking.",
+        "icon": "research",
+        "link": "/projects/?q=research"
+      },
+      {
+        "title": "Data, dashboards and analytics",
+        "text": "Data pipelines, SQL and dashboards that turn raw data into reports.",
+        "icon": "data",
+        "link": "/projects/?track=Data+%26+Engineering"
+      },
+      {
+        "title": "Machine-learning and AI strategy",
+        "text": "Machine-learning models, time-series forecasting and model benchmarking.",
+        "icon": "ai",
+        "link": "/projects/?q=machine+learning"
+      },
+      {
+        "title": "Process, role and knowledge-management design",
+        "text": "Process mapping and documentation, role design and knowledge management.",
+        "icon": "process",
+        "link": "/projects/?track=Operations+%26+People"
+      },
+      {
+        "title": "Marketing and communication strategy",
+        "text": "Marketing, social media and communication strategy, and member engagement.",
+        "icon": "marketing",
+        "link": "/projects/?q=marketing"
+      },
+      {
+        "title": "Business and monetization strategy",
+        "text": "Monetization, pricing, go-to-market and fundraising strategy.",
+        "icon": "business",
+        "link": "/projects/?track=Strategy+%26+Research"
+      }
+    ]
+  },
+  "partners_intro": "SCG partners with corporate and on-campus organizations that support its members and the Robert H. Smith School community."
 }

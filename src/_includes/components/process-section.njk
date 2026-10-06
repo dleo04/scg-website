@@ -1,0 +1,18 @@
+{%- from "components/stepper.njk" import stepper with context -%}
+{#- "How a project works" (data/process.json), shared by /about/ and /work-with-us/ so the
+    steps, photos and copy have one source. The Deliverables step's example opens a project
+    dialog: the page must also render projectDialog(...) for processDialogProjects(). -#}
+{% macro processSection(steps, cls = "section--paper-2") -%}
+{%- if steps.length %}
+<section class="section {{ cls }}" aria-labelledby="process-title">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Client work</p>
+      <h2 class="section__title" id="process-title">How a project works</h2>
+      <p class="section__lede">From a client's first request to the final deliverables, each semester.</p>
+    </header>
+    {{ stepper(steps, { id: "process", label: "Steps of a client project", headingLevel: 3, visuals: true }) }}
+  </div>
+</section>
+{%- endif %}
+{%- endmacro %}

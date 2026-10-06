@@ -111,6 +111,12 @@ Photos are listed in `data/gallery.json`: `file` (an image under `assets/`, usua
   - Matching: what a visitor types is compared (partial, case-insensitive, up to three comma-separated terms) with each track's name, `fits` and `skills`, and more weakly with the fits and skills of its projects. To make a word find a track, add it to that track's `fits` or `skills`.
   - The five suggestion chips are set in `src/join/index.njk`.
 
+## Work With Us: the request form and services
+- **Connect the form:** set `site.json → forms.client_request_endpoint` to your form service's URL (for example a Formspree form URL, `https://formspree.io/f/xxxx`) and rebuild. The form posts `name`, `organization`, `need`, `timeline`, `email` (and the hidden spam trap `_gotcha`, which Formspree understands). Without JavaScript it is a normal form post to the same URL.
+- **Until it is connected** (`null`), the live site hides the form and shows the fallback: the shared club address in `forms.client_request_fallback_email` (now `scgumd@gmail.com`, from the old Contact page) plus Instagram and LinkedIn. `npm run dev:notes` shows the form with a "not connected" note. Never put a personal email in either field; the build fails on any other address.
+- **Services cards:** `site.json → work_with_us.help` (title, one line, icon, a link to `/projects/` filtered by `q=` or `track=`). Keep them grounded in real project skills.
+- **Past clients:** logo tiles come from the projects (`projects.json → logo`), one per client; the other names come from `past-clients.json`. Fee wording is the FAQ answer "How much do SCG services cost?".
+
 ## How to change a page banner
 The header of `/projects/`, `/join/`, `/join/prepare/`, `/about/`, `/team/`, `/alumni/`, `/work-with-us/` and `/partners/` is a banner: a photo under a maroon-black tint, or, while a page has no photo, a plain maroon-black gradient. Settings live in `data/site.json → page_banners`, keyed by the page's URL:
 ```json

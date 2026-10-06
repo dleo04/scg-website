@@ -1,6 +1,7 @@
 // Post-build guard. Fails the build (exit 1) if the generated site contains:
 //  - the name of anyone in data/team.json or data/alumni.json without consent_to_publish: true
-//  - an email address (other than site.json → links.contact_email) or a phone number
+//  - an email address (other than the shared club addresses site.json → links.contact_email and
+//    forms.client_request_fallback_email) or a phone number
 //  - GoDaddy builder leftovers
 //  - with HIDE_PLACEHOLDERS=1: any visible placeholder or [TBD] marker
 import fs from "node:fs";
@@ -27,7 +28,7 @@ const unpublishedQuotes = (testimonialsFile.testimonials || [])
   .filter((t) => t.consent_to_publish !== true && t.quote && !/\[TBD/i.test(t.quote))
   .map((t) => t.quote.slice(0, 60));
 
-const allowedEmail = site.links?.contact_email?.toLowerCase();
+const allowedEmails = new Set([site.links?.contact_email, site.forms?.client_request_fallback_email].filter(Boolean).map((e) => e.toLowerCase()));
 const names = unpublishedNames();
 const surname = (n) => n.trim().split(/\s+/).at(-1);
 const problems = [];
@@ -46,7 +47,7 @@ for (const file of files) {
     }
   }
   for (const m of text.matchAll(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi)) {
-    if (m[0].toLowerCase() !== allowedEmail && !/\.(png|jpe?g|webp|svg|woff2?)$/i.test(m[0])) {
+    if (!allowedEmails.has(m[0].toLowerCase()) && !/\.(png|jpe?g|webp|svg|woff2?)$/i.test(m[0])) {
       problems.push(`${rel}: contains an email address "${m[0]}".`);
     }
   }

@@ -1,0 +1,82 @@
+{#- Client request form (/work-with-us/), posting to site.json → forms.client_request_endpoint.
+    - Endpoint set: a plain POST form (works without JS); request-form.js adds inline validation
+      (messages tied with aria-describedby), an error summary that takes focus, sending via
+      fetch with the button disabled, and success / error states announced politely.
+    - No endpoint: the live site shows the fallback (the shared club email from
+      forms.client_request_fallback_email, else the Instagram and LinkedIn links); with
+      SHOW_PLACEHOLDERS=1 the form is shown with a "not connected" dev note.
+    Honeypot: "_gotcha" (Formspree's name; ignored by people, filled by bots). No CAPTCHA. -#}
+{%- from "components/ui.njk" import tbdBlock with context -%}
+{% macro fallback(email) -%}
+<div class="request-fallback">
+  {%- if email %}
+  <p>To request a project, email us at <a href="mailto:{{ email }}?subject=Project%20request">{{ email }}</a>. Tell us your organization, what you need and your timeline.</p>
+  <p>You can also message SCG on <a href="{{ site.links.instagram }}" rel="noopener">Instagram</a> or <a href="{{ site.links.linkedin }}" rel="noopener">LinkedIn</a>.</p>
+  {%- else %}
+  <p>To request a project, message SCG on <a href="{{ site.links.instagram }}" rel="noopener">Instagram</a> or <a href="{{ site.links.linkedin }}" rel="noopener">LinkedIn</a> with your organization, what you need and your timeline.</p>
+  {%- endif %}
+</div>
+{%- endmacro %}
+
+{% macro requestForm() -%}
+{%- set endpoint = site.forms.client_request_endpoint if site.forms else null -%}
+{%- set email = site.forms.client_request_fallback_email if site.forms else null -%}
+{%- if endpoint or env.showPlaceholders %}
+{%- if not endpoint %}{{ tbdBlock("Form not connected", "[TBD: set site.json → forms.client_request_endpoint (e.g. a Formspree URL). Until then the live site hides this form and shows the email / social fallback.]") }}{% endif %}
+<div class="request" data-request>
+  <form class="request-form" action="{{ endpoint or '#' }}" method="post" data-request-form{% if not endpoint %} data-not-connected{% endif %}>
+    <div class="request-form__summary" tabindex="-1" aria-labelledby="request-errors-title" data-error-summary hidden>
+      <h3 class="request-form__summary-title" id="request-errors-title">Please fix the following</h3>
+      <ul data-error-list></ul>
+    </div>
+    <p class="request-form__note">All fields are required unless marked optional.</p>
+    <div class="field">
+      <label for="rq-name">Your name</label>
+      <input id="rq-name" name="name" type="text" autocomplete="name" required data-msg-required="Enter your name.">
+      <p class="field__error" id="rq-name-error" hidden></p>
+    </div>
+    <div class="field">
+      <label for="rq-org">Organization</label>
+      <input id="rq-org" name="organization" type="text" autocomplete="organization" required data-msg-required="Enter your organization's name.">
+      <p class="field__error" id="rq-org-error" hidden></p>
+    </div>
+    <div class="field">
+      <label for="rq-need">What do you need?</label>
+      <p class="field__hint" id="rq-need-hint">A few sentences about the problem or goal.</p>
+      <textarea id="rq-need" name="need" rows="5" required aria-describedby="rq-need-hint" data-msg-required="Tell us briefly what you need."></textarea>
+      <p class="field__error" id="rq-need-error" hidden></p>
+    </div>
+    <div class="field">
+      <label for="rq-timeline">Timeline <span class="field__optional">(optional)</span></label>
+      <p class="field__hint" id="rq-timeline-hint">For example, this semester or by a date.</p>
+      <input id="rq-timeline" name="timeline" type="text" aria-describedby="rq-timeline-hint">
+      <p class="field__error" id="rq-timeline-error" hidden></p>
+    </div>
+    <div class="field">
+      <label for="rq-email">Email</label>
+      <p class="field__hint" id="rq-email-hint">We only use it to reply to you.</p>
+      <input id="rq-email" name="email" type="email" autocomplete="email" required aria-describedby="rq-email-hint" data-msg-required="Enter your email address." data-msg-type="Enter a valid email address, with an @ and a domain.">
+      <p class="field__error" id="rq-email-error" hidden></p>
+    </div>
+    <div class="request-form__hp" aria-hidden="true">
+      <label for="rq-website">Leave this field empty</label>
+      <input id="rq-website" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
+    </div>
+    <div class="request-form__actions">
+      <button class="btn btn--primary" type="submit" data-request-submit>Send request</button>
+    </div>
+    <p class="request-form__status" role="status" aria-live="polite" data-request-status></p>
+  </form>
+  <div class="request-done" tabindex="-1" data-request-done hidden>
+    <h3 class="request-done__title">Thank you, your request was sent.</h3>
+    <p>We'll get back to you by email.</p>
+  </div>
+  <template data-request-error>
+    Sorry, your request could not be sent. Please try again{% if email %}, or email us at <a href="mailto:{{ email }}">{{ email }}</a>{% endif %}.
+  </template>
+</div>
+<script src="{{ '/js/request-form.js' | versioned }}" defer></script>
+{%- else %}
+{{ fallback(email) }}
+{%- endif %}
+{%- endmacro %}

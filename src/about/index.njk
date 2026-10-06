@@ -7,7 +7,7 @@ bodyClass: page-about
 {#- About (SPEC 5.6). Every fact comes from data/site.json (mission, established,
     partners, facts, stats, member_stats, pillars, press), data/process.json and
     data/photos.json. Section rhythm: white → paper-2 → white → paper-2 → ink → white → paper-2 → white. -#}
-{%- from "components/stepper.njk" import stepper with context -%}
+{%- from "components/process-section.njk" import processSection with context -%}
 {%- from "components/photo-wall.njk" import photoWall with context -%}
 {%- from "components/project-dialog.njk" import projectDialog with context -%}
 {%- from "components/page-banner.njk" import pageBanner with context -%}
@@ -134,19 +134,8 @@ bodyClass: page-about
   </div>
 </section>
 
-{# How a project works #}
-{%- if processSteps.length %}
-<section class="section section--paper-2" aria-labelledby="process-title">
-  <div class="container">
-    <header class="section__head">
-      <p class="eyebrow">Client work</p>
-      <h2 class="section__title" id="process-title">How a project works</h2>
-      <p class="section__lede">From a client's first request to the final deliverables, each semester.</p>
-    </header>
-    {{ stepper(processSteps, { id: "process", label: "Steps of a client project", headingLevel: 3, visuals: true }) }}
-  </div>
-</section>
-{%- endif %}
+{# How a project works (shared with /work-with-us/) #}
+{{ processSection(processSteps) }}
 
 {# Partnership band (dark): EY + Ed Snider Center #}
 <section class="section section--ink partners-band" aria-labelledby="partners-title">

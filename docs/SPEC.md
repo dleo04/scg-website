@@ -168,8 +168,12 @@ Audience: UMD student orgs, departments and nonprofits.
 - **What we can help with** (derived from the original Spring 2025 projects, not invented): research and benchmarking; data, dashboards and analytics; machine-learning and AI strategy; process, role and knowledge-management design; marketing and communication strategy; business and monetization strategy.
 - Process (reuse How a project works), a short "Past clients" strip, and a **request form** (name, organization, what you need, timeline, email). Form posts to a configurable endpoint (e.g., Formspree/Netlify Forms; endpoint in `site.json`, currently TBD). Include honeypot spam protection and a success/error state. Never expose a personal email.
 
+**As built (stage 4A):** banner + intro + FAQ fee line; six service cards linking to filtered `/projects/`; the shared "How a project works" section; 13 client logo tiles + other past-client names; the request form (endpoint `null` → the live site shows the shared club email and social links). See DECISIONS → Stage 4A.
+
 ### 5.9 Partners `/partners/`
 From `site.json → partners`. Keep the EY narrative but shorten and make it factual; remove the "level of prestige that elevates the SCG experience to new heights" style language. Keep the SICC case prompt download slot (existing "SICC December 2023 Case Prompt (pdf)"; placeholder).
+
+**As built (stage 4A):** intro, EY band (Home band style, EY site-visit photo), campus partner cards (CSVC, Ed Snider Center); the SICC download sits in the CSVC card and follows `downloads → published`. A branded `/404.html` was added (noindex).
 
 ## 6. Interactive Projects explorer (the centerpiece)
 
