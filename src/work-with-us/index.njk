@@ -13,8 +13,6 @@ bodyClass: page-wwu
 {%- from "components/wwu-icons.njk" import wwuIcon with context -%}
 {%- set wwu = site.work_with_us -%}
 {%- set clientStat = site.stats | findBy("label", "Client projects") -%}
-{%- set photo = photos | findBy("id", wwu.engagement.photo) -%}
-{%- set photoImg = generatedImages.photos[wwu.engagement.photo] if generatedImages.photos else null -%}
 {%- set hero = generatedImages.hero -%}
 
 {{ pageBanner({ id: "page-title", title: "Our services", lede: wwu.intro,
@@ -81,31 +79,51 @@ bodyClass: page-wwu
 </section>
 
 <section class="section" aria-labelledby="engage-title">
-  <div class="container engage{% if not photoImg %} engage--no-photo{% endif %}">
-    {%- if photo and photoImg %}
+  {#- Photo left (sticky from 1024px, top aligned with the eyebrow), text right; phones: photo
+      on top. Steps 1-4 are an <ol> whose visible numbers are aria-hidden (screen readers
+      count the list items themselves); "Beyond the semester" follows as the ongoing outcome. -#}
+  {%- set eng = wwu.engagement -%}
+  {%- set engImg = generatedImages.engagement -%}
+  <div class="container engage{% if not engImg %} engage--no-photo{% endif %}">
+    {%- if engImg %}
     <div class="engage__photo">
       <picture>
-        <source type="image/webp" srcset="{{ photoImg.webpSrcset }}" sizes="(min-width: 1024px) 460px, (min-width: 768px) 42vw, 92vw">
-        <img src="{{ photoImg.src }}" srcset="{{ photoImg.jpgSrcset }}" sizes="(min-width: 1024px) 460px, (min-width: 768px) 42vw, 92vw" width="{{ photoImg.width }}" height="{{ photoImg.height }}" alt="{{ photo.alt }}" loading="lazy" decoding="async">
+        <source media="(max-width: 767px)" type="image/webp" srcset="{{ engImg.mobile.webpSrcset }}" sizes="92vw">
+        <source media="(max-width: 767px)" srcset="{{ engImg.mobile.jpgSrcset }}" sizes="92vw">
+        <source type="image/webp" srcset="{{ engImg.wide.webpSrcset }}" sizes="(min-width: 1248px) 500px, 42vw">
+        <img src="{{ engImg.wide.src }}" srcset="{{ engImg.wide.jpgSrcset }}" sizes="(min-width: 1248px) 500px, 42vw" width="{{ engImg.wide.width }}" height="{{ engImg.wide.height }}" alt="{{ eng.alt }}" loading="lazy" decoding="async">
       </picture>
+      {%- if eng.badge %}<span class="engage__badge" aria-hidden="true">{{ eng.badge }}</span>{% endif %}
     </div>
     {%- endif %}
     <div class="engage__text">
       <header class="section__head">
         <p class="eyebrow">Working together</p>
-        <h2 class="section__title" id="engage-title">{{ wwu.engagement.title }}</h2>
+        <h2 class="section__title" id="engage-title">{{ eng.title }}</h2>
       </header>
-      <ul class="engage-list">
-        {%- for it in wwu.engagement.items %}
-        <li class="engage-item">
-          <span class="icon-chip">{{ wwuIcon(it.icon, 22) }}</span>
-          <div>
-            <h3 class="engage-item__title">{{ it.title }}</h3>
-            <p class="engage-item__text">{{ it.text }}</p>
+      {%- set steps = eng.items.slice(0, 4) -%}
+      {%- set outcome = eng.items[4] -%}
+      <ol class="engage-steps">
+        {%- for it in steps %}
+        <li class="engage-step" data-reveal style="--i: {{ loop.index0 }}">
+          <span class="engage-step__marker" aria-hidden="true">{{ loop.index }}</span>
+          <div class="engage-step__body">
+            <h3 class="engage-step__title">{{ it.title }}</h3>
+            <p class="engage-step__text">{{ it.text }}</p>
           </div>
         </li>
         {%- endfor %}
-      </ul>
+      </ol>
+      {%- if outcome %}
+      <div class="engage-step engage-step--outcome" data-reveal style="--i: 4">
+        <span class="engage-step__marker engage-step__marker--outcome" aria-hidden="true">{{ wwuIcon("link", 18) }}</span>
+        <div class="engage-step__body">
+          <h3 class="engage-step__title">{{ outcome.title }}</h3>
+          <p class="engage-step__text">{{ outcome.text }}</p>
+        </div>
+      </div>
+      {%- endif %}
+      <p class="engage__cta"><a class="engage__link" href="/work-with-us/contact/">Request a project <span class="engage__arrow" aria-hidden="true">→</span></a></p>
     </div>
   </div>
 </section>

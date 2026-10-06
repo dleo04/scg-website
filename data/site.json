@@ -455,7 +455,7 @@
     "file": null
   },
   "work_with_us": {
-    "_readme": "/work-with-us/ (Services). 'intro' and the 'engagement' items are the old Services page's own text (typos cleaned, nothing added). The two fee cards are read from faq.json ('How much do SCG services cost?'), one sentence each. 'help': the 'What we can help with' cards, derived only from projects.json skills; 'icon' is research, data, ai, process, marketing or business; 'link' opens /projects/ filtered (q = search, track = discipline); 'examples' picks up to 3 client logo chips from projects whose skills contain any of 'any' (or whose disciplines include 'track'). 'more' is the old page's closing line of 'How We Can Help'.",
+    "_readme": "/work-with-us/ (Services). 'intro' and the 'engagement' items are the old Services page's own text (typos cleaned, nothing added). The two fee cards are read from faq.json ('How much do SCG services cost?'), one sentence each. 'help': the 'What we can help with' cards, derived only from projects.json skills; 'icon' is research, data, ai, process, marketing or business; 'link' opens /projects/ filtered (q = search, track = discipline); 'examples' picks up to 3 client logo chips from projects whose skills contain any of 'any' (or whose disciplines include 'track'). 'more' is the old page's closing line of 'How We Can Help'. 'engagement': the old page's five points; the first four are numbered steps, the fifth ('Beyond the semester') is the ongoing outcome. 'photo' is a file name in assets/photos (any extension), 'focal' (x% y%) is kept in the 4:3 desktop crop and 'focal_mobile' (optional) in the 16:10 phone crop made by npm run assets, 'badge' is the figure from the first point shown over the photo (decorative).",
     "intro": "We proudly collaborate with University of Maryland clubs, organizations and institutions, as well as off-campus non-profit organizations, to support their missions and goals.",
     "fee_cards_readme": "The two cost cards above 'What we can help with'. Titles here; each description is one sentence of the FAQ answer 'How much do SCG services cost?' (faq.json). 'image' is a file name in assets/photos/ without extension (any of jpg/jpeg/png/webp); 'focal' (x% y%) is the point kept in the crop; 'alt' describes what the photo shows. npm run assets makes the crops.",
     "fee_cards": [
@@ -549,7 +549,11 @@
     "more": "Whatever the task, we are happy to meet and discuss if our services are the right fit for you.",
     "engagement": {
       "title": "How an engagement works",
-      "photo": "whiteboard",
+      "photo": "bbbpresentation",
+      "focal": "72% 50%",
+      "focal_mobile": "80% 50%",
+      "alt": "Four students in business attire presenting in a lecture room, one gesturing toward a screen showing slides titled E-Board Deliverables and Transition Guide.",
+      "badge": "3–4 month engagements",
       "items": [
         {
           "icon": "calendar",

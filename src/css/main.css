@@ -1600,16 +1600,44 @@ a.resource-card[target="_blank"] .resource-card__title::after { content: " ↗";
 .help-close__btn { justify-content: center; }
 @media (min-width: 768px) { .help-close { flex-direction: row; align-items: center; justify-content: space-between; gap: 32px; } .help-close__btn { flex: none; } }
 
-.engage { display: grid; gap: clamp(28px, 4vw, 56px); align-items: center; }
-@media (min-width: 768px) { .engage { grid-template-columns: minmax(0, 42%) minmax(0, 1fr); } .engage--no-photo { grid-template-columns: 1fr; } }
-@media (min-width: 1024px) { .engage { grid-template-columns: 460px minmax(0, 1fr); } }
-.engage__photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 45%; border-radius: var(--radius); box-shadow: var(--shadow); }
-@media (max-width: 767px) { .engage__photo img { aspect-ratio: 4 / 3; object-position: 50% 40%; } }
-.engage__text .section__head { margin-bottom: 20px; }
-.engage-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
-.engage-item { display: flex; gap: 16px; align-items: flex-start; }
-.engage-item__title { font-size: var(--step-0); margin: 2px 0 4px; }
-.engage-item__text { margin: 0; font-size: 1rem; line-height: 1.55; color: var(--ink-2); }
+/* "How an engagement works": photo left (42%, sticky, top aligned with the eyebrow), numbered
+   vertical timeline right. Circles 40px; the 2px line runs between circle centres: red for
+   steps 1-4, red fading to gold into the outcome circle. Phones: photo on top (16:10). */
+.engage { display: grid; gap: clamp(28px, 4vw, 56px); align-items: start; }
+@media (min-width: 768px) { .engage { grid-template-columns: minmax(0, 45fr) minmax(0, 55fr); } .engage--no-photo { grid-template-columns: 1fr; } }
+.engage__photo { position: relative; }
+@media (min-width: 1024px) { .engage__photo { position: sticky; top: calc(var(--header-h) + 24px); } }
+.engage__photo img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow); }
+@media (min-width: 768px) { .engage__photo img { aspect-ratio: 4 / 3; } }
+.engage__badge { position: absolute; left: 14px; bottom: 14px; padding: 6px 14px; border-radius: 999px; background: rgb(38 8 10 / .85); color: #FFFFFF; font-family: var(--font-head); font-weight: 700; font-size: .875rem; line-height: 1.3; }   /* white on maroon-black ≥ 13:1 */
+.engage__text .section__head { margin-bottom: 8px; }
+.engage-steps { list-style: none; margin: 0; padding: 0; }
+.engage-step { --dot: 40px; --dot-top: 18px; position: relative; display: grid; grid-template-columns: var(--dot) minmax(0, 1fr); column-gap: 20px; }
+/* Connector from this circle's centre to the next one's (the next item has the same top offset). */
+.engage-steps .engage-step::before {
+  content: ""; position: absolute; z-index: 0; left: calc(var(--dot) / 2 - 1px); width: 2px;
+  top: calc(var(--dot-top) + var(--dot) / 2); bottom: calc(-1 * (var(--dot-top) + var(--dot) / 2)); background: var(--scg-red);
+}
+.engage-steps .engage-step:last-child::before { background: linear-gradient(var(--scg-red), var(--scg-gold)); }
+.engage-step__marker {
+  position: relative; z-index: 1; display: grid; place-items: center; width: var(--dot); height: var(--dot); margin-top: var(--dot-top);
+  border-radius: 50%; background: var(--scg-red); color: #FFFFFF; font-family: var(--font-head); font-weight: 700; font-size: 1.0625rem;   /* white on red 7.2:1 */
+}
+.engage-step__marker--outcome { background: var(--paper); border: 2px solid var(--scg-gold); color: var(--scg-red); }
+.engage-step__body { padding-block: 24px; border-bottom: 1px solid var(--line); }
+.engage-step--outcome .engage-step__body { border-bottom: 0; }
+.engage-step__title { margin: 0 0 6px; font-family: var(--font-head); font-weight: 700; font-size: 1.375rem; line-height: 1.25; }   /* 22px */
+.engage-step__text { margin: 0; font-family: var(--font-body); font-size: 1rem; line-height: 1.6; color: var(--ink-2); }   /* 16px, 10.9:1 */
+.engage__cta { margin: 0; padding-top: 20px; border-top: 1px solid var(--line); }
+.engage__link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-family: var(--font-head); font-weight: 700; color: var(--scg-red); text-decoration: none; }
+.engage__link:hover { text-decoration: underline; text-underline-offset: 4px; }
+.engage__arrow { display: inline-block; transition: transform .2s ease; }
+@media (prefers-reduced-motion: no-preference) {
+  .engage__link:hover .engage__arrow, .engage__link:focus-visible .engage__arrow { transform: translateX(3px); }
+  /* Scroll reveal (site.js adds .reveal-ready only when motion is allowed): fade and rise 12px in sequence. */
+  .reveal-ready .engage-step[data-reveal] { transform: translateY(12px); transition-delay: calc(var(--i, 0) * 90ms); }
+  .reveal-ready .engage-step[data-reveal].is-visible { transform: none; }
+}
 
 .client-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (min-width: 768px) { .client-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }

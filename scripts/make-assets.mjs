@@ -216,6 +216,44 @@ for (const card of site.work_with_us?.fee_cards || []) {
   };
 }
 
+// Work With Us "How an engagement works" photo (site.json → work_with_us.engagement): 4:3
+// (desktop/tablet) and 16:10 (phones) crops around the focal point, 600 and 900px wide (never
+// upscaled), WebP + JPEG under 120KB. 'photo' is a file name in assets/photos/, any extension.
+{
+  const eng = site.work_with_us?.engagement;
+  const file = eng?.photo && fs.readdirSync(path.join(ROOT, "assets/photos")).find((f) => path.basename(f, path.extname(f)) === eng.photo && /\.(jpe?g|png|webp)$/i.test(f));
+  if (file) {
+    const src = path.join(ROOT, "assets/photos", file);
+    const meta = await sharp(src).rotate().metadata();
+    fs.mkdirSync(path.join(GEN_DIR, "engagement"), { recursive: true });
+    manifest.engagement = {};
+    for (const [kind, ar] of [["wide", 4 / 3], ["mobile", 16 / 10]]) {
+      const [fx, fy] = ((kind === "mobile" && eng.focal_mobile) || eng.focal || "50% 50%").split(/\s+/).map((v) => parseFloat(v) / 100);
+      let w = meta.width, h = Math.round(meta.width / ar);
+      if (h > meta.height) { h = meta.height; w = Math.round(h * ar); }
+      const crop = { left: Math.round((meta.width - w) * fx), top: Math.round((meta.height - h) * fy), width: w, height: h };
+      const set = { webp: [], jpg: [] };
+      for (const size of [...new Set([600, 900].map((v) => Math.min(v, w)))]) {
+        for (const fmt of ["webp", "jpg"]) {
+          let q = fmt === "webp" ? 78 : 80, buf;
+          do {
+            const img = sharp(src).rotate().extract(crop).resize({ width: size });
+            buf = await (fmt === "webp" ? img.webp({ quality: q }) : img.jpeg({ quality: q, mozjpeg: true, progressive: true })).toBuffer();
+            q -= 5;
+          } while (buf.length > 120 * 1024 && q > 40);
+          const name = `${eng.photo}-${kind}-${size}.${fmt}`;
+          fs.writeFileSync(path.join(GEN_DIR, "engagement", name), buf);
+          set[fmt].push({ src: `/assets/generated/engagement/${name}`, w: size, kb: Math.round(buf.length / 1024) });
+        }
+      }
+      const last = set.jpg.at(-1);
+      manifest.engagement[kind] = { src: last.src, width: last.w, height: Math.round(last.w / ar),
+        webpSrcset: set.webp.map((v) => `${v.src} ${v.w}w`).join(", "), jpgSrcset: set.jpg.map((v) => `${v.src} ${v.w}w`).join(", "),
+        crop, sizesKB: [...set.webp, ...set.jpg].map((v) => `${v.w}:${v.kb}`).join(" ") };
+    }
+  }
+}
+
 // About timeline photos (site.json → story_photos): 4:3 (desktop/tablet) and 16:9 (phones)
 // crops around each focal point, 800px wide (and 480px), WebP + JPEG under 100KB; smaller
 // sources are used at their own width (never upscaled). 'image' may have any extension.
