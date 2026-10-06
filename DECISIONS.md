@@ -913,3 +913,22 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - Colours unchanged: a red-to-gold line; red dots, gold for Today. Dots are now filled in their final state.
 - **Scroll progress** (`src/js/story.js`, IntersectionObserver). With JS and motion allowed, the line starts grey and fills top to bottom, and each dot fills as its card enters the view. Without JS or with reduced motion, everything is shown in the final state (tested).
 - **Verified** at 360/768/1024/1440: identical card widths, text edges and photo sizes; equal heights (desktop); stats on one row; no cropped faces; console clean. Text colours unchanged (ink-2 on white 10.9:1, red labels 6.58:1 on paper-2).
+
+## /about/: timeline body centring, pillar subheadings, two step photos
+
+- **Timeline.** From 768px the text column is a flex column: the title stays at the top (29px from the card top, unchanged), and the body is centred in the remaining height (the paragraph, or for Today the stats, paragraph and link as one group). Measured offset 0px on all four cards at 768/1024/1280/1440.
+  - The card's single grid row now stretches to the shared card height. The stats row's top margin is dropped inside the body so the group centres exactly.
+  - Left edges are unchanged; mobile is unchanged.
+- **Pillar subheadings.** Letter-spacing −0.01em and `text-wrap: balance`; titles also use balance.
+  - From 1024px the size follows the card width (the longest subheading just fits), never below 12px: one line on all three at 1024, 1130, 1280 and 1440 (12px at 1024–1130, 12.9px at 1280+, down from 16px).
+  - Below 1024px: 14px, balanced, with a two-line minimum height so descriptions line up.
+  - I first tried a container query; `container-type` switched off the cards' subgrid, so the size is computed from the viewport instead.
+  - Descriptions start at the same y in all three cards from 1024px. Equal heights (613px at 1440). The gaps (number→title 14, title→subheading 8, subheading→description 10) are identical in all three cards.
+- **Step visuals.** Step 1 Client request: `umdclubsimage.webp` (686×513, a crowd of students walking past tables at an outdoor fair), focal 50% 40%. Step 5 Deliverables: `bbbpresentation.jpeg` (2048×1140, five students presenting in a lecture room, slides titled "E-Board Deliverables" and "Transition Guide" on two screens), focal 60% 50%.
+  - The alt text describes only what is visible: no event name, and no claim about which project the presentation was for.
+  - Neither is a duplicate of another About photo.
+  - Faces: the Deliverables photo's leftmost person is already half out of frame in the original and is cut at the edge in the 3:2 panel; everyone else is fully in frame. The Client request crowd stays in frame.
+  - Client request is a small source, so it is served at 480 and its full 684px width (never upscaled); `focalCrops` now accepts any image extension.
+  - Steps 2–4, the panel size, the card height (278px at 1440, 441 at 360, constant across steps), the arrows and the crossfade are unchanged.
+- **Photo credits.** `assets/PHOTO-CREDITS.md` now lists `umdclubsimage` with a note to confirm it is not a UMD marketing or news photo (permission needed if it is), plus `smithbuilding` and `bbbpresentation`.
+- **Verified** at 360/768/1024/1130/1280/1440: no horizontal scroll, console clean. ui-check, build and check:notes pass.

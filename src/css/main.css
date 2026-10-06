@@ -946,6 +946,13 @@ html.dialog-open { overflow: hidden; }
   .story__card { grid-template-columns: minmax(0, 1fr) 32%; align-items: start; gap: clamp(24px, 3vw, 40px); padding: var(--card-pad); }
   .story__photo { grid-column: 2; grid-row: 1; order: 0; aspect-ratio: 4 / 3; max-height: none; }
   .story__card .story__text { grid-column: 1; grid-row: 1; }
+  /* Title stays at the top; the body (paragraph, or stats + paragraph + link) is centred in
+     the remaining height so the spare space splits evenly above and below it. */
+  .story__card { align-items: stretch; align-content: stretch; grid-template-rows: 1fr; }
+  .story__photo { align-self: start; }
+  .story__text { display: flex; flex-direction: column; }
+  .story__body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .story__body > .story__facts { margin-top: 0 !important; }
 }
 /* Progress state (JS, motion allowed): grey track, red-to-gold fill, hollow dots until reached. */
 .story__list.is-progress::before { background: var(--line); }
@@ -976,7 +983,16 @@ html.dialog-open { overflow: hidden; }
 .pillar > :not(.pillar__photo) { padding-inline: clamp(20px, 3vw, 28px); }
 .pillar__num { display: block; padding-top: 22px; font-family: var(--font-head); font-weight: 800; font-size: var(--step-3); line-height: 1; color: var(--scg-red); }   /* 7.24:1 */
 .pillar__name { font-size: var(--step-1); margin: 14px 0 0; }
-.pillar__summary { margin: 8px 0 0; color: var(--ink); font-size: var(--step-1); line-height: 1.4; font-weight: 700; font-family: var(--font-head); font-size: 1rem; }
+/* Subheading: from 1024px sized from the card width (3 columns in the 1200px container:
+   (min(100vw, 1248px) - 96px) / 3, minus 2 x 28px padding) so the longest one fits on one line
+   (about 12.9px at 1280+), never below 12px; until it fits (1024 to ~1130px) it wraps in
+   balance. Below 1024px: 14px, balanced, with a two-line minimum so descriptions line up.
+   (No container query here: container-type would switch off the cards' subgrid.) */
+.pillar__summary { margin: 8px 0 0; color: var(--ink); line-height: 1.4; font-weight: 700; font-family: var(--font-head); letter-spacing: -0.01em; text-wrap: balance; font-size: .875rem; min-height: 2.8em; }
+@media (min-width: 1024px) {
+  .pillar__summary { min-height: 0; font-size: max(0.75rem, min(1rem, calc(((min(100vw, 1248px) - 96px) / 3 - 56px) / 25.5))); }
+}
+.pillar__name { text-wrap: balance; }
 .pillar__text { margin: 10px 0 0; padding-bottom: clamp(20px, 3vw, 28px); color: var(--ink-2); }   /* 10.9:1 */
 
 /* ---- Stepper (How a project works, recruiting calendar) ---- */

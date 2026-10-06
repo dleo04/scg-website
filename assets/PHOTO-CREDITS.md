@@ -14,6 +14,14 @@ No photos downloaded from the internet are used on the site.
 | /work-with-us/ | `assets/photos/workwithusimage.jpeg` (8160×3264) | band 3, widened to 40–85% so no head is cut | Supplied by the site owner (students walking past a campus building, motion-blurred). Photographer and license: please record here. |
 | /join/prepare/, /partners/ | none yet (gradient) | | Add `prepareimage` or `partnersimage` under `assets/`. |
 
+## Supplied by the site owner (other sections)
+
+| File | Used for | Source |
+|---|---|---|
+| `assets/photos/smithbuilding.jpg` (600×350) | /about/ timeline, Smith Impact Case Competition card | Supplied by the site owner (campus building seen from above). Photographer and license: please record here. |
+| `assets/photos/umdclubsimage.webp` (686×513) | /about/ "How a project works", Client request | Supplied by the site owner (crowd at an outdoor student fair). Confirm the source: if it is a UMD marketing or news photo, it needs UMD's permission. |
+| `assets/photos/bbbpresentation.jpeg` (2048×1140) | /about/ "How a project works", Deliverables | Supplied by the site owner (students presenting in a lecture room). |
+
 ## Other photos
 
 | File | Used for | Source |

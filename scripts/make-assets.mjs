@@ -223,10 +223,12 @@ for (const [key, sp] of Object.entries(site.story_photos || {})) {
 // Generic focal-point crops: each kind is [name, aspect]; 480 and 800px wide, WebP + JPEG
 // under 100KB. Used for the /about/ pillar cards (16:10) and step visuals (4:3 + 16:9).
 async function focalCrops(dir, key, image, focal, kinds) {
-  const src = image && path.join(ROOT, "assets/photos", `${image}.jpg`);
-  if (!src || !fs.existsSync(src)) return null;
+  // 'image' is a file name in assets/photos/ without extension (any of jpg/jpeg/png/webp).
+  const file = image && fs.readdirSync(path.join(ROOT, "assets/photos")).find((f) => path.basename(f, path.extname(f)).toLowerCase() === image.toLowerCase() && /\.(jpe?g|png|webp)$/i.test(f));
+  const src = file && path.join(ROOT, "assets/photos", file);
+  if (!src) return null;
   fs.mkdirSync(path.join(GEN_DIR, dir), { recursive: true });
-  const meta = await sharp(src).metadata();
+  const meta = await sharp(src).rotate().metadata();
   const [fx, fy] = (focal || "50% 50%").split(/\s+/).map((v) => parseFloat(v) / 100);
   const entry = {};
   for (const [kind, ar] of kinds) {
@@ -234,11 +236,13 @@ async function focalCrops(dir, key, image, focal, kinds) {
     if (h > meta.height) { h = meta.height; w = Math.round(h * ar); }
     const crop = { left: Math.round((meta.width - w) * fx), top: Math.round((meta.height - h) * fy), width: w, height: h };
     const set = { webp: [], jpg: [] };
-    for (const size of [480, 800].filter((s) => s <= w)) {
+    const sizes = [480, 800].filter((s) => s <= w);
+    if (w < 800) sizes.push(w);   // small sources: also their full width (never upscaled)
+    for (const size of [...new Set(sizes)]) {
       for (const fmt of ["webp", "jpg"]) {
         let q = fmt === "webp" ? 76 : 78, buf;
         do {
-          const img = sharp(src).extract(crop).resize({ width: size });
+          const img = sharp(src).rotate().extract(crop).resize({ width: size });
           buf = await (fmt === "webp" ? img.webp({ quality: q }) : img.jpeg({ quality: q, mozjpeg: true, progressive: true })).toBuffer();
           q -= 5;
         } while (buf.length > 100 * 1024 && q > 40);

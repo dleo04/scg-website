@@ -50,7 +50,9 @@ bodyClass: page-about
           {{ storyPhoto("founded") }}
           <div class="story__text">
             <h3 class="story__title">Founded</h3>
-            <p>SCG was founded at the {{ site.established_at }}, in direct affiliation with the Ed Snider Center for Enterprise and Markets.</p>
+            <div class="story__body">
+              <p>SCG was founded at the {{ site.established_at }}, in direct affiliation with the Ed Snider Center for Enterprise and Markets.</p>
+            </div>
           </div>
         </div>
       </li>
@@ -61,7 +63,9 @@ bodyClass: page-about
           {{ storyPhoto("ey") }}
           <div class="story__text">
             <h3 class="story__title">EY partnership</h3>
-            <p>{{ ey.blurb }}</p>
+            <div class="story__body">
+              <p>{{ ey.blurb }}</p>
+            </div>
           </div>
         </div>
       </li>
@@ -73,7 +77,9 @@ bodyClass: page-about
           {{ storyPhoto("competition") }}
           <div class="story__text">
             <h3 class="story__title">Smith Impact Case Competition</h3>
-            <p>{{ csvc.blurb }}</p>
+            <div class="story__body">
+              <p>{{ csvc.blurb }}</p>
+            </div>
           </div>
         </div>
       </li>
@@ -84,12 +90,14 @@ bodyClass: page-about
           {{ storyPhoto("today") }}
           <div class="story__text">
             <h3 class="story__title">UMD's student-run consulting group</h3>
-            {%- if verifiedStats.length %}
-            <ul class="story__facts">
-              {%- for s in verifiedStats %}<li><strong>{{ s.value }}</strong> <span>{{ s.label | lower }}</span></li>{% endfor %}
-            </ul>
-            {%- endif %}
-            <p>Student teams work with campus organizations, nonprofits and startups. <a href="/projects/">See the projects</a>.</p>
+            <div class="story__body">
+              {%- if verifiedStats.length %}
+              <ul class="story__facts">
+                {%- for s in verifiedStats %}<li><strong>{{ s.value }}</strong> <span>{{ s.label | lower }}</span></li>{% endfor %}
+              </ul>
+              {%- endif %}
+              <p>Student teams work with campus organizations, nonprofits and startups. <a href="/projects/">See the projects</a>.</p>
+            </div>
           </div>
         </div>
       </li>
