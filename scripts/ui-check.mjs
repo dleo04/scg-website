@@ -52,9 +52,9 @@ for (const route of routes) {
     const errors = [];
     page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
     page.on("pageerror", (e) => errors.push(e.message));
-    // Failed requests made inside third-party iframes (e.g. the Google Slides embed probing a
-    // chrome-extension:// URL) are not this site's; only the main frame's requests count.
-    page.on("requestfailed", (r) => { if (r.frame() === page.mainFrame()) errors.push(`request failed ${r.url()}`); });
+        // Only this site's own requests count: third-party embeds (e.g. Google Slides) make
+    // their own background requests (CSP reports, extension probes) that may fail.
+    page.on("requestfailed", (r) => { if (r.url().startsWith(BASE)) errors.push(`request failed ${r.url()}`); });
     page.on("response", (r) => r.status() >= 400 && r.url().startsWith(BASE) && errors.push(`${r.status()} ${r.url()}`));
     await page.goto(BASE + route, { waitUntil: "networkidle0" });
     // Trigger reveal-on-scroll, then return to top.
