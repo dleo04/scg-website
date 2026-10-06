@@ -1046,3 +1046,18 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - **Data:** photo, focal points and alt are in `work_with_us.engagement`.
 - **Badge.** "3–4 month engagements" (the figure from the first item, en dash) in a pill at the photo's bottom-left: maroon-black at 85% with 14px white Montserrat, 13:1 or better. It is `aria-hidden` and out of the alt text, and sits over the presenters' legs, not faces.
 
+## /work-with-us/: second photo in "How an engagement works"
+
+- **Only the left column changed.** Timeline, copy, badge, circles, dividers and the closing link are unchanged.
+- **Photo.** `assets/photos/hyswapteam.jpeg` (1912×1434): six students in business attire in front of a screen whose title slide reads "Hy-Swap – Final Presentation".
+  - **Alt:** "Six students in business attire standing together in front of a screen showing the title slide "Hy-Swap: Final Presentation"." The client name is printed on the slide and Hy-Swap is a client in projects.json (Fall 2025).
+  - **Uniqueness:** different from the first photo, and not shown anywhere else on /work-with-us/; only Hy-Swap's logo appears there, in the client grid.
+  - **Data:** `work_with_us.engagement.photo2` (photo, focal, focal_mobile, focal_bands, alt), next to the first photo. No badge, no caption.
+- **Desktop (768px and up).** `.engage__photos` is a flex column stretched to the text column: the first frame's top meets the eyebrow's top and the second frame's bottom meets the "Request a project" row (0px off at 768, 1024, 1440 and 1800). The frames are equal (flex: 1, minimum 220px), 16px apart, with the same radius and shadow; the badge stays on the first. The sticky photo was dropped, since the stack now spans the whole column.
+- **Phones.** The photo wrapper and text column become `display: contents`; CSS order puts photo 1 on top and photo 2 between "Beyond the semester" and the link, at 16:10. Margins replace the flex gap so the timeline spacing is unchanged. Each image is one element; the DOM and reading order is photo 1, photo 2, heading, steps, link. The frame reserves its 16:10 box before the lazy image loads (CLS 0).
+- **Face-safe crops.** The frames' shape follows the text column: about 0.63 (width/height) at 768, 0.92 at 1024, 1.29 from 1248 up. No single focal point keeps every face whole across that range, because these are group photos with people spread across the width.
+  - **How it works:** each frame is a size container, and its `object-position` comes from `focal_bands` (aspect-ratio limits → position) through container queries, so the crop follows the frame's own shape.
+  - **How the bands were computed:** from face boxes found with the build's face detector in each frame image (the presentation photo's left-hand face was missed and added by hand). Each band is the position that keeps every face either fully inside or fully outside the frame and shows the most faces, and band limits sit inside a range where both neighbouring positions are safe.
+  - **Verified:** at every width from 768 to 1800px (1px steps), no face is cut. Shown: 2–4 of the 4 presenters (3 at 1248px and up, where the fourth falls just outside) and 3–6 of the 6 Hy-Swap team (all 6 from about 1072px).
+- **Images.** Each photo has a 16:10 phone crop and a desktop frame image (the first trimmed to 16:10 to drop the half-visible person at the left; the second uncut 4:3), 600 and 900px, WebP + JPEG, 30–85KB.
+

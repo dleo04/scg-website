@@ -1604,11 +1604,26 @@ a.resource-card[target="_blank"] .resource-card__title::after { content: " ↗";
    vertical timeline right. Circles 40px; the 2px line runs between circle centres: red for
    steps 1-4, red fading to gold into the outcome circle. Phones: photo on top (16:10). */
 .engage { display: grid; gap: clamp(28px, 4vw, 56px); align-items: start; }
-@media (min-width: 768px) { .engage { grid-template-columns: minmax(0, 45fr) minmax(0, 55fr); } .engage--no-photo { grid-template-columns: 1fr; } }
-.engage__photo { position: relative; }
-@media (min-width: 1024px) { .engage__photo { position: sticky; top: calc(var(--header-h) + 24px); } }
-.engage__photo img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow); }
-@media (min-width: 768px) { .engage__photo img { aspect-ratio: 4 / 3; } }
+@media (min-width: 768px) { .engage { grid-template-columns: minmax(0, 45fr) minmax(0, 55fr); align-items: stretch; } .engage--no-photo { grid-template-columns: 1fr; } }
+/* Desktop: two equal frames filling the text column's height, 16px apart; each photo covers its
+   frame around its focal point (img style --focal). */
+.engage__photos { display: flex; flex-direction: column; gap: 16px; }
+.engage__frame { position: relative; flex: 1 1 0; min-height: 220px; overflow: hidden; border-radius: var(--radius); box-shadow: var(--shadow); }
+@media (min-width: 768px) { .engage__frame { container-type: size; } }   /* face-safe crops by frame shape (inline <style>) */
+.engage__frame img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: var(--focal, 50% 50%); }
+/* Phones: one column; photo 1 on top, photo 2 between "Beyond the semester" and the link. */
+@media (max-width: 767px) {
+  .engage { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
+  .engage__photos, .engage__text { display: contents; }
+  .engage__frame { flex: none; min-height: 0; aspect-ratio: 16 / 10; }   /* space reserved before the lazy image loads */
+  .engage__frame img { object-position: 50% 50%; }
+  .engage__frame--1 { order: 0; margin-bottom: 28px; }
+  .engage__text > .section__head { order: 1; }
+  .engage-steps { order: 2; }
+  .engage-step--outcome { order: 3; }
+  .engage__frame--2 { order: 4; margin: 4px 0 24px; }
+  .engage__cta { order: 5; }
+}
 .engage__badge { position: absolute; left: 14px; bottom: 14px; padding: 6px 14px; border-radius: 999px; background: rgb(38 8 10 / .85); color: #FFFFFF; font-family: var(--font-head); font-weight: 700; font-size: .875rem; line-height: 1.3; }   /* white on maroon-black ≥ 13:1 */
 .engage__text .section__head { margin-bottom: 8px; }
 .engage-steps { list-style: none; margin: 0; padding: 0; }

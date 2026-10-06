@@ -216,21 +216,26 @@ for (const card of site.work_with_us?.fee_cards || []) {
   };
 }
 
-// Work With Us "How an engagement works" photo (site.json → work_with_us.engagement): 4:3
-// (desktop/tablet) and 16:10 (phones) crops around the focal point, 600 and 900px wide (never
-// upscaled), WebP + JPEG under 120KB. 'photo' is a file name in assets/photos/, any extension.
+// Work With Us "How an engagement works" photos (site.json → work_with_us.engagement and its
+// photo2): per photo a 16:10 phone crop (around focal_mobile, else focal) and a desktop "frame"
+// image that CSS fills with object-fit: cover around 'focal' (the frame's shape follows the
+// text column). frame_crop ("16:10") trims the photo first; otherwise the whole photo is used.
+// 600 and 900px wide (never upscaled), WebP + JPEG under 120KB. Any extension in assets/photos.
 {
   const eng = site.work_with_us?.engagement;
-  const file = eng?.photo && fs.readdirSync(path.join(ROOT, "assets/photos")).find((f) => path.basename(f, path.extname(f)) === eng.photo && /\.(jpe?g|png|webp)$/i.test(f));
-  if (file) {
+  manifest.engagement = {};
+  fs.mkdirSync(path.join(GEN_DIR, "engagement"), { recursive: true });
+  for (const [key, ph] of [["1", eng], ["2", eng?.photo2]]) {
+    const file = ph?.photo && fs.readdirSync(path.join(ROOT, "assets/photos")).find((f) => path.basename(f, path.extname(f)) === ph.photo && /\.(jpe?g|png|webp)$/i.test(f));
+    if (!file) continue;
     const src = path.join(ROOT, "assets/photos", file);
     const meta = await sharp(src).rotate().metadata();
-    fs.mkdirSync(path.join(GEN_DIR, "engagement"), { recursive: true });
-    manifest.engagement = {};
-    for (const [kind, ar] of [["wide", 4 / 3], ["mobile", 16 / 10]]) {
-      const [fx, fy] = ((kind === "mobile" && eng.focal_mobile) || eng.focal || "50% 50%").split(/\s+/).map((v) => parseFloat(v) / 100);
-      let w = meta.width, h = Math.round(meta.width / ar);
-      if (h > meta.height) { h = meta.height; w = Math.round(h * ar); }
+    const ratio = (str) => { const [x, y] = str.split(":").map(Number); return x / y; };
+    const out = {};
+    for (const [kind, ar] of [["mobile", 16 / 10], ["frame", ph.frame_crop ? ratio(ph.frame_crop) : null]]) {
+      const [fx, fy] = (ph.focal_mobile || ph.focal || "50% 50%").split(/\s+/).map((v) => parseFloat(v) / 100);
+      let w = meta.width, h = meta.height;
+      if (ar) { h = Math.round(w / ar); if (h > meta.height) { h = meta.height; w = Math.round(h * ar); } }
       const crop = { left: Math.round((meta.width - w) * fx), top: Math.round((meta.height - h) * fy), width: w, height: h };
       const set = { webp: [], jpg: [] };
       for (const size of [...new Set([600, 900].map((v) => Math.min(v, w)))]) {
@@ -241,16 +246,17 @@ for (const card of site.work_with_us?.fee_cards || []) {
             buf = await (fmt === "webp" ? img.webp({ quality: q }) : img.jpeg({ quality: q, mozjpeg: true, progressive: true })).toBuffer();
             q -= 5;
           } while (buf.length > 120 * 1024 && q > 40);
-          const name = `${eng.photo}-${kind}-${size}.${fmt}`;
+          const name = `${ph.photo}-${kind}-${size}.${fmt}`;
           fs.writeFileSync(path.join(GEN_DIR, "engagement", name), buf);
           set[fmt].push({ src: `/assets/generated/engagement/${name}`, w: size, kb: Math.round(buf.length / 1024) });
         }
       }
       const last = set.jpg.at(-1);
-      manifest.engagement[kind] = { src: last.src, width: last.w, height: Math.round(last.w / ar),
+      out[kind] = { src: last.src, width: last.w, height: Math.round((last.w * h) / w),
         webpSrcset: set.webp.map((v) => `${v.src} ${v.w}w`).join(", "), jpgSrcset: set.jpg.map((v) => `${v.src} ${v.w}w`).join(", "),
         crop, sizesKB: [...set.webp, ...set.jpg].map((v) => `${v.w}:${v.kb}`).join(" ") };
     }
+    manifest.engagement[key] = out;
   }
 }
 

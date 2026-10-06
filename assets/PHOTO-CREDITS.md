@@ -23,6 +23,7 @@ No photos downloaded from the internet are used on the site.
 | `assets/photos/bbbpresentation.jpeg` (2048×1140) | /about/ "How a project works", Deliverables | Supplied by the site owner (students presenting in a lecture room). |
 | `assets/photos/smithschoolservices.webp` (719×430) | /work-with-us/ "On-campus clients" card | Supplied by the site owner (the Robert H. Smith School building and clock tower; the same photo was on the old Services page). Photographer and license: please record here; if it is a UMD photo, it needs UMD's permission. |
 | `assets/photos/collegeparkservices.jpg` (1200×675) | /work-with-us/ "Off-campus nonprofits" card | Supplied by the site owner. The photo carries the credit "Image: University of Maryland" (bottom right, kept visible, not cropped out): confirm UMD's permission to use it. |
+| `assets/photos/hyswapteam.jpeg` (1912×1434) | /work-with-us/ "How an engagement works" (second photo) | Supplied by the site owner (SCG team at the Hy-Swap final presentation). Confirm the six members are OK with being shown. |
 
 ## Other photos
 

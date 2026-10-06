@@ -455,7 +455,7 @@
     "file": null
   },
   "work_with_us": {
-    "_readme": "/work-with-us/ (Services). 'intro' and the 'engagement' items are the old Services page's own text (typos cleaned, nothing added). The two fee cards are read from faq.json ('How much do SCG services cost?'), one sentence each. 'help': the 'What we can help with' cards, derived only from projects.json skills; 'icon' is research, data, ai, process, marketing or business; 'link' opens /projects/ filtered (q = search, track = discipline); 'examples' picks up to 3 client logo chips from projects whose skills contain any of 'any' (or whose disciplines include 'track'). 'more' is the old page's closing line of 'How We Can Help'. 'engagement': the old page's five points; the first four are numbered steps, the fifth ('Beyond the semester') is the ongoing outcome. 'photo' is a file name in assets/photos (any extension), 'focal' (x% y%) is kept in the 4:3 desktop crop and 'focal_mobile' (optional) in the 16:10 phone crop made by npm run assets, 'badge' is the figure from the first point shown over the photo (decorative).",
+    "_readme": "/work-with-us/ (Services). 'intro' and the 'engagement' items are the old Services page's own text (typos cleaned, nothing added). The two fee cards are read from faq.json ('How much do SCG services cost?'), one sentence each. 'help': the 'What we can help with' cards, derived only from projects.json skills; 'icon' is research, data, ai, process, marketing or business; 'link' opens /projects/ filtered (q = search, track = discipline); 'examples' picks up to 3 client logo chips from projects whose skills contain any of 'any' (or whose disciplines include 'track'). 'more' is the old page's closing line of 'How We Can Help'. 'engagement': the old page's five points; the first four are numbered steps, the fifth ('Beyond the semester') is the ongoing outcome. 'photo' is a file name in assets/photos (any extension), 'focal' (x% y%) is kept in the 4:3 desktop crop and 'focal_mobile' (optional) in the 16:10 phone crop made by npm run assets, 'badge' is the figure from the first point shown over the photo (decorative). 'frame_crop' (optional, e.g. '16:10') trims the first photo before it fills its desktop frame (here: drops the half-visible person at the left edge); without it the whole photo is used. 'photo2' is the second photo under the first (same fields; no badge). Desktop frames change shape with the text column, so each photo has 'focal_bands': [max frame aspect ratio (width/height; null = any wider), object-position], applied with container queries so that every face is either fully in or fully out of the frame; they were computed from the faces detected in the frame image (see DECISIONS). 'focal' is the fallback.",
     "intro": "We proudly collaborate with University of Maryland clubs, organizations and institutions, as well as off-campus non-profit organizations, to support their missions and goals.",
     "fee_cards_readme": "The two cost cards above 'What we can help with'. Titles here; each description is one sentence of the FAQ answer 'How much do SCG services cost?' (faq.json). 'image' is a file name in assets/photos/ without extension (any of jpg/jpeg/png/webp); 'focal' (x% y%) is the point kept in the crop; 'alt' describes what the photo shows. npm run assets makes the crops.",
     "fee_cards": [
@@ -550,10 +550,55 @@
     "engagement": {
       "title": "How an engagement works",
       "photo": "bbbpresentation",
-      "focal": "72% 50%",
+      "focal": "76% 50%",
       "focal_mobile": "80% 50%",
       "alt": "Four students in business attire presenting in a lecture room, one gesturing toward a screen showing slides titled E-Board Deliverables and Transition Guide.",
+      "frame_crop": "16:10",
       "badge": "3–4 month engagements",
+      "photo2": {
+        "photo": "hyswapteam",
+        "focal": "45% 40%",
+        "focal_mobile": "50% 30%",
+        "alt": "Six students in business attire standing together in front of a screen showing the title slide “Hy-Swap: Final Presentation”.",
+        "focal_bands": [
+          [
+            0.6125,
+            "13% 40%"
+          ],
+          [
+            0.6665,
+            "6% 40%"
+          ],
+          [
+            0.7615,
+            "79% 40%"
+          ],
+          [
+            0.841,
+            "92% 40%"
+          ],
+          [
+            0.8835,
+            "67% 40%"
+          ],
+          [
+            0.9215,
+            "73% 40%"
+          ],
+          [
+            0.956,
+            "80% 40%"
+          ],
+          [
+            0.9875,
+            "87% 40%"
+          ],
+          [
+            null,
+            "45% 40%"
+          ]
+        ]
+      },
       "items": [
         {
           "icon": "calendar",
@@ -580,6 +625,20 @@
           "title": "Beyond the semester",
           "text": "While engagements are time-bound, we value long-term relationships and seek to maintain meaningful connections beyond the initial partnership."
         }
+      ],
+      "focal_bands": [
+        [
+          1.2275,
+          "13% 50%"
+        ],
+        [
+          1.2965,
+          "40% 50%"
+        ],
+        [
+          null,
+          "76% 50%"
+        ]
       ]
     },
     "cta": "Have a project in mind? Tell us about your organization."

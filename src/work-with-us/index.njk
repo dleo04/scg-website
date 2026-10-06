@@ -79,21 +79,44 @@ bodyClass: page-wwu
 </section>
 
 <section class="section" aria-labelledby="engage-title">
-  {#- Photo left (sticky from 1024px, top aligned with the eyebrow), text right; phones: photo
-      on top. Steps 1-4 are an <ol> whose visible numbers are aria-hidden (screen readers
-      count the list items themselves); "Beyond the semester" follows as the ongoing outcome. -#}
+  {#- Two photos left, text right. From 768px the photos are two equal frames that fill the
+      text column's height (top = eyebrow, bottom = "Request a project" row). Phones: the photo
+      wrapper and the text column become display: contents and CSS order puts photo 1 on top and
+      photo 2 between "Beyond the semester" and the link (one <img> each; DOM/reading order:
+      photo 1, photo 2, heading, steps). Steps 1-4 are an <ol> whose visible numbers are
+      aria-hidden; "Beyond the semester" follows as the ongoing outcome. -#}
   {%- set eng = wwu.engagement -%}
   {%- set engImg = generatedImages.engagement -%}
   <div class="container engage{% if not engImg %} engage--no-photo{% endif %}">
     {%- if engImg %}
-    <div class="engage__photo">
-      <picture>
-        <source media="(max-width: 767px)" type="image/webp" srcset="{{ engImg.mobile.webpSrcset }}" sizes="92vw">
-        <source media="(max-width: 767px)" srcset="{{ engImg.mobile.jpgSrcset }}" sizes="92vw">
-        <source type="image/webp" srcset="{{ engImg.wide.webpSrcset }}" sizes="(min-width: 1248px) 500px, 42vw">
-        <img src="{{ engImg.wide.src }}" srcset="{{ engImg.wide.jpgSrcset }}" sizes="(min-width: 1248px) 500px, 42vw" width="{{ engImg.wide.width }}" height="{{ engImg.wide.height }}" alt="{{ eng.alt }}" loading="lazy" decoding="async">
-      </picture>
-      {%- if eng.badge %}<span class="engage__badge" aria-hidden="true">{{ eng.badge }}</span>{% endif %}
+    {#- Face-safe crops: each frame is a size container; its object-position follows the
+        frame's own aspect ratio (site.json → focal_bands), so no face is ever half cut. -#}
+    <style>
+      @media (min-width: 768px) {
+      {%- for item in [{ key: "1", ph: eng }, { key: "2", ph: eng.photo2 }] %}{% if item.ph and item.ph.focal_bands %}
+      {%- set lo = null %}
+      {%- for band in item.ph.focal_bands %}
+        @container {% if lo %}(aspect-ratio >= {{ lo }}){% endif %}{% if lo and band[0] %} and {% endif %}{% if band[0] %}(aspect-ratio < {{ band[0] }}){% endif %} { .engage__frame--{{ item.key }} img { object-position: {{ band[1] }}; } }
+        {%- set lo = band[0] %}
+      {%- endfor %}
+      {%- endif %}{% endfor %}
+      }
+    </style>
+    <div class="engage__photos">
+      {%- for item in [{ key: "1", ph: eng, badge: eng.badge }, { key: "2", ph: eng.photo2 }] %}
+      {%- set im = engImg[item.key] %}
+      {%- if im and item.ph %}
+      <div class="engage__frame engage__frame--{{ item.key }}">
+        <picture>
+          <source media="(max-width: 767px)" type="image/webp" srcset="{{ im.mobile.webpSrcset }}" sizes="92vw">
+          <source media="(max-width: 767px)" srcset="{{ im.mobile.jpgSrcset }}" sizes="92vw">
+          <source type="image/webp" srcset="{{ im.frame.webpSrcset }}" sizes="(min-width: 1248px) 520px, 42vw">
+          <img src="{{ im.frame.src }}" srcset="{{ im.frame.jpgSrcset }}" sizes="(min-width: 1248px) 520px, 42vw" width="{{ im.frame.width }}" height="{{ im.frame.height }}" alt="{{ item.ph.alt }}" loading="lazy" decoding="async" style="--focal: {{ item.ph.focal or '50% 50%' }}">
+        </picture>
+        {%- if item.badge %}<span class="engage__badge" aria-hidden="true">{{ item.badge }}</span>{% endif %}
+      </div>
+      {%- endif %}
+      {%- endfor %}
     </div>
     {%- endif %}
     <div class="engage__text">
