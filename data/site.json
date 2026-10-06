@@ -641,7 +641,16 @@
         ]
       ]
     },
-    "cta": "Have a project in mind? Tell us about your organization."
+    "cta": "Have a project in mind? Tell us about your organization.",
+    "client_tiles": {
+      "_readme": "Logo tiles in 'Organizations we've worked with'. 'overrides' changes how one client's tile looks on this page only (projects.json → logo_bg stays as is for the project cards): 'bg' tile colour, 'roomy' extra padding. Tiles are ordered in the build: the first client keeps the first slot, then dark/coloured and light backgrounds alternate (by luminance), each group in projects.json order.",
+      "overrides": {
+        "Smith Equity Research": {
+          "bg": "#FFFFFF",
+          "roomy": true
+        }
+      }
+    }
   },
   "partners_intro": "SCG partners with corporate and on-campus organizations that support its members and the Robert H. Smith School community.",
   "contact": {

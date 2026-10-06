@@ -1061,3 +1061,16 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - **Verified:** at every width from 768 to 1800px (1px steps), no face is cut. Shown: 2–4 of the 4 presenters (3 at 1248px and up, where the fourth falls just outside) and 3–6 of the 6 Hy-Swap team (all 6 from about 1072px).
 - **Images.** Each photo has a 16:10 phone crop and a desktop frame image (the first trimmed to 16:10 to drop the half-visible person at the left; the second uncut 4:3), 600 and 900px, WebP + JPEG, 30–85KB.
 
+## /work-with-us/: "Past clients" refinement
+
+- **Unchanged.** Eyebrow, heading, "40+ client projects so far." and every logo (Alliom's orange magnifier included). Nothing else on the site changed.
+- **Grid.** A centred flex-wrap with equal-width items, 2 / 3 / 4 / 5 per row (under 480 / 480 / 768 / 1024px), so a partial last row centres. Tested with 13, 14 and 20 logos (fake entries in a scratch copy of the data, since deleted) at 360/480/768/1024/1440: equal widths, tiles and captions; last row centred; no horizontal scroll.
+- **Captions.** The organization name (from the data) under each tile: 13px, ink-2 (10.9:1 on the section background), centred, clamped to two lines and always two lines tall, so rows align.
+- **Links.** Tiles with a project page (all 13 now) are one link for the tile and caption. The caption is the accessible name, so the logo's alt is empty inside links. A tile without a page is a plain block that keeps its logo alt and has no hover.
+  - **Interaction:** a 2px brand-red focus ring around tile and caption. Hover lifts the tile 4px with a shadow and shows a small "→" (aria-hidden) after the name. Motion is off with reduced motion.
+- **Order.** `lib/load-data.js` keeps the first client (Alliom) first, then alternates dark/coloured and light tiles (background luminance < 0.6), each group in projects.json order. Deterministic. With 13 tiles it alternates perfectly, so 5- and 3-column rows form a checkerboard; at 4 and 2 columns any single order gives columns of one kind, which is accepted.
+- **Smith Equity Research.** The logo file has its own grey gradient background (the file is never altered). `site.json → work_with_us.client_tiles.overrides` puts it on a white tile with extra padding on this page only; projects.json's `logo_bg` is unchanged, so the project cards look the same. TODO-CONTENT asks for a cleaner file.
+- **More past clients.** 56px of space and a 1px divider above the heading. Quieter pills: #ECE6DC fill (a darker tone of paper-2), no border, 999px radius, 15px ink text (15.4:1), 8px gaps.
+  - **Not grouped:** past-clients.json has no client type for any of the 27 names (its fields are name, year, logo, likely_technical, case_study_id), so the list stays as one ungrouped list rather than inventing categories.
+  - **Collapse:** `src/js/client-list.js` shows the first two rows (measured, re-measured on resize) and a "Show all 27 clients" / "Show fewer" button with aria-expanded and aria-controls, and no live announcement. Without JS, or when everything fits in two rows, all names show and the button stays hidden.
+

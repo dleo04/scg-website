@@ -1654,19 +1654,39 @@ a.resource-card[target="_blank"] .resource-card__title::after { content: " ↗";
   .reveal-ready .engage-step[data-reveal].is-visible { transform: none; }
 }
 
-.client-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-@media (min-width: 768px) { .client-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-@media (min-width: 1024px) { .client-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
-/* Equal tiles; each logo in full colour on its own logo_bg (white by default), never filtered. */
-.client-tile { display: flex; align-items: center; justify-content: center; aspect-ratio: 5 / 3; padding: clamp(8px, 1.4vw, 16px); overflow: hidden; background: var(--tile-bg, #FFFFFF); border: 1px solid var(--line); border-radius: var(--radius-sm); text-decoration: none; color: var(--ink); transition: box-shadow .2s ease, transform .2s ease; }
+/* Client logos: equal tiles in a centred flex-wrap (the last row centres when it is not full),
+   2/3/4/5 per row; caption under each tile; links lift 4px with a shadow and show "→". */
+.client-grid { --cols: 2; --gap: 12px; list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px var(--gap); }
+@media (min-width: 480px) { .client-grid { --cols: 3; } }
+@media (min-width: 768px) { .client-grid { --cols: 4; } }
+@media (min-width: 1024px) { .client-grid { --cols: 5; } }
+.client-item { flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols)); min-width: 0; }
+.client-link, .client-static { display: grid; gap: 8px; color: var(--ink-2); text-decoration: none; border-radius: var(--radius-sm); }
+.client-tile { display: flex; align-items: center; justify-content: center; aspect-ratio: 5 / 3; padding: clamp(8px, 1.4vw, 16px); overflow: hidden; background: var(--tile-bg, #FFFFFF); border: 1px solid var(--line); border-radius: var(--radius-sm); color: var(--ink); transition: box-shadow .2s ease, transform .2s ease; }
+.client-tile--roomy { padding: clamp(14px, 2vw, 24px); }
 .client-tile picture { display: contents; }
 .client-tile img { display: block; width: 100%; height: 100%; max-height: 72px; object-fit: contain; }
-.client-tile:hover { box-shadow: var(--shadow); }
-@media (prefers-reduced-motion: no-preference) { .client-tile:hover { transform: translateY(-2px); } }
 .client-tile__name { font-family: var(--font-head); font-weight: 700; text-align: center; line-height: 1.25; font-size: .875rem; }
-.client-more__title { font-size: var(--step-0); margin: clamp(28px, 4vw, 40px) 0 12px; }
+/* Caption: 13px, ink-2 (10.9:1 on paper-2), centred, always two lines tall so rows align. */
+.client-caption { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; min-height: calc(2 * 1.35em); font-size: .8125rem; line-height: 1.35; text-align: center; color: var(--ink-2); }
+.client-caption__arrow { display: inline-block; opacity: 0; transition: opacity .2s ease, transform .2s ease; }
+.client-link:hover .client-tile { box-shadow: var(--shadow); }
+.client-link:hover .client-caption, .client-link:focus-visible .client-caption { color: var(--ink); }
+.client-link:hover .client-caption__arrow, .client-link:focus-visible .client-caption__arrow { opacity: 1; }
+.client-link:focus-visible { outline: 2px solid var(--scg-red); outline-offset: 4px; }
+@media (prefers-reduced-motion: no-preference) {
+  .client-link:hover .client-tile { transform: translateY(-4px); }
+  .client-link:hover .client-caption__arrow { transform: translateX(2px); }
+}
+/* "More past clients": a quieter secondary list. */
+.client-more { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--line); }
+.client-more__title { font-size: var(--step-0); margin: 0 0 14px; }
 .client-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.client-chips .chip { font-size: .875rem; font-weight: 400; padding: .4em .9em; background: var(--paper); }   /* 14px */
+.client-chips li[hidden] { display: none; }
+.client-chip { display: inline-block; padding: .3em .85em; border-radius: 999px; background: #ECE6DC; color: var(--ink); font-size: .9375rem; line-height: 1.35; text-decoration: none; }   /* 15px; ink on #ECE6DC 15.4:1 */
+a.client-chip:hover { text-decoration: underline; }
+.client-more__toggle { margin-top: 14px; min-height: 44px; padding: 0; background: none; border: 0; font: inherit; font-family: var(--font-head); font-weight: 700; color: var(--scg-red); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.client-more__toggle[hidden] { display: none; }
 
 .btn--white { background: #FFFFFF; color: var(--ink); border-color: #FFFFFF; }   /* ink on white 18.6:1 */
 .btn--white:hover { background: var(--scg-gold-soft); color: var(--ink); border-color: var(--scg-gold-soft); }

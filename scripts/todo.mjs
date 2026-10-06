@@ -100,6 +100,7 @@ if (noConsent.length) data.push(`team.json / alumni.json: ${noConsent.length} en
 if (site.forms?.client_request_fallback_email) data.push(`site.json → forms.client_request_fallback_email (${site.forms.client_request_fallback_email}): confirm this inbox is monitored for client requests (the old Contact Us page listed it for applicants; client requests went to a personal address, which is not used).`);
 if (!site.forms?.client_request_endpoint) data.push("site.json → forms.client_request_endpoint: supply a form endpoint (e.g. a Formspree form URL) so /work-with-us/contact/ shows the real request form instead of the 'Request by email' composer. No code change needed.");
 data.push("Launch: redirect the old URLs /services → /work-with-us/ and /contact-us → /work-with-us/contact/ (there is no redirect map in the repo yet; see DECISIONS.md → Work With Us dropdown).");
+data.push("Replace the Smith Equity Research logo with a cleaner (transparent or white background) file");
 data.push("Officers: confirm each listed member and alumnus is OK with their name, photo and details being shown; set consent_to_publish to false (or delete the entry) on request.");
 for (const p of people.filter((p) => p.review_note)) data.push(`${p.level ? "team.json" : "alumni.json"} → ${p.name}: ${p.review_note}`);
 const noMajors = (team.members || []).filter((p) => !p.majors).length;

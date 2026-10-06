@@ -159,22 +159,38 @@ bodyClass: page-wwu
       <h2 class="section__title" id="clients-title">Organizations we've worked with</h2>
       {%- if clientStat and clientStat.verified %}<p class="section__lede">{{ clientStat.value }} client projects so far.</p>{% endif %}
     </header>
+    {#- Tiles: equal widths in a centred flex-wrap (a partial last row is centred), 2/3/4/5 per
+        row (<480/480/768/1024px). Tile + caption form one link when the client has a project
+        page (the caption is the link's name, so the logo's alt is empty); otherwise the logo
+        keeps its alt and nothing is interactive. Order: lib/load-data.js (light/dark balance). -#}
     <ul class="client-grid">
       {%- for c in clientTiles %}
-      <li>
-        <a class="client-tile" href="{{ c.url }}" style="--tile-bg: {{ c.logo_bg or '#FFFFFF' }}">
-          {%- if c.logoImg %}
-          <picture><source type="image/webp" srcset="{{ c.logoImg.webp }}"><img src="{{ c.logoImg.png }}" width="{{ c.logoImg.width }}" height="{{ c.logoImg.height }}" alt="{{ c.name }}" loading="lazy" decoding="async"></picture>
-          {%- else %}<span class="client-tile__name">{{ c.name }}</span>{% endif %}
-        </a>
+      <li class="client-item">
+        {%- set logo %}
+          <span class="client-tile{% if c.roomy %} client-tile--roomy{% endif %}" style="--tile-bg: {{ c.logo_bg }}">
+            {%- if c.logoImg %}<picture><source type="image/webp" srcset="{{ c.logoImg.webp }}"><img src="{{ c.logoImg.png }}" width="{{ c.logoImg.width }}" height="{{ c.logoImg.height }}" alt="{{ '' if c.url else c.name }}" loading="lazy" decoding="async"></picture>
+            {%- else %}<span class="client-tile__name" aria-hidden="true">{{ c.name }}</span>{% endif -%}
+          </span>
+        {%- endset %}
+        {%- if c.url %}
+        <a class="client-link" href="{{ c.url }}">{{ logo | safe }}<span class="client-caption">{{ c.name }}<span class="client-caption__arrow" aria-hidden="true"> →</span></span></a>
+        {%- else %}
+        <div class="client-static">{{ logo | safe }}<span class="client-caption"{% if c.logoImg %} aria-hidden="true"{% endif %}>{{ c.name }}</span></div>
+        {%- endif %}
       </li>
       {%- endfor %}
     </ul>
     {%- if otherClients.length %}
-    <h3 class="client-more__title">More past clients</h3>
-    <ul class="client-chips">
-      {%- for c in otherClients %}<li>{% if c.url %}<a class="chip" href="{{ c.url }}">{{ c.name }}</a>{% else %}<span class="chip">{{ c.name }}</span>{% endif %}</li>{% endfor %}
-    </ul>
+    {#- One ungrouped list: past-clients.json has no client type for these names. Collapsed to
+        about two rows by client-list.js (all visible without JS). -#}
+    <div class="client-more">
+      <h3 class="client-more__title">More past clients</h3>
+      <ul class="client-chips" id="more-clients" data-client-list>
+        {%- for c in otherClients %}<li>{% if c.url %}<a class="client-chip" href="{{ c.url }}">{{ c.name }}</a>{% else %}<span class="client-chip">{{ c.name }}</span>{% endif %}</li>{% endfor %}
+      </ul>
+      <button class="client-more__toggle" type="button" aria-expanded="true" aria-controls="more-clients" data-client-toggle data-label-more="Show all {{ otherClients.length }} clients" data-label-less="Show fewer" hidden>Show fewer</button>
+    </div>
+    <script src="{{ '/js/client-list.js' | versioned }}" defer></script>
     {%- endif %}
   </div>
 </section>
