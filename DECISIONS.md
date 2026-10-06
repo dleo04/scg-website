@@ -1074,3 +1074,86 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - **Not grouped:** past-clients.json has no client type for any of the 27 names (its fields are name, year, logo, likely_technical, case_study_id), so the list stays as one ungrouped list rather than inventing categories.
   - **Collapse:** `src/js/client-list.js` shows the first two rows (measured, re-measured on resize) and a "Show all 27 clients" / "Show fewer" button with aria-expanded and aria-controls, and no live announcement. Without JS, or when everything fits in two rows, all names show and the button stays hidden.
 
+## Faded fixed page backdrop (test on /join/ only) — first version, superseded below
+
+- **Source.** `umdbackground3` was not under `assets/`. Identical copies (same checksum) were at `~/Downloads/umdbackground3.jpeg` and in an old `_site/`, so it was copied to `assets/pictures/umdbackground3.jpeg`. It is the McKeldin Mall view (library, fountain, autumn trees), 736×546. It is not published itself; only the processed files are.
+- **Processing** (`scripts/make-backdrop.mjs`, run by `npm run assets`):
+  - **Crops:** 16:9 at focal y 55% (desktop) and 3:5 centred on the library (portrait).
+  - **Steps:** Lanczos3 upscale to 2560×1440 and 1200×2000, saturation 15% (85% desaturated), Gaussian blur σ 1.8 (desktop) / 2 (portrait), then a linear tone map (×0.30 + warm offset). That makes a high-key, low-contrast warm grey image: darkest pixel rgb(176,171,159), lightest rgb(255,251,241).
+  - **Output:** WebP q70, desktop 35KB and portrait 17KB (limits were 150/100KB). `assets/backdrop/` is git-ignored and rebuilt.
+- **Component.**
+  - **Opt-in:** `site.json → page_backdrops.pages` is keyed by page URL like `page_banners` (`{"/join/": true}`, every other page off). An enabled page gets `body[data-backdrop="on"]` and a fixed, `aria-hidden`, pointer-events-none layer behind the content (z-index −1; `will-change: transform` gives it its own compositing layer; no `background-attachment: fixed`).
+  - **Loading:** `src/js/backdrop.js` loads the image only after `load` plus idle (never preloaded), choosing the portrait file on portrait viewports and swapping it on rotation. Only when the image has loaded does `html.backdrop-ready` turn the light sections into washes.
+  - **Washes:** white sections `rgb(255 255 255 / 100% − 0.857·v)`, beige `rgb(247 244 239 / 100% − 1.43·v)`, with v = `--backdrop-visibility`. At 7% that is 94% and 90%; at 15%, 87% and 78.5%.
+  - **Unchanged:** the FAQ accordion, the only transparent component in those sections, is given a solid white background. Banners, the dark "How recruiting works" band, header, footer, cards, tiles, inputs, dialogs and the sticky CTA already have their own backgrounds. No text, icon or border colour changed.
+- **Fallbacks** (all verified): without JS, if the image fails, with prefers-reduced-data (the script checks it; browsers do not implement it yet, so it was tested by simulation), in forced colours (washes only apply under `forced-colors: none`) and in print (layer hidden), the page keeps its current solid look.
+- **Dev control.** In SHOW_PLACEHOLDERS builds only (`npm run dev:notes`), a bottom-left panel has an on/off switch and a 0–15% slider with a live readout. It sets `--backdrop-visibility` on the page, persists nothing, and is absent from the normal build (check:notes passes).
+- **Contrast** (`scripts/check-contrast.mjs`, part of the build): every text colour drawn directly on those sections (ink, ink-2, red, red hover), on white and beige washes over the darkest and lightest backdrop pixels, at the default 7% and at 15%. All pass.
+  - **Lowest small grey text (ink-2):** 8.86:1 (beige at 15%); 9.57:1 at 7%.
+  - **Lowest red link:** 5.73:1 (beige at 15%).
+  - **1px `--line` borders:** down to 1.07:1 on the darkest wash at 15% (1.35:1 on solid white). Decorative dividers and card edges are a little fainter where the photo is darkest. No colours were changed.
+- **Performance** (Lighthouse 12, simulated mobile, 3 runs each, /join/): performance 87–88 before, 87 after. LCP 3.83s both (the backdrop is not the LCP element and loads after it), CLS 0 both, transfer +17KB.
+- **Scrolling.** Chrome trace while scrolling the whole page: 138 frames, median 16.7ms, none over 20ms, and identical paint counts and painted area with the backdrop on and off. The fixed layer is never repainted on scroll.
+- **Image quality.** Softness: the upscale is visibly soft (the source is 736px wide; the portrait is enlarged about 3.7×), but blur and the high-key tone make it read as an intentional haze. Banding: the sky spans about 10 grey levels after the wash; a 6× contrast stretch shows no blockiness or visible banding. Safe strength: up to about 10% on desktop and 7% on phones. At 15% the photo is clearly recognisable and the softness starts to show, more so on phones.
+
+## /join/ backdrop: larger source and one strength control (supersedes the first version)
+
+- **Source.** `mckeldinbackground.jpg` (2048×1519, the same McKeldin Mall view as the first source but larger). It was in `assets/photos/`, which is published as a whole (`assets/photos/*.jpg`), so it was moved to `assets/pictures/`, which is not published. The first source stays in `assets/pictures/` but nothing references it any more and it is not in the build.
+- **No upscaling.** The source is 2048px wide, so the 16:9 desktop file is 2048×1152 (not 2560×1440) and the 3:5 portrait is 911×1518 (not 1200×2000), both cropped as before (focal y 55%, portrait centred on the library at x 50.5%). At 1440px on a standard screen the desktop file is shown at about 0.7×. On 2× screens it is enlarged up to about 1.4×, invisible at these opacities.
+- **Treatment.** 45% of the saturation; a warm-biased lift (out = 0.82 × in + rgb(46,43,38)), so 82% of the contrast is kept and black lands at a warm dark grey (darkest pixel rgb(41,34,21)); blur σ 0.7. WebP q72: desktop 100KB, portrait 44KB.
+- **One strength control.** The fixed layer is `--paper` with the photo in a `::after` at opacity `--backdrop-visibility`. The old wash on every section (two fades stacked) is gone.
+  - **White sections:** fully transparent, so they show the layer as is.
+  - **Beige sections:** a 45% tint of rgb(237 231 219), the colour that over plain white gives exactly `--paper-2`, so the beige/white rhythm stays (by hue) and the photo shows at about half strength there.
+  - **Unchanged:** cards, tiles, inputs, the FAQ rows, header, footer, banners, the dark band, dialogs and the sticky CTA. The fixed mechanic (own compositing layer, image loaded after the page, fallbacks) is unchanged.
+- **Default 16%.** On a white section the darkest part of the photo lands at rgb(221,220,218), about 86% lightness, in the requested 85–90% (#D9–#E6) range; on a beige section, rgb(228,225,218).
+- **Dev slider.** Now 0–30% (1% steps), still only in dev:notes builds.
+- **Contrast** (worst case = darkest pixel).
+  - **At 16%:** ink 13.40:1, ink-2 (small grey text) 8.15:1, red links and small red labels (FAQ group titles) 5.27:1, red hover 7.09:1 (white sections); beige sections are higher.
+  - **At 30%:** red links and labels fall to 3.85:1 on white sections, below 4.5:1, and 4.70:1 on beige; ink-2 is 5.95:1 and ink 9.79:1. The build check therefore fails only on the configured default; 30% is reported.
+  - **Highest safe default:** 18%, the highest strength where every text colour keeps 5:1 or better. 16% is kept, with margin. No colours were changed.
+  - **1px `--line` borders:** 1.02:1 over the darkest pixel at 16% (1.35:1 on plain white), so dividers and card edges nearly vanish over the darkest tree areas and stay visible over sky and lawn. Reported, not changed.
+- **Right-edge strip.** Not a layout bug. At 390–1600px `scrollWidth` equals the viewport width, every section and the fixed layer span the full width, and the rightmost 8px of the page match the leftmost 8px (lightest 221, average about 234). The strip is the browser's own scrollbar track, which the page does not paint.
+- **Checked.** Screenshots at 1440 and 390 with 10%, 16% (default) and 22%, at top, middle and bottom, plus the Find your seat section, dark band and FAQ at 16%. A 4× contrast stretch shows no blockiness or banding.
+  - **Lighthouse (/join/, simulated mobile, 3 runs each):** 87–88 without the backdrop, 87 with it; LCP 3.83s and CLS 0 both; +44KB (portrait image) +1KB (script).
+  - **Scrolling:** identical paint counts and 16.7ms frames with the layer on and off.
+
+## Backdrop on every page (only background treatment)
+
+- **Scope.** `site.json → page_backdrops.pages`: `"default": true` plus explicit `true` flags for /, /projects/, /join/, /join/prepare/, /about/, /team/, /alumni/, /work-with-us/, /work-with-us/contact/, /partners/ and /404.html. Project and alumni detail pages use the default, and any page can be opted out with `false`. The layout resolves the page's own flag first, then `default`.
+- **Strength 23%** (`visibility`; the dev:notes slider starts there, range 0–30%). Same single control as before: the photo's opacity over `--paper` on the fixed layer.
+- **No beige, no white sections.** Once the photo has loaded, every light top-level block in `<main>` is transparent: `.section` (including `.section--paper-2` and the project/alumni `.project-page`), the home `.stat-strip` and `.projects-explorer`. The 45% beige tint from the /join/ test is gone. Content sits directly on the photo everywhere, like the approved "What you get" section.
+- **Wrappers.** The page inventory (every large light panel on every page type) found one wrapper around a group of cards: the Find your seat track panel (`.seat-panel`). It is now transparent with no border or shadow; padding and layout are unchanged.
+  - **Kept solid:** project, team, alumni, service, help, benefit, resource, fee and partner cards; story, stepper and question cards; the stat-strip list; the project/alumni content cards; the slides embed frame; inputs and textareas; FAQ rows; dialogs, drawers and the lightbox; and the beige contact card and eligibility callout, which are cards with their own styling.
+- **Unchanged:** header, footer, nav dropdown, page banners, home hero, dark bands (ink, EY band, CTA band, partner EY band), all images and the logo.
+- **Rhythm.** With the beige/white alternation gone, sections are separated by their existing spacing (two section paddings between neighbours). A light section that follows another light section also gets the existing 1px `--line` hairline at its top. No new colours.
+- **Contrast at 23%.**
+  - **Method:** a DOM audit of all 63 pages at 1440 (desktop image) and 390 (portrait image). For every text node it finds the first ancestor with an opaque background; text that reaches `<main>` without one sits on the photo and is measured against the darkest pixel of that image at 23%: rgb(206,204,201) desktop, rgb(206,206,204) portrait.
+  - **Result:** no failures and no text recoloured.
+  - **Lowest:** brand red (links, arrow links, accent words, About timeline years, FAQ group titles, "Request a project" link, "Show all clients" button) at 4.52:1 desktop and 4.59:1 phone. 23% is exactly the highest strength that keeps every text colour at 4.5:1 or better (18% would keep 5:1).
+  - **Others:** ink-2 (eyebrows, ledes, counts) 7.00:1; ink (headings, body, secondary buttons) 11.51:1. Gold is never used as text on these sections.
+  - **Guard:** `npm run contrast` fails the build if a future photo or strength pushes any of these under the limit.
+- **1px `--line` dividers** over the darkest pixel: 1.19:1 (1.35:1 on plain white). They are decorative and fainter over the trees; the section spacing does the separating.
+- **Mobile.** At 390px every page loads `backdrop-portrait.webp` (911×1518, 44KB); text measures 4.59:1 or better.
+- **Verified.** 378 screenshots (63 pages × 1440/390 × top/middle/bottom) in `scratch/reports/backdrop-all/`: backdrop ready on every page, no horizontal scroll, console clean.
+  - **Lighthouse (simulated mobile, 3 runs each, without → with the backdrop):** / 82 → 81–82 (LCP 4.80 → 4.88–5.03s); /projects/ 93 → 92–93; /join/ 87–88 → 87. CLS 0 everywhere; +44–45KB per page.
+- **Dev server.** The old `npm run dev` from Saturday and a `dev:notes` session from 1:35 PM today were stopped; a fresh `npm run dev:notes` now runs on port 8080 (it writes `_site` in notes mode, so production checks use a fresh `npm run build`).
+- **Photo rights.** The photo is now behind every page; TODO-CONTENT asks for UMD's written permission (or an SCG-owned replacement) before launch.
+
+## Backdrop refinement: 21%, no divider lines, one section gap, darker secondary text
+
+- **Strength 21%** (`site.json → page_backdrops.visibility`; the dev:notes slider starts at 21%, range 0–30%).
+- **Lines removed.** The 1px `--line` hairline between neighbouring light sections (added with the backdrop rollout) is gone. Section-level dividers drawn on the photo are hidden on backdrop pages: the "Request a project" row on /work-with-us/ (`.help-close`), "More past clients" (`.client-more`) and the CTA strips on /join/prepare/ and /about/ (`.cta-strip`).
+  - **Kept** as part of their components' design: card outlines, form field borders, the header and footer edges, dialog and drawer borders, the Work With Us timeline hairlines (`.engage-step__body`, `.engage__cta`), the stat-strip column dividers, the FAQ row lines, and the red underline under the level headings on /team/ (a heading style, not a section divider).
+- **One section gap.** `--section-gap: clamp(56px, 7vw, 96px)`. Where two light blocks meet (`.section`, `.projects-explorer`, `.home-block`, not dark), the first ends with that padding and the next starts at 0. Measured content-to-content: 96–97px everywhere at 1440, including /join/ "What you get" (was 129px) and home stat strip → "Our Community" (the community block's top padding is the gap minus the strip's 36px bottom padding). The transparent Find your seat panel has no bottom padding, so no invisible band remains. Next to dark bands, banners and the hero the existing padding is unchanged.
+- **Home stat strip.** The last opaque light band (white, inside the hero wrapper) is transparent on backdrop pages. To show the page photo under it rather than the hero photo, the hero wrapper becomes a two-row grid: the hero photo and tint cover only the hero row (`grid-area: 1 / 1 / 2 / 2`; an absolutely positioned grid child needs explicit end lines). They fade out to transparent over the last 96–140px with a mask, instead of the old fade to white. The hero above the fade, its text and the logo are unchanged; the strip's numbers stay red and its labels use the darker text.
+- **Darker secondary text.** On backdrop pages, light sections and the home stat strip set `--ink-2` to `--ink`. Eyebrows, ledes, hints, counts, captions and helper text directly on the photo are #141414 instead of #3B3B3B (sizes and weights unchanged). Every solid component in those sections (inputs, buttons, cards, tiles, panels, the empty-state boxes) restores `--ink-2` from `--ink-2-solid`, a copy of the original token, so text inside them is unchanged.
+  - **Proof:** a before/after diff of all 2,153 in-card text colours on 63 pages: 0 changes. The only differences are the home stat strip items, which were inside the white strip and now sit on the photo.
+  - **Stepper:** the About stepper's step names (transparent tab buttons on the photo) are included in the darkening.
+- **Outlines on the photo.** The STAR boxes on /join/prepare/ (`.star__item`, transparent with a `--line` border) use `--ph-border`, an existing token. The other outlined elements on the photo (inputs, chips, filters, outline buttons) already use `--ink-2`/`--ink` borders.
+- **Contrast at 21%** (DOM audit, all 63 pages, 1440 desktop image and 390 portrait image, darkest pixel → rgb(210,209,206)): no failures and no recolouring needed.
+  - **Worst per page:** brand red 4.73:1 (4.79:1 on phones) on every page that has red text on the photo: home accent words and stat numbers, /join/, /join/prepare/, /about/, /work-with-us/, /partners/, 404, project and alumni pages. The pages without red text on the photo (/projects/, /team/, /alumni/, /work-with-us/contact/) bottom out at 12.03:1 (ink).
+  - **Others:** ink on the photo 12.03:1; `--line` over the darkest pixel 1.13:1 (decorative).
+- **Verified.** 378 screenshots in `scratch/reports/backdrop-refine/` (63 pages × 1440/390 × top/middle/bottom): backdrop ready everywhere, portrait image at 390, no horizontal scroll, console clean.
+  - **Lighthouse (same code, backdrop off → on; simulated mobile, 3 runs):** / 82 → 81 (LCP 4.80 → 5.03s), /projects/ 93 → 92–93, /join/ 87–88 → 87, CLS 0. The same as the rollout step, no further regression.
+- **Dev server.** Restarted (`npm run dev:notes`, port 8080) with the new settings.
+

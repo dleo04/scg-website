@@ -3,7 +3,14 @@
 <head>
   {% include "partials/head.njk" %}
 </head>
-<body class="{{ bodyClass }}">
+{%- set bdFlag = backdrop.pages[page.url] if (backdrop.pages[page.url] === true or backdrop.pages[page.url] === false) else backdrop.pages["default"] -%}
+{%- set backdropOn = bdFlag and backdrop.desktop -%}
+<body class="{{ bodyClass }}"{% if backdropOn %} data-backdrop="on" style="--backdrop-visibility: {{ backdrop.visibility }}"{% endif %}>
+  {%- if backdropOn %}
+  {#- Faded fixed backdrop (site.json → page_backdrops): loaded after the page by backdrop.js;
+      until it loads (or without JS / with reduced data) the page keeps its solid colours. -#}
+  <div class="page-backdrop" aria-hidden="true" data-backdrop-desktop="{{ backdrop.desktop }}" data-backdrop-portrait="{{ backdrop.portrait }}"></div>
+  {%- endif %}
   <a class="skip-link" href="#main">Skip to main content</a>
   {% if not hideBanner %}{% include "partials/banner.njk" %}{% endif %}
   {% include "partials/header.njk" %}
@@ -12,5 +19,22 @@
   </main>
   {% include "partials/footer.njk" %}
   <script src="{{ '/js/site.js' | versioned }}" defer></script>
+  {%- if backdropOn %}
+  <script src="{{ '/js/backdrop.js' | versioned }}" defer></script>
+  {%- if env.showPlaceholders %}
+  {#- Dev-only preview control (SHOW_PLACEHOLDERS=1 builds only; never in production). -#}
+  <div class="backdrop-dev" role="group" aria-label="Backdrop preview (dev only)">
+    <label class="backdrop-dev__row"><input type="checkbox" checked data-bd-toggle> Backdrop</label>
+    <label class="backdrop-dev__row">Visibility <input type="range" min="0" max="30" step="1" value="{{ backdrop.visibility | replace('%', '') }}" data-bd-range> <output data-bd-out>{{ backdrop.visibility }}</output></label>
+  </div>
+  <script>
+    (() => {
+      const root = document.body, range = document.querySelector("[data-bd-range]"), out = document.querySelector("[data-bd-out]");
+      range.addEventListener("input", () => { root.style.setProperty("--backdrop-visibility", range.value + "%"); out.textContent = range.value + "%"; });
+      document.querySelector("[data-bd-toggle]").addEventListener("change", (e) => document.documentElement.classList.toggle("backdrop-off", !e.target.checked));
+    })();
+  </script>
+  {%- endif %}
+  {%- endif %}
 </body>
 </html>

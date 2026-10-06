@@ -45,6 +45,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets/placeholders/**/*.{png,jpg,jpeg,webp,svg}");
   eleventyConfig.addPassthroughCopy("assets/generated/**/*.{png,jpg,jpeg,webp,avif,svg}");
   eleventyConfig.addPassthroughCopy("assets/banners/*.{webp,jpg}");  // page banners (npm run banners)
+  eleventyConfig.addPassthroughCopy("assets/backdrop/*.webp");       // faded page backdrop (npm run backdrop)
   eleventyConfig.addPassthroughCopy("assets/photos/*.jpg");      // data/photos.json (npm run old-photos)
   // site.json → downloads: only published PDFs are copied to the site ("published": false keeps
   // the file in the repo but off the site).

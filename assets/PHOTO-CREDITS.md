@@ -24,6 +24,7 @@ No photos downloaded from the internet are used on the site.
 | `assets/photos/smithschoolservices.webp` (719×430) | /work-with-us/ "On-campus clients" card | Supplied by the site owner (the Robert H. Smith School building and clock tower; the same photo was on the old Services page). Photographer and license: please record here; if it is a UMD photo, it needs UMD's permission. |
 | `assets/photos/collegeparkservices.jpg` (1200×675) | /work-with-us/ "Off-campus nonprofits" card | Supplied by the site owner. The photo carries the credit "Image: University of Maryland" (bottom right, kept visible, not cropped out): confirm UMD's permission to use it. |
 | `assets/photos/hyswapteam.jpeg` (1912×1434) | /work-with-us/ "How an engagement works" (second photo) | Supplied by the site owner (SCG team at the Hy-Swap final presentation). Confirm the six members are OK with being shown. |
+| `assets/pictures/mckeldinbackground.jpg` (2048×1519) | /join/ faded page backdrop (processed copies in assets/backdrop/) | Supplied by the site owner (McKeldin Mall and library). Source not recorded; if it is a UMD marketing photo, it needs UMD's permission. |
 
 ## Other photos
 

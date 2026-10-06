@@ -120,6 +120,14 @@ Photos are listed in `data/gallery.json`: `file` (an image under `assets/`, usua
 - **Contact page text:** `site.json → contact` (intro, checklist, "What happens next", photo id). "Questions from clients" lists the FAQ's "For clients" group (drafts and open decisions left out).
 - **Banner:** the Contact page uses the Services banner until a photo named `contactimage` is added under `assets/` (`page_banners → fallback_same_as`).
 
+## Faded page backdrop (every page)
+A faint, fixed photo of McKeldin Mall sits behind every page; light sections are transparent so content sits directly on it, while cards, form fields, dialogs, banners, dark bands, header and footer stay solid.
+- **Turn it off for one page:** in `site.json → page_backdrops.pages` add `"/that-page/": false` (`"default": true` covers every page not listed, including project and alumni pages).
+- **Strength:** `page_backdrops.visibility` (`"23%"`), the photo's opacity over the page colour. 23% is the highest strength at which every text colour keeps 4.5:1 over the darkest part of the photo; `npm run contrast` re-checks it on every build.
+- **Picking a strength by eye:** `npm run dev:notes` shows a small panel (bottom left) with an on/off switch and a 0–30% slider (starts at 23%). It never appears in the live site.
+- **Photo:** `page_backdrops.image` is a file name anywhere under `assets/` (now `assets/pictures/mckeldinbackground.jpg`; keep sources in `assets/pictures/`, which is not published). `npm run assets` (or `npm run backdrop`) makes the processed files in `assets/backdrop/`.
+- Without JavaScript, if the image fails, in print, in high-contrast (forced colours) mode or with reduced data, pages keep their solid white/beige colours.
+
 ## How to change a page banner
 The header of `/projects/`, `/join/`, `/join/prepare/`, `/about/`, `/team/`, `/alumni/`, `/work-with-us/` and `/partners/` is a banner: a photo under a maroon-black tint, or, while a page has no photo, a plain maroon-black gradient. Settings live in `data/site.json → page_banners`, keyed by the page's URL:
 ```json

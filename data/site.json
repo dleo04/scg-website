@@ -663,5 +663,26 @@
     ],
     "next": "We'll set up a 1-hour online consulting session to learn about your organization and discuss whether our services are the right fit.",
     "photo": "group-smith-front"
+  },
+  "page_backdrops": {
+    "_readme": "Faded fixed page backdrop (opt-in per page). 'pages': page URL → true/false; 'default' applies to every page not listed (project and alumni detail pages included), so a page can be opted out with \"/its-url/\": false. 'image' is a file name under assets/ (any folder, any extension; keep sources in assets/pictures/, which is not published); npm run assets (scripts/make-backdrop.mjs) makes the desktop (16:9, at most 2560px wide, never upscaled) and portrait (3:5, at most 1200px wide) WebP files in assets/backdrop/. 'focal_y' (0–1) is kept in the 16:9 crop, 'portrait_focal_x' centres the portrait crop. 'visibility' is the default strength (CSS --backdrop-visibility): the image layer's opacity over the page colour.",
+    "image": "mckeldinbackground",
+    "focal_y": 0.55,
+    "portrait_focal_x": 0.505,
+    "visibility": "21%",
+    "pages": {
+      "default": true,
+      "/": true,
+      "/projects/": true,
+      "/join/": true,
+      "/join/prepare/": true,
+      "/about/": true,
+      "/team/": true,
+      "/alumni/": true,
+      "/work-with-us/": true,
+      "/work-with-us/contact/": true,
+      "/partners/": true,
+      "/404.html": true
+    }
   }
 }

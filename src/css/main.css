@@ -1784,6 +1784,70 @@ a.client-chip:hover { text-decoration: underline; }
 .nf-links__title { font-size: var(--step-1); margin: 32px 0 8px; }
 .nf-links { list-style: none; margin: 0 0 24px; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 24px; }
 
+/* Faded page backdrop (site.json → page_backdrops: on for every page by default, each page can
+   opt out). ONE strength control: the fixed layer is the page colour with the McKeldin photo on
+   top at opacity --backdrop-visibility (21%). It has its own compositing layer, so scrolling
+   never repaints it (no background-attachment: fixed). Once the image has loaded
+   (html.backdrop-ready, set by backdrop.js), on backdrop pages:
+   - every light top-level block is transparent and content sits directly on the photo: no
+     beige (--paper-2) or white section backgrounds, no wrapper panels around groups of cards
+     (the Find your seat track panel), and the home stat strip shows the photo too (the hero's
+     own photo and tint then cover only the hero and fade out to transparent instead of white);
+   - no divider lines between sections: where two light blocks meet, one gap
+     (--section-gap) separates them, together with their eyebrows and headings;
+   - secondary text directly on the photo uses --ink instead of --ink-2 (only darker, never
+     larger or bolder); every solid component keeps --ink-2 inside it, so text in cards,
+     tiles, inputs and dialogs is unchanged; faint outlines on the photo use --ph-border.
+   Cards, tiles, inputs, FAQ items, dialogs/drawers and the lightbox keep their own solid
+   backgrounds; banners, dark bands, header, footer and the nav dropdown are unchanged. Off in
+   print, forced colours, with reduced data, without JS or if the image fails. */
+body { --backdrop-visibility: 21%; --section-gap: clamp(56px, 7vw, 96px); --ink-2-solid: var(--ink-2); }   /* --ink-2-solid keeps the original --ink-2 for solid components */
+.page-backdrop { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: var(--paper); opacity: 0; will-change: transform; transition: opacity .4s ease; }
+.page-backdrop::after { content: ""; position: absolute; inset: 0; background: var(--backdrop-image, none) center / cover no-repeat; opacity: var(--backdrop-visibility); }
+@media screen and (forced-colors: none) {
+  .backdrop-ready .page-backdrop { opacity: 1; }
+  .backdrop-ready body[data-backdrop="on"] main > :is(.section, .projects-explorer, .home-block):not(.section--ink, .home-block--ink) { background-color: transparent; }
+  /* One gap where two light blocks meet (no divider lines). */
+  .backdrop-ready body[data-backdrop="on"] main > :is(.section, .projects-explorer, .home-block):not(.section--ink, .home-block--ink):has(+ :is(.section, .projects-explorer, .home-block):not(.section--ink, .home-block--ink)) { padding-bottom: var(--section-gap); }
+  .backdrop-ready body[data-backdrop="on"] main > :is(.section, .projects-explorer, .home-block):not(.section--ink, .home-block--ink) + :is(.section, .projects-explorer, .home-block):not(.section--ink, .home-block--ink) { padding-top: 0; }
+  /* Home: the stat strip is transparent; the hero photo and tint cover only the hero and fade
+     out to transparent (instead of to white) so there is no seam above the strip. The strip's
+     bottom padding (36px) plus the next block's top padding make one --section-gap. */
+  .backdrop-ready body[data-backdrop="on"] .hero-wrap { display: grid; background: transparent; }
+  .backdrop-ready body[data-backdrop="on"] :is(.hero-wrap__bg, .hero) { grid-area: 1 / 1 / 2 / 2; }   /* explicit end lines: the absolutely positioned photo covers only row 1 */
+  .backdrop-ready body[data-backdrop="on"] .hero-wrap > .stat-strip { grid-area: 2 / 1 / 3 / 2; background: transparent; }
+  .backdrop-ready body[data-backdrop="on"] .hero-wrap__bg,
+  .backdrop-ready body[data-backdrop="on"] .hero::before {
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - clamp(96px, 12vh, 140px)), transparent);
+    mask-image: linear-gradient(to bottom, #000 calc(100% - clamp(96px, 12vh, 140px)), transparent);
+  }
+  .backdrop-ready body[data-backdrop="on"] .hero::after { display: none; }
+  .backdrop-ready body[data-backdrop="on"] .hero-wrap + .home-block:not(.home-block--ink) { padding-top: calc(var(--section-gap) - 36px); }
+  /* Wrapper panels around groups of cards become transparent (padding and layout unchanged). */
+  .backdrop-ready body[data-backdrop="on"] .seat-panel { background-color: transparent; border-color: transparent; box-shadow: none; padding-bottom: 0; }   /* no invisible padding under the last row: the section gap separates it from "What you get" */
+  /* Section-level dividers inside sections (no lines on the photo). */
+  .backdrop-ready body[data-backdrop="on"] :is(.help-close, .client-more, .cta-strip) { border-top-color: transparent; }
+  /* Darker secondary text on the photo; solid components keep their own --ink-2. */
+  .backdrop-ready body[data-backdrop="on"] :is(main > :is(.section, .projects-explorer, .home-block):not(.section--ink, .home-block--ink), .hero-wrap > .stat-strip) { --ink-2: var(--ink); }
+  .backdrop-ready body[data-backdrop="on"] main :is(input, select, textarea, summary, button:not(.link-button, .client-more__toggle, .alumni-card__more, .stepper__tab), .btn, .card, .work-card, .project-filters__popover, .project-page__card, .project-pager__link, .employer-card, .seat-tile, .seat-skill, .benefit, .join-process__eligibility, .accordion, .resource-card, .qcard, .timer, .doc-card, .embed-frame, .story__card, .pillar, .stepper__card, .stepper__num, .stat-strip--grid .stat-strip__list, .press-link, .team-card, .alumni-card, .fee-card, .help-card, .client-tile, .client-chip, .contact-card, .partner-card, .engage__badge, .engage-step__marker, .request-done, .request-form__summary, .ph-text, .faq__empty, .projects-empty, .people-empty, .star__letter, .gallery__item, .media) { --ink-2: var(--ink-2-solid); }
+  /* Faint outlines that sit directly on the photo: --ph-border (an existing token). */
+  .backdrop-ready body[data-backdrop="on"] .star__item { border-color: var(--ph-border); }
+  /* Components without a background of their own stay opaque (FAQ rows). */
+  .backdrop-ready body[data-backdrop="on"] main .accordion { background-color: var(--paper); }
+}
+@media (prefers-reduced-motion: reduce) { .page-backdrop { transition: none; } }
+@media print { .page-backdrop, .backdrop-dev { display: none !important; } }
+/* Dev preview control: the backdrop-off class restores the solid colours. */
+.backdrop-off .page-backdrop { display: none; }
+html.backdrop-off.backdrop-ready body[data-backdrop="on"] main > .section--paper-2,
+html.backdrop-off.backdrop-ready body[data-backdrop="on"] main > .projects-explorer,
+html.backdrop-off.backdrop-ready body[data-backdrop="on"] main > .project-page { background-color: var(--paper-2); }
+html.backdrop-off.backdrop-ready body[data-backdrop="on"] .hero-wrap > .stat-strip { background-color: var(--paper); }
+html.backdrop-off.backdrop-ready body[data-backdrop="on"] .seat-panel { background-color: var(--paper); border-color: var(--line); box-shadow: var(--shadow); }
+.backdrop-dev { position: fixed; z-index: 90; left: 12px; bottom: 12px; display: grid; gap: 6px; padding: 10px 12px; background: var(--paper); border: 1px solid var(--ink-2); border-radius: 10px; box-shadow: var(--shadow-lift); font-size: .8125rem; color: var(--ink); }
+.backdrop-dev__row { display: flex; align-items: center; gap: 8px; }
+.backdrop-dev output { min-width: 3.5em; font-variant-numeric: tabular-nums; font-weight: 700; }
+
 /* 9. Utilities ----------------------------------------------------------- */
 .visually-hidden {
   position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;

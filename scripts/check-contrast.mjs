@@ -134,6 +134,58 @@ if (fs.existsSync(reversed)) {
   }
 }
 
+// Page backdrop (site.json → page_backdrops: every page unless opted out). Same model as
+// main.css: the fixed layer is --paper with the photo at opacity v, and every light section is
+// transparent, so text in those sections sits directly on the photo. Worst case = the darkest
+// pixel of either backdrop file. The configured default must pass (normal text 4.5:1, large
+// 3:1); 30% (the dev slider's top) is reported, and so is the highest strength at which every
+// text colour keeps 4.5:1 and a 5:1 margin.
+{
+  const cfg = readJson("site.json").page_backdrops;
+  const files = ["desktop", "portrait"].map((k) => path.join(ROOT, `assets/backdrop/backdrop-${k}.webp`)).filter((f) => fs.existsSync(f));
+  const anyOn = Object.values(cfg?.pages || {}).some(Boolean);
+  if (files.length && anyOn) {
+    let dark = null;
+    for (const f of files) {
+      const { data, info } = await sharp(f).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+      for (let i = 0; i < data.length; i += info.channels) {
+        const px = [data[i], data[i + 1], data[i + 2]];
+        if (!dark || lum(px) < lum(dark)) dark = px;
+      }
+    }
+    const bgAt = (v) => mix(dark, v, C.paper);
+    // Text colours drawn directly on light sections across the site (from the page audit):
+    // headings and body (ink), eyebrows/ledes/counts (ink-2), links, accent words, timeline
+    // years, FAQ group titles, toggles (scg-red), link hover (scg-red-dark), secondary buttons (ink).
+    const text = [
+      ["ink", 4.5, "headings, body text, secondary button text"],
+      ["ink-2", 4.5, "reference only: on the photo, eyebrows, ledes, hints, counts and captions use ink (main.css); ink-2 stays inside solid components"],
+      ["scg-red", 4.5, "links, arrow links, accent words, timeline years, FAQ group titles, toggles"],
+      ["scg-red-dark", 4.5, "link hover"],
+    ];
+    const def = parseFloat(cfg.visibility || "21%") / 100;
+    rows.push(`   –     backdrop: darkest pixel rgb(${dark}); default visibility ${(def * 100).toFixed(0)}%`);
+    for (const v of [def, 0.30]) {
+      const bg = bgAt(v);
+      rows.push(`   –     v=${(v * 100).toFixed(0)}%: a light section over the darkest pixel = rgb(${bg.map(Math.round)})`);
+      for (const [fg, min, where] of text) {
+        const r = ratio(C[fg], bg);
+        const flag = r < min ? "  ← below the limit" : r < 5 ? "  (passes, under a 5:1 margin)" : "";
+        rows.push(`${r.toFixed(2).padStart(6)}:1  ${fg} on the photo (v=${(v * 100).toFixed(0)}%; ${where})${flag}`);
+        if (v === def && r < min) failures.push(`backdrop default ${(v * 100).toFixed(0)}%: ${fg} over the darkest pixel ${r.toFixed(2)}:1 < ${min}:1`);
+      }
+      rows.push(`${ratio(C.line, bg).toFixed(2).padStart(6)}:1  1px --line divider over the darkest pixel (v=${(v * 100).toFixed(0)}%; decorative, reported; ${ratio(C.line, C.paper).toFixed(2)}:1 on plain white)`);
+    }
+    let best45 = 0, best5 = 0;
+    for (let p = 0; p <= 30; p++) {
+      const bg = bgAt(p / 100);
+      if (text.every(([fg]) => ratio(C[fg], bg) >= 4.5)) best45 = p;
+      if (text.every(([fg]) => ratio(C[fg], bg) >= 5)) best5 = p;
+    }
+    rows.push(`   –     highest strength with every text colour >= 4.5:1: ${best45}%; with a 5:1 margin: ${best5}%`);
+  }
+}
+
 console.log(rows.join("\n"));
 if (failures.length) {
   console.error(`\n[contrast] FAILED:\n  - ${failures.join("\n  - ")}`);

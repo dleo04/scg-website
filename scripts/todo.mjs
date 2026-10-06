@@ -101,6 +101,7 @@ if (site.forms?.client_request_fallback_email) data.push(`site.json → forms.cl
 if (!site.forms?.client_request_endpoint) data.push("site.json → forms.client_request_endpoint: supply a form endpoint (e.g. a Formspree form URL) so /work-with-us/contact/ shows the real request form instead of the 'Request by email' composer. No code change needed.");
 data.push("Launch: redirect the old URLs /services → /work-with-us/ and /contact-us → /work-with-us/contact/ (there is no redirect map in the repo yet; see DECISIONS.md → Work With Us dropdown).");
 data.push("Replace the Smith Equity Research logo with a cleaner (transparent or white background) file");
+data.push("Confirm usage rights and any required credit for the backdrop photo (mckeldinbackground). It is now shown behind every page of the site, so its permission matters more: if it is a UMD photo, get UMD's written permission (and any required credit) before launch, or replace it with an SCG-owned photo of the same view.");
 data.push("Officers: confirm each listed member and alumnus is OK with their name, photo and details being shown; set consent_to_publish to false (or delete the entry) on request.");
 for (const p of people.filter((p) => p.review_note)) data.push(`${p.level ? "team.json" : "alumni.json"} → ${p.name}: ${p.review_note}`);
 const noMajors = (team.members || []).filter((p) => !p.majors).length;
