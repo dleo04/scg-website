@@ -305,6 +305,36 @@ for (const g of fs.existsSync(galleryFile) ? JSON.parse(fs.readFileSync(galleryF
   manifest.gallery[g.file] = out;
 }
 
+// Team and alumni headshots: assets/photos/people/<id>.* → 400px square WebP (< 40KB) cropped
+// around the person's stored focal point (data → photo.focal); without one, sharp's attention
+// strategy picks the crop. Never stretched; never upscaled past the source.
+manifest.people = {};
+const peopleDir = path.join(ROOT, "assets/photos/people");
+fs.mkdirSync(path.join(GEN_DIR, "people"), { recursive: true });
+const peopleData = [...(readJson("team.json").members || []), ...(readJson("alumni.json").alumni || [])];
+for (const person of peopleData) {
+  if (!person.id || !fs.existsSync(peopleDir)) continue;
+  const file = fs.readdirSync(peopleDir).find((f) => path.basename(f, path.extname(f)) === person.id && /\.(jpe?g|png|webp)$/i.test(f));
+  if (!file) continue;
+  const src = path.join(peopleDir, file);
+  const meta = await sharp(src).rotate().metadata();
+  const side = Math.min(meta.width, meta.height);
+  const size = Math.min(400, side);
+  let pipeline;
+  if (person.photo?.focal) {
+    const [fx, fy] = person.photo.focal.split(/\s+/).map((v) => parseFloat(v) / 100);
+    const left = Math.round(Math.min(meta.width - side, Math.max(0, meta.width * fx - side / 2)));
+    const top = Math.round(Math.min(meta.height - side, Math.max(0, meta.height * fy - side / 2)));
+    pipeline = () => sharp(src).rotate().extract({ left, top, width: side, height: side }).resize(size, size);
+  } else {
+    pipeline = () => sharp(src).rotate().resize(size, size, { fit: "cover", position: sharp.strategy.attention });
+  }
+  let q = 80, buf;
+  do { buf = await pipeline().flatten({ background: "#FFFFFF" }).webp({ quality: q }).toBuffer(); q -= 6; } while (buf.length > 40 * 1024 && q > 35);
+  fs.writeFileSync(path.join(GEN_DIR, "people", `${person.id}.webp`), buf);
+  manifest.people[person.id] = { src: `/assets/generated/people/${person.id}.webp`, width: size, height: size, kb: Math.round(buf.length / 1024) };
+}
+
 // Employer logos (downloaded once by `npm run logos`): small WebP + PNG copies,
 // resized proportionally to at most 360x120 (3x the largest display size). No recoloring.
 const logoManifest = path.join(ROOT, "assets/logos/logos.json");

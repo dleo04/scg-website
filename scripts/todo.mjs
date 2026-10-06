@@ -94,8 +94,14 @@ for (const g of faq.groups) for (const item of g.items) {
   if (item.needs_decision) data.push(`faq.json → "${item.q}" NEEDS DECISION (hidden in production): ${item.decision}`);
   else if (item.needs_review) data.push(`faq.json → "${item.q}" is a draft; officers to review.`);
 }
-const noConsent = [...team.board, ...team.members, ...alumni].filter((p) => p.consent_to_publish !== true);
-data.push(`team.json / alumni.json: ${noConsent.length} entr${noConsent.length === 1 ? "y has" : "ies have"} no consent_to_publish yet and are not shown.`);
+const people = [...(team.board || []), ...(team.members || []), ...alumni];
+const noConsent = people.filter((p) => p.consent_to_publish !== true);
+if (noConsent.length) data.push(`team.json / alumni.json: ${noConsent.length} entr${noConsent.length === 1 ? "y has" : "ies have"} no consent_to_publish yet and are not shown.`);
+data.push("Officers: confirm each listed member and alumnus is OK with their name, photo and details being shown; set consent_to_publish to false (or delete the entry) on request.");
+for (const p of people.filter((p) => p.review_note)) data.push(`${p.level ? "team.json" : "alumni.json"} → ${p.name}: ${p.review_note}`);
+const noMajors = (team.members || []).filter((p) => !p.majors).length;
+if (noMajors) data.push(`team.json: ${noMajors} members have no majors (the old site did not list them); the major filter on /team/ appears once at least 3 members have one. "worked_on" (project ids) is empty for everyone.`);
+if (!site.alumni_report?.file) data.push("site.json → alumni_report.file: add the 2026 Alumni Report PDF to show the download on /alumni/ (the old site only showed it as an image carousel; no file was found).");
 const noYear = clients.filter((c) => !c.year).length;
 if (noYear) data.push(`past-clients.json: ${noYear} clients have no year; "likely_technical" flags are unconfirmed guesses.`);
 

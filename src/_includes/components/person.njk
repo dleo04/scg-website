@@ -1,0 +1,13 @@
+{#- Person avatar: the generated headshot (assets/generated/people/<id>.webp) or, without a
+    photo, initials on a maroon-black circle (gold initials, 8:1). -#}
+{% macro avatar(p, cls = "") -%}
+{%- if p.headshot %}
+<img class="avatar {{ cls }}" src="{{ p.headshot.src }}" width="{{ p.headshot.width }}" height="{{ p.headshot.height }}" alt="Photo of {{ p.name }}" loading="lazy" decoding="async">
+{%- else %}
+<span class="avatar avatar--initials {{ cls }}" role="img" aria-label="{{ p.name }}">{{ p.initials }}</span>
+{%- endif %}
+{%- endmacro %}
+
+{% macro linkedinLink(p) -%}
+{%- if p.linkedin %}<a class="person__linkedin" href="{{ p.linkedin }}" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.6 8.65 21 11.2 21 14.5V21h-4v-5.8c0-1.4-.03-3.2-1.95-3.2-1.95 0-2.25 1.52-2.25 3.1V21H9z"/></svg><span>LinkedIn<span class="visually-hidden"> profile of {{ p.name }} (opens in a new tab)</span></span></a>{% endif %}
+{%- endmacro %}

@@ -1,44 +1,439 @@
 {
-  "_readme": "Schema for team members. NO real people are included; officers must supply entries and confirm each person consents to name/photo/major being public. Goal: show a visitor who is already in SCG by MAJOR and ROLE, not only by internship employer, so non-business students see people like themselves.",
-  "board": [
-    {
-      "name": "[TBD]",
-      "title": "Chair",
-      "cohort": null,
-      "majors": [
-        "[TBD]"
-      ],
-      "school_college": null,
-      "year": null,
-      "worked_on": [],
-      "photo": null,
-      "linkedin": null,
-      "consent_to_publish": false
-    }
-  ],
-  "members": [
-    {
-      "name": "[TBD]",
-      "title": "Consultant",
-      "cohort": null,
-      "majors": [
-        "[TBD]"
-      ],
-      "school_college": null,
-      "year": null,
-      "worked_on": [
-        "project id from projects.json"
-      ],
-      "photo": null,
-      "linkedin": null,
-      "consent_to_publish": false
-    }
-  ],
+  "_readme": "SCG members shown on /team/, grouped by level (levels, in order). Imported from the old site's About page (source: old-site). Fields: id, name, level (one of levels), title, cohort, majors (list; null until known, never guessed), experience (internship line from the old site, optional), worked_on (project ids from projects.json; optional), photo ({focal: 'x% y%'}; the file is assets/photos/people/<id>.* , made by npm run people-photos), linkedin (only if publicly linked; null otherwise), consent_to_publish (true to show), consent_basis, source. To add a person: add an entry, put their photo at assets/photos/people/<id>.jpg (or .png/.webp) and run npm run build.",
   "levels": [
-    "Board of Trustees (Chair, Vice Chair)",
+    "Board of Trustees",
     "Principal Consultants",
     "Senior Consultants",
     "Consultants",
     "Analysts"
+  ],
+  "members": [
+    {
+      "id": "stacy-sun",
+      "name": "Stacy Sun",
+      "level": "Board of Trustees",
+      "title": "Chair",
+      "cohort": 8,
+      "majors": null,
+      "experience": "Business Analyst Intern at Capital One",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "abby-richard",
+      "name": "Abby Richard",
+      "level": "Board of Trustees",
+      "title": "Vice Chair",
+      "cohort": 9,
+      "majors": null,
+      "experience": "Business Analyst Intern at Capital One",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "audrey-feng",
+      "name": "Audrey Feng",
+      "level": "Principal Consultants",
+      "title": "Principal Consultant",
+      "cohort": 9,
+      "majors": null,
+      "experience": "Business Analyst Intern at Capital One",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "hamid-shabbir",
+      "name": "Hamid Shabbir",
+      "level": "Principal Consultants",
+      "title": "Principal Consultant",
+      "cohort": 9,
+      "majors": null,
+      "experience": "Prev Banking Intern at J. P. Morgan",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 38%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "pavi-paila",
+      "name": "Pavi Paila",
+      "level": "Principal Consultants",
+      "title": "Principal Consultant",
+      "cohort": 10,
+      "majors": null,
+      "experience": "Past Intern at Artemis Real Estate Partners",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "daniel-leo",
+      "name": "Daniel Leo",
+      "level": "Principal Consultants",
+      "title": "Principal Consultant",
+      "cohort": 10,
+      "majors": null,
+      "experience": "Financial Services Intern at Ernst & Young",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 40%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "michelle-sun",
+      "name": "Michelle Sun",
+      "level": "Principal Consultants",
+      "title": "Principal Consultant",
+      "cohort": 10,
+      "majors": null,
+      "experience": "Business Analyst Intern at Capital One",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 40%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "olevia-tinepaw",
+      "name": "Olevia Tinepaw",
+      "level": "Principal Consultants",
+      "title": "Principal Consultant",
+      "cohort": 10,
+      "majors": null,
+      "experience": "Technology Risk & Financial Advisory at Deloitte",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 40%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site",
+      "review_note": "shown as 'Olevia Tinepaw' on the old About page, but the old site also has a hidden page titled 'Olevia Tinpaw' (/olevia-tinpaw); confirm the spelling."
+    },
+    {
+      "id": "bryce-powell",
+      "name": "Bryce Powell",
+      "level": "Principal Consultants",
+      "title": "Principal Consultant",
+      "cohort": 11,
+      "majors": null,
+      "experience": "Audit and Controls Intern at Exelon",
+      "worked_on": [],
+      "photo": {
+        "focal": "49% 53%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "vibha-gunturi",
+      "name": "Vibha Gunturi",
+      "level": "Senior Consultants",
+      "title": "Senior Consultant",
+      "cohort": 8,
+      "majors": null,
+      "experience": "Intern at AlphaSights",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 55%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "jessie-feng",
+      "name": "Jessie Feng",
+      "level": "Senior Consultants",
+      "title": "Senior Consultant",
+      "cohort": 9,
+      "majors": null,
+      "experience": "Finance Intern at Capital One",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "shree-dave",
+      "name": "Shree Dave",
+      "level": "Senior Consultants",
+      "title": "Senior Consultant",
+      "cohort": 9,
+      "majors": null,
+      "experience": "Intern at PwC",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 36%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "ethan-han",
+      "name": "Ethan Han",
+      "level": "Senior Consultants",
+      "title": "Senior Consultant",
+      "cohort": 9,
+      "majors": null,
+      "experience": "Intern at KPMG",
+      "worked_on": [],
+      "photo": {
+        "focal": "54% 50%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "vasa-schnell",
+      "name": "Vasa Schnell",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 9,
+      "majors": null,
+      "experience": "Past Strategy & Analytics Intern at School Harbor",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "amari-mehta",
+      "name": "Amari Mehta",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 10,
+      "majors": null,
+      "experience": "Past Enterprise Advisory & Transformation Intern at SC&H",
+      "worked_on": [],
+      "photo": {
+        "focal": "49% 44%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "saachi-aggarwal",
+      "name": "Saachi Aggarwal",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 10,
+      "majors": null,
+      "experience": "Past Strategic Insights & Analytics Intern at Stanley Black & Decker",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "hasan-ege",
+      "name": "Hasan Ege",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 10,
+      "majors": null,
+      "experience": "PDIP at Capital One",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 34%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "pranav-sasikumar",
+      "name": "Pranav Sasikumar",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 11,
+      "majors": null,
+      "experience": "Past Intern at Capitol Hill",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "utkarsh-mandsaurwale",
+      "name": "Utkarsh Mandsaurwale",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 11,
+      "majors": null,
+      "experience": null,
+      "worked_on": [],
+      "photo": {
+        "focal": "51% 46%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "riley-ying",
+      "name": "Riley Ying",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 11,
+      "majors": null,
+      "experience": "Incoming Intern at MetLife Investment Management",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "ibraheem-shaikh",
+      "name": "Ibraheem Shaikh",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 11,
+      "majors": null,
+      "experience": "Software Engineer Intern at AfterQuery",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "daniel-li",
+      "name": "Daniel Li",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 11,
+      "majors": null,
+      "experience": "Past AI Intern at the National Institutes of Health",
+      "worked_on": [],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "nikhil-thomas",
+      "name": "Nikhil Thomas",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 11,
+      "majors": null,
+      "experience": null,
+      "worked_on": [],
+      "photo": {
+        "focal": "51% 49%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site",
+      "review_note": "old photo is a cropped circular screenshot; replace with a proper headshot if available."
+    },
+    {
+      "id": "santana-pina",
+      "name": "Santana Pina",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 11,
+      "majors": null,
+      "experience": "District Manager Intern at Aldi",
+      "worked_on": [],
+      "photo": {
+        "focal": "46% 49%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "chaewon-cheon",
+      "name": "Chaewon Cheon",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 11,
+      "majors": null,
+      "experience": "Digital Services Intern at Marriott",
+      "worked_on": [],
+      "photo": {
+        "focal": "51% 52%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    }
   ]
 }

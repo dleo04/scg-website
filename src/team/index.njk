@@ -1,7 +1,56 @@
 ---
-layout: layouts/stub.njk
+layout: layouts/base.njk
 title: "Our team"
-eyebrow: "Who we are"
-stage: 3
-description: "Meet SCG's board and members by major and role."
+description: "Meet the Snider Consulting Group's board of trustees and consultants."
+bodyClass: page-team
 ---
+{#- /team/ from data/team.json (consent enforced in lib/load-data.js). Grouped by level; filters
+    (level, name, and major once at least 3 people have one) are added by people-filter.js.
+    Without JS every card is visible. -#}
+{%- from "components/page-banner.njk" import pageBanner with context -%}
+{%- from "components/person.njk" import avatar, linkedinLink with context -%}
+{{ pageBanner({ id: "page-title", eyebrow: "Who we are", title: "Our team" }) }}
+<section class="section section--paper-2 people" aria-label="Team members">
+  <div class="container">
+    <form class="people-filters" data-people-filters hidden role="search" aria-label="Filter team members" onsubmit="return false">
+      <div class="people-filters__field people-filters__field--search">
+        <label for="tf-q">Search by name</label>
+        <input id="tf-q" name="q" type="search" autocomplete="off">
+      </div>
+      <div class="people-filters__field">
+        <label for="tf-level">Level</label>
+        <select id="tf-level" name="level"><option value="">All levels</option>{% for g in team.groups %}<option>{{ g.level }}</option>{% endfor %}</select>
+      </div>
+      {%- if team.majors.length >= 3 %}
+      <div class="people-filters__field">
+        <label for="tf-major">Major</label>
+        <select id="tf-major" name="major"><option value="">All majors</option>{% for m in team.majors %}<option>{{ m }}</option>{% endfor %}</select>
+      </div>
+      {%- endif %}
+      <p class="people-filters__count" role="status" aria-live="polite" data-people-count></p>
+    </form>
+    {%- for g in team.groups %}
+    <section class="people-group" data-people-group aria-labelledby="lvl-{{ g.slug }}">
+      <h2 class="people-group__title" id="lvl-{{ g.slug }}">{{ g.level }}</h2>
+      <ul class="team-grid">
+        {%- for p in g.people %}
+        <li class="team-card" data-person data-name="{{ p.name }}" data-level="{{ p.level }}" data-majors="{{ p.majors | join('|') }}" data-search="{{ p.name }} {{ p.title }} {{ p.experience }}">
+          <div class="team-card__photo">{{ avatar(p, "avatar--square") }}</div>
+          <div class="team-card__body">
+            <h3 class="team-card__name">{{ p.name }}</h3>
+            <p class="team-card__title">{{ p.title }}</p>
+            {%- if p.cohort %}<p class="team-card__cohort">Cohort {{ p.cohort }}</p>{% endif %}
+            {%- if p.majors.length %}<p class="team-card__majors">{{ p.majors | join(", ") }}</p>{% endif %}
+            {%- if p.experience %}<p class="team-card__exp">{{ p.experience }}</p>{% endif %}
+            {%- if p.workedOn.length %}<ul class="chips team-card__projects" aria-label="Worked on">{% for pr in p.workedOn %}<li><a class="chip" href="{{ pr.url }}">{{ pr.title }}</a></li>{% endfor %}</ul>{% endif %}
+            {{ linkedinLink(p) }}
+          </div>
+        </li>
+        {%- endfor %}
+      </ul>
+    </section>
+    {%- endfor %}
+    <p class="people-empty" data-people-empty hidden>No one matches. <button class="link-button" type="button" data-people-clear>Clear filters</button></p>
+  </div>
+</section>
+<script src="{{ '/js/people-filter.js' | versioned }}" defer></script>

@@ -50,6 +50,17 @@ Projects live in `data/projects.json`, one object per **client tile**; the card,
 ### A returning client (a second semester)
 Do not create a new tile. Add another object to that client's `"engagements"` list with its own `semester`, optional `title` (e.g. "Colorado school data API"), `tagline`, `challenge`, `scope`, `skills` and `outcome`. The card switches to the newest engagement, the title reads e.g. "(Spring & Fall 2025)", the dialog and page show one section per semester (newest first), and the Semester filter finds the tile under every semester. Two separate projects for the same client in the **same** semester are separate tiles instead; they link to each other automatically.
 
+## How to add a team member or alumnus
+People live in `data/team.json` (`members`) and `data/alumni.json` (`alumni`). Copy an existing entry and edit it:
+
+- `id`: lower-case name with hyphens (`jane-doe`). It names the photo file too.
+- Team: `name`, `level` (one of `levels` at the top of the file), `title` (e.g. "Vice Chair"), `cohort`, `experience` (one short line), `majors` (a list, or `null` if unknown; never guess), `worked_on` (project ids from `projects.json`, shown as chips), `linkedin` (full URL or `null`).
+- Alumni: `name`, `graduation_year`, `majors`, `current_role`, `current_org`, `industry` (only if stated; otherwise `null`), `summary` (one sentence), `bio` (a list of paragraphs), `linkedin`.
+- `consent_to_publish`: must be `true` or the person is not shown. Set it to `false` (or delete the entry) when someone asks to be removed. Never add emails or phone numbers; the build fails if it finds any.
+- **Photo:** put the original as `assets/photos/people/<id>.jpg` (or .png/.webp) and run `npm run assets`. It makes a 400px square headshot centred on the face (automatic), or on `photo.focal` (e.g. `"focal": "50% 30%"`) if you set one. No photo shows the person's initials instead.
+- The major filter on `/team/` appears once at least three members have majors; the alumni industry filter lists whatever industries are filled in.
+- The Alumni Report download appears on `/alumni/` when `site.json → alumni_report.file` points to a PDF.
+
 ## How to update the recruiting status and calendar
 Everything on `/join/` that changes each semester lives in `data/site.json`:
 - `recruiting.banner_label` / `banner_text` / `closed_text`: the status card at the top of `/join/` (for example "Spring 2027 recruitment · Interest form is open. · Fall 2026 applications are closed.").

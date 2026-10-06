@@ -1,7 +1,99 @@
 ---
-layout: layouts/stub.njk
+layout: layouts/base.njk
 title: "Alumni"
-eyebrow: "Who we are"
-stage: 3
-description: "Where SCG alumni went next, and what they studied."
+description: "Where Snider Consulting Group alumni went next, and what they studied."
+bodyClass: page-alumni
 ---
+{#- /alumni/ from data/alumni.json (consent enforced). Filters (major, industry if any, name or
+    employer search) and "Read more" disclosures are added by people-filter.js; without JS every
+    card and full bio is visible. Member statistics reuse site.json → member_stats (the same
+    figures as /about/). The Alumni Report slot shows only when site.json → alumni_report.file exists. -#}
+{%- from "components/page-banner.njk" import pageBanner with context -%}
+{%- from "components/person.njk" import avatar, linkedinLink with context -%}
+{%- from "components/ui.njk" import tbdBlock with context -%}
+{{ pageBanner({ id: "page-title", eyebrow: "Who we are", title: "Alumni" }) }}
+<section class="section section--paper-2 people" aria-label="Alumni directory">
+  <div class="container">
+    <form class="people-filters" data-people-filters hidden role="search" aria-label="Filter alumni" onsubmit="return false">
+      <div class="people-filters__field people-filters__field--search">
+        <label for="af-q">Search by name or employer</label>
+        <input id="af-q" name="q" type="search" autocomplete="off">
+      </div>
+      {%- if alumniMeta.majors.length > 1 %}
+      <div class="people-filters__field">
+        <label for="af-major">Major</label>
+        <select id="af-major" name="major"><option value="">All majors</option>{% for m in alumniMeta.majors %}<option>{{ m }}</option>{% endfor %}</select>
+      </div>
+      {%- endif %}
+      {%- if alumniMeta.industries.length > 1 %}
+      <div class="people-filters__field">
+        <label for="af-industry">Industry</label>
+        <select id="af-industry" name="industry"><option value="">All industries</option>{% for m in alumniMeta.industries %}<option>{{ m }}</option>{% endfor %}</select>
+      </div>
+      {%- endif %}
+      <p class="people-filters__count" role="status" aria-live="polite" data-people-count></p>
+    </form>
+    <ul class="alumni-grid" data-people-group>
+      {%- for p in alumni %}
+      <li class="alumni-card" data-person data-name="{{ p.name }}" data-majors="{{ p.majors | join('|') }}" data-industry="{{ p.industry or '' }}" data-search="{{ p.name }} {{ p.current_role }} {{ p.current_org }} {{ p.bio | join(' ') }}">
+        <div class="alumni-card__head">
+          {{ avatar(p, "avatar--round") }}
+          <div>
+            <h2 class="alumni-card__name">{{ p.name }}</h2>
+            {%- if p.graduation_year %}<p class="alumni-card__year">Class of {{ p.graduation_year }}</p>{% endif %}
+          </div>
+        </div>
+        {%- if p.majors.length %}<p class="alumni-card__majors"><span class="visually-hidden">Majors: </span>{{ p.majors | join(", ") }}</p>{% endif %}
+        {%- if p.current_role or p.current_org %}<p class="alumni-card__role">{{ p.current_role }}{% if p.current_role and p.current_org %}, {% endif %}{{ p.current_org }}</p>{% endif %}
+        <p class="alumni-card__summary">{{ p.summary }}</p>
+        <div class="alumni-card__bio" id="bio-{{ p.id }}" data-bio>
+          {%- for para in p.bio %}<p>{{ para }}</p>{% endfor %}
+        </div>
+        <div class="alumni-card__foot">
+          <button class="alumni-card__more" type="button" aria-expanded="false" aria-controls="bio-{{ p.id }}" data-bio-toggle hidden><span data-bio-label>Read more</span><span class="visually-hidden"> about {{ p.name }}</span></button>
+          {{ linkedinLink(p) }}
+        </div>
+      </li>
+      {%- endfor %}
+    </ul>
+    <p class="people-empty" data-people-empty hidden>No alumni match. <button class="link-button" type="button" data-people-clear>Clear filters</button></p>
+  </div>
+</section>
+
+{%- set memberStats = site.member_stats | selectattr("verified") -%}
+{%- if memberStats.length %}
+<section class="section member-stats" aria-labelledby="member-stats-title">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Members</p>
+      <h2 class="section__title" id="member-stats-title">Leaders across campus</h2>
+      <p class="section__lede">Among SCG's members are</p>
+    </header>
+    <div class="stat-strip stat-strip--grid" data-countup>
+      <dl class="stat-strip__list">
+        {%- for s in memberStats %}
+        {%- set n = s.value | parseStat %}
+        <div class="stat-strip__item"><dt>
+          {%- if s.label_abbr %}{% for abbr, full in s.label_abbr %}<abbr title="{{ full }}">{{ abbr }}</abbr>{{ s.label | replace(abbr, "") }}{% endfor %}{% else %}{{ s.label }}{% endif -%}
+        </dt><dd>
+          {%- if n -%}<span class="visually-hidden">{{ s.value }}</span><span class="stat-strip__value" aria-hidden="true">{{ n.prefix }}<span class="stat-strip__num" data-count-to="{{ n.target }}" style="--chars: {{ n.chars }}">{{ n.formatted }}</span>{{ n.suffix }}</span>
+          {%- else -%}{{ s.value }}{%- endif -%}
+        </dd></div>
+        {%- endfor %}
+      </dl>
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+{%- if site.alumni_report and site.alumni_report.file %}
+<section class="section section--tight" aria-labelledby="report-title">
+  <div class="container">
+    <h2 class="section__title" id="report-title">{{ site.alumni_report.title }}</h2>
+    <p><a class="btn btn--primary" href="/{{ site.alumni_report.file }}" download>Download the report (PDF)</a></p>
+  </div>
+</section>
+{%- elif env.showPlaceholders %}
+<section class="section section--tight"><div class="container">{{ tbdBlock("2026 Alumni Report", "[TBD: Alumni Report PDF (site.json → alumni_report.file); the old site showed it as an image carousel, not a file]") }}</div></section>
+{%- endif %}
+<script src="{{ '/js/people-filter.js' | versioned }}" defer></script>

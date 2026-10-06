@@ -19,6 +19,7 @@
     "logos": "node scripts/fetch-logos.mjs",
     "trim-logos": "node scripts/trim-logos.mjs",
     "old-photos": "node scripts/fetch-old-photos.mjs",
+    "people-photos": "node scripts/import-people-photos.mjs",
     "clean": "node -e \"require('fs').rmSync('_site',{recursive:true,force:true})\"",
     "hero-contrast": "node scripts/hero-contrast.mjs",
     "banner-contrast": "node scripts/banner-contrast.mjs",

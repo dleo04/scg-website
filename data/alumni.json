@@ -1,95 +1,1013 @@
 {
-  "_readme": "Seed alumni whose majors are outside the Smith School core, taken from the public Our Alumni page, to support the 'every major has a seat' message. VERIFY each entry against the current Our Alumni page and get each person's OK before publishing names. Fields not shown on the old page (cohort, current employer, photo) are null. Add all other alumni using the same schema so the filter-by-major feature has complete data.",
+  "_readme": "Alumni on /alumni/, imported from the old site's Our Alumni page (source: old-site). Fields: id, name, graduation_year (the old page's alumni year heading), majors (only as stated in the bio), minors, current_role/current_org/industry (only where the bio states what the person did after graduating; null otherwise), summary (first sentence of the bio), bio (paragraphs, as written; typos cleaned), photo ({focal}), linkedin (only when the page linked that person's own profile), consent_to_publish, consent_basis, source.",
   "alumni": [
     {
+      "id": "harrisen-cefalu-schwartz",
+      "name": "Harrisen Cefalu-Schwartz",
+      "graduation_year": 2026,
+      "majors": [
+        "Finance",
+        "Operations Management & Business Analytics"
+      ],
+      "minors": null,
+      "current_role": null,
+      "current_org": null,
+      "industry": null,
+      "summary": "Harrisen Cefalu-Schwartz was a vice-chair on the board of trustees and a principal consultant for Snider Consulting Group.",
+      "bio": [
+        "Harrisen Cefalu-Schwartz was a vice-chair on the board of trustees and a principal consultant for Snider Consulting Group. He joined in the Fall of 2022 as a member of Cohort 5.",
+        "Harrisen majored in Finance and Operations Management & Business Analytics.",
+        "Harrisen has internship experience with Ernst & Young, where he worked as an FSO consulting intern, and at the Executive Office of the President, serving as an intern in the Office of Management and Budget (OMB). These experiences have provided him with a strong foundation in consulting and financial management.",
+        "Harrisen served as the Consulting Careers intern for the Office of Career Services, where he focused on helping students build the skills necessary to pursue careers in consulting. He also worked to increase awareness of available opportunities in the field. Previously, Harrisen played a key role in organizing the Smith in the City trip to New York City as the Consulting Track Lead, coordinating networking events and informational sessions to introduce students to career opportunities.",
+        "Outside of his academic and professional pursuits, Harrisen enjoys hiking, reading, and spending time with friends and family."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": "https://www.linkedin.com/in/harrisen-cefalu-schwartz-b903491b1/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site",
+      "review_note": "old LinkedIn URL had a stray '/rious' suffix; stripped. Confirm the link works."
+    },
+    {
+      "id": "sebastian-decady",
+      "name": "Sebastian Decady",
+      "graduation_year": 2026,
+      "majors": [
+        "Finance",
+        "Economics"
+      ],
+      "minors": null,
+      "current_role": null,
+      "current_org": null,
+      "industry": null,
+      "summary": "Sebastian Decady was a consultant for Snider Consulting Group.",
+      "bio": [
+        "Sebastian Decady was a consultant for Snider Consulting Group. He joined in Spring 2024 as part of Cohort 8.",
+        "At UMD, Sebastian pursued a double major in Finance and Economics.",
+        "Sebastian’s strengths include ideation, critical thinking, client relation, market analysis, problem solving, and collaboration.",
+        "Outside of SCG, he was heavily involved within the Smith Business School as an inaugural cohort member of SBLF, former Vice president of Administration for the Black Business Association, and member of the Smith business Academy. Outside of business he was the Keeper of Exchequer for his fraternity, Kappa Alpha Psi, and a member of QUEST Honor (Cohort 41).",
+        "He has also participated in multiple case competitions, including the Deloitte Case Competition, Smith Finance Group x Stifel Case Competition, and SBLF Case Competition. In his free time Sebastian enjoys playing soccer, volleyball, listening to podcasts, photography, drawing, watching Netflix, and exploring surrounding restaurants and museums.",
+        "Sebastian professional experiences so far includes working as a Risk and Financial Advisory Intern with Deloitte, Non profit consultant with BCG. His upcoming plans this summer include Working with Energy Innovation Capital as a VC intern, in addition to returning to Deloitte as RFA intern. Finally, in the summer of 2025 working with Morgan Stanley in the Public Finance Investment Banking division in NYC."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site",
+      "review_note": "old LinkedIn button pointed to someone else's profile (vincentjkyu); omitted. Add the right URL if they want one."
+    },
+    {
+      "id": "matthew-weirich",
       "name": "Matthew Weirich",
-      "majors": "Electrical Engineering (pre-law track)",
-      "school_college": null,
-      "cohort": null,
-      "graduation_year": null,
+      "graduation_year": 2025,
+      "majors": [
+        "Electrical Engineering"
+      ],
+      "minors": null,
       "current_role": null,
       "current_org": null,
-      "scg_roles": [],
-      "note": "Also a QUEST Honors Program member, a peer mentor and TA in Electrical and Computer Engineering, and an academic peer coach for the A. James Clark School of Engineering.",
-      "photo": null,
-      "linkedin": null,
-      "consent_to_publish": false,
-      "verify_against_old_site": true
+      "industry": null,
+      "summary": "Matthew Weirich was a vice-chair on the board of trustees and a principal consultant for Snider Consulting Group.",
+      "bio": [
+        "Matthew Weirich was a vice-chair on the board of trustees and a principal consultant for Snider Consulting Group. He joined in the Fall of 2022 as a member of Cohort 5.",
+        "Matthew pursued an Electrical Engineering degree on the pre-law track. He was also a part of the QUEST honors program cohort 39, a peer mentor and TA for the Electrical and Computer Engineering school, and an academic peer coach for the A. James Clark School of Engineering",
+        "Matthew has experience in leading teams, logic-based project design, entrepreneurship, innovation, and team building",
+        "Apart from SCG, Matthew was a peer mentor for the ECE department, a mentor for the QUEST honors program, and a buddy for the Global Communities honors program. Outside of UMD, after his freshman year, Matthew worked at the United States Naval Research Laboratory as a radar countermeasure hardware developer. Following his sophomore year, He worked with ExxonMobil as an electrical engineering intern. After his junior year, he became the first-ever technical specialist intern at Finnegan, Henderson, Farabow, Garrett & Dunner.",
+        "At home, Matthew has started two successful businesses: One is a pop-up fine dining restaurant out of his home called Restaurant Confluence, and a landscaping business called Weirich Landscaping. Matthew is also the sole inventor on two US patents and has multiple more currently pending at the USPTO."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": "https://www.linkedin.com/in/mweirich12/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
     },
     {
-      "name": "Sridhar Ganti",
-      "majors": "Chemical Engineering",
-      "school_college": null,
-      "cohort": null,
-      "graduation_year": null,
+      "id": "vincent-yu",
+      "name": "Vincent Yu",
+      "graduation_year": 2025,
+      "majors": [
+        "Finance",
+        "Information Systems"
+      ],
+      "minors": null,
       "current_role": null,
       "current_org": null,
-      "scg_roles": [],
-      "note": "Chemical engineer at ExxonMobil after graduating.",
-      "photo": null,
-      "linkedin": null,
-      "consent_to_publish": false,
-      "verify_against_old_site": true
+      "industry": null,
+      "summary": "Vincent was a Principal Consultant for the Snider Consulting Group, having joined in Fall 2022 as part of Cohort 5.",
+      "bio": [
+        "Vincent was a Principal Consultant for the Snider Consulting Group, having joined in Fall 2022 as part of Cohort 5. He pursued a BS in Finance and Information Systems and was a member of the QUEST Honors Program Cohort 40.",
+        "Vincent’s experience spans internships, academic projects, and leadership roles, where he has developed skills in data analysis, communication, and project management. He is passionate about creating innovative and sustainable solutions.",
+        "Beyond SCG, Vincent served as the Professional Chair for Phi Chi Theta, a professional business fraternity. His campus involvement included roles as a Business and Financial Services Intern in the UMD Vice President’s Office of Administration, a Career Advising Intern in the Office of Career Services, and a Teaching Assistant at the Robert H. Smith School of Business. He also won a case competition sponsored by the Center for Social Value Creation at UMD.",
+        "In his free time, Vincent enjoys podcasts, EDM, volleyball, pickleball, and recreational weightlifting."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": "https://www.linkedin.com/in/vincentjkyu/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
     },
     {
-      "name": "Elyana Furman",
-      "majors": "Psychology and Business Information Systems (double major)",
-      "school_college": null,
-      "cohort": null,
-      "graduation_year": null,
+      "id": "kiran-vepa",
+      "name": "Kiran Vepa",
+      "graduation_year": 2025,
+      "majors": [
+        "Finance",
+        "Information Systems"
+      ],
+      "minors": null,
       "current_role": null,
       "current_org": null,
-      "scg_roles": [],
-      "note": "Member of the Cloud Computing stream in UMD's First-Year Innovative Research Experience (F.I.R.E.) and of the Information Technology and Business Transformation Fellows Program.",
-      "photo": null,
-      "linkedin": null,
-      "consent_to_publish": false,
-      "verify_against_old_site": true
+      "industry": null,
+      "summary": "Kiran Vepa was a Principal Consultant for the Snider Consulting Group, where she also served as Director of Recruitment and Director of Community Development.",
+      "bio": [
+        "Kiran Vepa was a Principal Consultant for the Snider Consulting Group, where she also served as Director of Recruitment and Director of Community Development. She joined SCG in Spring 2023 as part of Cohort 6.",
+        "Kiran pursued a BS in Finance and Information Systems at the Robert H. Smith School of Business, University of Maryland. She was also a member of the QUEST Honors Program in Cohort 40.",
+        "Her experiences across professional and academic settings have honed her leadership, teamwork, design thinking, and project management skills. Kiran is passionate about continuous learning and is dedicated to giving back to her communities through mentorship and service.",
+        "Outside of SCG, Kiran was a Head Teaching Assistant for BMGT301 - Introduction to Information Systems. She was also a member of Phi Chi Theta, a business professional organization, where she served on the Executive Board in 2023."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": "https://www.linkedin.com/in/kiranvepa/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
     },
     {
-      "name": "Matt Leonhartt",
-      "majors": "Mathematics and Finance",
-      "school_college": null,
-      "cohort": null,
-      "graduation_year": null,
+      "id": "angie-mcgonigle",
+      "name": "Angie McGonigle",
+      "graduation_year": 2025,
+      "majors": [
+        "Information Systems"
+      ],
+      "minors": [
+        "Business Analytics"
+      ],
       "current_role": null,
       "current_org": null,
-      "scg_roles": [],
-      "note": "Project lead for SCG's first client, Maryland Impact; vice president of the UMD Actuaries club; graduated summa cum laude.",
-      "photo": null,
-      "linkedin": null,
-      "consent_to_publish": false,
-      "verify_against_old_site": true
+      "industry": null,
+      "summary": "Angie McGonigle was a Principal Consultant for the Snider Consulting Group serving as Director of Web Development and Administration.",
+      "bio": [
+        "Angie McGonigle was a Principal Consultant for the Snider Consulting Group serving as Director of Web Development and Administration. She joined as a member of Cohort 6 in Spring 2023.",
+        "Angie pursued a BS in Information Systems with a minor in Business Analytics. She was also a member of the QUEST Honors Program Cohort 39.",
+        "Through her various academic and professional experiences, Angie has strengthened her teamwork, project management, problem-solving, and communication skills. She excels in technical consulting and data-driven projects.",
+        "Beyond Snider Consulting Group, Angie served as President of Pi Sigma Epsilon, a co-ed professional business fraternity. She also worked as a Teaching Assistant for the BMGT302 (Essential Programming Skills for Business Majors), an Information Systems course at the Smith School."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": "https://www.linkedin.com/in/angelamcgonigle/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
     },
     {
+      "id": "michael-zhao",
+      "name": "Michael Zhao",
+      "graduation_year": 2025,
+      "majors": [
+        "Finance"
+      ],
+      "minors": [
+        "Computer Science"
+      ],
+      "current_role": null,
+      "current_org": null,
+      "industry": null,
+      "summary": "Michael Zhao was a consultant for the Snider Consulting Group.",
+      "bio": [
+        "Michael Zhao was a consultant for the Snider Consulting Group. He joined in the Fall of 2022 as a member of Cohort 5.",
+        "Michael pursued a BS in Finance with a minor in Computer Science at the Robert H. Smith School of Business and the College of Computer, Mathematical, and Natural Sciences at the University of Maryland. He has been recognized by the University of Maryland as a Banneker/Key Scholar. Michael was also a member of Cohort 40 of the QUEST Honors Program.",
+        "Michael specializes in teamwork, data analysis, and leading diverse teams as a result of his professional and academic experiences.",
+        "Outside of SCG, Michael was involved as founder and president of Product Space @ UMD, and was the co-chair of the Dean’s Student Advisory Council. He enjoys spending his free time researching fantasy football and watching soccer."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": "https://www.linkedin.com/in/michael-zhao25/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "jessica-cerkovnik",
+      "name": "Jessica Cerkovnik",
+      "graduation_year": 2025,
+      "majors": [
+        "Information Systems",
+        "Operations Management & Business Analytics"
+      ],
+      "minors": null,
+      "current_role": null,
+      "current_org": null,
+      "industry": null,
+      "summary": "Jessica Cerkovnik was a Consultant for the Snider Consulting Group and she joined in the Fall of 2022 as a member of Cohort 5.",
+      "bio": [
+        "Jessica Cerkovnik was a Consultant for the Snider Consulting Group and she joined in the Fall of 2022 as a member of Cohort 5.",
+        "Jessica pursued a BS in Information Systems and Operations Management & Business Analytics. She is a Girls Who Invest Alumna, a previous Deloitte and Morgan Stanley Summer Intern, and a previous Stamp Student Union Employee. She is a previous member of the Finance Fellows Program and Business Society and Economy Scholars Program as a Scholar, Peer Mentor, and Board Engagement Chair. She is also a previous member of the Women in Finance Mentorship Program, Consult Your Community Group, and Women in Business Association.",
+        "Jessica’s areas of expertise include research, data analytics, AI, financial modeling, and financial analysis. She has adapted these skills through past internships, professional experiences, and academic work.",
+        "Jessica was a past VP of Administration and a Research Associate within the Smith Investment Fund where she gained valuable skills in financial modeling, valuation, and company pitching. She has also competed in three case competitions (2 consulting and 1 investment banking). At UMD, Jessica enjoyed playing intramural volleyball, soccer, basketball, and pickleball and going to all types of group fitness classes.",
+        "Previously, Jessica interned with the Do Good Institute where she worked to support various data analysis and benchmarking projects to assess fundraising, marketing efforts, and giving trends at this social impact organization. At Morgan Stanley, she performed in-depth Excel-based investment underwriting for multi-million-dollar real estate transactions. She built and optimized real estate acquisition models to price deals and worked 450+ hours over a 7-week period. At Deloitte, Jessica gained experience within Artificial Intelligence, Compliance & Operational Risk, the Mortgage Industry and Project Management."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": "https://www.linkedin.com/in/jessica-cerkovnik/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "adelina-seck",
+      "name": "Adelina Seck",
+      "graduation_year": 2025,
+      "majors": [
+        "Information Systems",
+        "Operations Management & Business Analytics"
+      ],
+      "minors": null,
+      "current_role": null,
+      "current_org": null,
+      "industry": null,
+      "summary": "Adelina was a consultant for the Snider Consulting Group.",
+      "bio": [
+        "Adelina was a consultant for the Snider Consulting Group.",
+        "Adelina joined SCG as a member of Cohort 5 in the Fall of 2022.",
+        "Adelina pursued a BS in Information Systems and Operations Management and Business Analytics (OMBA) at the Robert H. Smith School of Business. She was part of Cohort 39 of the QUEST Honors program as well as the Business, Society, and Economy (BSE) Scholars Program.",
+        "Adelina’s strengths include collaboration, data analytics, creativity, and organization which she has developed through professional and academic experiences.",
+        "Within UMD, Adelina was the student co-lead for the QUEST Corporate organization, a member of the National Leadership Honors Society Omicron Delta Kappa (ODK), and worked on campus as a student representative at the STEM Library. She also was awarded as a Philip Merrill Presidential Scholar as she was recognized as one of three top rising seniors within the Smith Business School.",
+        "She also completed Capital One's Analyst Internship Program in 2024 as well as the Early Analyst Internship Program in 2023."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": "https://www.linkedin.com/in/adelinaseck",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "peter-mitrione",
+      "name": "Peter Mitrione",
+      "graduation_year": 2025,
+      "majors": [
+        "Finance",
+        "Information Systems"
+      ],
+      "minors": null,
+      "current_role": null,
+      "current_org": null,
+      "industry": null,
+      "summary": "Peter Mitrione was a Consultant for the Snider Consulting Group.",
+      "bio": [
+        "Peter Mitrione was a Consultant for the Snider Consulting Group. He joined in the Fall of 2022 as a member of Cohort 5 and served as a Project Lead in the fall of 2023 before studying abroad in Rome in the spring of 2024.",
+        "Peter pursued a BS in finance and information systems at the Robert H. Smith School of Business at the University of Maryland. He has been recognized by the University of Maryland as a Banneker/Key Scholar and by the Hispanic Scholarship fund as an HSF Scholar.",
+        "Peter excels in collaboration, leadership, creative solutions, and data analysis which he has developed as a result of professional and academic experiences.",
+        "Apart from SCG, Peter served the Smith community as a member of the Dean's Student Advisory Council and was self-employed as a barber. He has previously held positions as a Committee Member on the SGA Finance Committee, a Council Member on the University Honors Student Life Council, a Smith Ambassador, a tutor for The Every Child Project, and Academic Chair, Brotherhood Chair, and Rush Chair for the Delta Sigma Phi Alpha Sigma Chapter.",
+        "Outside of UMD, Peter has gained valuable professional experience. After his freshman year, he interned at Ernst and Young and attended KPMG’s Rise Leadership Institute. Following his sophomore year, Peter was a Growing Future Leaders Intern, and after his junior year, a Summer Associate at Boston Consulting Group."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": "https://www.linkedin.com/in/peter-mitrione/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "lane-schanck",
       "name": "Lane Schanck",
-      "majors": "Economics (BS) and Government and Politics (BA)",
-      "school_college": null,
-      "cohort": null,
-      "graduation_year": null,
+      "graduation_year": 2025,
+      "majors": [
+        "Economics",
+        "Government and Politics"
+      ],
+      "minors": null,
       "current_role": null,
       "current_org": null,
-      "scg_roles": [],
-      "note": "College of Behavioral and Social Sciences; Promoting Achievement and Diversity in Economics (PADE) Program and UMD Federal Fellows Program.",
-      "photo": null,
-      "linkedin": null,
-      "consent_to_publish": false,
-      "verify_against_old_site": true
+      "industry": null,
+      "summary": "Lane Schanck was a consultant for the Snider Consulting Group.",
+      "bio": [
+        "Lane Schanck was a consultant for the Snider Consulting Group. She joined in the Spring of 2023 as a member of Cohort 6.",
+        "Lane pursued a BS in Economics and a BA in Government and Politics in the College of Behavioral and Social Sciences at the University of Maryland. She was part of the Promoting Achievement and Diversity in Economics (PADE) Program and UMD Federal Fellows Program.",
+        "Lane’s strengths include market research, data analysis, and collaborative strategy creation which have been developed in both professional and academic experiences. Lane wants to apply her background in economics and affinity for business problem solving to create impactful change for commercial and government clients.",
+        "Within UMD, Lane was a Facilities Supervisor of Eppley Recreation Center. Lane served on the UMD Sustainability Fund Council which is in charge of financial allocation of campus sustainable funds. Lane has also previously been an Impact Consulting Fellow and served as a Civil and Government Affairs committee member in SGA. Lane also enjoys playing intramural sports such as volleyball and basketball.",
+        "In the spring of 2023, Lane interned with the U.S. Department of Commerce within the Economic Development Association, aiding in grant management and program selection to support the allocation of economic development funds. In summer 2023, she interned at Baker Tilly as a Now for Tomorrow Intern in their audit and consulting branches. In summer 2024, Lane was an Associate Consultant Intern for Bain & Company in the D.C. office."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": "https://www.linkedin.com/in/lane-schanck-0aa158224/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
     },
     {
-      "name": "Dylan Fitch",
-      "majors": "Communication, minor in International Development and Conflict Management",
-      "school_college": null,
-      "cohort": null,
-      "graduation_year": null,
+      "id": "andrea-campos",
+      "name": "Andrea Campos",
+      "graduation_year": 2025,
+      "majors": [
+        "Finance"
+      ],
+      "minors": null,
       "current_role": null,
       "current_org": null,
-      "scg_roles": [],
-      "note": "President of Terrapin Beats Society (UMD's DJ and music production club) and a Principal Consultant in SCG.",
-      "photo": null,
+      "industry": null,
+      "summary": "Andrea Campos was a consultant for the Snider Consulting Group.",
+      "bio": [
+        "Andrea Campos was a consultant for the Snider Consulting Group. She joined in the Spring of 2023 as a member of Cohort 6.",
+        "Andrea pursued a B.S. in Finance at the Robert H. Smith School of Business at the University of Maryland.",
+        "Andrea’s strengths include project management, team building, adaptability, and presentation skills.",
+        "Within UMD, Andrea was the Vice President of Scholarship and Awards of Delta Sigma Pi, a professional business fraternity. Previous to transferring to UMD, Andrea served as President of the Student Investment Club, the Vice President of Operations for the Macklin Business Institute, and the Secretary for the Student Business Association. She previously worked as Risk Management Advisory intern at KPMG. In summer 2024, Andrea interned at Bain & Company."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": "https://www.linkedin.com/in/andreanichole/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "matt-ryan",
+      "name": "Matt Ryan",
+      "graduation_year": 2024,
+      "majors": [
+        "Finance"
+      ],
+      "minors": null,
+      "current_role": "Associate Consultant",
+      "current_org": "Bain & Company",
+      "industry": "Consulting",
+      "summary": "Matt was the Chairman of the Board of Trustees for the Snider Consulting Group.",
+      "bio": [
+        "Matt was the Chairman of the Board of Trustees for the Snider Consulting Group. He joined as a member of Cohort 3 in the Fall of 2021.",
+        "Within SCG Matt has served as Director of Recruitment, Director of Community Development, and currently serves as Director of Onboarding. During his time as Director of Onboarding, the analyst introduction program was revamped to train new members in all the skills critical to succeeding in consulting case interviews.",
+        "Matt completed a Bachelor's Degree in Finance and was a teaching assistant for BMGT340, Introduction to Business Finance. He has competed in multiple case competitions with other SCG members including the Deloitte National Undergraduate Case Competition in which their team finished 4th nationally.",
+        "Matt’s professional experience includes two summer internships with consulting firms; with PwC in their Trust Solutions practice as a Start Intern and as an Associate Consultant Intern at Bain & Company.",
+        "Matt will start his full-time role as an Associate Consultant at Bain & Company in the Fall of 2024."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": "https://www.linkedin.com/in/mattryan901/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "miranda-chung",
+      "name": "Miranda Chung",
+      "graduation_year": 2024,
+      "majors": [
+        "Information Systems"
+      ],
+      "minors": null,
+      "current_role": null,
+      "current_org": null,
+      "industry": "Asset management",
+      "summary": "Miranda Chung was a Vice-Chairman on the Board of Trustees for the Snider Consulting Group and the Director of Finance within the organization.",
+      "bio": [
+        "Miranda Chung was a Vice-Chairman on the Board of Trustees for the Snider Consulting Group and the Director of Finance within the organization. She was a member of cohort 3, joining SCG in the Fall of 2021.",
+        "Miranda graduated a year early with a BS in Information Systems in May 2023 and is currently pursuing a MS in Information Systems through Smith’s Plus 1 program.",
+        "Miranda’s areas of expertise include data analysis, web design, and research.",
+        "As an undergrad, Miranda was involved in Smith’s Dean's Student Advisory Council, VP of Strategy and Operations in the Smith Undergraduate Student Association (SUSA), a member of the Information Technology and Business Transformation Fellows (iTBT), Teaching Assistant, and Smith Ambassador.",
+        "As a graduate student, Miranda worked as a teaching assistant for BMGT302 and a Graduate Assistant for the Smith School.",
+        "Outside of UMD, Miranda works in the asset management space. She is a Girls Who Invest alumna and has previously interned at Morgan Stanley Investment Management doing high-yield credit research and PGIM Fixed Income as a portfolio analysis investment analyst on the emerging markets desk."
+      ],
+      "photo": {
+        "focal": "50% 35%"
+      },
+      "linkedin": "https://www.linkedin.com/in/miranda-chung/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "michael-swetz",
+      "name": "Michael Swetz",
+      "graduation_year": 2024,
+      "majors": [
+        "Mechanical Engineering"
+      ],
+      "minors": [
+        "Business Analytics"
+      ],
+      "current_role": null,
+      "current_org": null,
+      "industry": null,
+      "summary": "Mike Swetz was a Vice-Chairman on the Board of Trustees for the Snider Consulting Group.",
+      "bio": [
+        "Mike Swetz was a Vice-Chairman on the Board of Trustees for the Snider Consulting Group. He served as the head of web development and external affairs for the organization. Mike came on board SCG as a member of cohort 3 in the Fall of 2021.",
+        "Mike completed a BS in mechanical engineering within the A. James Clark School of Engineering at the University of Maryland, College Park. He completed his minor in business analytics as well.",
+        "On past SCG projects, Mike’s areas of expertise were data analysis, website page creation, and strategizing actions that could be implemented quickly.",
+        "Outside of SCG, Mike has been devoting some of his time to local startups while in Consult Your Community, another consulting club on campus. He is also very involved with Theta Tau, a co-ed professional engineering fraternity, where he has been a board member and has held three other positions. Some extracurriculars he is interested in are intramural sports, golfing, formula 1, and talking sports.",
+        "Aside from UMD, Mike has been keeping busy with an internship his freshman summer as an engineering consultant intern, a project management intern his sophomore summer, and most recently as a Summer Scholar for Deloitte Consulting LLP. Lastly, he has loved competing in case comps with other members, specifically the National Undergraduate Case Competition hosted by Deloitte."
+      ],
+      "photo": {
+        "focal": "46% 50%"
+      },
+      "linkedin": "https://www.linkedin.com/in/michaelswetz/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "elyana-furman",
+      "name": "Elyana Furman",
+      "graduation_year": 2024,
+      "majors": [
+        "Psychology",
+        "Information Systems"
+      ],
+      "minors": null,
+      "current_role": null,
+      "current_org": null,
+      "industry": null,
+      "summary": "Elyana Furman was a consultant for the Snider Consulting Group.",
+      "bio": [
+        "Elyana Furman was a consultant for the Snider Consulting Group. She joined SCG as a member of cohort 3 in the Fall of 2021.",
+        "Elyana completed a double major in Psychology and Business Information Systems. She was a member of the Cloud Computing stream within F.I.R.E. (First-Year Innovative Research Experience) and completed the program in the Fall of 2021. She was also a member of the Information Technology and Business Transformation Fellows Program at the Robert H. Smith School of Business.",
+        "On past projects, Elyana has worked on plan and design implementation. She recently worked on the club’s internal team to create effective models to gauge the productivity and success of past SCG projects.",
+        "Outside of SCG, Elyana served on the executive board of the Women in Business Association as the Vice President of Programming where she plans professional and social events for the club. She also served as the Operations Captain for Terp Thon, a club that benefits Childrens National Hospital.",
+        "In her free time, Elyana enjoys hiking, traveling, and playing the piano."
+      ],
+      "photo": {
+        "focal": "50% 53%"
+      },
+      "linkedin": "https://www.linkedin.com/in/elyanafurman/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "collin-marcian",
+      "name": "Collin Marcian",
+      "graduation_year": 2024,
+      "majors": [
+        "Information Systems"
+      ],
+      "minors": null,
+      "current_role": null,
+      "current_org": null,
+      "industry": null,
+      "summary": "Collin Marcian was a consultant for the Snider Consulting Group.",
+      "bio": [
+        "Collin Marcian was a consultant for the Snider Consulting Group. He came onboard SCG as a member of cohort 4 in the Spring of 2022.",
+        "Collin completed a BS and MS in Information Systems within the Robert H. Smith School of Business at the University of Maryland, College Park. He was involved in QUEST, BSE Scholars, Finance Fellows, and Information Technology Business Development Fellows.",
+        "Collin’s areas of expertise involve data analysis, tech implementation, strategy consulting, change management, industry analysis, and design thinking.",
+        "Outside of SCG, Collin was the president of his fraternity (Delta Sigma Phi), a mentor for his honors program (QUEST), and a former Student Consultant for Fox Sport University. He has also been a part of the Smith Undergraduate Student Association as a committee member, and participated in numerous case competitions including the University of Maryland Deloitte Case Competition and the UMD CSVC Case Competition.",
+        "Outside of UMD, Collin was busy with his summer internship as a Deloitte Risk and Financial Advisory Intern. He also volunteers frequently with Best Buddies USA and a local soup kitchen."
+      ],
+      "photo": {
+        "focal": "51% 40%"
+      },
+      "linkedin": "https://www.linkedin.com/in/collin-marcian/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "devin-srinivas",
+      "name": "Devin Srinivas",
+      "graduation_year": 2024,
+      "majors": [
+        "Finance",
+        "Information Systems"
+      ],
+      "minors": [
+        "Sustainability Studies"
+      ],
+      "current_role": null,
+      "current_org": null,
+      "industry": null,
+      "summary": "Devin Srinivas was a consultant within Snider Consulting Group.",
+      "bio": [
+        "Devin Srinivas was a consultant within Snider Consulting Group. Devin joined SCG as a member of Cohort 4 in the Spring of 2022.",
+        "Devin completed a BS in Finance and Information systems with a minor in Sustainability Studies. He was also a part of Cohort 37 of the QUEST Honors program and an alumnus of the First Year Innovative Research Program (FIRE).",
+        "Devin’s strengths in the consulting space include data analytics, market research, and strategizing innovative solutions. These skills have been acquired through education, past projects, and work experience.",
+        "He has been involved in various programs and organizations throughout his time on campus. He was a member of the Smith’s Diversity and Equity Council (DEC) and a Student Mentor for the Smith Start program. Devin held the position of Vice President of Public Relations on the executive board for the professional business fraternity Delta Sigma Pi. He was also a member of the Student Government Association's finance committee.",
+        "Some of Devin’s accomplishments include winning first place in Deloitte’s local case competition, and the Impact Consulting Fellows group competition. Devin was also a finalist in the SCG & Impact Consulting Fellows Case Competition and the Deloitte University National Case Competition alongside three other SCG Consultants."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": "https://www.linkedin.com/in/devinsrinivas/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "diya-sinha",
+      "name": "Diya Sinha",
+      "graduation_year": 2024,
+      "majors": [
+        "Operations Management & Business Analytics",
+        "Finance"
+      ],
+      "minors": null,
+      "current_role": null,
+      "current_org": null,
+      "industry": null,
+      "summary": "Diya Sinha was a consultant for the Snider Consulting Group.",
+      "bio": [
+        "Diya Sinha was a consultant for the Snider Consulting Group. She joined SCG in Spring 2022 as a member of cohort 4.",
+        "Diya completed a BS in Operations Management & Business Analytics and Finance from the University of Maryland, College Park. She was a member of the Language program within the Carillon Communities, which she completed in Spring 2021. She was also a member of the Sophomore Finance Fellows and Wall Street Finance Fellows at the Robert H. Smith School of Business.",
+        "Diya’s areas of expertise include data analysis, research, and statistical modeling.",
+        "Outside of SCG, Diya was on the executive board of the Smith Undergraduate Student Association (SUSA) where she served as the Vice President of Finance. She also acted as the Vice President of External Affairs for Ascend, an Asian business association, and the travel coordinator on the Operations team for Technica, the world's largest hackathon for underrepresented genders. She has participated in a couple of case competitions, including the University of Maryland Deloitte Case Competition. In her free time, Diya enjoys playing volleyball and traveling.",
+        "Outside of UMD, Diya previously interned at OPEX as a finance intern and at Holman as a Portfolio Management summer intern."
+      ],
+      "photo": {
+        "focal": "50% 44%"
+      },
+      "linkedin": "https://www.linkedin.com/in/diya-sinha/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "itamar-freund",
+      "name": "Itamar Freund",
+      "graduation_year": 2024,
+      "majors": [
+        "Finance",
+        "Information Systems"
+      ],
+      "minors": null,
+      "current_role": null,
+      "current_org": null,
+      "industry": null,
+      "summary": "Itamar was a consultant for the Snider Consulting Group.",
+      "bio": [
+        "Itamar was a consultant for the Snider Consulting Group. Itamar came onboard SCG as a member of cohort 4 in the Spring of 2022.",
+        "Itamar completed a BS in Finance and Information systems in the Robert H. Smith School of Business at the University of Maryland, College Park. He was a part of Cohort 37 of the QUEST Honors program, as well as the University Honors program within the Honors College at UMD.",
+        "Itamar’s areas of expertise include presentational skills, ideating solutions, and using Six Sigma Quality tools.",
+        "At UMD, Itamar was a part of Phi Chi Theta, a professional business frat on campus. He was also a member of the school's Spikeball team, as well as UMD Survivor, and QServes.",
+        "Outside of UMD, Itamar has worked as a camp counselor at Camp Shomria and a process analyst for the Division of IT of the University of Maryland."
+      ],
+      "photo": {
+        "focal": "50% 44%"
+      },
+      "linkedin": "https://www.linkedin.com/in/itamar-freund/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "jonathan-mortman",
+      "name": "Jonathan Mortman",
+      "graduation_year": 2024,
+      "majors": [
+        "Information Systems"
+      ],
+      "minors": null,
+      "current_role": null,
+      "current_org": null,
+      "industry": null,
+      "summary": "Jonathan Mortman is a principal consultant for the Snider Consulting Group.",
+      "bio": [
+        "Jonathan Mortman is a principal consultant for the Snider Consulting Group. He joined in the Fall of 2022 as a member of cohort 5. He was the Director of Recruitment and Client Acquisitions.",
+        "Jonathan completed a Bachelor of Science in Information Systems at the Robert H. Smith School of Business. He was a member of the Information Technology and Business Transformation (iTBT) Fellows program and the Public Leadership Scholars program.",
+        "Jonathan’s strengths include digital transformation, data analytics, and human capital management. These skills have been studied through past internships, work experiences, classes, and projects. He is aiming to combine these abilities into a career in either management consulting or cybersecurity consulting.",
+        "Within College Park, Jonathan was a Consulting Careers Intern at the Robert H. Smith School of Business Office of Career Services, where he also worked as a Career Advising Intern. He was a TA for BMGT110 for Professor Jeff Mund and a TA for BMGT367. He is also an inducted member of the Order of Omega and a former vice president of finance and president of a social fraternity. He was also a Smith Start Mentor in the 2022-23 academic year.",
+        "In the summer of 2022, Jonathan interned at Maximus as a Department of Defense Business Development Intern, aiding the full-time team in expanding a multi-billion dollar pipeline. In the summer of 2023, Jonathan interned at Deloitte as a Technology Risk & Financial Advisory Intern based in McLean, VA, specializing in technology assurance for two Fortune 500 companies."
+      ],
+      "photo": {
+        "focal": "50% 42%"
+      },
+      "linkedin": "https://www.linkedin.com/in/jonathanmortman/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "will-ahn",
+      "name": "Will Ahn",
+      "graduation_year": 2024,
+      "majors": [
+        "Information Systems"
+      ],
+      "minors": null,
+      "current_role": null,
+      "current_org": null,
+      "industry": null,
+      "summary": "Will Ahn was a consultant for the Snider Consulting Group.",
+      "bio": [
+        "Will Ahn was a consultant for the Snider Consulting Group. Will joined SCG as a member of Cohort 5 in the Fall of 2022.",
+        "Will completed a BS in Information Systems. He is involved in numerous student organizations and groups, such as the QUEST Honors Program, Federal/Global Fellows Program, and the College Park Scholars - Public Leadership program.",
+        "Will’s greatest strength is his passion for wanting to help people, and he would love to pursue this for a career. Will ultimately wants to combine his business, problem-solving, and information technology skills to strategically and effectively create positive change for the world, especially within the government and public sector.",
+        "Within UMD, Will served as a Resident Assistant to the South Hill Community, Challenge Course Facilitator and Adventure Trip leader for the Adventure Program at Eppley, and a member of the Alpha Kappa Psi Business Fraternity.",
+        "Outside of UMD, Will worked for the Department of Justice - Office of the Inspector General as a Pathways intern where he aided the Investigations Division as a member of the support staff. Will interned as a Strategy Consulting intern at Accenture Federal Services, and he will be an extern at Deloitte as well."
+      ],
+      "photo": {
+        "focal": "50% 35%"
+      },
+      "linkedin": "https://www.linkedin.com/in/will-ahn/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "alec-musheno",
+      "name": "Alec Musheno",
+      "graduation_year": 2023,
+      "majors": [
+        "Business Management",
+        "Government & Politics"
+      ],
+      "minors": null,
+      "current_role": "Business Analyst",
+      "current_org": "Capital One",
+      "industry": null,
+      "summary": "Alec Musheno was a member of SCG's Cohort 1 and served as the second Chairman of SCG's Board of Trustees.",
+      "bio": [
+        "Alec Musheno was a member of SCG's Cohort 1 and served as the second Chairman of SCG's Board of Trustees. During his chairmanship, he oversaw substantial modifications to SCG's leadership structure, interview process, professional development offerings, and alumni interactions.",
+        "Academically, Alec successfully completed a Bachelor of Science in Business Management, a Bachelor of Arts in Government & Politics, and a Master of Science in Marketing Analytics. His tenure at UMD was marked by active involvement in various capacities. He served as a graduate assistant at the A. James Clark School of Engineering, a teaching assistant for both undergraduate and MBA courses at the R.H. Smith School of Business, and a resident assistant at The Courtyards for both undergraduate and graduate students. Alec was also a member of the ODK Sigma Circle.",
+        "Following his graduation, Alec joined Capital One as a Business Analyst at their headquarters in McLean, Virginia."
+      ],
+      "photo": {
+        "focal": "50% 46%"
+      },
+      "linkedin": "https://www.linkedin.com/in/amusheno/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "sridhar-ganti",
+      "name": "Sridhar Ganti",
+      "graduation_year": 2023,
+      "majors": [
+        "Chemical Engineering"
+      ],
+      "minors": null,
+      "current_role": "Chemical Engineer",
+      "current_org": "ExxonMobil",
+      "industry": "Engineering",
+      "summary": "Sridhar graduated with a B.S in chemical engineering.",
+      "bio": [
+        "Sridhar graduated with a B.S in chemical engineering. While at school, Sridhar did research with Dr. Wachsman’s electrocatalysis group in order to optimize ceramics development for solid oxide fuel cells. He was also a part of the Entrepreneurship and Innovation (EIP) honors program.",
+        "As a principal consultant at the Snider Consulting Group, Sridhar primarily focused on running and improving the marketing and recruitment process.",
+        "Sridhar did a co-op at Specialty Granules Inc. during his Junior year where he used MATLAB to optimize product analysis.",
+        "After graduating, Sridhar pursued a career as a chemical engineer at ExxonMobil."
+      ],
+      "photo": {
+        "focal": "50% 45%"
+      },
       "linkedin": null,
-      "consent_to_publish": false,
-      "verify_against_old_site": true
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "eunha-yim",
+      "name": "Eunha Yim",
+      "graduation_year": 2023,
+      "majors": [
+        "Physiology & Neurobiology"
+      ],
+      "minors": [
+        "General Business"
+      ],
+      "current_role": "Software Engineer",
+      "current_org": "JPMorgan Chase & Co.",
+      "industry": "Engineering",
+      "summary": "Eunha graduated with a B.S.",
+      "bio": [
+        "Eunha graduated with a B.S. in Physiology & Neurobiology with a minor in General Business. At UMD, she was the Brand Director for Technica, a Sponsorship Organizer for Bitcamp, a Marketing Committee Member for Smith Undergraduate Student Association, an Undergraduate Research Assistant in the Child Development Lab, and served as a Smith Business Minor Ambassador. She also was a Teaching Assistant for BSCI170, BSCI222, and FGSM370. Eunha was inducted into the Omicron Delta Kappa Honor Society which engraves her name on the McKeldin Mall Fountain.",
+        "Throughout her undergraduate career, Eunha worked at the National Institutes of Mental Health as a Research Assistant Intern, the Department of Health and Human Services as a Program Analyst Intern, PNC Bank as a Treasury Management Intern, and the UMD Women’s Gymnastics Team as a Sports Medicine Intern.",
+        "After graduating, Eunha began working as a Software Engineer at JPMorgan Chase & Co. in Chicago, Illinois."
+      ],
+      "photo": {
+        "focal": "49% 44%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "jessica-strongin",
+      "name": "Jessica Strongin",
+      "graduation_year": 2023,
+      "majors": [
+        "Chemical Engineering"
+      ],
+      "minors": null,
+      "current_role": "PhD student, Chemical and Biomolecular Engineering",
+      "current_org": "Johns Hopkins University",
+      "industry": "Graduate study",
+      "summary": "Jessica graduated with a B.S.",
+      "bio": [
+        "Jessica graduated with a B.S. in Chemical Engineering with concentrations in biomolecular engineering. While at UMD, Jessica did undergraduate research at the Department of Materials Science and Engineering under Dr. Timothy Koeth, focusing on understanding materials at the extremes. She was also a teaching assistant for the QUEST Honors Program and served as an undergraduate teaching fellow for the department of chemical engineering. As a principal and Board of Trustee for SCG, Jessica’s initiatives focused on technical development of members, industry and internal club mentorship, and client recruitment.",
+        "Jessica has previously been an intern and co-op for the US Nuclear Regulatory Commission, where she developed data visualizations for radiation protection applications. She also worked as a design engineering and optimization intern for Siemens.",
+        "After graduating, Jessica pursued a PhD in Chemical and Biomolecular Engineering at Johns Hopkins University."
+      ],
+      "photo": {
+        "focal": "49% 38%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site",
+      "review_note": "old LinkedIn button was an empty link; omitted."
+    },
+    {
+      "id": "ayelette-halbfinger",
+      "name": "Ayelette Halbfinger",
+      "graduation_year": 2023,
+      "majors": [
+        "Operations Management & Business Analytics",
+        "Finance"
+      ],
+      "minors": null,
+      "current_role": null,
+      "current_org": null,
+      "industry": null,
+      "summary": "Ayelette graduated with a B.S in Operations Management Business Analytics and a B.S in Finance from the Robert H.",
+      "bio": [
+        "Ayelette graduated with a B.S in Operations Management Business Analytics and a B.S in Finance from the Robert H. Smith School of Business. While at school, Ayelette served as Student Body President and conducted research under Dean Joseph Bailey about undergraduate business education programs. Ayelette was also a part of the QUEST and DCC honors programs.",
+        "Throughout her time with the Snider Consulting Group, Ayelette focused on internal organization projects to help guide the group's project and professional development structures as the organization grew and evolved.",
+        "Following graduation, Ayelette will be pursuing a career in value creation and operations optimization strategy."
+      ],
+      "photo": {
+        "focal": "50% 44%"
+      },
+      "linkedin": "https://www.linkedin.com/in/ayelette-halbfinger/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "kunal-parikh",
+      "name": "Kunal Parikh",
+      "graduation_year": 2022,
+      "majors": [
+        "Operations Management & Business Analytics"
+      ],
+      "minors": null,
+      "current_role": "Associate Product Manager",
+      "current_org": "Capital One",
+      "industry": null,
+      "summary": "Kunal graduated with a degree in Operations Management & Business Analytics.",
+      "bio": [
+        "Kunal graduated with a degree in Operations Management & Business Analytics. While at UMD Kunal was involved with the QUEST Honors Program and Phi Chi Theta. With Snider Consulting Group, he served as a Principal Consultant for two semesters.",
+        "Professionally, Kunal completed two internships throughout his college career. In the Summer of 2021, he interned at Nehal & Co, a luxury makeup brand within Business Operations, and in the Summer of 2022, he interned at Capital One within their Risk Management Division.",
+        "After graduating, Kunal joined Capital One as an Associate Product Manager."
+      ],
+      "photo": {
+        "focal": "50% 35%"
+      },
+      "linkedin": "https://www.linkedin.com/in/kunal-parikh25/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "dawson-jones",
+      "name": "Dawson Jones",
+      "graduation_year": 2022,
+      "majors": [
+        "Supply Chain Management",
+        "Operations Management & Business Analytics"
+      ],
+      "minors": null,
+      "current_role": "Business Transformation Consultant",
+      "current_org": "EY",
+      "industry": "Consulting",
+      "summary": "Dawson graduated with a dual degree in Supply Chain Management and Operations Management & Business Analytics.",
+      "bio": [
+        "Dawson graduated with a dual degree in Supply Chain Management and Operations Management & Business Analytics. While at UMD, Dawson was in Public Leadership Scholars, Global Fellows, Global Consulting Fellows, and Supply Chain Consulting Fellows. During his time at UMD, Dawson interned on Capitol Hill in the U.S. House of Representatives. He also, worked as a Summer Analyst for an aerospace and defense consulting firm in D.C. the summer of his junior year.",
+        "For extracurricular involvement, Dawson served as the Vice Noble Ruler of Finance and Risk Management Chair for Alpha Gamma Rho, a professional and social agriculture fraternity. In his senior year, he earned Undergraduate Brother of the Year for his contributions and service within the fraternity. He also served as the President of Consult Your Community and was one of the founding members of Snider Consulting Group.",
+        "After graduating, Dawson started working for EY in Charlotte, NC as a Business Transformation Consultant with a focus on the food and agriculture sectors."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site",
+      "review_note": "old LinkedIn button pointed to someone else's profile (kunal-parikh25); omitted."
+    },
+    {
+      "id": "joseph-houghton",
+      "name": "Joseph Houghton",
+      "graduation_year": 2022,
+      "majors": [
+        "Business Management",
+        "Supply Chain Management"
+      ],
+      "minors": [
+        "Professional Writing"
+      ],
+      "current_role": "Supply Chain Consultant",
+      "current_org": "Ernst & Young",
+      "industry": "Consulting",
+      "summary": "Joe graduated with a dual degree in Business Management and Supply Chain Management with a minor in Professional Writing.",
+      "bio": [
+        "Joe graduated with a dual degree in Business Management and Supply Chain Management with a minor in Professional Writing. While at UMD, Joe graduated from the Business, Society, and the Economy Scholars Program, the QUEST Honors Program, the Global Consulting Fellows, the Supply Chain Consulting Fellows, was a tutor and intern at the Writing Center and was a 3-time Teaching Assistant. For extracurricular involvement, Joe served as the Vice President of Service for the Smith Undergraduate Student Association during his freshman and sophomore year, was the Vice President of the First Year Class Council, the Vice President of Communications for the Snider Professional Development Society, and also ran Campus Relations for the Maryland Student Legislature chapter of UMD.",
+        "Joe was selected for the Joseph and Olivia Mattingly Logistics and Transportation Scholarship, the Charles A. Taff Scholarship, the Gene and Ann West (Olga K. Werntz) '52 Endowed Family Scholarship, the Felix Kaplan Memorial Fund, was a Senior Marshal, and the Robert H. Smith School of Business' Graduation Commencement Speaker.",
+        "Joe was the Chairman and one of the original founders of Snider Consulting Group. Snider Consulting Group was his personal passion throughout college, and Joe continues to contribute to the organization in his full-time position at Ernst & Young as a Supply Chain Consultant."
+      ],
+      "photo": {
+        "focal": "50% 48%"
+      },
+      "linkedin": "https://www.linkedin.com/in/josephhoughton2/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "natalie-hirsch",
+      "name": "Natalie Hirsch",
+      "graduation_year": 2022,
+      "majors": [
+        "Supply Chain Management",
+        "Marketing"
+      ],
+      "minors": null,
+      "current_role": "Strategy Analyst",
+      "current_org": "Deloitte Consulting",
+      "industry": "Consulting",
+      "summary": "Natalie Hirsch graduated from the Robert H.",
+      "bio": [
+        "Natalie Hirsch graduated from the Robert H. Smith School of Business with a B.S. in Supply Chain Management and Marketing. She spent her time at UMD as President of First-Year Class Council, President and Community Service Chair of Gamma Phi Beta Sorority, and co-founder/Principal Consultant of the Snider Consulting Group. She also served on Smith’s Dean’s Student Advisory Council and the inaugural Provost Student Advisory Council. Academically, Natalie was a Global Consulting Fellow and Supply Chain Consulting Fellow.",
+        "Natalie was inducted into Omicron Delta Kappa- UMD's most prestigious honor society, which engraves her name on the McKeldin Mall Fountain. She was also inducted into the Order of Omega, an organization honoring the top 3% of Greek Life members, and will have her name engraved onto Fraternity Row. Beyond honor societies, Natalie was on Dean’s List, received the Smith Undergraduate Student Association Outstanding Senior Award, and received the Fall 2020 Panhellenic Association Service Scholarship.",
+        "After graduating, Natalie started working as a Strategy Analyst at Deloitte Consulting in McLean, Virginia."
+      ],
+      "photo": {
+        "focal": "50% 48%"
+      },
+      "linkedin": "https://www.linkedin.com/in/nataliemayhirsch/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "devin-streight",
+      "name": "Devin Streight",
+      "graduation_year": 2022,
+      "majors": [
+        "Supply Chain Management",
+        "Business Management"
+      ],
+      "minors": null,
+      "current_role": "Consulting Analyst",
+      "current_org": "Deloitte",
+      "industry": "Consulting",
+      "summary": "Devin graduated with a double major in Supply Chain Management and Business Management.",
+      "bio": [
+        "Devin graduated with a double major in Supply Chain Management and Business Management. Devin was one of the co-founders of the Snider Consulting Group, and was involved in the Supply Chain Fellows Program, as well as the Business, Society and the Economy Scholars Program. During his time at UMD, Devin had multiple internships including in BDOs consulting practice, The World Bank, Achievence Consulting, and an international hedge fund.",
+        "Outside of UMD, Devin enjoys serving as a Firefighter/EMT at the Rockville Volunteer Fire Department. He has been playing the guitar for over 10 years, performing at venues such as the 9:30 Club, The Fillmore, National Harbor and your mom’s house. Additionally, Devin is on the Board of the Corvette Club of America, the first and oldest Corvette Club in the United States.",
+        "After graduating, Devin started working as a Consulting Analyst at Deloitte’s Government and Public Service Practice."
+      ],
+      "photo": {
+        "focal": "50% 56%"
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site",
+      "review_note": "old LinkedIn button pointed to a YouTube video; omitted. Bio ends with a joke line ('…and your mom's house') kept as written; confirm or trim."
+    },
+    {
+      "id": "robert-koehler",
+      "name": "Robert Koehler",
+      "graduation_year": 2022,
+      "majors": [
+        "Accounting",
+        "Finance"
+      ],
+      "minors": null,
+      "current_role": "Business Processes Consulting Associate",
+      "current_org": "PwC",
+      "industry": "Consulting",
+      "summary": "Rob graduated with a dual degree of a B.S.",
+      "bio": [
+        "Rob graduated with a dual degree of a B.S. in Accounting and a B.S. in Finance. Rob earned his College Park Scholars citation from the Business, Society, and the Economy program sophomore year. Rob participated in two separate Finance Fellows programs, Sophomore Finance and Emerging CFOs, while at UMD. Rob was also a part of the QUEST honors program earning his citation as a part of cohort 34. Outside of class, Rob also volunteered for UMD’s VITA/TCE tax preparation site TerpTax, served as Director of Community Service for the Management and Organization Society, and worked for UMD Athletic Operations.",
+        "After graduating, Rob returned to UMD to finish his Masters degree in Accounting before starting with PwC as a Business Processes Consulting Associate."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": "https://www.linkedin.com/in/robert-koehler-umd/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "alexandra-strouse",
+      "name": "Alexandra Strouse",
+      "graduation_year": 2022,
+      "majors": [
+        "Finance",
+        "Operations Management & Business Analytics"
+      ],
+      "minors": null,
+      "current_role": "Risk Advisory Associate",
+      "current_org": "KPMG",
+      "industry": null,
+      "summary": "Alexandra Strouse graduated with a B.S.",
+      "bio": [
+        "Alexandra Strouse graduated with a B.S. in Finance and Operations Management & Business Analytics. She was very active in the QUEST Honors Program as a member of Cohort 33 as well as a mentor, member of the Curriculum Review Committee, and Leader of Workshop Coordinators for the QUEST Development Series, which she worked to revitalize. Outside of QUEST, she has served as a founding member and President of Club Jogging, Treasurer for Women’s Club Lacrosse, and Principal in Snider Consulting Group.",
+        "Alexandra was inducted into Omicron Delta Kappa- UMD's most prestigious honor society, which engraves her name on the McKeldin Mall Fountain. She also is the recipient of the Ed Snider Center Leadership Award (an honor given to four students who demonstrate determination and show achievement in the areas of innovation and enterprise) and was chosen as the OMBA Department's Outstanding Senior (which celebrates the top student in each major, as chosen by the faculty). Due to her extensive involvement, she also received a QUEST service award.",
+        "After college, she will be working as a Risk Advisory Associate at KPMG in their New York City office."
+      ],
+      "photo": {
+        "focal": "50% 50%"
+      },
+      "linkedin": "https://www.linkedin.com/in/alexandra-strouse/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "cameren-bruce",
+      "name": "Cameren Bruce",
+      "graduation_year": 2022,
+      "majors": [
+        "Finance",
+        "Operations Management & Business Analytics"
+      ],
+      "minors": [
+        "Mathematics"
+      ],
+      "current_role": "Business Consulting Staff",
+      "current_org": "EY",
+      "industry": "Consulting",
+      "summary": "Cameren graduated with a dual degree of a B.S.",
+      "bio": [
+        "Cameren graduated with a dual degree of a B.S. in Finance with a minor in Mathematics and a B.S. in Operations Management and Business Analytics. Cameren earned her College Park Scholars citation from the Business, Society, and Economy program in her sophomore year, and was a Teaching Assistant for the OMBA department her junior year. Outside the classroom, Cameren was an external analyst on SUSA’s Strategy and Operations Committee for the 2020 calendar year, a Principal Consultant in SCG, a Maryland Images Tour Guide, and a Recwell Fitness Instructor and performance evaluator within the Group Fitness Department.",
+        "After graduating, Cameren started working for EY in Tysons, VA as a Business Consulting Staff in their Financial Services Organization."
+      ],
+      "photo": {
+        "focal": "50% 35%"
+      },
+      "linkedin": "https://www.linkedin.com/in/camerenbruce/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "dylan-fitch",
+      "name": "Dylan Fitch",
+      "graduation_year": 2021,
+      "majors": [
+        "Communication"
+      ],
+      "minors": [
+        "International Development and Conflict Management"
+      ],
+      "current_role": null,
+      "current_org": "Ernst & Young",
+      "industry": "Consulting",
+      "summary": "Dylan graduated with a degree in Communication with a minor in International Development and Conflict Management.",
+      "bio": [
+        "Dylan graduated with a degree in Communication with a minor in International Development and Conflict Management. In the classroom, Dylan completed the Global Fellows program and conducted research for the Center for International Development and Conflict Management and as a Research Mentor in the First-Year Innovation and Research Experience (FIRE). While on campus, Dylan was the President of Terrapin Beats Society, UMD's DJ and music production club, as well as a Principal Consultant in Snider Consulting Group.",
+        "Dylan was selected as a Senior Marshal for the University of Maryland 2021 Winter Commencement- an honor only given to one student per college who demonstrates the highest levels of scholarship, service to the campus community, extracurricular involvement, and personal growth",
+        "After graduating, Dylan entered the consulting industry with Ernst & Young."
+      ],
+      "photo": {
+        "focal": "50% 48%"
+      },
+      "linkedin": "https://www.linkedin.com/in/dylanmfitch/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "matt-leonhartt",
+      "name": "Matt Leonhartt",
+      "graduation_year": 2021,
+      "majors": [
+        "Mathematics",
+        "Finance"
+      ],
+      "minors": null,
+      "current_role": "Actuarial Analyst",
+      "current_org": "GEICO",
+      "industry": null,
+      "summary": "Matt graduated Summa Cum Laude with degrees in Mathematics and Finance.",
+      "bio": [
+        "Matt graduated Summa Cum Laude with degrees in Mathematics and Finance. In college, he served as project lead for SCG’s first client (Maryland Impact). He also served as Vice President of the University of Maryland Actuaries club. Matt was a member of the class of 2022 Smith Sophomore Finance Fellows program and College Park Scholars Business, Society, and the Economy program. In scholars, he was one of two recipients of the Academic Achievement Award in his cohort. He also served as a tutor in the College Park Scholars Lakeland STARs program, helping develop students from local Paint Branch Elementary School.",
+        "Following graduation, Matt joined GEICO as an actuarial analyst for their auto pricing division."
+      ],
+      "photo": {
+        "focal": "50% 35%"
+      },
+      "linkedin": "https://www.linkedin.com/in/matt-leonhartt-115900150/",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
     }
   ]
 }

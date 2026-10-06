@@ -437,5 +437,10 @@
       "alt": "A large brick and white campus building seen from above, with green lawns, brick paths and a brick clock tower in front."
     }
   },
-  "press_readme": "'SCG elsewhere' cards on /about/. 'image' is a photo id from data/photos.json shown decoratively (alt=\"\") at 16:10; 'focal' (x% y%) is the point kept in the crop."
+  "press_readme": "'SCG elsewhere' cards on /about/. 'image' is a photo id from data/photos.json shown decoratively (alt=\"\") at 16:10; 'focal' (x% y%) is the point kept in the crop.",
+  "alumni_report": {
+    "_readme": "Alumni Report download on /alumni/. Set 'file' to a PDF path (e.g. assets/downloads/scg-alumni-report-2026.pdf) to show the download; null hides it.",
+    "title": "2026 Alumni Report",
+    "file": null
+  }
 }
