@@ -1010,3 +1010,14 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 - **Not reused any more.** The About stepper ("How a project works") no longer appears on Work With Us; `components/process-section.njk` stays for /about/.
 - **Mock endpoint.** Form tests used a scratch copy of `data/` with the endpoint set to a local mock (200 / 500, 0.5s delay); the copy and builds were deleted afterwards. The repo endpoint stays `null`.
 
+## /work-with-us/: the two cost cards as photo cards
+
+- **Only these two tiles changed.** Titles and descriptions are unchanged (titles now in `site.json → work_with_us.fee_cards`, descriptions still the FAQ answer's two sentences). The icons are gone; the photos replace them.
+- **Card style.** The pillar card look: white, 1px border, 4px red top accent, radius, soft shadow; 4px hover lift only with hover and motion allowed. Not links, so no focus stops. Two columns from 768px, stacked below. Equal heights everywhere, including when stacked (`grid-auto-rows: 1fr`). Montserrat 700 titles, Lato 17px descriptions (10.9:1), padding 22–28px. The section spacing (the tight section above "What we can help with") is unchanged.
+- **Photo shape.** The request asked for "16:9 on desktop, about 200px tall", but two columns are about 590px wide at 1440, where 16:9 would be about 330px tall. So the photo is 16:9 below 1024px (197px tall at 768) and a 220px band from 1024px, cut around the focal point with `object-position`.
+- **Photos.** `fee_cards[].image` (file name in assets/photos, any extension), `focal`, `alt`; `npm run assets` makes 16:9 crops at 600 and 1000px, WebP + JPEG under 120KB, never upscaled.
+  - **On-campus clients:** `smithschoolservices.webp` (719px source, so 600/719px), focal 58% 50% (building and the whole clock tower in every crop).
+  - **Off-campus nonprofits:** `collegeparkservices.jpg`, focal 50% 55% (road and skyline).
+  - **Alt text:** describes only what is visible. Neither photo has people.
+  - **Permissions:** the College Park photo carries an "Image: University of Maryland" credit, kept visible. Both are flagged in `assets/PHOTO-CREDITS.md` for permission.
+

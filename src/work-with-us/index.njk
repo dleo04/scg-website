@@ -20,17 +20,23 @@ bodyClass: page-wwu
 {{ pageBanner({ id: "page-title", title: "Our services", lede: wwu.intro,
   before: '<nav class="breadcrumbs page-banner__crumbs" aria-label="Breadcrumb"><ol><li>Work With Us</li><li aria-current="page">Services</li></ol></nav>' }) }}
 
-{%- if feeFacts.length == 2 %}
+{%- if feeFacts.length == 2 and wwu.fee_cards and wwu.fee_cards.length == 2 %}
 <section class="section section--tight" aria-labelledby="fees-title">
   <div class="container">
     <h2 class="visually-hidden" id="fees-title">Cost</h2>
     <ul class="fee-grid">
-      {%- for f in [{ title: "On-campus clients", icon: "campus", text: feeFacts[0] }, { title: "Off-campus nonprofits", icon: "nonprofit", text: feeFacts[1] }] %}
+      {%- for card in wwu.fee_cards %}
+      {%- set img = generatedImages.feeCards[card.image] if generatedImages.feeCards else null %}
       <li class="fee-card">
-        <span class="icon-chip icon-chip--lg">{{ wwuIcon(f.icon, 26) }}</span>
-        <div>
-          <h3 class="fee-card__title">{{ f.title }}</h3>
-          <p class="fee-card__text">{{ f.text }}</p>
+        {%- if img %}
+        <picture class="fee-card__photo">
+          <source type="image/webp" srcset="{{ img.webpSrcset }}" sizes="(min-width: 1248px) 588px, (min-width: 768px) 46vw, 92vw">
+          <img src="{{ img.src }}" srcset="{{ img.jpgSrcset }}" sizes="(min-width: 1248px) 588px, (min-width: 768px) 46vw, 92vw" width="{{ img.width }}" height="{{ img.height }}" alt="{{ card.alt }}" loading="lazy" decoding="async" style="object-position: {{ card.focal or '50% 50%' }}">
+        </picture>
+        {%- endif %}
+        <div class="fee-card__body">
+          <h3 class="fee-card__title">{{ card.title }}</h3>
+          <p class="fee-card__text">{{ feeFacts[loop.index0] }}</p>
         </div>
       </li>
       {%- endfor %}

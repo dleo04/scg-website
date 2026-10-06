@@ -180,6 +180,42 @@ for (const b of site.benefits || []) {
   };
 }
 
+// Work With Us cost cards (site.json → work_with_us.fee_cards): 16:9 crops around each focal
+// point, 600 and 1000px wide (or the source width, never upscaled), WebP + JPEG under 120KB.
+// 'image' is a file name in assets/photos/ with any extension.
+manifest.feeCards = {};
+fs.mkdirSync(path.join(GEN_DIR, "fee-cards"), { recursive: true });
+for (const card of site.work_with_us?.fee_cards || []) {
+  const file = card.image && fs.readdirSync(path.join(ROOT, "assets/photos")).find((f) => path.basename(f, path.extname(f)) === card.image && /\.(jpe?g|png|webp)$/i.test(f));
+  if (!file) continue;
+  const src = path.join(ROOT, "assets/photos", file);
+  const meta = await sharp(src).rotate().metadata();
+  let w = meta.width, h = Math.round((meta.width * 9) / 16);
+  if (h > meta.height) { h = meta.height; w = Math.round((h * 16) / 9); }
+  const [fx, fy] = (card.focal || "50% 50%").split(/\s+/).map((v) => parseFloat(v) / 100);
+  const crop = { left: Math.round((meta.width - w) * fx), top: Math.round((meta.height - h) * fy), width: w, height: h };
+  const set = { webp: [], jpg: [] };
+  for (const size of [...new Set([600, 1000].map((s) => Math.min(s, w)))]) {
+    for (const fmt of ["webp", "jpg"]) {
+      let q = fmt === "webp" ? 78 : 80, buf;
+      do {
+        const img = sharp(src).rotate().extract(crop).resize({ width: size });
+        buf = await (fmt === "webp" ? img.webp({ quality: q }) : img.jpeg({ quality: q, mozjpeg: true, progressive: true })).toBuffer();
+        q -= 5;
+      } while (buf.length > 120 * 1024 && q > 40);
+      const name = `${card.image}-${size}.${fmt}`;
+      fs.writeFileSync(path.join(GEN_DIR, "fee-cards", name), buf);
+      set[fmt].push({ src: `/assets/generated/fee-cards/${name}`, w: size, kb: Math.round(buf.length / 1024) });
+    }
+  }
+  const last = set.jpg.at(-1);
+  manifest.feeCards[card.image] = {
+    src: last.src, width: last.w, height: Math.round((last.w * 9) / 16),
+    webpSrcset: set.webp.map((v) => `${v.src} ${v.w}w`).join(", "), jpgSrcset: set.jpg.map((v) => `${v.src} ${v.w}w`).join(", "),
+    sizesKB: [...set.webp, ...set.jpg].map((v) => `${v.w}${v.src.endsWith("webp") ? "w" : "j"}:${v.kb}`).join(" "),
+  };
+}
+
 // About timeline photos (site.json → story_photos): 4:3 (desktop/tablet) and 16:9 (phones)
 // crops around each focal point, 800px wide (and 480px), WebP + JPEG under 100KB; smaller
 // sources are used at their own width (never upscaled). 'image' may have any extension.

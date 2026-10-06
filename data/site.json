@@ -457,6 +457,21 @@
   "work_with_us": {
     "_readme": "/work-with-us/ (Services). 'intro' and the 'engagement' items are the old Services page's own text (typos cleaned, nothing added). The two fee cards are read from faq.json ('How much do SCG services cost?'), one sentence each. 'help': the 'What we can help with' cards, derived only from projects.json skills; 'icon' is research, data, ai, process, marketing or business; 'link' opens /projects/ filtered (q = search, track = discipline); 'examples' picks up to 3 client logo chips from projects whose skills contain any of 'any' (or whose disciplines include 'track'). 'more' is the old page's closing line of 'How We Can Help'.",
     "intro": "We proudly collaborate with University of Maryland clubs, organizations and institutions, as well as off-campus non-profit organizations, to support their missions and goals.",
+    "fee_cards_readme": "The two cost cards above 'What we can help with'. Titles here; each description is one sentence of the FAQ answer 'How much do SCG services cost?' (faq.json). 'image' is a file name in assets/photos/ without extension (any of jpg/jpeg/png/webp); 'focal' (x% y%) is the point kept in the crop; 'alt' describes what the photo shows. npm run assets makes the crops.",
+    "fee_cards": [
+      {
+        "title": "On-campus clients",
+        "image": "smithschoolservices",
+        "focal": "58% 50%",
+        "alt": "The Robert H. Smith School of Business building, brick and white stone, beside a brick clock tower, with trees and flower beds in front under a blue sky."
+      },
+      {
+        "title": "Off-campus nonprofits",
+        "image": "collegeparkservices",
+        "focal": "50% 55%",
+        "alt": "Aerial view of a busy four-lane road through College Park, lined with apartment buildings, shops and autumn trees."
+      }
+    ],
     "help": [
       {
         "title": "Research and benchmarking",
