@@ -15,6 +15,7 @@
 //   would cut off faces; see DECISIONS.md).
 // - Output: WebP + JPEG, desktop 1920/1280px wide, tablet 1536px, mobile 1080/720px, quality
 //   stepped down until each file is under 220KB. Never upscaled.
+// - fallback_same_as: "/x/" uses that page's banner until this page's own 'source' photo exists.
 // - same_as: "/join/" reuses another page's banner as is (same source, band, focal, tint and
 //   the same crop files; nothing is generated twice).
 // Writes assets/banners/banners.json, which the build reads.
@@ -60,6 +61,7 @@ const manifest = {};
 for (const [pageUrl, cfg] of entries) {
   if (cfg.same_as) continue; // resolved after all pages are processed
   const rel = cfg.source ? findAsset(cfg.source) : null;
+  if (!rel && cfg.fallback_same_as) continue; // no photo of its own yet: reuse that page's banner (below)
   if (!rel) { manifest[pageUrl] = { photo: false, source: cfg.source || null, tint: cfg.tint ?? 0.78 }; continue; }
   const src = path.join(ROOT, rel);
   const meta = await sharp(src).rotate().metadata();
@@ -117,11 +119,12 @@ for (const [pageUrl, cfg] of entries) {
   console.log(`  ${pageUrl.padEnd(16)} ${rel} band ${band} → desktop ${windows.desktop.map((v) => v.toFixed(1)).join("-")}%, tablet ${windows.tablet.map((v) => v.toFixed(1)).join("-")}%, mobile ${windows.mobile.map((v) => v.toFixed(1)).join("-")}%  [${report.join("; ")}]`);
 }
 for (const [pageUrl, cfg] of entries) {
-  if (!cfg.same_as) continue;
-  const target = manifest[cfg.same_as];
-  if (!target) throw new Error(`[banners] ${pageUrl}: same_as "${cfg.same_as}" is not a page in page_banners.`);
-  manifest[pageUrl] = { ...target, sameAs: cfg.same_as };
-  console.log(`  ${pageUrl.padEnd(16)} same banner as ${cfg.same_as}${target.photo ? ` (${target.source}, band ${target.band})` : " (gradient)"}`);
+  const sameAs = cfg.same_as || (!manifest[pageUrl] && cfg.fallback_same_as);
+  if (!sameAs) continue;
+  const target = manifest[sameAs];
+  if (!target) throw new Error(`[banners] ${pageUrl}: same_as "${sameAs}" is not a page in page_banners.`);
+  manifest[pageUrl] = { ...target, sameAs };
+  console.log(`  ${pageUrl.padEnd(16)} same banner as ${sameAs}${cfg.same_as ? "" : ` (no ${cfg.source} photo yet)`}${target.photo ? ` (${target.source}, band ${target.band})` : " (gradient)"}`);
 }
 fs.writeFileSync(path.join(OUT, "banners.json"), JSON.stringify(manifest, null, 2));
 const photo = Object.entries(manifest).filter(([, v]) => v.photo).map(([k]) => k);

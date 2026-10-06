@@ -354,5 +354,56 @@
       }
     },
     "sameAs": "/join/"
+  },
+  "/work-with-us/contact/": {
+    "photo": true,
+    "source": "assets/photos/workwithusimage.jpeg",
+    "band": 3,
+    "focal": "50% 50%",
+    "tint": 0.78,
+    "windows": {
+      "desktop": [
+        40,
+        85
+      ],
+      "tablet": [
+        40,
+        85
+      ],
+      "mobile": [
+        0,
+        100
+      ]
+    },
+    "files": {
+      "desktop": {
+        "webp": "/assets/banners/work-with-us-desktop-2300.webp 2300w",
+        "jpg": "/assets/banners/work-with-us-desktop-2300.jpg 2300w",
+        "fallback": "/assets/banners/work-with-us-desktop-2300.jpg",
+        "width": 2300,
+        "height": 414,
+        "sizes": "max(100vw, 2222px)",
+        "window": "40.0-85.0%"
+      },
+      "tablet": {
+        "webp": "/assets/banners/work-with-us-desktop-2300.webp 2300w",
+        "jpg": "/assets/banners/work-with-us-desktop-2300.jpg 2300w",
+        "fallback": "/assets/banners/work-with-us-desktop-2300.jpg",
+        "width": 2300,
+        "height": 414,
+        "sizes": "max(100vw, 2222px)",
+        "window": "40.0-85.0%"
+      },
+      "mobile": {
+        "webp": "/assets/banners/work-with-us-mobile-1080.webp 1080w, /assets/banners/work-with-us-mobile-720.webp 720w",
+        "jpg": "/assets/banners/work-with-us-mobile-1080.jpg 1080w, /assets/banners/work-with-us-mobile-720.jpg 720w",
+        "fallback": "/assets/banners/work-with-us-mobile-1080.jpg",
+        "width": 1080,
+        "height": 432,
+        "sizes": "max(100vw, 700px)",
+        "window": "0.0-100.0%"
+      }
+    },
+    "sameAs": "/work-with-us/"
   }
 }

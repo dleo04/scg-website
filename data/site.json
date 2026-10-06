@@ -50,7 +50,7 @@
     ]
   },
   "forms": {
-    "_readme": "Client request form on /work-with-us/. 'client_request_endpoint': where the form POSTs (e.g. a Formspree or Netlify Forms URL); null = not connected: the form is hidden on the live site and the fallback below is shown instead (npm run dev:notes shows the form with a 'not connected' note). 'client_request_fallback_email': a shared club address only, never a personal one; it is the only email the build allows besides links.contact_email.",
+    "_readme": "Client request on /work-with-us/contact/. 'client_request_endpoint': where the form POSTs (e.g. a Formspree URL); null = not connected: the page shows a 'Request by email' composer instead (same fields; its button opens the visitor's email app with a message to client_request_fallback_email), and npm run dev:notes adds a 'not connected' note. Set the endpoint and rebuild: the real form replaces the composer with no code changes. 'client_request_fallback_email': the shared club address only, never a personal one; it is the only email the build allows besides links.contact_email.",
     "client_request_endpoint": null,
     "client_request_fallback_email": "scgumd@gmail.com",
     "client_request_fallback_source": "The organization address listed on the old site's public Contact Us page (sniderconsultinggroup.com/contact-us)."
@@ -415,6 +415,14 @@
       "band": 2,
       "focal": "50% 50%",
       "tint": 0.78
+    },
+    "/work-with-us/contact/": {
+      "source": "contactimage",
+      "band": 3,
+      "focal": "50% 50%",
+      "tint": 0.78,
+      "fallback_same_as": "/work-with-us/",
+      "note": "Uses the /work-with-us/ banner until a photo named contactimage (any extension) is added under assets/; then it is cropped at band 3 automatically."
     }
   },
   "story_photos_readme": "Photos on the /about/ 'Since 2020' timeline cards, keyed by card (founded, ey, competition, today). 'image' is the file name (without extension) of a photo in assets/photos/; 'focal' (x% y%) is the point kept when it is cut to 4:3 (desktop/tablet) and 16:9 (phones); 'alt' describes what is visible. Swap a photo by changing 'image'.",
@@ -447,46 +455,126 @@
     "file": null
   },
   "work_with_us": {
-    "_readme": "/work-with-us/. 'intro' is SPEC 5.8's sentence; the fee line is read from faq.json ('How much do SCG services cost?'), so it has one source. 'help': the 'What we can help with' cards, derived only from the skills in data/projects.json; 'icon' is one of research, data, ai, process, marketing, business; 'link' opens /projects/ filtered (q = search, track = discipline).",
-    "intro": "SCG works alongside your organization to create personalized and long-lasting solutions.",
+    "_readme": "/work-with-us/ (Services). 'intro' and the 'engagement' items are the old Services page's own text (typos cleaned, nothing added). The two fee cards are read from faq.json ('How much do SCG services cost?'), one sentence each. 'help': the 'What we can help with' cards, derived only from projects.json skills; 'icon' is research, data, ai, process, marketing or business; 'link' opens /projects/ filtered (q = search, track = discipline); 'examples' picks up to 3 client logo chips from projects whose skills contain any of 'any' (or whose disciplines include 'track'). 'more' is the old page's closing line of 'How We Can Help'.",
+    "intro": "We proudly collaborate with University of Maryland clubs, organizations and institutions, as well as off-campus non-profit organizations, to support their missions and goals.",
     "help": [
       {
         "title": "Research and benchmarking",
         "text": "Market, stakeholder, legal and regulatory research, and benchmarking.",
         "icon": "research",
-        "link": "/projects/?q=research"
+        "link": "/projects/?q=research",
+        "examples": {
+          "any": [
+            "research",
+            "benchmarking"
+          ]
+        }
       },
       {
         "title": "Data, dashboards and analytics",
         "text": "Data pipelines, SQL and dashboards that turn raw data into reports.",
         "icon": "data",
-        "link": "/projects/?track=Data+%26+Engineering"
+        "link": "/projects/?track=Data+%26+Engineering",
+        "examples": {
+          "track": "Data & Engineering"
+        }
       },
       {
         "title": "Machine-learning and AI strategy",
         "text": "Machine-learning models, time-series forecasting and model benchmarking.",
         "icon": "ai",
-        "link": "/projects/?q=machine+learning"
+        "link": "/projects/?q=machine+learning",
+        "examples": {
+          "any": [
+            "machine learning"
+          ]
+        }
       },
       {
         "title": "Process, role and knowledge-management design",
         "text": "Process mapping and documentation, role design and knowledge management.",
         "icon": "process",
-        "link": "/projects/?track=Operations+%26+People"
+        "link": "/projects/?track=Operations+%26+People",
+        "examples": {
+          "any": [
+            "process",
+            "knowledge management",
+            "role and responsibility"
+          ]
+        }
       },
       {
         "title": "Marketing and communication strategy",
         "text": "Marketing, social media and communication strategy, and member engagement.",
         "icon": "marketing",
-        "link": "/projects/?q=marketing"
+        "link": "/projects/?q=marketing",
+        "examples": {
+          "any": [
+            "marketing",
+            "social media",
+            "communication"
+          ]
+        }
       },
       {
         "title": "Business and monetization strategy",
         "text": "Monetization, pricing, go-to-market and fundraising strategy.",
         "icon": "business",
-        "link": "/projects/?track=Strategy+%26+Research"
+        "link": "/projects/?track=Strategy+%26+Research",
+        "examples": {
+          "any": [
+            "monetization",
+            "pricing",
+            "go-to-market",
+            "fundraising"
+          ]
+        }
       }
-    ]
+    ],
+    "more": "Whatever the task, we are happy to meet and discuss if our services are the right fit for you.",
+    "engagement": {
+      "title": "How an engagement works",
+      "photo": "whiteboard",
+      "items": [
+        {
+          "icon": "calendar",
+          "title": "One focused semester",
+          "text": "Each semester, we take on a select group of clients for a focused 3–4 month engagement."
+        },
+        {
+          "icon": "diagnostic",
+          "title": "A detailed diagnostic",
+          "text": "Our team guides you through the engagement, starting with a detailed diagnostic to identify areas of improvement and establish clear objectives."
+        },
+        {
+          "icon": "plan",
+          "title": "An actionable plan",
+          "text": "Together, we craft a comprehensive, actionable plan for the semester."
+        },
+        {
+          "icon": "meeting",
+          "title": "We join your meetings",
+          "text": "We are happy to attend your meetings to better understand your organization's dynamics and foster stronger collaboration."
+        },
+        {
+          "icon": "link",
+          "title": "Beyond the semester",
+          "text": "While engagements are time-bound, we value long-term relationships and seek to maintain meaningful connections beyond the initial partnership."
+        }
+      ]
+    },
+    "cta": "Have a project in mind? Tell us about your organization."
   },
-  "partners_intro": "SCG partners with corporate and on-campus organizations that support its members and the Robert H. Smith School community."
+  "partners_intro": "SCG partners with corporate and on-campus organizations that support its members and the Robert H. Smith School community.",
+  "contact": {
+    "_readme": "/work-with-us/contact/. 'intro' and 'next' come from the old Contact Us page ('we're always happy to meet potential clients…', 'E-mail us to set up a 1-hour online consulting session') and the old Services page ('happy to meet and discuss if our services are the right fit'). 'include' is the request checklist (the old page listed nothing else). 'photo' is an id from data/photos.json.",
+    "intro": "We're always happy to meet potential clients and learn more about UMD student clubs.",
+    "include": [
+      "Your organization and what it does",
+      "What you need help with",
+      "Your timeline"
+    ],
+    "next": "We'll set up a 1-hour online consulting session to learn about your organization and discuss whether our services are the right fit.",
+    "photo": "group-smith-front"
+  }
 }

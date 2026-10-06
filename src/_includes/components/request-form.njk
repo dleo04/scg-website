@@ -1,30 +1,15 @@
-{#- Client request form (/work-with-us/), posting to site.json → forms.client_request_endpoint.
-    - Endpoint set: a plain POST form (works without JS); request-form.js adds inline validation
-      (messages tied with aria-describedby), an error summary that takes focus, sending via
-      fetch with the button disabled, and success / error states announced politely.
-    - No endpoint: the live site shows the fallback (the shared club email from
-      forms.client_request_fallback_email, else the Instagram and LinkedIn links); with
-      SHOW_PLACEHOLDERS=1 the form is shown with a "not connected" dev note.
-    Honeypot: "_gotcha" (Formspree's name; ignored by people, filled by bots). No CAPTCHA. -#}
+{#- Client request (/work-with-us/contact/). The same fields in both modes:
+    - site.json → forms.client_request_endpoint set: a real form that POSTs there (works without
+      JS); request-form.js adds inline validation, an error summary that takes focus, sending
+      via fetch with the button disabled, and success / error states announced politely.
+    - endpoint null (now): a "Request by email" composer. Its button builds a mailto: link to
+      forms.client_request_fallback_email (subject and body prefilled, encoded) and opens the
+      visitor's email app; with SHOW_PLACEHOLDERS=1 a "not connected" note is added. Without JS
+      the composer is replaced by a plain mailto link (the address is also in the contact card).
+    Honeypot "_gotcha" (Formspree's name). No CAPTCHA. Nothing else to change when an endpoint
+    is added: the form replaces the composer. -#}
 {%- from "components/ui.njk" import tbdBlock with context -%}
-{% macro fallback(email) -%}
-<div class="request-fallback">
-  {%- if email %}
-  <p>To request a project, email us at <a href="mailto:{{ email }}?subject=Project%20request">{{ email }}</a>. Tell us your organization, what you need and your timeline.</p>
-  <p>You can also message SCG on <a href="{{ site.links.instagram }}" rel="noopener">Instagram</a> or <a href="{{ site.links.linkedin }}" rel="noopener">LinkedIn</a>.</p>
-  {%- else %}
-  <p>To request a project, message SCG on <a href="{{ site.links.instagram }}" rel="noopener">Instagram</a> or <a href="{{ site.links.linkedin }}" rel="noopener">LinkedIn</a> with your organization, what you need and your timeline.</p>
-  {%- endif %}
-</div>
-{%- endmacro %}
-
-{% macro requestForm() -%}
-{%- set endpoint = site.forms.client_request_endpoint if site.forms else null -%}
-{%- set email = site.forms.client_request_fallback_email if site.forms else null -%}
-{%- if endpoint or env.showPlaceholders %}
-{%- if not endpoint %}{{ tbdBlock("Form not connected", "[TBD: set site.json → forms.client_request_endpoint (e.g. a Formspree URL). Until then the live site hides this form and shows the email / social fallback.]") }}{% endif %}
-<div class="request" data-request>
-  <form class="request-form" action="{{ endpoint or '#' }}" method="post" data-request-form{% if not endpoint %} data-not-connected{% endif %}>
+{% macro fields() -%}
     <div class="request-form__summary" tabindex="-1" aria-labelledby="request-errors-title" data-error-summary hidden>
       <h3 class="request-form__summary-title" id="request-errors-title">Please fix the following</h3>
       <ul data-error-list></ul>
@@ -53,7 +38,7 @@
       <p class="field__error" id="rq-timeline-error" hidden></p>
     </div>
     <div class="field">
-      <label for="rq-email">Email</label>
+      <label for="rq-email">Your email</label>
       <p class="field__hint" id="rq-email-hint">We only use it to reply to you.</p>
       <input id="rq-email" name="email" type="email" autocomplete="email" required aria-describedby="rq-email-hint" data-msg-required="Enter your email address." data-msg-type="Enter a valid email address, with an @ and a domain.">
       <p class="field__error" id="rq-email-error" hidden></p>
@@ -62,6 +47,16 @@
       <label for="rq-website">Leave this field empty</label>
       <input id="rq-website" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
     </div>
+{%- endmacro %}
+
+{% macro requestForm() -%}
+{%- set endpoint = site.forms.client_request_endpoint if site.forms else null -%}
+{%- set email = site.forms.client_request_fallback_email if site.forms else null -%}
+<div class="request" data-request>
+  {%- if endpoint %}
+  <h3 class="request__title">Send a request</h3>
+  <form class="request-form" action="{{ endpoint }}" method="post" data-request-form>
+    {{ fields() }}
     <div class="request-form__actions">
       <button class="btn btn--primary" type="submit" data-request-submit>Send request</button>
     </div>
@@ -74,9 +69,24 @@
   <template data-request-error>
     Sorry, your request could not be sent. Please try again{% if email %}, or email us at <a href="mailto:{{ email }}">{{ email }}</a>{% endif %}.
   </template>
+  {%- elif email %}
+  {%- if env.showPlaceholders %}{{ tbdBlock("Form not connected", "[TBD: set site.json → forms.client_request_endpoint (e.g. a Formspree URL). Until then visitors get this email composer, which opens their email app.]") }}{% endif %}
+  <h3 class="request__title">Request by email</h3>
+  <p class="request__intro request__intro--js">Fill in the details and we'll put them into an email for you to send from your own email app.</p>
+  <form class="request-form request-form--composer" action="mailto:{{ email }}" method="get" data-request-form data-mailto="{{ email }}">
+    {{ fields() }}
+    <div class="request-form__actions">
+      <button class="btn btn--primary" type="submit" data-request-submit aria-describedby="rq-opens">Write the email</button>
+      <span class="request-form__opens" id="rq-opens">Opens your email app</span>
+    </div>
+    <p class="request-form__status" role="status" aria-live="polite" data-request-status></p>
+  </form>
+  <div class="request-nojs">
+    <p>Email us at <a href="mailto:{{ email }}?subject=Project%20request">{{ email }}</a> with your organization, what you need and your timeline.</p>
+  </div>
+  {%- else %}
+  <p>To request a project, message SCG on <a href="{{ site.links.instagram }}" rel="noopener">Instagram</a> or <a href="{{ site.links.linkedin }}" rel="noopener">LinkedIn</a>.</p>
+  {%- endif %}
 </div>
 <script src="{{ '/js/request-form.js' | versioned }}" defer></script>
-{%- else %}
-{{ fallback(email) }}
-{%- endif %}
 {%- endmacro %}

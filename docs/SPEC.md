@@ -170,6 +170,8 @@ Audience: UMD student orgs, departments and nonprofits.
 
 **As built (stage 4A):** banner + intro + FAQ fee line; six service cards linking to filtered `/projects/`; the shared "How a project works" section; 13 client logo tiles + other past-client names; the request form (endpoint `null` → the live site shows the shared club email and social links). See DECISIONS → Stage 4A.
 
+**Updated:** Work With Us is now a header dropdown with two pages: Services (`/work-with-us/`: cost cards, service cards with client logo chips, "How an engagement works" from the old Services page, client logo grid, CTA) and Contact us (`/work-with-us/contact/`: request form, or an email composer while no endpoint is set; contact card; client FAQ). The About stepper is not reused there. See DECISIONS → Work With Us dropdown.
+
 ### 5.9 Partners `/partners/`
 From `site.json → partners`. Keep the EY narrative but shorten and make it factual; remove the "level of prestige that elevates the SCG experience to new heights" style language. Keep the SICC case prompt download slot (existing "SICC December 2023 Case Prompt (pdf)"; placeholder).
 

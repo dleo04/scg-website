@@ -1,4 +1,5 @@
-// Client request form (components/request-form.njk), progressive enhancement over a plain POST.
+// Client request (components/request-form.njk): the real form (POST to the endpoint, progressive
+// enhancement) or, with no endpoint, the email composer (data-mailto) that opens a prefilled email.
 // - Validates on submit: each invalid field gets aria-invalid and an inline message added to its
 //   aria-describedby; an error summary (links to the fields) appears and takes focus.
 //   Once a field has been flagged it re-validates as the person types.
@@ -90,12 +91,8 @@
     const errors = validate();
     renderSummary(errors);
     if (errors.length) return;
-    if (form.elements._gotcha.value) { finish(); return; }   // bot: pretend it worked
-    if (form.hasAttribute("data-not-connected")) {
-      status.textContent = "This form is not connected yet (development build): set forms.client_request_endpoint in site.json.";
-      status.classList.add("is-error");
-      return;
-    }
+    if (form.elements._gotcha.value) { if (form.dataset.mailto) return; finish(); return; }   // bot: do nothing / pretend it worked
+    if (form.dataset.mailto) { compose(); return; }
     setSending(true);
     status.textContent = "Sending your request…";
     try {
@@ -108,6 +105,26 @@
       status.classList.add("is-error");
     }
   });
+
+  // Email composer (no endpoint yet): a mailto: link with the subject and body prefilled.
+  // encodeURIComponent keeps &, ?, #, accents and line breaks (CRLF, as RFC 6068 asks) intact.
+  function mailtoUrl() {
+    const v = (n) => form.elements[n].value.trim().replace(/\r?\n/g, "\r\n");
+    const lines = ["Hello SCG,", "", `Name: ${v("name")}`, `Organization: ${v("organization")}`, `Email: ${v("email")}`];
+    if (v("timeline")) lines.push(`Timeline: ${v("timeline")}`);
+    lines.push("", "What we need:", v("need"));
+    const subject = `Project request: ${v("organization")}`;
+    return `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\r\n"))}`;
+  }
+  function compose() {
+    const url = mailtoUrl();
+    status.replaceChildren(
+      document.createTextNode("Your email app should open with the message ready to send. If it doesn't, "),
+      Object.assign(document.createElement("a"), { href: url, textContent: "open the email again", className: "request-form__again" }),
+      document.createTextNode(` or write to ${form.dataset.mailto}.`),
+    );
+    window.location.href = url;
+  }
 
   function finish() {
     form.hidden = true;

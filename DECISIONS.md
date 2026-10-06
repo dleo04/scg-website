@@ -975,3 +975,38 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 - **404.** `src/404.njk` → `/404.html`, base layout (header, footer), gradient banner, one friendly line, links to Projects, Join SCG, About, Team and Work With Us, plus home. noindex, out of the sitemap; every asset URL is absolute, verified at `/some/deep/missing/path` with a 404 status.
 - **Mock endpoint.** Form tests ran against a scratch build whose copied `site.json` pointed at a local mock (`/__mock-form`, 200 or 500 with a 0.5s delay); the scratch data and builds were deleted afterwards. The repo's endpoint stays `null`.
 
+## Work With Us dropdown: Services and Contact us (supersedes parts of Stage 4A)
+
+- **Sources.** The new archives were unzipped to `reference/old-site/services/` and `reference/old-site/contact-us/` (git-ignored; they had no `__MACOSX` folders).
+  - **Old Services page:** H1 "Our Services" and its intro; the "Prospective Client Form" button (a Google Form); two engagement paragraphs; "How We Can Help" with five items and "And More!"; and a past-clients logo wall linking to client websites. The logo images were not in the archive; it holds only placeholders.
+  - **Old Contact Us page:** "Set Up an Engagement Appointment" ("we're always happy to meet potential clients and learn more about UMD student clubs. E-mail us to set up a 1-hour online consulting session…"), then four email lines: Applicants → `scgumd@gmail.com`; Prospective Clients, Other Inquiries → a personal address; Employers & Faculty → another personal address.
+  - **Images in the archives:** two SCG brand mockups (business cards, a lamp-post banner), a Van Munching Hall exterior, a McKeldin Mall aerial and a "University of Maryland" wall, the last three likely UMD marketing photos. None are used: the mockups are not photos (and the cards show printed contact details), and the campus shots would need UMD permission. The pages use SCG's own photos from `assets/photos` instead.
+- **Old-page sections used.**
+  - The intro is the Services banner lede (shortened; "achieve measurable success" left out as a vague claim).
+  - The engagement paragraphs became "How an engagement works": five icon items in a split layout with the whiteboard photo. Not numbered, not a stepper, and only the old page's facts: 3–4 month semester engagement, select group of clients, detailed diagnostic and clear objectives, an actionable plan, attending client meetings, long-term relationships.
+  - "And more" ("Whatever the task, we are happy to meet and discuss if our services are the right fit for you") closes the services grid.
+  - The Contact intro is the banner lede; "What happens next" uses the 1-hour online consulting session (Contact) and "discuss if our services are the right fit" (Services).
+- **Old-page sections skipped.**
+  - The five old "How We Can Help" items: the six project-derived categories cover them (expansion and marketing, competitive analysis as research and benchmarking, restructuring and process improvement as process design).
+  - The Google "Prospective Client Form": unknown whether it is still read.
+  - The logo wall's links to client websites: tiles link to SCG project pages.
+  - "All of our services are free!": contradicts the FAQ (off-campus nonprofits pay low rates); the FAQ wins.
+  - The personal email lines: privacy. The old pages state no team composition or deliverables beyond "an actionable plan", so none are added.
+- **Navigation.** The header `nav` entries can now carry `sub` lists. Join SCG and Work With Us use the same disclosure component: hover with close delay, caret toggle, focus-in, Esc returns focus to the caret, arrow keys, mobile accordion, and only one open at a time. On `/work-with-us/` the Services entry is `aria-current="page"` and the parent link `aria-current="true"` (red, underlined); on Contact the Contact entry is "page". The footer adds "Contact us". Breadcrumbs sit in the banners: "Work With Us / Services" (the parent is text, since it is the same page) and "Work With Us / Contact us" (the parent links to Services). The redundant "Work With Us" eyebrow was dropped. Every "Request a project" link goes to `/work-with-us/contact/`. The About stepper's "Work with SCG →" example link still goes to `/work-with-us/` (it is not a request button).
+- **Redirects (for launch).** There is no redirect map in the repo. At launch, redirect `/services` → `/work-with-us/` and `/contact-us` → `/work-with-us/contact/` (also listed in TODO-CONTENT).
+- **Services page.** Section order: banner, two cost cards, service cards, "How an engagement works", clients, CTA band.
+  - **Cost cards:** the FAQ answer split into its two sentences (the loader fails the build if it is not two sentences), each in an equal card with a 48px icon chip. No amounts.
+  - **Service cards:** 48px red-on-tint icon chips, 16px body text, equal heights at 3/2/1 columns. Up to three logo chips of real clients whose project skills match (`work_with_us.help.examples`, e.g. machine learning → Alliom only), linking to the project pages; SCG's internal project is excluded.
+  - **Client grid:** 5/4/3 columns of equal 5:3 tiles with 1px borders, logos in full colour on their own `logo_bg` (white by default), `object-fit: contain`, no filters, each linking to its project. The other 27 names are 14px chips. The lede uses the verified "40+" client-projects stat ("40+ client projects so far.").
+  - **CTA band:** the Home EY band's look (hero photo low, maroon-black tint at 0.84) with a white button and dark text.
+  - **Legibility:** every tile and chip was measured; all show their logo. Alliom (white on orange, about 2.9:1) and FBLA (white on gold, about 1.9:1) are those clients' own artwork, shown unaltered (logos are exempt from WCAG contrast).
+- **Contact page.** The banner uses `contactimage` when it exists, otherwise the Services banner: the new `page_banners → fallback_same_as` option in make-banners.mjs.
+  - **Layout:** the request on the left and a contact card on the right (stacked below 1024px).
+  - **Contact card:** `scgumd@gmail.com` (confirmed on the old Contact page), Instagram and LinkedIn with icons, the checklist (organization, what you need, timeline; the old page listed nothing else), "What happens next" and the six-members-at-Smith photo.
+  - **With an endpoint:** the real form posts to `site.json → forms.client_request_endpoint`, same behaviour as before.
+  - **With no endpoint (now):** a "Request by email" composer with the same fields and validation. Its "Write the email" button (described by "Opens your email app") builds `mailto:scgumd@gmail.com?subject=Project request: <organization>&body=…`, with every field encoded by `encodeURIComponent` and line breaks as CRLF. A status line offers "open the email again" in case the app does not open.
+  - **Without JS:** a plain mailto link replaces the composer, and the address is in the contact card. dev:notes adds the "Form not connected" note.
+  - **FAQ:** "Questions from clients" shows the FAQ's "For clients" group without drafts or open decisions: one item, "How much do SCG services cost?". The rest of the FAQ is about joining.
+- **Not reused any more.** The About stepper ("How a project works") no longer appears on Work With Us; `components/process-section.njk` stays for /about/.
+- **Mock endpoint.** Form tests used a scratch copy of `data/` with the endpoint set to a local mock (200 / 500, 0.5s delay); the copy and builds were deleted afterwards. The repo endpoint stays `null`.
+

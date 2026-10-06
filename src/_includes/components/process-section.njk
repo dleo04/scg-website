@@ -1,5 +1,5 @@
 {%- from "components/stepper.njk" import stepper with context -%}
-{#- "How a project works" (data/process.json), shared by /about/ and /work-with-us/ so the
+{#- "How a project works" (data/process.json) on /about/ (a component so other pages can reuse the
     steps, photos and copy have one source. The Deliverables step's example opens a project
     dialog: the page must also render projectDialog(...) for processDialogProjects(). -#}
 {% macro processSection(steps, cls = "section--paper-2") -%}

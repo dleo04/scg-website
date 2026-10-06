@@ -1,4 +1,4 @@
-// Site-wide progressive enhancement: mobile menu, the "Join SCG" sub-menu, accessible tabs (also the step-by-step
+// Site-wide progressive enhancement: mobile menu, the header sub-menus (Join SCG, Work With Us), accessible tabs (also the step-by-step
 // steppers on /about/ and /join/), stat count-up and reveal-on-scroll. Everything works without this file.
 (() => {
   "use strict";
@@ -18,7 +18,7 @@
   toggle?.addEventListener("click", () => setMenu(toggle.getAttribute("aria-expanded") !== "true"));
   desktop.addEventListener("change", () => setMenu(false));
 
-  // ---- "Join SCG" sub-menu (disclosure pattern, not role=menu) ---------------
+  // ---- Header sub-menus: "Join SCG", "Work With Us" (disclosure pattern, not role=menu) ----
   // "Join SCG" stays a plain link; the caret button next to it toggles the list.
   // Desktop (≥1024px): opens on hover (200ms close delay) and when keyboard focus enters the
   // item; Esc closes and returns focus to the caret; a click outside closes; Up/Down move
@@ -46,14 +46,20 @@
 
     // A click on the caret of a panel that hover just opened keeps it open (no open-then-close).
     button.addEventListener("click", () => set(openedByHover ? true : !isOpen()));
-    item.addEventListener("mouseenter", () => { if (hoverDesktop.matches && !isOpen()) set(true, { hover: true }); });
+    // Only one dropdown open at a time (Join SCG, Work With Us).
+    button.addEventListener("click", () => { if (isOpen()) subs.forEach((s) => s.item !== item && s.set(false)); });
+    item.addEventListener("mouseenter", () => {
+      if (!hoverDesktop.matches || isOpen()) return;
+      subs.forEach((s) => s.item !== item && s.set(false));
+      set(true, { hover: true });
+    });
     item.addEventListener("mouseleave", () => {
       if (!hoverDesktop.matches) return;
       clearTimeout(closeTimer);
       closeTimer = setTimeout(() => { if (!item.contains(document.activeElement)) set(false); }, 200);
     });
     item.addEventListener("focusin", (e) => {
-      if (desktop.matches && !refocusing && e.target.matches(":focus-visible") && !isOpen()) set(true);
+      if (desktop.matches && !refocusing && e.target.matches(":focus-visible") && !isOpen()) { subs.forEach((s) => s.item !== item && s.set(false)); set(true); }
     });
     item.addEventListener("focusout", (e) => {
       if (desktop.matches && !item.contains(e.relatedTarget)) set(false);

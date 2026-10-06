@@ -1,19 +1,22 @@
 {#- Site header (docs/HOME-LAYOUT.md): sticky, always solid white, same on every page.
     Partners and Interview prep live in the footer, which is the full sitemap. -#}
+{#- Items with "sub" get a disclosure dropdown on desktop and an accordion in the mobile menu
+    (same component for both). The parent link still works on its own and the footer lists the
+    same destinations, so nothing depends on JS. "id" names the sub-list (#nav-sub-<id>). -#}
 {%- set nav = [
   { label: "Projects", url: "/projects/" },
-  { label: "Join SCG", url: "/join/" },
+  { label: "Join SCG", url: "/join/", id: "join", sub: [
+    { label: "Recruiting timeline", url: "/join/#timeline" },
+    { label: "FAQ", url: "/join/#faq" },
+    { label: "Interview prep", url: "/join/prepare/" }
+  ] },
   { label: "About", url: "/about/" },
   { label: "Team", url: "/team/" },
   { label: "Alumni", url: "/alumni/" },
-  { label: "Work With Us", url: "/work-with-us/" }
-] -%}
-{#- Sub-pages under "Join SCG" (disclosure dropdown on desktop, accordion in the mobile menu).
-    The same destinations are linked from /join/ itself and the footer, so nothing depends on JS. -#}
-{%- set joinSub = [
-  { label: "Recruiting timeline", url: "/join/#timeline" },
-  { label: "FAQ", url: "/join/#faq" },
-  { label: "Interview prep", url: "/join/prepare/" }
+  { label: "Work With Us", url: "/work-with-us/", id: "wwu", sub: [
+    { label: "Services", url: "/work-with-us/" },
+    { label: "Contact us", url: "/work-with-us/contact/" }
+  ] }
 ] -%}
 {#- "Join SCG" goes straight to the application while it is open, otherwise to /join/. -#}
 {%- set joinHref = site.recruiting.application_url if (site.recruiting.open and site.recruiting.application_url) else "/join/" -%}
@@ -32,16 +35,19 @@
         {%- set inSection = page.url.startsWith(item.url) %}
         {#- aria-current: "page" on the page itself, "true" on a parent section (e.g. Join SCG on /join/prepare/). -#}
         {%- set current = ("page" if page.url == item.url else "true") if inSection else "" %}
-        {%- if item.url == "/join/" %}
+        {#- When a sub-entry is this exact page (Work With Us → Services), that entry carries
+            aria-current="page" and the parent is marked as the current section instead. -#}
+        {%- if current == "page" and item.sub and (item.sub | findBy("url", page.url)) %}{% set current = "true" %}{% endif %}
+        {%- if item.sub %}
         <li class="nav-item nav-item--sub" data-nav-sub>
           <div class="nav-item__row">
             <a class="nav-link" href="{{ item.url }}"{% if current %} aria-current="{{ current }}"{% endif %}>{{ item.label }}</a>
-            <button class="nav-sub-toggle" type="button" aria-expanded="false" aria-controls="nav-sub-join" aria-label="Show Join SCG menu" data-nav-sub-toggle hidden>
+            <button class="nav-sub-toggle" type="button" aria-expanded="false" aria-controls="nav-sub-{{ item.id }}" aria-label="Show {{ item.label }} menu" data-nav-sub-toggle hidden>
               <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2.5 4.5L6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
           </div>
-          <ul class="nav-sub" id="nav-sub-join" data-nav-sub-list>
-            {%- for sub in joinSub %}
+          <ul class="nav-sub" id="nav-sub-{{ item.id }}" data-nav-sub-list>
+            {%- for sub in item.sub %}
             <li><a class="nav-sub__link" href="{{ sub.url }}"{% if page.url == sub.url %} aria-current="page"{% endif %}>{{ sub.label }}</a></li>
             {%- endfor %}
           </ul>

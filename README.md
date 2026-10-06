@@ -111,11 +111,14 @@ Photos are listed in `data/gallery.json`: `file` (an image under `assets/`, usua
   - Matching: what a visitor types is compared (partial, case-insensitive, up to three comma-separated terms) with each track's name, `fits` and `skills`, and more weakly with the fits and skills of its projects. To make a word find a track, add it to that track's `fits` or `skills`.
   - The five suggestion chips are set in `src/join/index.njk`.
 
-## Work With Us: the request form and services
-- **Connect the form:** set `site.json → forms.client_request_endpoint` to your form service's URL (for example a Formspree form URL, `https://formspree.io/f/xxxx`) and rebuild. The form posts `name`, `organization`, `need`, `timeline`, `email` (and the hidden spam trap `_gotcha`, which Formspree understands). Without JavaScript it is a normal form post to the same URL.
-- **Until it is connected** (`null`), the live site hides the form and shows the fallback: the shared club address in `forms.client_request_fallback_email` (now `scgumd@gmail.com`, from the old Contact page) plus Instagram and LinkedIn. `npm run dev:notes` shows the form with a "not connected" note. Never put a personal email in either field; the build fails on any other address.
-- **Services cards:** `site.json → work_with_us.help` (title, one line, icon, a link to `/projects/` filtered by `q=` or `track=`). Keep them grounded in real project skills.
-- **Past clients:** logo tiles come from the projects (`projects.json → logo`), one per client; the other names come from `past-clients.json`. Fee wording is the FAQ answer "How much do SCG services cost?".
+## Work With Us: Services and Contact us
+"Work With Us" in the header is a dropdown (Services → `/work-with-us/`, Contact us → `/work-with-us/contact/`); the header's `nav` list in `src/_includes/partials/header.njk` defines it, like Join SCG.
+- **Connect the request form:** set `site.json → forms.client_request_endpoint` to your form service's URL (for example a Formspree form URL) and rebuild. The real form then replaces the "Request by email" composer automatically. It posts `name`, `organization`, `need`, `timeline`, `email` and the hidden spam trap `_gotcha`; without JavaScript it is a normal form post.
+- **Until then** (`null`), the Contact page shows the composer: the same fields, and a "Write the email" button that opens the visitor's email app with a message to `forms.client_request_fallback_email` (now `scgumd@gmail.com`, the club address from the old Contact page). Never put a personal email there; the build fails on any other address.
+- **Services text:** `site.json → work_with_us` (intro, the five "How an engagement works" points, the closing line) is the old Services page's own wording. The two cost cards are the FAQ answer "How much do SCG services cost?", one sentence each, so edit it in `faq.json`.
+- **Service cards:** `work_with_us.help` (title, one line, icon, a `/projects/` link with `q=` or `track=`, and `examples` that picks up to three client logo chips from matching project skills or tracks).
+- **Contact page text:** `site.json → contact` (intro, checklist, "What happens next", photo id). "Questions from clients" lists the FAQ's "For clients" group (drafts and open decisions left out).
+- **Banner:** the Contact page uses the Services banner until a photo named `contactimage` is added under `assets/` (`page_banners → fallback_same_as`).
 
 ## How to change a page banner
 The header of `/projects/`, `/join/`, `/join/prepare/`, `/about/`, `/team/`, `/alumni/`, `/work-with-us/` and `/partners/` is a banner: a photo under a maroon-black tint, or, while a page has no photo, a plain maroon-black gradient. Settings live in `data/site.json → page_banners`, keyed by the page's URL:
