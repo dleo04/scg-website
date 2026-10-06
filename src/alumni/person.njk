@@ -1,0 +1,58 @@
+---
+layout: layouts/base.njk
+bodyClass: page-alum
+pagination:
+  data: alumniPages
+  size: 1
+  alias: alum
+  addAllPagesToCollections: true
+permalink: "/alumni/{{ alum.id }}/"
+eleventyComputed:
+  # "| safe" here because the <head> escapes these values itself.
+  title: "{{ alum.name | safe }}{% if alum.classLabel %}, {{ alum.classLabel }}{% endif %} | Alumni"
+  description: "{{ alum.summary | safe }}"
+  ogImagePath: "{{ alum.headshot.og.src if alum.headshot and alum.headshot.og else '' }}"
+  ogImageAlt: "Photo of {{ alum.name | safe }} beside the Snider Consulting Group logo"
+---
+{%- from "components/alumni-detail.njk" import alumniDetail with context -%}
+{#- Standalone alumni bio: the no-JS / shareable version of the alumni drawer. Same content
+    (components/alumni-detail.njk), plus breadcrumbs, prev/next, BreadcrumbList and Person
+    JSON-LD. Only alumni with consent_to_publish: true and more than a one-sentence bio. -#}
+{%- set i = pagination.pageNumber -%}
+{%- set prev = alumniPages[i - 1] if i > 0 else null -%}
+{%- set next = alumniPages[i + 1] if i + 1 < alumniPages.length else null -%}
+{%- set pageUrl = alum.url | absoluteUrl(site.domain) -%}
+{%- set crumbs = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Alumni", "item": "/alumni/" | absoluteUrl(site.domain) },
+    { "@type": "ListItem", "position": 2, "name": alum.name, "item": pageUrl }
+  ]
+} -%}
+{%- set person = { "@context": "https://schema.org", "@type": "Person", "name": alum.name, "url": pageUrl, "description": alum.summary,
+  "alumniOf": { "@type": "Organization", "name": site.name, "url": "/" | absoluteUrl(site.domain) } } -%}
+{%- if alum.headshot and alum.headshot.portrait %}{% set person = person | merge({ "image": alum.headshot.portrait.src | absoluteUrl(site.domain) }) %}{% endif -%}
+{%- if alum.current_role %}{% set person = person | merge({ "jobTitle": alum.current_role }) %}{% endif -%}
+{%- if alum.current_org %}{% set person = person | merge({ "worksFor": { "@type": "Organization", "name": alum.current_org } }) %}{% endif -%}
+{%- if alum.linkedin %}{% set person = person | merge({ "sameAs": [alum.linkedin] }) %}{% endif -%}
+<script type="application/ld+json">{{ crumbs | jsonLd | safe }}</script>
+<script type="application/ld+json">{{ person | jsonLd | safe }}</script>
+<section class="section project-page alum-page">
+  <div class="container project-page__inner">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/alumni/">Alumni</a></li>
+        <li><span aria-current="page">{{ alum.name }}</span></li>
+      </ol>
+    </nav>
+    <div class="project-page__card">
+      {{ alumniDetail(alum, 1) }}
+    </div>
+    <nav class="project-pager" aria-label="More alumni">
+      {%- if prev %}<a class="project-pager__link project-pager__link--prev" href="{{ prev.url }}"><span class="project-pager__dir">Previous</span><span class="project-pager__name">{{ prev.name }}</span></a>{% else %}<span></span>{% endif %}
+      {%- if next %}<a class="project-pager__link project-pager__link--next" href="{{ next.url }}"><span class="project-pager__dir">Next</span><span class="project-pager__name">{{ next.name }}</span></a>{% else %}<span></span>{% endif %}
+    </nav>
+    <p class="project-page__back"><a class="link-arrow" href="/alumni/#{{ alum.id }}"><span aria-hidden="true">←</span> Back to alumni</a></p>
+  </div>
+</section>

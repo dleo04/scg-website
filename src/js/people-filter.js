@@ -1,25 +1,10 @@
-// /team/ and /alumni/ filters + alumni "Read more" disclosures (progressive enhancement).
-// Without JS every card (and every full bio) is visible and the filter form stays hidden.
+// /team/ and /alumni/ filters (progressive enhancement).
+// Without JS every card is visible and the filter form stays hidden.
 // Filters: name search (team) or name/employer/bio search (alumni), plus any <select> in the
 // form (level, major, industry). State lives in the URL query (?q=&level=&major=&industry=);
 // the result count is announced politely; groups with no visible card are hidden.
 (() => {
   "use strict";
-
-  // ---- Bio disclosures (alumni) ----------------------------------------------------
-  document.querySelectorAll("[data-bio-toggle]").forEach((btn) => {
-    const card = btn.closest("[data-person]");
-    const bio = document.getElementById(btn.getAttribute("aria-controls"));
-    const label = btn.querySelector("[data-bio-label]");
-    const set = (open) => {
-      btn.setAttribute("aria-expanded", String(open));
-      label.textContent = open ? "Show less" : "Read more";
-      card.classList.toggle("is-open", open);
-    };
-    btn.hidden = false;
-    set(false);
-    btn.addEventListener("click", () => set(btn.getAttribute("aria-expanded") !== "true"));
-  });
 
   // ---- Filters ---------------------------------------------------------------------
   const form = document.querySelector("[data-people-filters]");

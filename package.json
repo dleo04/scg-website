@@ -24,7 +24,9 @@
     "hero-contrast": "node scripts/hero-contrast.mjs",
     "banner-contrast": "node scripts/banner-contrast.mjs",
     "dev:notes": "npm run assets && SHOW_PLACEHOLDERS=1 eleventy --serve --port 8080",
-    "check:notes": "node scripts/check-notes.mjs"
+    "check:notes": "node scripts/check-notes.mjs",
+    "headshots:sheet": "node scripts/people-contact-sheet.mjs",
+    "faces": "REDETECT=1 node scripts/make-assets.mjs"
   },
   "type": "module",
   "devDependencies": {
@@ -32,6 +34,10 @@
     "@fontsource/lato": "^5.3.0",
     "@fontsource/montserrat": "^5.3.0",
     "@napi-rs/canvas": "^1.0.10",
+    "@tensorflow/tfjs-backend-wasm": "^4.22.0",
+    "@tensorflow/tfjs-converter": "^4.22.0",
+    "@tensorflow/tfjs-core": "^4.22.0",
+    "@vladmandic/human": "^3.3.6",
     "axe-core": "^4.13.0",
     "pdfjs-dist": "^6.4.299",
     "puppeteer-core": "^25.12.0",

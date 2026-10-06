@@ -57,9 +57,29 @@ People live in `data/team.json` (`members`) and `data/alumni.json` (`alumni`). C
 - Team: `name`, `level` (one of `levels` at the top of the file), `title` (e.g. "Vice Chair"), `cohort`, `experience` (one short line), `majors` (a list, or `null` if unknown; never guess), `worked_on` (project ids from `projects.json`, shown as chips), `linkedin` (full URL or `null`).
 - Alumni: `name`, `graduation_year`, `majors`, `current_role`, `current_org`, `industry` (only if stated; otherwise `null`), `summary` (one sentence), `bio` (a list of paragraphs), `linkedin`.
 - `consent_to_publish`: must be `true` or the person is not shown. Set it to `false` (or delete the entry) when someone asks to be removed. Never add emails or phone numbers; the build fails if it finds any.
-- **Photo:** put the original as `assets/photos/people/<id>.jpg` (or .png/.webp) and run `npm run assets`. It makes a 400px square headshot centred on the face (automatic), or on `photo.focal` (e.g. `"focal": "50% 30%"`) if you set one. No photo shows the person's initials instead.
+- **Photo:** put the original as `assets/photos/people/<id>.jpg` (or .png/.webp) and run `npm run assets` (or `npm run build`). The face is found automatically and the photo is cropped around it (see "Headshot framing" below). No photo shows the person's initials instead.
+- **Alumni pages:** every alumnus with more than a one-sentence bio gets a "Read bio" link, a drawer on `/alumni/` and their own page `/alumni/<id>/` (also in the sitemap). Nothing to set up; it follows `bio`.
 - The major filter on `/team/` appears once at least three members have majors; the alumni industry filter lists whatever industries are filled in.
 - The Alumni Report download appears on `/alumni/` when `site.json → alumni_report.file` points to a PDF.
+
+## Headshot framing (team and alumni photos)
+`npm run assets` (part of `dev` and `build`) finds the face in each photo in `assets/photos/people/` and writes what it found into the person's `photo` entry in `data/team.json` / `data/alumni.json`:
+
+```json
+"photo": {
+  "source": { "file": "jane-doe.jpg", "width": 2560, "height": 1708 },
+  "face":   { "x": 44.5, "y": 24.7, "w": 15.2, "h": 27.2 },
+  "focal":  { "x": 52.1, "y": 38.4 }
+}
+```
+
+All numbers are percentages of the original photo: `face` is the box around the face (left, top, width, height) and `focal` is its centre. From these it makes a square card image (600px, `/team/` and `/alumni/` cards) and a 4:5 portrait (600×750, the alumni bio), with the face centred left to right, its centre at half the height and about 38% of the frame width, leaving room for hair above and shoulders below. A photo that is already tight is cropped as close to that as it allows (never enlarged).
+
+- **Override:** if a crop looks wrong, add `"focal_override": { "x": 50, "y": 35 }` to that `photo` (the point, in % of the original, that should be the centre of the face) and run `npm run assets`. The override always wins and is never overwritten.
+- **New or replaced photo:** detection runs again by itself when the file name or size changes. `npm run faces` re-detects every photo.
+- **No face found:** the build prints the name and uses a default crop (upper middle); add a `focal_override`.
+- **Check by eye:** `npm run headshots:sheet` writes `scratch/reports/headshot-contact-sheet.png` (all crops with a centre crosshair; git-ignored).
+- Face detection uses `@vladmandic/human` on the TensorFlow.js WebAssembly backend (installed with `npm install`; no system software needed).
 
 ## How to update the recruiting status and calendar
 Everything on `/join/` that changes each semester lives in `data/site.json`:

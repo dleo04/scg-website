@@ -5,7 +5,8 @@
 // assets/photos/people/<id>.<ext>, where <id> matches data/team.json / data/alumni.json.
 // Existing files are kept (so a photo replaced by an officer is never overwritten).
 // Original file names are not kept (one of them contained a personal email address).
-// Headshots (400px square WebP) are made from these files by npm run assets.
+// Headshots (square card + 4:5 portrait WebP, framed on the detected face) are made from these
+// files by npm run assets.
 import fs from "node:fs";
 import path from "node:path";
 import { ROOT, readJson } from "../lib/load-data.js";

@@ -1,31 +1,31 @@
-{%- from "components/project-detail.njk" import projectDetail with context -%}
-{#- Project detail dialog (SPEC 6). One native <dialog> per page, plus one <template>
-    per project rendered with the same macro as /projects/<id>/. src/js/detail-dialog.js
-    wires it to any link with data-project-open="<id>". Order of templates = prev/next order. -#}
-{% macro projectDialog(projects) -%}
-<dialog class="project-dialog" id="project-dialog" aria-labelledby="project-dialog-title" data-detail-dialog="project">
+{%- from "components/alumni-detail.njk" import alumniDetail with context -%}
+{#- Alumni bio drawer: one native <dialog> plus one <template> per alumnus with a full bio,
+    rendered with the same macro as /alumni/<id>/. src/js/detail-dialog.js (kind "alumni")
+    wires it to links with data-alumni-open="<id>"; prev/next follow the filtered cards. -#}
+{% macro alumniDialog(people) -%}
+<dialog class="project-dialog alum-dialog" id="alumni-dialog" aria-labelledby="alumni-dialog-title" data-detail-dialog="alumni">
   <div class="project-dialog__panel">
     <div class="project-dialog__bar">
       <div class="project-dialog__nav">
-        <button class="icon-btn" type="button" data-dialog-prev aria-label="Previous project">
+        <button class="icon-btn" type="button" data-dialog-prev aria-label="Previous alumnus">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <span class="project-dialog__pos" data-dialog-position></span>
-        <button class="icon-btn" type="button" data-dialog-next aria-label="Next project">
+        <button class="icon-btn" type="button" data-dialog-next aria-label="Next alumnus">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
-      <a class="project-dialog__full" href="/projects/" data-dialog-full>Open full page</a>
-      <button class="icon-btn" type="button" data-dialog-close aria-label="Close project details">
+      <a class="project-dialog__full" href="/alumni/" data-dialog-full>Open full page</a>
+      <button class="icon-btn" type="button" data-dialog-close aria-label="Close bio">
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
       </button>
     </div>
     <div class="project-dialog__body" data-dialog-body></div>
   </div>
 </dialog>
-{%- for p in projects %}
-<template data-project-template="{{ p.id }}" data-project-url="{{ p.url }}" data-project-title="{{ p.title }}">
-  {{ projectDetail(p, 2) }}
+{%- for p in people %}
+<template data-alumni-template="{{ p.id }}" data-alumni-url="{{ p.url }}" data-alumni-title="{{ p.name }}">
+  {{ alumniDetail(p, 2) }}
 </template>
 {%- endfor %}
 <script src="{{ '/js/detail-dialog.js' | versioned }}" defer></script>

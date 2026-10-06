@@ -37,6 +37,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("icsText", filters.icsText);
   eleventyConfig.addFilter("findBy", filters.findBy);
   eleventyConfig.addFilter("slidesEmbed", filters.slidesEmbed);
+  eleventyConfig.addFilter("merge", filters.merge);
 
   // Static files. Brand assets are copied as-is (never transformed).
   // Originals in assets/logos/ are not published; pages use the small copies in assets/generated/logos/.

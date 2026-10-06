@@ -1471,8 +1471,6 @@ a.resource-card[target="_blank"] .resource-card__title::after { content: " ↗";
   display: grid; place-items: center; background: #26080A; color: var(--scg-gold);   /* gold on maroon-black 9.5:1 */
   font-family: var(--font-head); font-weight: 800; letter-spacing: .04em; font-size: clamp(1.5rem, 1rem + 2vw, 2.5rem);
 }
-.avatar--round { border-radius: 50%; width: 72px; flex: none; }
-.avatar--round.avatar--initials { font-size: 1.375rem; }
 .people-filters { display: grid; gap: 12px; margin: 0 0 32px; grid-template-columns: 1fr; align-items: end; }
 @media (min-width: 768px) { .people-filters { grid-template-columns: minmax(240px, 2fr) repeat(auto-fit, minmax(200px, 1fr)); } }
 .people-filters[hidden] { display: none; }
@@ -1501,23 +1499,55 @@ a.resource-card[target="_blank"] .resource-card__title::after { content: " ↗";
 .team-card__exp { margin-top: 4px; }
 .team-card__projects { margin-top: 8px; }
 .team-card .person__linkedin { margin-top: auto; padding-top: 8px; }
+/* Alumni cards: the Team card format; 1 / 2 / 3 / 4 columns (under 400 / 400 / 768 / 1024px). */
 .alumni-grid { grid-template-columns: 1fr; }
-@media (min-width: 768px) { .alumni-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1200px) { .alumni-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.alumni-card { display: flex; flex-direction: column; gap: 10px; padding: clamp(16px, 2.4vw, 24px); }
-.alumni-card__head { display: flex; align-items: center; gap: 14px; }
-.alumni-card__name { font-size: var(--step-1); margin: 0; }
-.alumni-card__year { margin: 2px 0 0; font-size: var(--step--1); color: var(--ink-2); }
-.alumni-card__majors { margin: 0; font-weight: 700; font-size: var(--step--1); color: var(--scg-red); }
-.alumni-card__role { margin: 0; font-size: var(--step--1); font-weight: 700; }
-.alumni-card__summary, .alumni-card__bio p { margin: 0; line-height: 1.55; }
-.alumni-card__bio { display: grid; gap: .8em; }
-.js .alumni-card__bio { display: none; }
-.js .alumni-card.is-open .alumni-card__bio { display: grid; }
-.js .alumni-card.is-open .alumni-card__summary, .no-js .alumni-card__summary { display: none; }
-.alumni-card__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin-top: auto; padding-top: 4px; }
-.alumni-card__more { min-height: 44px; padding: 0; background: none; border: 0; font: inherit; font-weight: 700; color: var(--scg-red); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
-.alumni-card__more[hidden] { display: none; }
+@media (min-width: 400px) { .alumni-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 768px) { .alumni-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .alumni-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.alumni-card { position: relative; display: flex; flex-direction: column; }
+.alumni-card__photo .avatar { border-radius: 0; }
+.alumni-card__body { display: flex; flex-direction: column; gap: 4px; flex: 1; padding: clamp(12px, 2vw, 18px); }
+.alumni-card__name { font-size: clamp(1rem, .95rem + .3vw, 1.1875rem); margin: 0; overflow-wrap: anywhere; }
+.alumni-card__year { margin: 0; font-size: var(--step--1); color: var(--ink-2); }
+.alumni-card__majors { margin: 4px 0 0; font-family: var(--font-head); font-size: .6875rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; line-height: 1.45; color: var(--scg-red); }   /* 7.2:1 */
+.alumni-card__role { margin: 2px 0 0; font-size: var(--step--1); font-weight: 700; line-height: 1.4; }
+.alumni-card__excerpt { margin: 6px 0 0; font-size: var(--step--1); line-height: 1.5; color: var(--ink-2); }
+.alumni-card__excerpt--clamp { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; }
+.alumni-card__foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 8px; }
+.alumni-card__more { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; font-weight: 700; color: var(--scg-red); text-decoration: none; }
+.alumni-card__more:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* Stretched link: "Read bio" covers the card; the LinkedIn icon sits above it as its own stop. */
+.alumni-card__more::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.alumni-card--link { cursor: pointer; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.alumni-card--link:hover { box-shadow: var(--shadow-lift); border-color: #CFC6B8; }
+@media (prefers-reduced-motion: no-preference) { .alumni-card--link:hover { transform: translateY(-3px); } }
+.alumni-card--link:has(.alumni-card__more:focus-visible) { outline: 3px solid var(--focus); outline-offset: 3px; }
+.alumni-card__more:focus-visible { outline: none; text-decoration: underline; text-underline-offset: 3px; }
+.alumni-card__linkedin { position: relative; z-index: 2; display: inline-grid; place-items: center; width: 44px; height: 44px; margin-right: -10px; color: #0A66C2; border-radius: var(--radius-sm); }   /* 5.7:1 */
+.alumni-card__linkedin:hover { background: var(--paper-2); }
+
+/* Alumni bio: drawer (560px, full-screen sheet on phones) and /alumni/<id>/. */
+@media (min-width: 768px) { .alum-dialog .project-dialog__panel { width: min(560px, 100%); } }
+.alum-detail { display: grid; gap: 20px; padding: clamp(20px, 3vw, 32px); }
+.alum-detail__photo { width: min(100%, 300px); }
+.alum-detail__photo img, .alum-detail__photo .avatar { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); background: var(--ph-bg); }
+.alum-detail__photo .avatar--initials { font-size: 4rem; }
+.alum-detail__name { font-size: var(--step-2); line-height: 1.15; margin: 0; }
+.alum-page .alum-detail__name { font-size: var(--step-3); line-height: 1.1; }
+.alum-detail__name:focus, .alum-detail__name:focus-visible { outline: none; }
+.alum-detail__class { margin: 8px 0 0; color: var(--ink-2); }
+.alum-detail__majors { margin: 10px 0 0; font-family: var(--font-head); font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; line-height: 1.5; color: var(--scg-red); }
+.alum-detail__role { margin: 6px 0 0; font-weight: 700; }
+.alum-detail__links { margin: 16px 0 0; }
+.alum-detail__linkedin { gap: 8px; }
+.alum-detail__linkedin svg { color: #0A66C2; }
+.alum-detail__linkedin:hover svg { color: currentColor; }
+.alum-detail__bio { display: grid; gap: 1em; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); }
+.alum-detail__bio p { margin: 0; max-width: 65ch; line-height: 1.65; }
+@media (min-width: 768px) {
+  .alum-page .alum-detail { grid-template-columns: 260px minmax(0, 1fr); gap: 32px; align-items: start; }
+  .alum-page .alum-detail__photo { width: 100%; }
+}
 .person__linkedin { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-size: var(--step--1); font-weight: 700; color: var(--ink); text-underline-offset: 3px; }
 .person__linkedin svg { color: #0A66C2; flex: none; }
 

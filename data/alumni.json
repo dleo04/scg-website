@@ -1,5 +1,5 @@
 {
-  "_readme": "Alumni on /alumni/, imported from the old site's Our Alumni page (source: old-site). Fields: id, name, graduation_year (the old page's alumni year heading), majors (only as stated in the bio), minors, current_role/current_org/industry (only where the bio states what the person did after graduating; null otherwise), summary (first sentence of the bio), bio (paragraphs, as written; typos cleaned), photo ({focal}), linkedin (only when the page linked that person's own profile), consent_to_publish, consent_basis, source.",
+  "_readme": "Alumni on /alumni/, imported from the old site's Our Alumni page (source: old-site). Fields: id, name, graduation_year (the old page's alumni year heading), majors (only as stated in the bio), minors, current_role/current_org/industry (only where the bio states what the person did after graduating; null otherwise), summary (first sentence of the bio), bio (paragraphs, as written; typos cleaned), photo (written by npm run assets from face detection: source, face box and focal point in % of the original; add focal_override {x, y} in % to move the face centre by hand; see README → Headshot framing), linkedin (only when the page linked that person's own profile), consent_to_publish, consent_basis, source.",
   "alumni": [
     {
       "id": "harrisen-cefalu-schwartz",
@@ -22,7 +22,21 @@
         "Outside of his academic and professional pursuits, Harrisen enjoys hiking, reading, and spending time with friends and family."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "harrisen-cefalu-schwartz.jpg",
+          "width": 1708,
+          "height": 2560
+        },
+        "face": {
+          "x": 35.9,
+          "y": 17.8,
+          "w": 24.9,
+          "h": 18.5
+        },
+        "focal": {
+          "x": 48.3,
+          "y": 27
+        }
       },
       "linkedin": "https://www.linkedin.com/in/harrisen-cefalu-schwartz-b903491b1/",
       "consent_to_publish": true,
@@ -52,7 +66,21 @@
         "Sebastian professional experiences so far includes working as a Risk and Financial Advisory Intern with Deloitte, Non profit consultant with BCG. His upcoming plans this summer include Working with Energy Innovation Capital as a VC intern, in addition to returning to Deloitte as RFA intern. Finally, in the summer of 2025 working with Morgan Stanley in the Public Finance Investment Banking division in NYC."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "sebastian-decady.jpg",
+          "width": 1708,
+          "height": 2560
+        },
+        "face": {
+          "x": 37.2,
+          "y": 17.2,
+          "w": 26.1,
+          "h": 20.7
+        },
+        "focal": {
+          "x": 50.2,
+          "y": 27.5
+        }
       },
       "linkedin": null,
       "consent_to_publish": true,
@@ -80,7 +108,21 @@
         "At home, Matthew has started two successful businesses: One is a pop-up fine dining restaurant out of his home called Restaurant Confluence, and a landscaping business called Weirich Landscaping. Matthew is also the sole inventor on two US patents and has multiple more currently pending at the USPTO."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "matthew-weirich.png",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 37.1,
+          "y": 17.4,
+          "w": 24,
+          "h": 18.2
+        },
+        "focal": {
+          "x": 49.1,
+          "y": 26.5
+        }
       },
       "linkedin": "https://www.linkedin.com/in/mweirich12/",
       "consent_to_publish": true,
@@ -107,7 +149,21 @@
         "In his free time, Vincent enjoys podcasts, EDM, volleyball, pickleball, and recreational weightlifting."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "vincent-yu.jpg",
+          "width": 1709,
+          "height": 2560
+        },
+        "face": {
+          "x": 37.9,
+          "y": 14.3,
+          "w": 22.8,
+          "h": 18.2
+        },
+        "focal": {
+          "x": 49.3,
+          "y": 23.3
+        }
       },
       "linkedin": "https://www.linkedin.com/in/vincentjkyu/",
       "consent_to_publish": true,
@@ -134,7 +190,21 @@
         "Outside of SCG, Kiran was a Head Teaching Assistant for BMGT301 - Introduction to Information Systems. She was also a member of Phi Chi Theta, a business professional organization, where she served on the Executive Board in 2023."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "kiran-vepa.png",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 42.1,
+          "y": 18.7,
+          "w": 23.5,
+          "h": 19.2
+        },
+        "focal": {
+          "x": 53.8,
+          "y": 28.3
+        }
       },
       "linkedin": "https://www.linkedin.com/in/kiranvepa/",
       "consent_to_publish": true,
@@ -162,7 +232,21 @@
         "Beyond Snider Consulting Group, Angie served as President of Pi Sigma Epsilon, a co-ed professional business fraternity. She also worked as a Teaching Assistant for the BMGT302 (Essential Programming Skills for Business Majors), an Information Systems course at the Smith School."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "angie-mcgonigle.jpg",
+          "width": 942,
+          "height": 1414
+        },
+        "face": {
+          "x": 41.1,
+          "y": 13.6,
+          "w": 24.8,
+          "h": 20.5
+        },
+        "focal": {
+          "x": 53.4,
+          "y": 23.8
+        }
       },
       "linkedin": "https://www.linkedin.com/in/angelamcgonigle/",
       "consent_to_publish": true,
@@ -190,7 +274,21 @@
         "Outside of SCG, Michael was involved as founder and president of Product Space @ UMD, and was the co-chair of the Dean’s Student Advisory Council. He enjoys spending his free time researching fantasy football and watching soccer."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "michael-zhao.jpg",
+          "width": 2560,
+          "height": 2171
+        },
+        "face": {
+          "x": 40.2,
+          "y": 23.3,
+          "w": 20.4,
+          "h": 26.7
+        },
+        "focal": {
+          "x": 50.4,
+          "y": 36.6
+        }
       },
       "linkedin": "https://www.linkedin.com/in/michael-zhao25/",
       "consent_to_publish": true,
@@ -218,7 +316,21 @@
         "Previously, Jessica interned with the Do Good Institute where she worked to support various data analysis and benchmarking projects to assess fundraising, marketing efforts, and giving trends at this social impact organization. At Morgan Stanley, she performed in-depth Excel-based investment underwriting for multi-million-dollar real estate transactions. She built and optimized real estate acquisition models to price deals and worked 450+ hours over a 7-week period. At Deloitte, Jessica gained experience within Artificial Intelligence, Compliance & Operational Risk, the Mortgage Industry and Project Management."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "jessica-cerkovnik.jpg",
+          "width": 1954,
+          "height": 2400
+        },
+        "face": {
+          "x": 36.1,
+          "y": 32.7,
+          "w": 23,
+          "h": 21.9
+        },
+        "focal": {
+          "x": 47.6,
+          "y": 43.7
+        }
       },
       "linkedin": "https://www.linkedin.com/in/jessica-cerkovnik/",
       "consent_to_publish": true,
@@ -247,7 +359,21 @@
         "She also completed Capital One's Analyst Internship Program in 2024 as well as the Early Analyst Internship Program in 2023."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "adelina-seck.jpg",
+          "width": 1180,
+          "height": 1479
+        },
+        "face": {
+          "x": 37.2,
+          "y": 24.3,
+          "w": 23.3,
+          "h": 21.2
+        },
+        "focal": {
+          "x": 48.8,
+          "y": 34.9
+        }
       },
       "linkedin": "https://www.linkedin.com/in/adelinaseck",
       "consent_to_publish": true,
@@ -275,7 +401,21 @@
         "Outside of UMD, Peter has gained valuable professional experience. After his freshman year, he interned at Ernst and Young and attended KPMG’s Rise Leadership Institute. Following his sophomore year, Peter was a Growing Future Leaders Intern, and after his junior year, a Summer Associate at Boston Consulting Group."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "peter-mitrione.jpg",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 40,
+          "y": 15.2,
+          "w": 23.3,
+          "h": 18.3
+        },
+        "focal": {
+          "x": 51.7,
+          "y": 24.4
+        }
       },
       "linkedin": "https://www.linkedin.com/in/peter-mitrione/",
       "consent_to_publish": true,
@@ -303,7 +443,21 @@
         "In the spring of 2023, Lane interned with the U.S. Department of Commerce within the Economic Development Association, aiding in grant management and program selection to support the allocation of economic development funds. In summer 2023, she interned at Baker Tilly as a Now for Tomorrow Intern in their audit and consulting branches. In summer 2024, Lane was an Associate Consultant Intern for Bain & Company in the D.C. office."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "lane-schanck.jpg",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 42.4,
+          "y": 20,
+          "w": 22.6,
+          "h": 17.7
+        },
+        "focal": {
+          "x": 53.7,
+          "y": 28.9
+        }
       },
       "linkedin": "https://www.linkedin.com/in/lane-schanck-0aa158224/",
       "consent_to_publish": true,
@@ -329,7 +483,21 @@
         "Within UMD, Andrea was the Vice President of Scholarship and Awards of Delta Sigma Pi, a professional business fraternity. Previous to transferring to UMD, Andrea served as President of the Student Investment Club, the Vice President of Operations for the Macklin Business Institute, and the Secretary for the Student Business Association. She previously worked as Risk Management Advisory intern at KPMG. In summer 2024, Andrea interned at Bain & Company."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "andrea-campos.jpg",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 44.4,
+          "y": 22.1,
+          "w": 22,
+          "h": 17.5
+        },
+        "focal": {
+          "x": 55.4,
+          "y": 30.8
+        }
       },
       "linkedin": "https://www.linkedin.com/in/andreanichole/",
       "consent_to_publish": true,
@@ -356,7 +524,21 @@
         "Matt will start his full-time role as an Associate Consultant at Bain & Company in the Fall of 2024."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "matt-ryan.png",
+          "width": 730,
+          "height": 730
+        },
+        "face": {
+          "x": 39.2,
+          "y": 19.2,
+          "w": 20,
+          "h": 22.3
+        },
+        "focal": {
+          "x": 49.2,
+          "y": 30.3
+        }
       },
       "linkedin": "https://www.linkedin.com/in/mattryan901/",
       "consent_to_publish": true,
@@ -384,7 +566,21 @@
         "Outside of UMD, Miranda works in the asset management space. She is a Girls Who Invest alumna and has previously interned at Morgan Stanley Investment Management doing high-yield credit research and PGIM Fixed Income as a portfolio analysis investment analyst on the emerging markets desk."
       ],
       "photo": {
-        "focal": "50% 35%"
+        "source": {
+          "file": "miranda-chung.jpg",
+          "width": 2560,
+          "height": 1905
+        },
+        "face": {
+          "x": 38.8,
+          "y": 16.4,
+          "w": 17.2,
+          "h": 26.4
+        },
+        "focal": {
+          "x": 47.4,
+          "y": 29.6
+        }
       },
       "linkedin": "https://www.linkedin.com/in/miranda-chung/",
       "consent_to_publish": true,
@@ -413,7 +609,21 @@
         "Aside from UMD, Mike has been keeping busy with an internship his freshman summer as an engineering consultant intern, a project management intern his sophomore summer, and most recently as a Summer Scholar for Deloitte Consulting LLP. Lastly, he has loved competing in case comps with other members, specifically the National Undergraduate Case Competition hosted by Deloitte."
       ],
       "photo": {
-        "focal": "46% 50%"
+        "source": {
+          "file": "michael-swetz.jpg",
+          "width": 2560,
+          "height": 1707
+        },
+        "face": {
+          "x": 34.4,
+          "y": 19,
+          "w": 17.1,
+          "h": 29.6
+        },
+        "focal": {
+          "x": 42.9,
+          "y": 33.8
+        }
       },
       "linkedin": "https://www.linkedin.com/in/michaelswetz/",
       "consent_to_publish": true,
@@ -441,7 +651,21 @@
         "In her free time, Elyana enjoys hiking, traveling, and playing the piano."
       ],
       "photo": {
-        "focal": "50% 53%"
+        "source": {
+          "file": "elyana-furman.webp",
+          "width": 1724,
+          "height": 2065
+        },
+        "face": {
+          "x": 41.3,
+          "y": 30.1,
+          "w": 22.8,
+          "h": 22.7
+        },
+        "focal": {
+          "x": 52.7,
+          "y": 41.4
+        }
       },
       "linkedin": "https://www.linkedin.com/in/elyanafurman/",
       "consent_to_publish": true,
@@ -468,7 +692,21 @@
         "Outside of UMD, Collin was busy with his summer internship as a Deloitte Risk and Financial Advisory Intern. He also volunteers frequently with Best Buddies USA and a local soup kitchen."
       ],
       "photo": {
-        "focal": "51% 40%"
+        "source": {
+          "file": "collin-marcian.webp",
+          "width": 724,
+          "height": 1086
+        },
+        "face": {
+          "x": 39.2,
+          "y": 16.8,
+          "w": 19.5,
+          "h": 15.4
+        },
+        "focal": {
+          "x": 49,
+          "y": 24.5
+        }
       },
       "linkedin": "https://www.linkedin.com/in/collin-marcian/",
       "consent_to_publish": true,
@@ -498,7 +736,21 @@
         "Some of Devin’s accomplishments include winning first place in Deloitte’s local case competition, and the Impact Consulting Fellows group competition. Devin was also a finalist in the SCG & Impact Consulting Fellows Case Competition and the Deloitte University National Case Competition alongside three other SCG Consultants."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "devin-srinivas.webp",
+          "width": 800,
+          "height": 800
+        },
+        "face": {
+          "x": 40.3,
+          "y": 24.8,
+          "w": 21.8,
+          "h": 24.6
+        },
+        "focal": {
+          "x": 51.1,
+          "y": 37.1
+        }
       },
       "linkedin": "https://www.linkedin.com/in/devinsrinivas/",
       "consent_to_publish": true,
@@ -526,7 +778,21 @@
         "Outside of UMD, Diya previously interned at OPEX as a finance intern and at Holman as a Portfolio Management summer intern."
       ],
       "photo": {
-        "focal": "50% 44%"
+        "source": {
+          "file": "diya-sinha.webp",
+          "width": 724,
+          "height": 1086
+        },
+        "face": {
+          "x": 37,
+          "y": 15.7,
+          "w": 22.8,
+          "h": 18.8
+        },
+        "focal": {
+          "x": 48.5,
+          "y": 25.1
+        }
       },
       "linkedin": "https://www.linkedin.com/in/diya-sinha/",
       "consent_to_publish": true,
@@ -554,7 +820,21 @@
         "Outside of UMD, Itamar has worked as a camp counselor at Camp Shomria and a process analyst for the Division of IT of the University of Maryland."
       ],
       "photo": {
-        "focal": "50% 44%"
+        "source": {
+          "file": "itamar-freund.webp",
+          "width": 724,
+          "height": 1086
+        },
+        "face": {
+          "x": 36.6,
+          "y": 16.2,
+          "w": 22.5,
+          "h": 18.7
+        },
+        "focal": {
+          "x": 47.9,
+          "y": 25.5
+        }
       },
       "linkedin": "https://www.linkedin.com/in/itamar-freund/",
       "consent_to_publish": true,
@@ -581,7 +861,21 @@
         "In the summer of 2022, Jonathan interned at Maximus as a Department of Defense Business Development Intern, aiding the full-time team in expanding a multi-billion dollar pipeline. In the summer of 2023, Jonathan interned at Deloitte as a Technology Risk & Financial Advisory Intern based in McLean, VA, specializing in technology assurance for two Fortune 500 companies."
       ],
       "photo": {
-        "focal": "50% 42%"
+        "source": {
+          "file": "jonathan-mortman.jpg",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 39,
+          "y": 13.8,
+          "w": 22.6,
+          "h": 18.7
+        },
+        "focal": {
+          "x": 50.3,
+          "y": 23.1
+        }
       },
       "linkedin": "https://www.linkedin.com/in/jonathanmortman/",
       "consent_to_publish": true,
@@ -608,7 +902,21 @@
         "Outside of UMD, Will worked for the Department of Justice - Office of the Inspector General as a Pathways intern where he aided the Investigations Division as a member of the support staff. Will interned as a Strategy Consulting intern at Accenture Federal Services, and he will be an extern at Deloitte as well."
       ],
       "photo": {
-        "focal": "50% 35%"
+        "source": {
+          "file": "will-ahn.jpg",
+          "width": 331,
+          "height": 331
+        },
+        "face": {
+          "x": 33.8,
+          "y": 24.5,
+          "w": 37.2,
+          "h": 38.7
+        },
+        "focal": {
+          "x": 52.4,
+          "y": 43.8
+        }
       },
       "linkedin": "https://www.linkedin.com/in/will-ahn/",
       "consent_to_publish": true,
@@ -634,7 +942,21 @@
         "Following his graduation, Alec joined Capital One as a Business Analyst at their headquarters in McLean, Virginia."
       ],
       "photo": {
-        "focal": "50% 46%"
+        "source": {
+          "file": "alec-musheno.png",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 39,
+          "y": 15.8,
+          "w": 20.2,
+          "h": 15.8
+        },
+        "focal": {
+          "x": 49.1,
+          "y": 23.7
+        }
       },
       "linkedin": "https://www.linkedin.com/in/amusheno/",
       "consent_to_publish": true,
@@ -660,7 +982,21 @@
         "After graduating, Sridhar pursued a career as a chemical engineer at ExxonMobil."
       ],
       "photo": {
-        "focal": "50% 45%"
+        "source": {
+          "file": "sridhar-ganti.jpg",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 41.8,
+          "y": 15.5,
+          "w": 16,
+          "h": 13.5
+        },
+        "focal": {
+          "x": 49.8,
+          "y": 22.3
+        }
       },
       "linkedin": null,
       "consent_to_publish": true,
@@ -687,7 +1023,21 @@
         "After graduating, Eunha began working as a Software Engineer at JPMorgan Chase & Co. in Chicago, Illinois."
       ],
       "photo": {
-        "focal": "49% 44%"
+        "source": {
+          "file": "eunha-yim.jpg",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 39.4,
+          "y": 17,
+          "w": 20.7,
+          "h": 16.6
+        },
+        "focal": {
+          "x": 49.8,
+          "y": 25.3
+        }
       },
       "linkedin": null,
       "consent_to_publish": true,
@@ -712,7 +1062,21 @@
         "After graduating, Jessica pursued a PhD in Chemical and Biomolecular Engineering at Johns Hopkins University."
       ],
       "photo": {
-        "focal": "49% 38%"
+        "source": {
+          "file": "jessica-strongin.jpg",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 37.2,
+          "y": 16.5,
+          "w": 20.1,
+          "h": 16.6
+        },
+        "focal": {
+          "x": 47.3,
+          "y": 24.8
+        }
       },
       "linkedin": null,
       "consent_to_publish": true,
@@ -739,7 +1103,21 @@
         "Following graduation, Ayelette will be pursuing a career in value creation and operations optimization strategy."
       ],
       "photo": {
-        "focal": "50% 44%"
+        "source": {
+          "file": "ayelette-halbfinger.jpg",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 35.5,
+          "y": 13.3,
+          "w": 23.9,
+          "h": 19.9
+        },
+        "focal": {
+          "x": 47.4,
+          "y": 23.2
+        }
       },
       "linkedin": "https://www.linkedin.com/in/ayelette-halbfinger/",
       "consent_to_publish": true,
@@ -764,7 +1142,21 @@
         "After graduating, Kunal joined Capital One as an Associate Product Manager."
       ],
       "photo": {
-        "focal": "50% 35%"
+        "source": {
+          "file": "kunal-parikh.jpg",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 30.1,
+          "y": 23.7,
+          "w": 44,
+          "h": 33.3
+        },
+        "focal": {
+          "x": 52.1,
+          "y": 40.4
+        }
       },
       "linkedin": "https://www.linkedin.com/in/kunal-parikh25/",
       "consent_to_publish": true,
@@ -790,7 +1182,21 @@
         "After graduating, Dawson started working for EY in Charlotte, NC as a Business Transformation Consultant with a focus on the food and agriculture sectors."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "dawson-jones.jpg",
+          "width": 1200,
+          "height": 800
+        },
+        "face": {
+          "x": 37,
+          "y": 23.1,
+          "w": 22.2,
+          "h": 39.4
+        },
+        "focal": {
+          "x": 48.1,
+          "y": 42.8
+        }
       },
       "linkedin": null,
       "consent_to_publish": true,
@@ -819,7 +1225,21 @@
         "Joe was the Chairman and one of the original founders of Snider Consulting Group. Snider Consulting Group was his personal passion throughout college, and Joe continues to contribute to the organization in his full-time position at Ernst & Young as a Supply Chain Consultant."
       ],
       "photo": {
-        "focal": "50% 48%"
+        "source": {
+          "file": "joseph-houghton.jpg",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 39.1,
+          "y": 14.4,
+          "w": 20.8,
+          "h": 15.6
+        },
+        "focal": {
+          "x": 49.6,
+          "y": 22.2
+        }
       },
       "linkedin": "https://www.linkedin.com/in/josephhoughton2/",
       "consent_to_publish": true,
@@ -845,7 +1265,21 @@
         "After graduating, Natalie started working as a Strategy Analyst at Deloitte Consulting in McLean, Virginia."
       ],
       "photo": {
-        "focal": "50% 48%"
+        "source": {
+          "file": "natalie-hirsch.jpg",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 38.4,
+          "y": 16.3,
+          "w": 24,
+          "h": 19.7
+        },
+        "focal": {
+          "x": 50.4,
+          "y": 26.2
+        }
       },
       "linkedin": "https://www.linkedin.com/in/nataliemayhirsch/",
       "consent_to_publish": true,
@@ -871,7 +1305,21 @@
         "After graduating, Devin started working as a Consulting Analyst at Deloitte’s Government and Public Service Practice."
       ],
       "photo": {
-        "focal": "50% 56%"
+        "source": {
+          "file": "devin-streight.jpg",
+          "width": 1707,
+          "height": 2560
+        },
+        "face": {
+          "x": 41.9,
+          "y": 42.4,
+          "w": 18.3,
+          "h": 14.6
+        },
+        "focal": {
+          "x": 51,
+          "y": 49.7
+        }
       },
       "linkedin": null,
       "consent_to_publish": true,
@@ -897,7 +1345,21 @@
         "After graduating, Rob returned to UMD to finish his Masters degree in Accounting before starting with PwC as a Business Processes Consulting Associate."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "robert-koehler.jpg",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 36.2,
+          "y": 20.7,
+          "w": 25.2,
+          "h": 18.8
+        },
+        "focal": {
+          "x": 48.8,
+          "y": 30.1
+        }
       },
       "linkedin": "https://www.linkedin.com/in/robert-koehler-umd/",
       "consent_to_publish": true,
@@ -923,7 +1385,21 @@
         "After college, she will be working as a Risk Advisory Associate at KPMG in their New York City office."
       ],
       "photo": {
-        "focal": "50% 50%"
+        "source": {
+          "file": "alexandra-strouse.jpg",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 38.7,
+          "y": 18.4,
+          "w": 18.8,
+          "h": 14.3
+        },
+        "focal": {
+          "x": 48.1,
+          "y": 25.5
+        }
       },
       "linkedin": "https://www.linkedin.com/in/alexandra-strouse/",
       "consent_to_publish": true,
@@ -950,7 +1426,21 @@
         "After graduating, Cameren started working for EY in Tysons, VA as a Business Consulting Staff in their Financial Services Organization."
       ],
       "photo": {
-        "focal": "50% 35%"
+        "source": {
+          "file": "cameren-bruce.jpg",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 40.3,
+          "y": 15.6,
+          "w": 16.4,
+          "h": 13
+        },
+        "focal": {
+          "x": 48.5,
+          "y": 22.1
+        }
       },
       "linkedin": "https://www.linkedin.com/in/camerenbruce/",
       "consent_to_publish": true,
@@ -977,7 +1467,21 @@
         "After graduating, Dylan entered the consulting industry with Ernst & Young."
       ],
       "photo": {
-        "focal": "50% 48%"
+        "source": {
+          "file": "dylan-fitch.jpg",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 38.9,
+          "y": 13.7,
+          "w": 17.6,
+          "h": 14.4
+        },
+        "focal": {
+          "x": 47.7,
+          "y": 20.8
+        }
       },
       "linkedin": "https://www.linkedin.com/in/dylanmfitch/",
       "consent_to_publish": true,
@@ -1002,7 +1506,21 @@
         "Following graduation, Matt joined GEICO as an actuarial analyst for their auto pricing division."
       ],
       "photo": {
-        "focal": "50% 35%"
+        "source": {
+          "file": "matt-leonhartt.jpg",
+          "width": 1706,
+          "height": 2560
+        },
+        "face": {
+          "x": 38.9,
+          "y": 14.6,
+          "w": 17.4,
+          "h": 14.1
+        },
+        "focal": {
+          "x": 47.6,
+          "y": 21.7
+        }
       },
       "linkedin": "https://www.linkedin.com/in/matt-leonhartt-115900150/",
       "consent_to_publish": true,

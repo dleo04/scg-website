@@ -4,6 +4,7 @@ pagination:
   data: projectsSorted
   size: 1
   alias: project
+  addAllPagesToCollections: true
 permalink: "/projects/{{ project.id }}/"
 eleventyComputed:
   # "| safe" here because the <head> escapes these values itself (otherwise "&" becomes "&amp;amp;").

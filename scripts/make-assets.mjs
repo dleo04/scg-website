@@ -305,34 +305,73 @@ for (const g of fs.existsSync(galleryFile) ? JSON.parse(fs.readFileSync(galleryF
   manifest.gallery[g.file] = out;
 }
 
-// Team and alumni headshots: assets/photos/people/<id>.* → 400px square WebP (< 40KB) cropped
-// around the person's stored focal point (data → photo.focal); without one, sharp's attention
-// strategy picks the crop. Never stretched; never upscaled past the source.
+// Team and alumni headshots: assets/photos/people/<id>.* → a square card image (600px, as on
+// /team/ and /alumni/ cards) and a 4:5 portrait (600×750, alumni drawer and page), WebP < 60KB,
+// framed on the detected face (lib/faces.mjs, lib/headshots.mjs). Detection runs here only for
+// photos without a stored face box (or whose file changed); results are written back to the
+// data files so framing is reproducible and can be overridden by hand (photo.focal_override).
 manifest.people = {};
-const peopleDir = path.join(ROOT, "assets/photos/people");
 fs.mkdirSync(path.join(GEN_DIR, "people"), { recursive: true });
-const peopleData = [...(readJson("team.json").members || []), ...(readJson("alumni.json").alumni || [])];
-for (const person of peopleData) {
-  if (!person.id || !fs.existsSync(peopleDir)) continue;
-  const file = fs.readdirSync(peopleDir).find((f) => path.basename(f, path.extname(f)) === person.id && /\.(jpe?g|png|webp)$/i.test(f));
-  if (!file) continue;
-  const src = path.join(peopleDir, file);
-  const meta = await sharp(src).rotate().metadata();
-  const side = Math.min(meta.width, meta.height);
-  const size = Math.min(400, side);
-  let pipeline;
-  if (person.photo?.focal) {
-    const [fx, fy] = person.photo.focal.split(/\s+/).map((v) => parseFloat(v) / 100);
-    const left = Math.round(Math.min(meta.width - side, Math.max(0, meta.width * fx - side / 2)));
-    const top = Math.round(Math.min(meta.height - side, Math.max(0, meta.height * fy - side / 2)));
-    pipeline = () => sharp(src).rotate().extract({ left, top, width: side, height: side }).resize(size, size);
-  } else {
-    pipeline = () => sharp(src).rotate().resize(size, size, { fit: "cover", position: sharp.strategy.attention });
+{
+  const { sourceFor, frame, renderCrop } = await import("../lib/headshots.mjs");
+  const round1 = (v) => Math.round(v * 1000) / 10;
+  const files = [["team.json", "members"], ["alumni.json", "alumni"]];
+  const noFace = [], clampedList = [];
+  for (const [name, key] of files) {
+    const file = path.join(ROOT, "data", name);
+    const raw = fs.readFileSync(file, "utf8");
+    const doc = JSON.parse(raw);
+    for (const person of doc[key] || []) {
+      const src = person.id && sourceFor(person.id);
+      if (!src) continue;
+      const meta = await sharp(src).rotate().metadata();
+      const W = meta.autoOrient?.width ?? meta.width, H = meta.autoOrient?.height ?? meta.height;
+      const photo = (person.photo = person.photo && typeof person.photo === "object" ? person.photo : {});
+      delete photo.focal_legacy;
+      if (typeof photo.focal === "string") delete photo.focal;   // old-site crop hint, superseded
+      const sourceInfo = { file: path.basename(src), width: W, height: H };
+      const stale = !photo.source || photo.source.file !== sourceInfo.file || photo.source.width !== W || photo.source.height !== H;
+      if (stale || (!photo.face && !photo.detect_failed) || process.env.REDETECT) {
+        const { detectFace } = await import("../lib/faces.mjs");
+        const f = await detectFace(src);
+        photo.source = sourceInfo;
+        if (f) {
+          photo.face = { x: round1(f.x), y: round1(f.y), w: round1(f.w), h: round1(f.h) };
+          photo.focal = { x: round1(f.x + f.w / 2), y: round1(f.y + f.h / 2) };
+          delete photo.detect_failed;
+        } else {
+          delete photo.face; delete photo.focal;
+          photo.detect_failed = true;
+        }
+      }
+      if (photo.detect_failed && !photo.focal_override) noFace.push(person.name);
+      const out = { };
+      for (const [kind, aspect, w] of [["card", 1, 600], ["portrait", 4 / 5, 600]]) {
+        const rect = frame(photo, W, H, aspect);
+        if (rect.clamped && kind === "card") clampedList.push(person.name);
+        const { buf, width, height } = await renderCrop(src, rect, w, aspect, 60);
+        const fileName = kind === "card" ? `${person.id}.webp` : `${person.id}-portrait.webp`;
+        fs.writeFileSync(path.join(GEN_DIR, "people", fileName), buf);
+        out[kind] = { src: `/assets/generated/people/${fileName}`, width, height, kb: Math.round(buf.length / 1024) };
+      }
+      // Open Graph image for /alumni/<id>/: the portrait beside the logo on --paper-2.
+      if (key === "alumni") {
+        const portrait = await sharp(path.join(GEN_DIR, "people", `${person.id}-portrait.webp`)).resize(504, 630, { fit: "cover" }).toBuffer();
+        const logo = await sharp(LOGO).resize({ width: 520 }).toBuffer();
+        const lh = (await sharp(logo).metadata()).height;
+        await sharp({ create: { width: 1200, height: 630, channels: 4, background: PAPER_2 } })
+          .composite([{ input: logo, left: Math.round((696 - 520) / 2), top: Math.round((630 - lh) / 2) }, { input: portrait, left: 696, top: 0 }])
+          .flatten({ background: PAPER_2 }).jpeg({ quality: 82, mozjpeg: true })
+          .toFile(path.join(GEN_DIR, "people", `${person.id}-og.jpg`));
+        out.og = { src: `/assets/generated/people/${person.id}-og.jpg`, width: 1200, height: 630 };
+      }
+      manifest.people[person.id] = { ...out.card, portrait: out.portrait, og: out.og };
+    }
+    const next = JSON.stringify(doc, null, 2) + "\n";
+    if (next !== raw) fs.writeFileSync(file, next);
   }
-  let q = 80, buf;
-  do { buf = await pipeline().flatten({ background: "#FFFFFF" }).webp({ quality: q }).toBuffer(); q -= 6; } while (buf.length > 40 * 1024 && q > 35);
-  fs.writeFileSync(path.join(GEN_DIR, "people", `${person.id}.webp`), buf);
-  manifest.people[person.id] = { src: `/assets/generated/people/${person.id}.webp`, width: size, height: size, kb: Math.round(buf.length / 1024) };
+  if (noFace.length) console.warn(`[assets] headshots: no face found for ${noFace.join(", ")}; default framing used (set photo.focal_override).`);
+  if (clampedList.length) console.log(`[assets] headshots: tight source, face larger than ${Math.round(55)}% or off-centre: ${clampedList.join(", ")}`);
 }
 
 // Employer logos (downloaded once by `npm run logos`): small WebP + PNG copies,

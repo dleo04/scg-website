@@ -4,13 +4,15 @@ title: "Alumni"
 description: "Where Snider Consulting Group alumni went next, and what they studied."
 bodyClass: page-alumni
 ---
-{#- /alumni/ from data/alumni.json (consent enforced). Filters (major, industry if any, name or
-    employer search) and "Read more" disclosures are added by people-filter.js; without JS every
-    card and full bio is visible. Member statistics reuse site.json → member_stats (the same
+{#- /alumni/ from data/alumni.json (consent enforced). Cards in the Team style; "Read bio" is a
+    stretched link to /alumni/<id>/ that detail-dialog.js opens as a drawer instead (same content,
+    components/alumni-detail.njk). Filters (major, industry if any, name or employer search) come
+    from people-filter.js; without JS the form stays hidden and the links go to the pages. Member statistics reuse site.json → member_stats (the same
     figures as /about/). The Alumni Report slot shows only when site.json → alumni_report.file exists. -#}
 {%- from "components/page-banner.njk" import pageBanner with context -%}
 {%- from "components/person.njk" import avatar, linkedinLink with context -%}
 {%- from "components/ui.njk" import tbdBlock with context -%}
+{%- from "components/alumni-dialog.njk" import alumniDialog with context -%}
 {{ pageBanner({ id: "page-title", eyebrow: "Who we are", title: "Alumni" }) }}
 <section class="section section--paper-2 people" aria-label="Alumni directory">
   <div class="container">
@@ -35,23 +37,22 @@ bodyClass: page-alumni
     </form>
     <ul class="alumni-grid" data-people-group>
       {%- for p in alumni %}
-      <li class="alumni-card" data-person data-name="{{ p.name }}" data-majors="{{ p.majors | join('|') }}" data-industry="{{ p.industry or '' }}" data-search="{{ p.name }} {{ p.current_role }} {{ p.current_org }} {{ p.bio | join(' ') }}">
-        <div class="alumni-card__head">
-          {{ avatar(p, "avatar--round") }}
-          <div>
-            <h2 class="alumni-card__name">{{ p.name }}</h2>
-            {%- if p.graduation_year %}<p class="alumni-card__year">Class of {{ p.graduation_year }}</p>{% endif %}
+      <li class="alumni-card{% if p.hasBio %} alumni-card--link{% endif %}" data-person data-name="{{ p.name }}" data-majors="{{ p.majors | join('|') }}" data-industry="{{ p.industry or '' }}" data-search="{{ p.name }} {{ p.current_role }} {{ p.current_org }} {{ p.bio | join(' ') }}">
+        <div class="alumni-card__photo">{{ avatar(p, "avatar--square") }}</div>
+        <div class="alumni-card__body">
+          <h2 class="alumni-card__name">{{ p.name }}</h2>
+          {%- if p.classLabel %}<p class="alumni-card__year">{{ p.classLabel }}</p>{% endif %}
+          {%- if p.majors.length %}<p class="alumni-card__majors"><span class="visually-hidden">Majors: </span>{{ p.majors | join(", ") }}</p>{% endif %}
+          {%- if p.current_role or p.current_org %}<p class="alumni-card__role">{{ p.current_role }}{% if p.current_role and p.current_org %}, {% endif %}{{ p.current_org }}</p>{% endif %}
+          <p class="alumni-card__excerpt{% if p.hasBio %} alumni-card__excerpt--clamp{% endif %}">{{ p.excerpt }}</p>
+          <div class="alumni-card__foot">
+            {%- if p.hasBio %}
+            <a class="alumni-card__more" href="{{ p.url }}" data-alumni-open="{{ p.id }}" aria-label="{{ p.name }}{% if p.classLabel %}, {{ p.classLabel }}{% endif %}: read bio">Read bio <span aria-hidden="true">→</span></a>
+            {%- else %}<span></span>{% endif %}
+            {%- if p.linkedin %}
+            <a class="alumni-card__linkedin" href="{{ p.linkedin }}" target="_blank" rel="noopener noreferrer" aria-label="{{ p.name }} on LinkedIn (opens in a new tab)"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.6 8.65 21 11.2 21 14.5V21h-4v-5.8c0-1.4-.03-3.2-1.95-3.2-1.95 0-2.25 1.52-2.25 3.1V21H9z"/></svg></a>
+            {%- endif %}
           </div>
-        </div>
-        {%- if p.majors.length %}<p class="alumni-card__majors"><span class="visually-hidden">Majors: </span>{{ p.majors | join(", ") }}</p>{% endif %}
-        {%- if p.current_role or p.current_org %}<p class="alumni-card__role">{{ p.current_role }}{% if p.current_role and p.current_org %}, {% endif %}{{ p.current_org }}</p>{% endif %}
-        <p class="alumni-card__summary">{{ p.summary }}</p>
-        <div class="alumni-card__bio" id="bio-{{ p.id }}" data-bio>
-          {%- for para in p.bio %}<p>{{ para }}</p>{% endfor %}
-        </div>
-        <div class="alumni-card__foot">
-          <button class="alumni-card__more" type="button" aria-expanded="false" aria-controls="bio-{{ p.id }}" data-bio-toggle hidden><span data-bio-label>Read more</span><span class="visually-hidden"> about {{ p.name }}</span></button>
-          {{ linkedinLink(p) }}
         </div>
       </li>
       {%- endfor %}
@@ -96,4 +97,5 @@ bodyClass: page-alumni
 {%- elif env.showPlaceholders %}
 <section class="section section--tight"><div class="container">{{ tbdBlock("2026 Alumni Report", "[TBD: Alumni Report PDF (site.json → alumni_report.file); the old site showed it as an image carousel, not a file]") }}</div></section>
 {%- endif %}
+{{ alumniDialog(alumniPages) }}
 <script src="{{ '/js/people-filter.js' | versioned }}" defer></script>
