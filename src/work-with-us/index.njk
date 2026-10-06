@@ -52,27 +52,31 @@ bodyClass: page-wwu
       <h2 class="section__title" id="help-title">What we can help with</h2>
       <p class="section__lede">Drawn from the projects SCG teams have delivered for clients.</p>
     </header>
+    {#- Cards share row tracks (subgrid), so titles, descriptions and the footer dividers line up
+        across a row. Hyphenated words in titles ("knowledge-management") are kept whole from
+        768px (.help-card__word); on phones they may break after their own hyphen so the
+        title still fits beside the icon.
+        The footer link is a stretched link: its ::after covers the card. -#}
     <ul class="help-grid">
       {%- for h in helpCards %}
       <li class="help-card">
-        <span class="icon-chip icon-chip--lg">{{ wwuIcon(h.icon, 24) }}</span>
-        <h3 class="help-card__title">{{ h.title }}</h3>
+        <div class="help-card__head">
+          <span class="icon-chip icon-chip--lg">{{ wwuIcon(h.icon, 24) }}</span>
+          <h3 class="help-card__title">{{ h.title | escape | replace(r/(\S+-\S+)/g, '<span class="help-card__word">$1</span>') | safe }}</h3>
+        </div>
         <p class="help-card__text">{{ h.text }}</p>
-        {%- if h.chips.length %}
-        <ul class="logo-chips" aria-label="Past clients: {{ h.title }}">
-          {%- for c in h.chips %}
-          <li><a class="logo-chip" href="{{ c.url }}" style="--tile-bg: {{ c.logo_bg or '#FFFFFF' }}">
-            {%- if c.logoImg %}<picture><source type="image/webp" srcset="{{ c.logoImg.webp }}"><img src="{{ c.logoImg.png }}" width="{{ c.logoImg.width }}" height="{{ c.logoImg.height }}" alt="{{ c.name }}" loading="lazy" decoding="async"></picture>
-            {%- else %}<span class="logo-chip__name">{{ c.name }}</span>{% endif -%}
-          </a></li>
-          {%- endfor %}
-        </ul>
-        {%- endif %}
-        {%- if h.link %}<a class="link-arrow help-card__link" href="{{ h.link }}" aria-label="See related projects: {{ h.title }}">See related projects <span aria-hidden="true">→</span></a>{% endif %}
+        <div class="help-card__foot">
+          {%- if h.link %}<a class="help-card__link" href="{{ h.link }}">See related projects<span class="visually-hidden">: {{ h.title }}</span> <span class="help-card__arrow" aria-hidden="true">→</span></a>{% endif %}
+        </div>
       </li>
       {%- endfor %}
     </ul>
-    {%- if wwu.more %}<p class="help-more">{{ wwu.more }}</p>{% endif %}
+    {%- if wwu.more %}
+    <div class="help-close">
+      <p class="help-close__text">{{ wwu.more }}</p>
+      <a class="btn btn--primary help-close__btn" href="/work-with-us/contact/">Request a project</a>
+    </div>
+    {%- endif %}
   </div>
 </section>
 

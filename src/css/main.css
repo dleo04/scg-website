@@ -1568,21 +1568,37 @@ a.resource-card[target="_blank"] .resource-card__title::after { content: " ↗";
 .fee-card__body { flex: 1; padding: clamp(22px, 2.6vw, 28px); }
 .fee-card__title { font-family: var(--font-head); font-weight: 700; font-size: var(--step-1); margin: 0 0 8px; }
 .fee-card__text { margin: 0; font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.55; color: var(--ink-2); }   /* 17px, 10.9:1 */
-.help-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(12px, 2vw, 24px); grid-template-columns: 1fr; }
+/* "What we can help with": pillar-style cards (white, 1px border, 4px red top, radius, soft
+   shadow) on a subgrid so the title, description and footer rows align across each row. */
+.help-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(20px, 2.4vw, 30px); grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 768px) { .help-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1024px) { .help-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.help-card { display: flex; flex-direction: column; gap: 10px; padding: clamp(20px, 2.4vw, 28px); background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); }
-.help-card .icon-chip { margin-bottom: 4px; }
-.help-card__title { font-size: var(--step-1); line-height: 1.25; margin: 0; }
-.help-card__text { margin: 0; font-size: 1rem; line-height: 1.55; color: var(--ink-2); }   /* 16px */
-.logo-chips { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.logo-chip { display: flex; align-items: center; justify-content: center; width: 92px; height: 40px; padding: 5px 8px; background: var(--tile-bg, #FFFFFF); border: 1px solid var(--line); border-radius: 8px; text-decoration: none; }
-.logo-chip picture { display: contents; }
-.logo-chip img { display: block; width: 100%; height: 100%; object-fit: contain; }
-.logo-chip:hover { box-shadow: var(--shadow); }
-.logo-chip__name { font-size: .75rem; font-weight: 700; color: var(--ink); text-align: center; line-height: 1.1; }
-.help-card__link { margin-top: auto; padding-top: 2px; align-self: flex-start; }
-.help-more { margin: clamp(24px, 3vw, 32px) 0 0; font-size: var(--step-1); color: var(--ink); }
+.help-card {
+  --pad: clamp(24px, 2.6vw, 30px);
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr); grid-row: span 3; grid-template-rows: subgrid; row-gap: 0;
+  background: var(--paper); border: 1px solid var(--line); border-top: 4px solid var(--scg-red); border-radius: var(--radius);
+  box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.help-card:hover { border-color: var(--scg-red); box-shadow: var(--shadow-lift); }
+@media (prefers-reduced-motion: no-preference) { .help-card:hover { transform: translateY(-4px); } }
+.help-card:has(.help-card__link:focus-visible) { outline: 2px solid var(--focus); outline-offset: 3px; }
+/* Phones: icon beside the title; from 768px the icon sits above it. */
+.help-card__head { display: flex; align-items: center; gap: 14px; padding: var(--pad) var(--pad) 0; }
+@media (min-width: 768px) { .help-card__head { flex-direction: column; align-items: flex-start; gap: 16px; } }
+.help-card__title { min-width: 0; margin: 0; font-family: var(--font-head); font-weight: 700; font-size: 1.1875rem; line-height: 1.25; text-wrap: balance; }   /* 19px on phones */
+@media (min-width: 768px) { .help-card__title { font-size: 1.3125rem; } .help-card__word { white-space: nowrap; } }   /* 21px; hyphenated words never split */
+.help-card__text { margin: 0; padding: 10px var(--pad) 22px; font-family: var(--font-body); font-size: 1rem; line-height: 1.55; color: var(--ink-2); }   /* 16px, 10.9:1 */
+.help-card__foot { align-self: end; padding: 14px var(--pad) 16px; border-top: 1px solid var(--line); }
+.help-card__link { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; font-family: var(--font-head); font-weight: 700; font-size: .9375rem; color: var(--scg-red); text-decoration: none; }   /* 7.2:1 */
+.help-card__link::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.help-card__link:focus-visible { outline: none; }
+.help-card__arrow { display: inline-block; transition: transform .2s ease; }
+@media (prefers-reduced-motion: no-preference) { .help-card:hover .help-card__arrow, .help-card:has(.help-card__link:focus-visible) .help-card__arrow { transform: translateX(3px); } }
+/* Closing row: divider, the sentence on the left, "Request a project" on the right. */
+.help-close { display: flex; flex-direction: column; align-items: stretch; gap: 18px; margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); }
+.help-close__text { margin: 0; font-size: 1.125rem; line-height: 1.5; color: var(--ink); }   /* 18px */
+.help-close__btn { justify-content: center; }
+@media (min-width: 768px) { .help-close { flex-direction: row; align-items: center; justify-content: space-between; gap: 32px; } .help-close__btn { flex: none; } }
 
 .engage { display: grid; gap: clamp(28px, 4vw, 56px); align-items: center; }
 @media (min-width: 768px) { .engage { grid-template-columns: minmax(0, 42%) minmax(0, 1fr); } .engage--no-photo { grid-template-columns: 1fr; } }

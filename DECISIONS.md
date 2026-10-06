@@ -1021,3 +1021,15 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - **Alt text:** describes only what is visible. Neither photo has people.
   - **Permissions:** the College Park photo carries an "Image: University of Maryland" credit, kept visible. Both are flagged in `assets/PHOTO-CREDITS.md` for permission.
 
+## /work-with-us/: "What we can help with" redesign
+
+- **Unchanged.** Eyebrow, heading, intro, the six titles and descriptions, and the closing sentence's wording. Nothing else on the page changed.
+- **Logo chips removed.** The client logo chips (and their text fallbacks) are gone from the cards. The data is untouched: `work_with_us.help[].examples` and the loader's `helpCards[].chips` are still computed but no longer shown. "Organizations we've worked with" is unchanged.
+- **Cards.** Pillar family: white, 1px border, 4px red top, radius, soft shadow. 3/2/1 columns (1024/768), 20–30px gaps, 24–30px padding. The cards share row tracks (CSS subgrid), so title, description and footer rows line up across each row. Icon chips are 48px with 24px icons, above the title from 768px and beside it on phones. Titles are Montserrat 700, 21px (19px on phones), balanced; descriptions Lato 16px (10.9:1).
+- **Footer.** A 1px divider (line color) with "See related projects →" below it in brand red (7.2:1), aligned across each row. The arrow nudges 3px on hover or focus when motion is allowed.
+- **Stretched link.** The link's `::after` covers the card. Hover: red border, 4px lift (none with reduced motion), shadow; content unchanged. Keyboard: a 2px focus ring around the whole card (`:has(:focus-visible)`). Accessible names come from visually hidden text: "See related projects: <title>". Tab order: the six card links, then "Request a project".
+- **Two-line titles: not achievable as specified.** At the 3-column width the cards leave 318px for text at 1440 (and about 254px at 1024). "knowledge-management design" is 344px at 20px, so "Process, role and knowledge-management design" needs three lines unless the wording changes, the word breaks, or the size drops below about 19px. Kept: 21px, three lines for that title at 1024 and 1440, and at 1024 "Marketing and communication strategy" too ("communication strategy" is about 277px). The subgrid keeps every row aligned regardless.
+  - **Phones:** the beside-the-icon layout leaves about 218px, so "knowledge-management" may break after its own hyphen; from 768px hyphenated words are kept whole (`.help-card__word`, `white-space: nowrap`).
+- **Links checked** (each opens the explorer with the filter shown in the filter UI): research, q=research, 7 projects; data, track Data & Engineering, 2; ML/AI, q=machine learning, 1; process, track Operations & People, 10; marketing, q=marketing, 3; business, track Strategy & Research, 13. None returned zero; the business link is the broad track, as noted in Stage 4A.
+- **Closing row.** 48px below the cards, a 1px divider, then the sentence (18px, ink) on the left and a red "Request a project" button (white text) to `/work-with-us/contact/` on the right. Stacked with a full-width button below 768px.
+
