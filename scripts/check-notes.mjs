@@ -38,6 +38,13 @@ for (const file of pages) {
   }
 }
 
+// PREVIEW ONLY: SKIP_CHECK_NOTES=1 reports the notes as warnings and does not fail (the
+// GitHub Pages preview workflow may set it). Never set for the production build; it is
+// ignored when SCG_ENV=production.
+if (hits.length && process.env.SKIP_CHECK_NOTES === "1" && !getEnv().production) {
+  console.warn(`[check:notes] WARNING (preview build, SKIP_CHECK_NOTES=1): ${hits.length} development note(s) in ${pages.length} pages would fail the production build:\n  - ${hits.join("\n  - ")}`);
+  process.exit(0);
+}
 if (hits.length) {
   console.error(`[check:notes] FAILED: ${hits.length} development note(s) in ${pages.length} pages:\n  - ${hits.join("\n  - ")}`);
   process.exit(1);

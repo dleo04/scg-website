@@ -2,7 +2,13 @@
 permalink: /robots.txt
 eleventyExcludeFromCollections: true
 ---
+{% if env.previewNoindex -%}
+# Preview build (PREVIEW_NOINDEX=1): not for search engines.
+User-agent: *
+Disallow: /
+{%- else -%}
 User-agent: *
 Allow: /
+{%- endif %}
 
 Sitemap: {{ "/sitemap.xml" | absoluteUrl(site.domain) }}

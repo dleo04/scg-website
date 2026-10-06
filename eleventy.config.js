@@ -1,5 +1,6 @@
 import { loadData, readJson } from "./lib/load-data.js";
 import * as filters from "./lib/filters.js";
+import { normalizePrefix, prefixHtml } from "./lib/path-prefix.js";
 
 export default function (eleventyConfig) {
   // Content lives in data/*.json (outside src/) so officers have one place to edit.
@@ -67,7 +68,17 @@ export default function (eleventyConfig) {
     "node_modules/@fontsource/montserrat/files/montserrat-latin-800-normal.woff2": "fonts/montserrat-latin-800-normal.woff2",
   });
 
+  // Sub-folder hosting (GitHub Pages preview): PATH_PREFIX=/scg-website/. Unset = site root,
+  // output unchanged. See lib/path-prefix.js.
+  const prefix = normalizePrefix(process.env.PATH_PREFIX);
+  if (prefix) {
+    eleventyConfig.addTransform("path-prefix", function (content) {
+      return (this.page.outputPath || "").endsWith(".html") ? prefixHtml(content, prefix) : content;
+    });
+  }
+
   return {
+    pathPrefix: prefix ? `${prefix}/` : "/",
     dir: { input: "src", includes: "_includes", output: "_site" },
     templateFormats: ["njk", "md"],
     htmlTemplateEngine: "njk",

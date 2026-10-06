@@ -128,6 +128,13 @@ A faint, fixed photo of McKeldin Mall sits behind every page; light sections are
 - **Photo:** `page_backdrops.image` is a file name anywhere under `assets/` (now `assets/pictures/mckeldinbackground.jpg`; keep sources in `assets/pictures/`, which is not published). `npm run assets` (or `npm run backdrop`) makes the processed files in `assets/backdrop/`.
 - Without JavaScript, if the image fails, in print, in high-contrast (forced colours) mode or with reduced data, pages keep their solid white/beige colours.
 
+## Preview on GitHub Pages
+Every push to `main` builds the site and publishes a **preview** at https://dleo04.github.io/scg-website/ (`.github/workflows/pages.yml`). The preview is hidden from search engines; it is not the real site.
+- **One-time setup:** on github.com open the repository → Settings → Pages → under "Build and deployment" set Source to **GitHub Actions**. After that each push to `main` deploys (Actions tab shows progress; a run can also be started by hand there).
+- **How it works:** the workflow builds with `PATH_PREFIX=/scg-website/` (every link and file path gets the prefix), `SITE_URL=https://dleo04.github.io/scg-website` (canonical, social and sitemap URLs) and `PREVIEW_NOINDEX=1` (noindex on every page). The production build sets none of these, so it is unchanged.
+- **Try it locally:** `PATH_PREFIX=/scg-website/ SITE_URL=https://dleo04.github.io/scg-website PREVIEW_NOINDEX=1 npm run build`, then serve `_site` under `/scg-website/`.
+- **check:notes** still runs. If a preview ever must go out with dev notes in it, set `SKIP_CHECK_NOTES: "1"` in the workflow (preview only): the build then lists every note as a warning instead of failing.
+
 ## How to change a page banner
 The header of `/projects/`, `/join/`, `/join/prepare/`, `/about/`, `/team/`, `/alumni/`, `/work-with-us/` and `/partners/` is a banner: a photo under a maroon-black tint, or, while a page has no photo, a plain maroon-black gradient. Settings live in `data/site.json → page_banners`, keyed by the page's URL:
 ```json

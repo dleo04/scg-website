@@ -1157,3 +1157,19 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - **Lighthouse (same code, backdrop off → on; simulated mobile, 3 runs):** / 82 → 81 (LCP 4.80 → 5.03s), /projects/ 93 → 92–93, /join/ 87–88 → 87, CLS 0. The same as the rollout step, no further regression.
 - **Dev server.** Restarted (`npm run dev:notes`, port 8080) with the new settings.
 
+## GitHub Pages preview (https://dleo04.github.io/scg-website/)
+
+- **Workflow** `.github/workflows/pages.yml`: on every push to `main` (and by hand) it runs checkout, Node 24 (current LTS, the version used in development) with npm cache, `npm ci`, the unchanged `npm run build` (assets, Eleventy, privacy check, check:notes, contrast check), then configure-pages / upload-pages-artifact (`_site`) / deploy-pages. Permissions `contents: read`, `pages: write`, `id-token: write`; one deployment at a time.
+- **Path prefix.** `PATH_PREFIX=/scg-website/` sets Eleventy's `pathPrefix` (so the `url` filter works) and turns on a transform (`lib/path-prefix.js`) that adds the prefix to every root-relative URL in the built HTML: href, src, action, poster, srcset, all `data-*` attributes (drawer and full-page URLs, lightbox images, backdrop files) and `url(...)` in style attributes and blocks. Templates keep writing root-relative paths, so there is one mechanism instead of hundreds of edits. Unset, the transform is not registered.
+  - **Outside the HTML:** fonts in main.css are now relative (`../fonts/…`); PDF.js (module and worker) is resolved from pdf-viewer.js's own URL; site.webmanifest uses the `url` filter.
+  - **Absolute URLs:** `absoluteUrl` and `site.domain` use `SITE_URL` when set (canonical, Open Graph, JSON-LD, sitemap, robots.txt, calendar).
+  - **Drawers:** deep links are hash-based, so they work unchanged.
+  - **Redirects:** there is no redirect map yet, so there is nothing to prefix; the planned /services and /contact-us redirects stay a launch task.
+- **Preview only.** `PREVIEW_NOINDEX=1` adds `<meta name="robots" content="noindex">` to every page and makes robots.txt `Disallow: /`; `SCG_ENV=production` ignores it. GitHub serves that robots.txt at /scg-website/robots.txt, where crawlers do not look (only host-root robots.txt counts), so the per-page noindex is what keeps the preview out of search results. `SKIP_CHECK_NOTES=1` (preview only, ignored with `SCG_ENV=production`) turns check:notes failures into a printed warning list. The workflow sets it to "0": the current build has no dev notes, so the preview fails exactly like production would.
+- **Verified.**
+  - **No-prefix build vs the last commit:** identical apart from the intended changes (relative font URLs, the PDF.js resolution, cache-busting hashes) and sitemap order (same 62 URLs). Production keeps `Allow: /` and no noindex except the pages that already had it (404, stubs).
+  - **Prefixed build:** all 3,330 root-relative URLs in 63 pages are prefixed once (none missed, none doubled).
+  - **Browser test with the build served only under /scg-website/** (63 pages × 1440/390): no failed requests for CSS, JS, fonts, images, PDFs, manifest, sitemap or robots; no request outside the prefix; console clean; backdrop loads. The nav dropdown, mobile menu, project drawer (click, /#id and /projects/#id deep links, full-page link), alumni drawer and its no-JS link, lightbox, PDF viewer (PDF.js module and worker under the prefix, page rendered), projects filters from the URL, the contact composer with validation, and the 404 page under the prefix all work.
+  - **CI simulation:** a clean copy of only git-tracked files, `npm ci` and the workflow's build command passed, check:notes included; the data files were left untouched.
+  - **Unprefixed:** the same browser test passes on a normal build.
+

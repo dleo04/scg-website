@@ -9,6 +9,9 @@
 //   download link. Deep link: /join/prepare/#preview=<slug>.
 (() => {
   "use strict";
+  // PDF.js lives in js/vendor/pdfjs/ next to this file; resolving it from this script's own URL
+  // keeps it working under a path prefix (GitHub Pages preview) and at the site root.
+  const scriptBase = document.currentScript?.src || new URL("/js/pdf-viewer.js", location.href).href;
   const dialog = document.querySelector("[data-pdf-viewer]");
   const links = [...document.querySelectorAll("[data-pdf-preview]")];
   if (!dialog || typeof dialog.showModal !== "function" || !links.length) return;
@@ -28,8 +31,8 @@
 
   async function loadLib() {
     if (pdfjs) return pdfjs;
-    pdfjs = await import("/js/vendor/pdfjs/pdf.min.mjs");
-    pdfjs.GlobalWorkerOptions.workerSrc = "/js/vendor/pdfjs/pdf.worker.min.mjs";
+    pdfjs = await import(new URL("vendor/pdfjs/pdf.min.mjs", scriptBase).href);
+    pdfjs.GlobalWorkerOptions.workerSrc = new URL("vendor/pdfjs/pdf.worker.min.mjs", scriptBase).href;
     return pdfjs;
   }
 

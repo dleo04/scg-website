@@ -8,7 +8,7 @@
 <title>{{ pageTitle }}</title>
 <meta name="description" content="{{ pageDescription }}">
 <link rel="canonical" href="{{ canonical }}">
-{% if noindex %}<meta name="robots" content="noindex">{% endif %}
+{% if noindex or env.previewNoindex %}<meta name="robots" content="noindex">{% endif %}
 
 <link rel="preload" href="/fonts/lato-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/montserrat-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
