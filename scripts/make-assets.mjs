@@ -402,7 +402,7 @@ fs.mkdirSync(path.join(GEN_DIR, "people"), { recursive: true });
     const raw = fs.readFileSync(file, "utf8");
     const doc = JSON.parse(raw);
     for (const person of doc[key] || []) {
-      const src = person.id && sourceFor(person.id);
+      const src = person.id && sourceFor(person.id, person.photo?.file);
       if (!src) continue;
       const meta = await sharp(src).rotate().metadata();
       const W = meta.autoOrient?.width ?? meta.width, H = meta.autoOrient?.height ?? meta.height;

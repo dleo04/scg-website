@@ -102,6 +102,13 @@ if (!site.forms?.client_request_endpoint) data.push("site.json → forms.client_
 data.push("Launch: redirect the old URLs /services → /work-with-us/ and /contact-us → /work-with-us/contact/ (there is no redirect map in the repo yet; see DECISIONS.md → Work With Us dropdown).");
 data.push("Replace the Smith Equity Research logo with a cleaner (transparent or white background) file");
 data.push("Confirm usage rights and any required credit for the backdrop photo (mckeldinbackground). It is now shown behind every page of the site, so its permission matters more: if it is a UMD photo, get UMD's written permission (and any required credit) before launch, or replace it with an SCG-owned photo of the same view.");
+// New alumni added from the October 2026 list (data/alumni.json, source "officer-list-2026-10").
+data.push("alumni.json → Pranav Avula: confirm his exact title and group at Deloitte (\"Finance Technology Analyst\" vs Deloitte Government & Public Services).");
+data.push("alumni.json → Carter Gibson: confirm what \"Board of Trustees, Chair\" means for him (not used on the site), his cohort (5), and that he graduated in Mechanical Engineering. He has no LinkedIn link; add one if he wants it.");
+data.push("alumni.json → Sriya Sogal: confirm the year of her venture capital internship (the bio gives none).");
+data.push("alumni.json → new alumni (Angela Luo, Christopher Yeh, Faith LeBrun, Krushi Shah, Melanie Hwan, Nikhil Kurian, Pranav Avula, Shubham Bhatnagar, Sriya Sogal, Carter Gibson): confirm each started the post-graduation job shown and that the summer internships in their bios happened.");
+data.push("alumni.json → Melanie Hwan: confirm her Business Analytics minor.");
+data.push("alumni.json → new alumni (all 10 above): confirm permission to publish each photo and bio. Photo for Angela Luo is the file assets/photos/people/angela-lou.png (name differs from her id; photo.file points to it).");
 data.push("Officers: confirm each listed member and alumnus is OK with their name, photo and details being shown; set consent_to_publish to false (or delete the entry) on request.");
 for (const p of people.filter((p) => p.review_note)) data.push(`${p.level ? "team.json" : "alumni.json"} → ${p.name}: ${p.review_note}`);
 const noMajors = (team.members || []).filter((p) => !p.majors).length;

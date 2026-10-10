@@ -1173,3 +1173,19 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - **CI simulation:** a clean copy of only git-tracked files, `npm ci` and the workflow's build command passed, check:notes included; the data files were left untouched.
   - **Unprefixed:** the same browser test passes on a normal build.
 
+## 10 new alumni (October 2026 list)
+
+- **Source.** `scratch/scg-new-alumni-clean-v2.csv` and the headshots already in `assets/photos/people/`.
+- **Who.** Angela Luo, Christopher Yeh, Faith LeBrun, Krushi Shah, Melanie Hwan, Nikhil Kurian, Pranav Avula, Shubham Bhatnagar, Sriya Sogal, Carter Gibson. All Class of 2026. They are inserted after the existing 2026 entries in CSV order, so the page order is the existing rule: newest class first, file order within a class.
+- **Mapping.** slug → `id`; name → `name`; class_year → `graduation_year` (2026); majors → `majors` (split on commas); post_grad_role / post_grad_company → `current_role` / `current_org` (shown as "Role, Company"); linkedin → `linkedin` (null for Carter Gibson, so no button); bio → `bio` (split on blank lines, text unchanged).
+  - **`summary`:** the bio's first sentence, used for the page meta description and JSON-LD.
+  - **Set to null:** `minors` (no CSV column) and `industry` (not inferred, so the 10 do not appear under an industry filter).
+  - **Consent:** `consent_to_publish: true`, `consent_basis` "Supplied by SCG officers… permission to be confirmed", `source: "officer-list-2026-10"`.
+  - **Not stored:** graduation_semester, scg_role and cohort (existing entries do not store them), and needs_check (it stays in the CSV).
+- **Photos.** Built by the existing pipeline (face detection, square card and 4:5 portrait). Angela Luo's file is `angela-lou.png`, which does not match her id, and files are not renamed. So `photo.file` (new, optional) names it, and `lib/headshots.mjs → sourceFor(id, file)` uses it. All 10 faces were detected. Carter Gibson's face is small in his original, so his crop is 368px (never upscaled).
+- **Existing summaries, found and left unchanged.** 7 of the original 37 have a summary cut off at an abbreviation ("…a B.S.", "…the Robert H."): Eunha Yim, Jessica Strongin, Ayelette Halbfinger, Natalie Hirsch, Robert Koehler, Alexandra Strouse, Cameren Bruce. It affects only their page meta descriptions and JSON-LD. The new entries use a first-sentence rule that skips initials and "B.S.".
+- **Diff of the built site before → after.**
+  - **Added:** 10 alumni pages and 30 headshot files.
+  - **Changed:** /alumni/ (10 new cards and drawer templates; the 37 existing ones are byte-identical and in the same order; "Computer Science" and "Public Policy" added to the major filter); the Previous/Next links on Sebastian Decady's and Matthew Weirich's pages; 10 sitemap entries.
+  - Nothing else changed. `data/alumni.json` diff is additions only; `data/team.json` is unchanged, and none of the 10 is on /team/.
+
