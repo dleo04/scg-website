@@ -104,11 +104,15 @@ data.push("Replace the Smith Equity Research logo with a cleaner (transparent or
 data.push("Confirm usage rights and any required credit for the backdrop photo (mckeldinbackground). It is now shown behind every page of the site, so its permission matters more: if it is a UMD photo, get UMD's written permission (and any required credit) before launch, or replace it with an SCG-owned photo of the same view.");
 // New alumni added from the October 2026 list (data/alumni.json, source "officer-list-2026-10").
 data.push("alumni.json → Pranav Avula: confirm his exact title and group at Deloitte (\"Finance Technology Analyst\" vs Deloitte Government & Public Services).");
-data.push("alumni.json → Carter Gibson: confirm what \"Board of Trustees, Chair\" means for him (not used on the site), his cohort (5), and that he graduated in Mechanical Engineering. He has no LinkedIn link; add one if he wants it.");
+data.push("alumni.json → Carter Gibson: confirm what \"Board of Trustees, Chair\" means for him (not used on the site), his cohort (5), and that he graduated in Mechanical Engineering.");
 data.push("alumni.json → Sriya Sogal: confirm the year of her venture capital internship (the bio gives none).");
 data.push("alumni.json → new alumni (Angela Luo, Christopher Yeh, Faith LeBrun, Krushi Shah, Melanie Hwan, Nikhil Kurian, Pranav Avula, Shubham Bhatnagar, Sriya Sogal, Carter Gibson): confirm each started the post-graduation job shown and that the summer internships in their bios happened.");
 data.push("alumni.json → Melanie Hwan: confirm her Business Analytics minor.");
 data.push("alumni.json → new alumni (all 10 above): confirm permission to publish each photo and bio. Photo for Angela Luo is the file assets/photos/people/angela-lou.png (name differs from her id; photo.file points to it).");
+// Bio sentences left unchanged on purpose (October 2026 job update): confirm with the alumnus and update.
+data.push("alumni.json → Will Ahn: confirm with the alumnus and update \"…and he will be an extern at Deloitte as well.\" (future tense; unconfirmed).");
+data.push("alumni.json → Miranda Chung: confirm with the alumnus and update \"…is currently pursuing a MS in Information Systems through Smith’s Plus 1 program.\" (she is now a Senior Investment Analyst at PGIM).");
+data.push("alumni.json → Ayelette Halbfinger: confirm with the alumnus and update \"Following graduation, Ayelette will be pursuing a career in value creation and operations optimization strategy.\" (she is now an M.S. Candidate at Columbia University).");
 data.push("Officers: confirm each listed member and alumnus is OK with their name, photo and details being shown; set consent_to_publish to false (or delete the entry) on request.");
 for (const p of people.filter((p) => p.review_note)) data.push(`${p.level ? "team.json" : "alumni.json"} → ${p.name}: ${p.review_note}`);
 const noMajors = (team.members || []).filter((p) => !p.majors).length;
