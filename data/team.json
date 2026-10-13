@@ -1,5 +1,5 @@
 {
-  "_readme": "SCG members shown on /team/, grouped by level (levels, in order). Imported from the old site's About page (source: old-site). Fields: id, name, level (one of levels), title, cohort, majors (list; null until known, never guessed), experience (internship line from the old site, optional), worked_on (project ids from projects.json; optional), photo (written by npm run assets from face detection: source, face box and focal point in % of the original; add focal_override {x, y} in % to move the face centre by hand; see README → Headshot framing); the file is assets/photos/people/<id>.*, linkedin (only if publicly linked; null otherwise), consent_to_publish (true to show), consent_basis, source. To add a person: add an entry, put their photo at assets/photos/people/<id>.jpg (or .png/.webp) and run npm run build.",
+  "_readme": "SCG members shown on /team/, grouped by level (levels, in order). Imported from the old site's About page (source: old-site). Fields: id, name, level (one of levels), title, cohort, majors (list; null until known, never guessed), experience (internship line from the old site, optional), worked_on (project ids from projects.json; optional), photo (written by npm run assets from face detection: source, face box and focal point in % of the original; add focal_override {x, y} in % to move the face centre by hand; see README → Headshot framing); the file is assets/photos/people/<id>.*, linkedin (only if publicly linked; null otherwise), consent_to_publish (true to show), consent_basis, source. To add a person: add an entry, put their photo at assets/photos/people/<id>.jpg (or .png/.webp) and run npm run build. 'show_majors': false keeps majors as data only (no majors line or Major filter on /team/); set true to show them.",
   "levels": [
     "Board of Trustees",
     "Principal Consultants",
@@ -7,6 +7,7 @@
     "Consultants",
     "Analysts"
   ],
+  "show_majors": false,
   "members": [
     {
       "id": "stacy-sun",
@@ -14,7 +15,10 @@
       "level": "Board of Trustees",
       "title": "Chair",
       "cohort": 8,
-      "majors": null,
+      "majors": [
+        "Computer Science",
+        "Finance"
+      ],
       "experience": "Business Analyst Intern at Capital One",
       "worked_on": [],
       "photo": {
@@ -45,7 +49,10 @@
       "level": "Board of Trustees",
       "title": "Vice Chair",
       "cohort": 9,
-      "majors": null,
+      "majors": [
+        "Information Systems",
+        "Operations Management & Business Analytics"
+      ],
       "experience": "Business Analyst Intern at Capital One",
       "worked_on": [],
       "photo": {
@@ -76,7 +83,10 @@
       "level": "Principal Consultants",
       "title": "Principal Consultant",
       "cohort": 9,
-      "majors": null,
+      "majors": [
+        "Finance",
+        "Information Systems"
+      ],
       "experience": "Business Analyst Intern at Capital One",
       "worked_on": [],
       "photo": {
@@ -107,7 +117,10 @@
       "level": "Principal Consultants",
       "title": "Principal Consultant",
       "cohort": 9,
-      "majors": null,
+      "majors": [
+        "Finance",
+        "Economics"
+      ],
       "experience": "Prev Banking Intern at J. P. Morgan",
       "worked_on": [],
       "photo": {
@@ -138,7 +151,10 @@
       "level": "Principal Consultants",
       "title": "Principal Consultant",
       "cohort": 10,
-      "majors": null,
+      "majors": [
+        "Information Systems",
+        "Operations Management & Business Analytics"
+      ],
       "experience": "Past Intern at Artemis Real Estate Partners",
       "worked_on": [],
       "photo": {
@@ -169,7 +185,10 @@
       "level": "Principal Consultants",
       "title": "Principal Consultant",
       "cohort": 10,
-      "majors": null,
+      "majors": [
+        "Accounting",
+        "Information Systems"
+      ],
       "experience": "Financial Services Intern at Ernst & Young",
       "worked_on": [],
       "photo": {
@@ -200,7 +219,10 @@
       "level": "Principal Consultants",
       "title": "Principal Consultant",
       "cohort": 10,
-      "majors": null,
+      "majors": [
+        "Information Systems",
+        "Operations Management & Business Analytics"
+      ],
       "experience": "Business Analyst Intern at Capital One",
       "worked_on": [],
       "photo": {
@@ -231,7 +253,10 @@
       "level": "Principal Consultants",
       "title": "Principal Consultant",
       "cohort": 10,
-      "majors": null,
+      "majors": [
+        "Information Systems",
+        "Marketing"
+      ],
       "experience": "Technology Risk & Financial Advisory at Deloitte",
       "worked_on": [],
       "photo": {
@@ -263,7 +288,10 @@
       "level": "Principal Consultants",
       "title": "Principal Consultant",
       "cohort": 11,
-      "majors": null,
+      "majors": [
+        "Finance",
+        "Operations Management & Business Analytics"
+      ],
       "experience": "Audit and Controls Intern at Exelon",
       "worked_on": [],
       "photo": {
@@ -294,7 +322,10 @@
       "level": "Senior Consultants",
       "title": "Senior Consultant",
       "cohort": 8,
-      "majors": null,
+      "majors": [
+        "Information Systems",
+        "Operations Management & Business Analytics"
+      ],
       "experience": "Intern at AlphaSights",
       "worked_on": [],
       "photo": {
@@ -325,7 +356,10 @@
       "level": "Senior Consultants",
       "title": "Senior Consultant",
       "cohort": 9,
-      "majors": null,
+      "majors": [
+        "Finance",
+        "Information Systems"
+      ],
       "experience": "Finance Intern at Capital One",
       "worked_on": [],
       "photo": {
@@ -356,7 +390,9 @@
       "level": "Senior Consultants",
       "title": "Senior Consultant",
       "cohort": 9,
-      "majors": null,
+      "majors": [
+        "Computer Science"
+      ],
       "experience": "Intern at PwC",
       "worked_on": [],
       "photo": {
@@ -387,7 +423,9 @@
       "level": "Senior Consultants",
       "title": "Senior Consultant",
       "cohort": 9,
-      "majors": null,
+      "majors": [
+        "Finance"
+      ],
       "experience": "Intern at KPMG",
       "worked_on": [],
       "photo": {
@@ -418,7 +456,10 @@
       "level": "Consultants",
       "title": "Consultant",
       "cohort": 9,
-      "majors": null,
+      "majors": [
+        "Physics",
+        "Mathematics"
+      ],
       "experience": "Past Strategy & Analytics Intern at School Harbor",
       "worked_on": [],
       "photo": {
@@ -449,7 +490,10 @@
       "level": "Consultants",
       "title": "Consultant",
       "cohort": 10,
-      "majors": null,
+      "majors": [
+        "Finance",
+        "Information Systems"
+      ],
       "experience": "Past Enterprise Advisory & Transformation Intern at SC&H",
       "worked_on": [],
       "photo": {
@@ -480,7 +524,10 @@
       "level": "Consultants",
       "title": "Consultant",
       "cohort": 10,
-      "majors": null,
+      "majors": [
+        "Operations Management & Business Analytics",
+        "Government & Politics"
+      ],
       "experience": "Past Strategic Insights & Analytics Intern at Stanley Black & Decker",
       "worked_on": [],
       "photo": {
@@ -511,7 +558,10 @@
       "level": "Consultants",
       "title": "Consultant",
       "cohort": 10,
-      "majors": null,
+      "majors": [
+        "Computer Science",
+        "Economics"
+      ],
       "experience": "PDIP at Capital One",
       "worked_on": [],
       "photo": {
@@ -542,7 +592,10 @@
       "level": "Consultants",
       "title": "Consultant",
       "cohort": 11,
-      "majors": null,
+      "majors": [
+        "Finance",
+        "Information Systems"
+      ],
       "experience": "Past Intern at Capitol Hill",
       "worked_on": [],
       "photo": {
@@ -573,7 +626,10 @@
       "level": "Consultants",
       "title": "Consultant",
       "cohort": 11,
-      "majors": null,
+      "majors": [
+        "Finance",
+        "Information Systems"
+      ],
       "experience": null,
       "worked_on": [],
       "photo": {
@@ -604,7 +660,10 @@
       "level": "Consultants",
       "title": "Consultant",
       "cohort": 11,
-      "majors": null,
+      "majors": [
+        "Finance",
+        "Information Systems"
+      ],
       "experience": "Incoming Intern at MetLife Investment Management",
       "worked_on": [],
       "photo": {
@@ -635,7 +694,9 @@
       "level": "Consultants",
       "title": "Consultant",
       "cohort": 11,
-      "majors": null,
+      "majors": [
+        "Computer Science"
+      ],
       "experience": "Software Engineer Intern at AfterQuery",
       "worked_on": [],
       "photo": {
@@ -666,7 +727,9 @@
       "level": "Consultants",
       "title": "Consultant",
       "cohort": 11,
-      "majors": null,
+      "majors": [
+        "Computer Science"
+      ],
       "experience": "Past AI Intern at the National Institutes of Health",
       "worked_on": [],
       "photo": {
@@ -697,7 +760,10 @@
       "level": "Consultants",
       "title": "Consultant",
       "cohort": 11,
-      "majors": null,
+      "majors": [
+        "Finance",
+        "Information Systems"
+      ],
       "experience": null,
       "worked_on": [],
       "photo": {
@@ -729,7 +795,10 @@
       "level": "Consultants",
       "title": "Consultant",
       "cohort": 11,
-      "majors": null,
+      "majors": [
+        "International Business",
+        "Finance"
+      ],
       "experience": "District Manager Intern at Aldi",
       "worked_on": [],
       "photo": {
@@ -760,7 +829,10 @@
       "level": "Consultants",
       "title": "Consultant",
       "cohort": 11,
-      "majors": null,
+      "majors": [
+        "Marketing",
+        "Operations Management & Business Analytics"
+      ],
       "experience": "Digital Services Intern at Marriott",
       "worked_on": [],
       "photo": {
@@ -784,6 +856,175 @@
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
+    },
+    {
+      "id": "jeremey-jacob",
+      "name": "Jeremey Jacob",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 12,
+      "majors": [
+        "Finance",
+        "Information Systems"
+      ],
+      "experience": "Previous Investor Relations & Operations Intern at ARMR Systems",
+      "worked_on": [],
+      "photo": {
+        "source": {
+          "file": "jeremey-jacob.jpg",
+          "width": 1600,
+          "height": 1067
+        },
+        "face": {
+          "x": 45.2,
+          "y": 26.6,
+          "w": 12.2,
+          "h": 20.8
+        },
+        "focal": {
+          "x": 51.3,
+          "y": 37
+        }
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Member consent confirmed by team lead (Oct 2026)",
+      "source": "cohort-12-sheet"
+    },
+    {
+      "id": "maaz-riaz",
+      "name": "Maaz Riaz",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 12,
+      "majors": [
+        "Finance",
+        "Information Systems"
+      ],
+      "experience": "Previous Financial Systems Intern at T. Rowe Price",
+      "worked_on": [],
+      "photo": {
+        "source": {
+          "file": "maaz-riaz.jpg",
+          "width": 1600,
+          "height": 1067
+        },
+        "face": {
+          "x": 42.6,
+          "y": 28.4,
+          "w": 12.7,
+          "h": 21.2
+        },
+        "focal": {
+          "x": 48.9,
+          "y": 39
+        }
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Member consent confirmed by team lead (Oct 2026)",
+      "source": "cohort-12-sheet"
+    },
+    {
+      "id": "darwin-ferrufino",
+      "name": "Darwin Ferrufino",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 12,
+      "majors": [
+        "Finance",
+        "Information Systems"
+      ],
+      "experience": "Previous Embark Intern at KPMG",
+      "worked_on": [],
+      "photo": {
+        "source": {
+          "file": "darwin-ferrufino.jpg",
+          "width": 1600,
+          "height": 1067
+        },
+        "face": {
+          "x": 44.3,
+          "y": 39.7,
+          "w": 13.1,
+          "h": 21.5
+        },
+        "focal": {
+          "x": 50.9,
+          "y": 50.4
+        }
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Member consent confirmed by team lead (Oct 2026)",
+      "source": "cohort-12-sheet"
+    },
+    {
+      "id": "edith-yang",
+      "name": "Edith Yang",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 12,
+      "majors": [
+        "Bioengineering"
+      ],
+      "experience": "Undergraduate Researcher at Stanford University School of Medicine",
+      "worked_on": [],
+      "photo": {
+        "source": {
+          "file": "edith-yang.jpg",
+          "width": 1600,
+          "height": 1067
+        },
+        "face": {
+          "x": 44.9,
+          "y": 32.1,
+          "w": 12.7,
+          "h": 22
+        },
+        "focal": {
+          "x": 51.3,
+          "y": 43
+        }
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Member consent confirmed by team lead (Oct 2026)",
+      "source": "cohort-12-sheet"
+    },
+    {
+      "id": "siddanth-vinay",
+      "name": "Siddanth Vinay",
+      "level": "Consultants",
+      "title": "Consultant",
+      "cohort": 12,
+      "majors": [
+        "Computer Science",
+        "Finance"
+      ],
+      "experience": "Previous Software Engineer Intern at Ntrepid",
+      "worked_on": [],
+      "photo": {
+        "source": {
+          "file": "siddanth-vinay.jpg",
+          "width": 1600,
+          "height": 1067
+        },
+        "face": {
+          "x": 43.8,
+          "y": 31.3,
+          "w": 14.2,
+          "h": 24.9
+        },
+        "focal": {
+          "x": 50.8,
+          "y": 43.8
+        }
+      },
+      "linkedin": null,
+      "consent_to_publish": true,
+      "consent_basis": "Member consent confirmed by team lead (Oct 2026)",
+      "source": "cohort-12-sheet"
     }
   ]
 }
