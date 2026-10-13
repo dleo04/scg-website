@@ -93,7 +93,7 @@ hideBanner: true
     </header>
     <div class="work__grid">
       {%- for p in featured %}
-      {{ workCard(p, loop.index, 3) }}
+      {{ workCard(p, loop.index, 3, "home") }}
       {%- endfor %}
     </div>
     <p class="btn-row btn-row--center work__more">

@@ -188,7 +188,8 @@ From `site.json → partners`. Keep the EY narrative but shorten and make it fac
 | `id` | yes | lowercase, digits and dashes; becomes `/projects/<id>/` and the deep link `#<id>` |
 | `title`, `client` | yes | `short_name` (e.g. "MPDS") is optional and searchable |
 | `client_type` | recommended | one of the existing types; filter + meta row |
-| `featured` | no | Home shows the first three featured tiles, in file order |
+| `featured` | no | Home "Our Work" shows the first three featured tiles (it drives nothing else) |
+| `home_order` | no | order of the featured tiles on Home (1, 2, 3); without it, file order |
 | `engagements` | yes | list, see below; newest is used on the card |
 | `disciplines`, `fits` (lists) | recommended | chips in the dialog/page; `disciplines` must be in the file's list; `fits` shown as "(suggested)", `fit_inferred: true` until officers confirm |
 | `team` {`size`, `roles`, `majors`}, `links` [{`label`, `url`}] | no | only filled fields render; never invent members or majors |

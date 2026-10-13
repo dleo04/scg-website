@@ -614,6 +614,12 @@ main:focus { outline: none; }
 .work-card__row { --icon: 28px; position: relative; padding-left: calc(var(--icon) + 14px); }
 .work-card__row dt { font-family: var(--font-head); font-weight: 600; font-size: .9375rem; line-height: 1.4; }   /* 15px semibold */
 .work-card__row dd { margin: 2px 0 0; color: var(--ink-2); font-size: .9375rem; line-height: 1.5; }               /* 15px / 1.5 */
+/* Home "Our Work" Skills row: up to 4 pills in the Join "Skills you'd build" style
+   (.seat-skill), at most two rows: each pill is 24px tall (20px line + 2px padding + 1px
+   borders) and rows are 6px apart, so 54px shows two whole rows; a pill that would start a
+   third row (only on narrow 3-column cards, ~1024px) is left out rather than cut. */
+.work-card__skills { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 0; padding: 0; list-style: none; max-height: 54px; overflow: hidden; }
+.work-card__skills .seat-skill { font-size: .8125rem; line-height: 20px; padding: 1px 10px; }
 .work-card__icon {
   position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: var(--icon); height: var(--icon);
   border-radius: 50%; display: grid; place-items: center; background: var(--scg-red); color: var(--paper);

@@ -1,12 +1,12 @@
 {
-  "_readme": "One object per client tile. A client that returns in a later semester keeps ONE tile with several 'engagements' (newest shown on the card); parallel projects for the same client in the same semester are separate tiles. Each engagement: semester (e.g. 'Fall 2025'), optional title, tagline (the card's Objective), challenge, scope (list), optional scope_detail/approach, skills, outcome (null until known). Tile fields: id, title, client, optional short_name, client_type, featured, disciplines, fits (inferred mapping of majors/interests; fit_inferred: true until officers confirm), team, links, logo (path; may omit the extension, e.g. assets/logos/hyswaplogo, and any .png/.jpg/.svg with that name is used), logo_bg (tile color; sampled automatically from the logo if omitted), logo_offset. Fields that are null or empty are omitted on the live site. No individual contact names, emails, fees or payment terms.",
+  "_readme": "One object per client tile. A client that returns in a later semester keeps ONE tile with several 'engagements' (newest shown on the card); parallel projects for the same client in the same semester are separate tiles. Each engagement: semester (e.g. 'Fall 2025'), optional title, tagline (the card's Objective), challenge, scope (list), optional scope_detail/approach, skills, outcome (null until known). Tile fields: id, title, client, optional short_name, client_type, featured (shown in Home \"Our Work\"), home_order (its order there), disciplines, fits (inferred mapping of majors/interests; fit_inferred: true until officers confirm), team, links, logo (path; may omit the extension, e.g. assets/logos/hyswaplogo, and any .png/.jpg/.svg with that name is used), logo_bg (tile color; sampled automatically from the logo if omitted), logo_offset. Fields that are null or empty are omitted on the live site. No individual contact names, emails, fees or payment terms.",
   "projects": [
     {
       "id": "alliom",
       "title": "Alliom",
       "client": "Alliom",
       "client_type": "Startup",
-      "featured": true,
+      "featured": false,
       "summary": "Alliom aims to develop machine learning models that address inefficiencies in the stratified housing market by predicting property values at a granular level (for example, by zip code).",
       "disciplines": [
         "Data & Engineering",
@@ -66,6 +66,7 @@
       "client": "School Harbor",
       "client_type": "Education organization",
       "featured": true,
+      "home_order": 2,
       "summary": "The project replicates an existing Tableau dashboard that visualizes student test scores over time, segmented by demographics and aggregated at school-district and state levels.",
       "disciplines": [
         "Data & Engineering"
@@ -140,7 +141,7 @@
       "title": "Product Space",
       "client": "Product Space",
       "client_type": "UMD student organization",
-      "featured": true,
+      "featured": false,
       "summary": "Product Space gives UMD students a way to explore product design, apply their skills on real-world projects, and build a professional network. As a new organization with a 5-member board and an inaugural cohort of 9 members, it needed support streamlining client outreach, benchmarking best practices, and planning for growth and turnover.",
       "disciplines": [
         "Operations & People",
@@ -447,7 +448,8 @@
       "title": "SpeechPundit",
       "client": "SpeechPundit",
       "client_type": "Startup",
-      "featured": false,
+      "featured": true,
+      "home_order": 3,
       "logo": "assets/logos/speechpunditlogo-trimmed.png",
       "logo_bg": "#FFFFFF",
       "disciplines": [
@@ -495,7 +497,8 @@
       "title": "DefenX Financial Management",
       "client": "DefenX",
       "client_type": "Startup",
-      "featured": false,
+      "featured": true,
+      "home_order": 1,
       "logo": "assets/logos/defenxlogo-trimmed.png",
       "logo_bg": "#F7F4EF",
       "disciplines": [

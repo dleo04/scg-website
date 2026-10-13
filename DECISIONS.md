@@ -1189,3 +1189,13 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - **Changed:** /alumni/ (10 new cards and drawer templates; the 37 existing ones are byte-identical and in the same order; "Computer Science" and "Public Policy" added to the major filter); the Previous/Next links on Sebastian Decady's and Matthew Weirich's pages; 10 sitemap entries.
   - Nothing else changed. `data/alumni.json` diff is additions only; `data/team.json` is unchanged, and none of the 10 is on /team/.
 
+## Home "Our Work": DefenX, School Harbor, SpeechPundit with a Skills row
+
+- **What `featured` drives.** Only the Home "Our Work" cards and the drawers rendered for them (`lib/load-data.js → featuredProjects`, `src/index.njk`). No Projects page badge, sort or other section uses it, so the flag is used directly: true for defenx-financial-management, school-harbor and speechpundit; false for alliom and product-space.
+- **Order.** Home showed featured tiles in `projects.json` file order. That order also drives the Work With Us client tiles and drawer prev/next, so the file is not reordered. A new optional `home_order` (1, 2, 3) sorts the Home cards: DefenX Financial Management, School Harbor, SpeechPundit. The Projects page sorts by date and title, so it is unchanged.
+- **Home card variant.** `workCard(p, n, level, "home")`, used only by `src/index.njk`.
+  - **Title:** the client name when it is shorter than the tile title ("DefenX (Spring 2026)", one line at every width).
+  - **Skills row:** replaces the Impact row. It uses the same 28px icon circle with a 14px glyph (a pencil), and the first up to 4 skills of the newest engagement in data order, as `.seat-skill` pills (the Join "Skills you'd build" style, 13px). It is capped at two whole rows (54px): on the narrow 3-column cards around 1024px a pill that would start a third row is left out, not cut. They stay in the HTML, so screen readers still hear all four.
+  - **Unchanged:** the Projects page and Join cards (Impact rows included), the drawers and the project pages are identical to before.
+- **Logos.** DefenX on #F7F4EF and SpeechPundit on #FFFFFF are fully visible and legible; no logo fields changed.
+
