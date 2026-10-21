@@ -230,22 +230,27 @@ main:focus { outline: none; }
 .stat--placeholder { border-style: dashed; border-color: #6B6760; }
 .stat--placeholder .stat__value { font-size: var(--step-1); }
 
-/* Accordion (native <details>) */
-.accordion { border-top: 1px solid var(--line); }
-.accordion details { border-bottom: 1px solid var(--line); }
+/* Accordion (native <details>): one white card per list (same look as other cards), the
+   questions are rows separated by 1px hairlines. Rows have no border, shadow or background of
+   their own. Hairlines only between VISIBLE rows (search hides rows with [hidden]). */
+.accordion { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+.accordion details:not([hidden]) ~ details:not([hidden]) { border-top: 1px solid var(--line); }
 .accordion summary {
   display: flex; justify-content: space-between; align-items: center; gap: 16px;
-  min-height: 56px; padding: 14px 4px; cursor: pointer; list-style: none;
+  min-height: 56px; padding: 18px 20px; cursor: pointer; list-style: none; line-height: 1.35;
   font-family: var(--font-head); font-weight: 600; font-size: var(--step-0);
 }
+.accordion summary:focus-visible { outline-offset: -3px; border-radius: var(--radius-sm); }   /* inside the card's rounded clip */
 .accordion summary::-webkit-details-marker { display: none; }
 .accordion summary::after {
-  content: ""; flex: none; width: 14px; height: 14px; margin-right: 6px;
+  content: ""; flex: none; width: 14px; height: 14px; margin-right: 2px;
   border-right: 2.5px solid var(--scg-red); border-bottom: 2.5px solid var(--scg-red);
   transform: rotate(45deg) translateY(-3px); transition: transform .2s;
 }
+.accordion details[open] > summary { color: var(--scg-red); }   /* open state: red question (7.2:1 on white) + rotated chevron */
 .accordion details[open] summary::after { transform: rotate(225deg) translate(-3px, 0); }
-.accordion .accordion__body { padding: 0 4px 20px; color: var(--ink-2); }
+.accordion .accordion__body { padding: 0 20px 22px; color: var(--ink-2); }
+.accordion .accordion__body p { margin: 0; max-width: 68ch; }
 
 .checklist { display: grid; gap: 10px; }
 .checklist li { position: relative; padding-left: 30px; }
@@ -1332,17 +1337,28 @@ html.dialog-open { overflow: hidden; }
 
 /* ---- Join: interview process + FAQ ---- */
 .join-process { display: grid; gap: clamp(32px, 5vw, 64px); }
-@media (min-width: 1024px) { .join-process { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; } .join-process__intro { position: sticky; top: calc(var(--header-h) + 24px); } }
+/* Two columns from 1024px: the intro stays in view below the header while the FAQ scrolls; it
+   stops at the end of the grid. faq-search.js adds .is-static when the intro is taller than the
+   space below the header, so it is never stuck with its end out of reach. */
+@media (min-width: 1024px) { .join-process { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; } .join-process__intro { position: sticky; top: calc(var(--header-h) + 24px); } .join-process__intro.is-static { position: static; } }
 .join-process__intro p { color: var(--ink-2); }
 .join-process__h { font-size: var(--step-1); margin-top: 28px; }
 .join-process__eligibility { padding: 14px 18px; border-left: 4px solid var(--scg-gold); background: var(--paper-2); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--ink) !important; }
-.faq__title { font-size: var(--step-2); }
-.faq__search { display: grid; gap: 6px; margin-bottom: 16px; }
+/* FAQ heading: same eyebrow + size as the left column's heading, so both sit on one baseline. */
+.faq__title { font-size: var(--step-3); letter-spacing: -0.01em; }
+.faq__search { display: grid; gap: 6px; margin-bottom: 20px; }
 .faq__search label { font-family: var(--font-head); font-size: .8125rem; font-weight: 700; }
-.faq__search input { min-height: 48px; width: 100%; padding: 0 14px; font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--ink-2); border-radius: var(--radius-sm); }
+/* Search field: pill with a magnifier inside, lighter than the question rows. --ph-border is
+   3.6:1 on white (non-text contrast); the focus ring is the site's red outline. */
+.faq__field { position: relative; }
+.faq__field-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--ink-2); pointer-events: none; }
+.faq__search input { min-height: 48px; width: 100%; padding: 0 18px 0 44px; font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--ph-border); border-radius: 999px; }
+.faq__search input::placeholder { color: var(--ink-2); opacity: .8; }
+.faq__search input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-color: var(--scg-red); border-radius: 999px; }
 .faq__count { margin: 0; min-height: 1.4em; font-size: .875rem; font-weight: 700; color: var(--ink-2); }
-.faq__group + .faq__group { margin-top: 24px; }
-.faq__group-title { font-family: var(--font-head); font-size: .8125rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--scg-red); margin-bottom: 4px; }
+/* Categories: label above its card (small gap), groups ~2x further apart than before (48px). */
+.faq__group:not([hidden]) ~ .faq__group:not([hidden]) { margin-top: 48px; }
+.faq__group-title { font-family: var(--font-head); font-size: .8125rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--scg-red); margin-bottom: 10px; }
 .faq__empty { padding: 20px; text-align: center; border: 1px dashed var(--line); border-radius: var(--radius); color: var(--ink-2); }
 
 /* ---- Resources and downloads ---- */

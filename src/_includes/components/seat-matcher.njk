@@ -1,7 +1,8 @@
 {%- from "components/work-card.njk" import workCard with context -%}
 {#- "Find your seat" (SPEC 5.2) for /join/, from data/tracks.json + data/projects.json.
     With JS (src/js/seat-matcher.js): one search bar, four equal selector tiles (icon, name, one line; WAI-ARIA tabs:
-    Left/Right, Home/End, roving tabindex) and ONE detail panel for the selected track.
+    Left/Right, Home/End, roving tabindex) and ONE detail panel for the selected track
+    (the first track in data/tracks.json is selected when the page opens and after "Clear").
     Typing or tapping a suggestion scores the tracks against their own fits/skills (strong) and
     their projects' fits/skills (weak); the best match is selected and badged "Best match",
     other matches get "Also relevant". Deep link: /join/#track=<slug>.
@@ -36,7 +37,7 @@
 
   <div class="seat-tiles" role="tablist" aria-label="Tracks" data-seat-tiles hidden>
     {%- for t in tracks %}
-    <button class="seat-tile" type="button" role="tab" id="seat-tab-{{ t.slug }}" aria-controls="seat-panel-{{ t.slug }}" aria-selected="{{ 'true' if loop.first else 'false' }}" tabindex="{{ 0 if loop.first else -1 }}" data-seat-tab="{{ t.slug }}" data-terms="{{ t.matchTerms | dump }}">
+    <button class="seat-tile" type="button" role="tab" id="seat-tab-{{ t.slug }}" aria-controls="seat-panel-{{ t.slug }}" {% set isDefault = loop.first %}aria-selected="{{ 'true' if isDefault else 'false' }}" tabindex="{{ 0 if isDefault else -1 }}"{% if isDefault %} data-seat-default{% endif %} data-seat-tab="{{ t.slug }}" data-terms="{{ t.matchTerms | dump }}">
       <span class="seat-tile__badge" data-seat-badge hidden></span>
       <span class="seat-tile__icon">{{ trackIcon(t.slug) }}</span>
       <span class="seat-tile__name">{{ t.name }}</span>

@@ -32,7 +32,9 @@
     p.setAttribute("aria-labelledby", tabs[i].id);
     p.tabIndex = 0;
   });
-  let current = 0;
+  // Track shown when the page opens without a #track= hash (data-seat-default in the template).
+  const DEFAULT = Math.max(0, tabs.findIndex((t) => t.hasAttribute("data-seat-default")));
+  let current = DEFAULT;
   function select(i, { focus = false, sync = true } = {}) {
     current = i;
     tabs.forEach((t, n) => {
@@ -143,7 +145,7 @@
     reset();
     status.textContent = "";
     announce("Search cleared. Showing all four tracks.");
-    select(0);
+    select(DEFAULT);
     input.focus();
   }
   clearBtn.addEventListener("click", clear);
@@ -154,7 +156,7 @@
     return m ? tabs.findIndex((t) => t.dataset.seatTab === m[1]) : -1;
   };
   const start = fromHash();
-  select(start >= 0 ? start : 0, { sync: false });
+  select(start >= 0 ? start : DEFAULT, { sync: false });
   if (start >= 0) requestAnimationFrame(() => document.getElementById("find-your-seat")?.scrollIntoView());
   window.addEventListener("hashchange", () => { const i = fromHash(); if (i >= 0) select(i, { sync: false }); });
   panelsWrap.classList.add("is-ready");

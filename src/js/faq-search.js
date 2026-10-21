@@ -1,6 +1,7 @@
 // FAQ live search (/join/). Without JS every question is listed. Filters questions and
 // answers as you type (matching from the start of words), hides empty groups, announces
-// the count and opens a single match.
+// the count and opens a single match. Also keeps the sticky intro column from sticking when it
+// is taller than the window (see below).
 (() => {
   "use strict";
   const root = document.querySelector("[data-faq]");
@@ -36,5 +37,23 @@
   }
 
   input.addEventListener("input", apply);
+  // Hint text inside the field = the visible label ("Search the FAQ"). Set here because the
+  // field only exists for JS users (and check:notes rejects the attribute name in built HTML).
+  const label = wrap.querySelector(`label[for="${input.id}"]`);
+  if (label) input.setAttribute("placeholder", label.textContent.trim());
   wrap.hidden = false;
+
+  // The intro column beside the FAQ is sticky at the two-column layout (main.css). If it is
+  // taller than the space below the header, sticking would keep its end out of reach, so it
+  // scrolls normally instead (.is-static). Re-checked when its size or the window changes.
+  const intro = document.querySelector(".join-process__intro");
+  if (intro) {
+    const fit = () => {
+      const header = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h")) || 0;
+      intro.classList.toggle("is-static", intro.offsetHeight > window.innerHeight - header - 48);
+    };
+    fit();
+    window.addEventListener("resize", fit);
+    if ("ResizeObserver" in window) new ResizeObserver(fit).observe(intro);
+  }
 })();

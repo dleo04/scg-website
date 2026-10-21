@@ -101,10 +101,14 @@ bodyClass: page-join
       {%- if env.showPlaceholders %}{{ tbdBlock("Eligibility details", "[TBD: confirm the five-semesters-remaining rule before publishing it (faq.json → needs_decision)]") }}{% endif %}
     </div>
     <div class="faq" id="faq" data-faq>
+      <p class="eyebrow">FAQ</p>
       <h3 class="faq__title" id="faq-title">Frequently asked questions</h3>
       <div class="faq__search" data-faq-search-wrap hidden>
         <label for="faq-q">Search the FAQ</label>
-        <input id="faq-q" type="search" autocomplete="off" data-faq-search aria-describedby="faq-count">
+        <div class="faq__field">
+          <svg class="faq__field-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5L21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input id="faq-q" type="search" autocomplete="off" data-faq-search aria-describedby="faq-count">
+        </div>
         <p class="faq__count" id="faq-count" role="status" data-faq-count></p>
       </div>
       {%- for g in faq %}

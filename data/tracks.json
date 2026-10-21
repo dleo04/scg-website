@@ -2,55 +2,6 @@
   "_readme": "'Find your seat' role tracks (SPEC 5.2). Each 'name' must match an entry in projects.json -> disciplines; the projects shown under a track are pulled automatically from projects tagged with that discipline. 'what_you_do' items are written ONLY from the scope of real projects and name the project they come from ('project' = project id). 'fits' is a SUGGESTED mapping of majors and interests, taken from the inferred 'fits' of the projects in this track (projects.json, fit_inferred: true); it does not mean members of those majors have done this work. Officers: correct it to match who actually worked on these projects. The /join/ matcher searches each track's 'fits' and 'skills' only. A what_you_do item without a real project is not allowed (officers: add design-focused work such as user research or prototyping here once a project has done it). Find your seat (/join/): each tile shows 'short' (one line); the panel shows the three what_you_do items marked \"panel\": true, the first 5 'skills', the first 5 'fits' (so order them by importance) and up to 3 recent projects in the track (automatic). The full lists stay here and are all used for matching.",
   "tracks": [
     {
-      "name": "Data & Engineering",
-      "slug": "data-engineering",
-      "summary": "Build the models, databases and dashboards a client's decisions run on.",
-      "what_you_do": [
-        {
-          "text": "Source data and assess whether a machine-learning approach is viable.",
-          "project": "alliom"
-        },
-        {
-          "text": "Refine and benchmark forecasting models, including a time-series model and an LSTM.",
-          "project": "alliom",
-          "panel": true
-        },
-        {
-          "text": "Configure a Google Cloud SQL database and connect it to Looker Studio.",
-          "project": "school-harbor",
-          "panel": true
-        },
-        {
-          "text": "Rebuild a test-score dashboard segmented by demographics, district and state.",
-          "project": "school-harbor"
-        },
-        {
-          "text": "Build a Python ETL pipeline and a REST API that make public school data queryable.",
-          "project": "school-harbor",
-          "panel": true
-        }
-      ],
-      "skills": [
-        "Machine learning",
-        "Python",
-        "SQL",
-        "REST API design",
-        "Data visualization",
-        "Time-series forecasting",
-        "ETL pipelines",
-        "Looker Studio"
-      ],
-      "fits": [
-        "Computer Science",
-        "Data Science",
-        "Statistics",
-        "Mathematics",
-        "Information Systems"
-      ],
-      "illustration": "assets/placeholders/track-data-engineering.jpg",
-      "short": "Models, databases and dashboards for client decisions."
-    },
-    {
       "name": "Strategy & Research",
       "slug": "strategy-research",
       "summary": "Research the landscape, benchmark what works and turn it into a plan.",
@@ -98,6 +49,55 @@
       ],
       "illustration": "assets/placeholders/track-strategy-research.jpg",
       "short": "Research, benchmarks and plans a client can act on."
+    },
+    {
+      "name": "Data & Engineering",
+      "slug": "data-engineering",
+      "summary": "Build the models, databases and dashboards a client's decisions run on.",
+      "what_you_do": [
+        {
+          "text": "Source data and assess whether a machine-learning approach is viable.",
+          "project": "alliom"
+        },
+        {
+          "text": "Refine and benchmark forecasting models, including a time-series model and an LSTM.",
+          "project": "alliom",
+          "panel": true
+        },
+        {
+          "text": "Configure a Google Cloud SQL database and connect it to Looker Studio.",
+          "project": "school-harbor",
+          "panel": true
+        },
+        {
+          "text": "Rebuild a test-score dashboard segmented by demographics, district and state.",
+          "project": "school-harbor"
+        },
+        {
+          "text": "Build a Python ETL pipeline and a REST API that make public school data queryable.",
+          "project": "school-harbor",
+          "panel": true
+        }
+      ],
+      "skills": [
+        "Machine learning",
+        "Python",
+        "SQL",
+        "REST API design",
+        "Data visualization",
+        "Time-series forecasting",
+        "ETL pipelines",
+        "Looker Studio"
+      ],
+      "fits": [
+        "Computer Science",
+        "Data Science",
+        "Statistics",
+        "Mathematics",
+        "Information Systems"
+      ],
+      "illustration": "assets/placeholders/track-data-engineering.jpg",
+      "short": "Models, databases and dashboards for client decisions."
     },
     {
       "name": "Product & Design",
