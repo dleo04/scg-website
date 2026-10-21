@@ -249,7 +249,7 @@
     },
     {
       "id": "olevia-tinepaw",
-      "name": "Olevia Tinepaw",
+      "name": "Olevia Tinpaw",
       "level": "Principal Consultants",
       "title": "Principal Consultant",
       "cohort": 10,
@@ -279,8 +279,7 @@
       "linkedin": null,
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
-      "source": "old-site",
-      "review_note": "shown as 'Olevia Tinepaw' on the old About page, but the old site also has a hidden page titled 'Olevia Tinpaw' (/olevia-tinpaw); confirm the spelling."
+      "source": "old-site"
     },
     {
       "id": "bryce-powell",

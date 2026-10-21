@@ -1273,3 +1273,20 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 - **Skills pills removed** from the panel (the project cards show skills); `skills` stays in `data/tracks.json`.
 - **Good fit as gold pills:** "Good fit if you study or enjoy" is now a label in the "What you'd do" style with the same five fits as gold chips (the project drawers' style, ink on `--scg-gold-soft`, 15.7:1), in the right column where the skills were; the grey text line is gone.
 - Section height: 1577 → 1484 px at 1440, 1982 → 1747 px at 390.
+
+## Pre-launch content fixes (Oct 2026)
+- **Olevia Tinpaw:** name corrected in `team.json` (visible name, alt text, search text); id and photo file stay `olevia-tinepaw` so nothing breaks; the old `/olevia-tinpaw` redirect still goes to `/team/`.
+- **Stale alumni sentences removed:** Will Ahn (Deloitte externship clause), Miranda Chung (Plus 1 MS clause), Ayelette Halbfinger ("Following graduation…" sentence). Summaries did not contain them.
+- **Redirects added:** `/case-prep` → `/join/prepare/`, plus the other old URLs linked from the published case-guide PDFs: `/about-1` → `/about/`, `/interview-prep` → `/join/prepare/`, `/alec-musheno`, `/matthew-weirich`, `/vincent-yu` → their alumni pages (people list).
+- **FAQ:** "What does the interview look like?" published with the two-round answer and an inline link to `/join/prepare/` (`links` in faq.json). "Do I need to be a business major…" and "What makes SCG different…" carry `"approved": "Oct 2026"`; `scripts/todo.mjs` skips approved items. The dev-only "Interview rounds" placeholder on /join/ was removed.
+- **Confirmed for launch** (fields that only silence the TODO list; no page reads them): `site.images.license_confirmed`, `site.page_backdrops.confirmed`, `site.partners[EY].band.confirmed`, `projects[wind-terpines].logo_confirmed`, `site.recruiting.confirmed`, `site.links.resume_guide_confirmed` (all "Oct 2026"), and `site.member_stats_as_of: "October 2026"` (not shown on any page). "Majors represented" stays open: it has no figure (`[TBD]`). `assets/PHOTO-CREDITS.md` unchanged.
+
+## Robust sentence splitting (alumni summaries)
+- **Problem:** stored alumni summaries had been cut at initials and degree abbreviations ("…from the Robert H.", "…with a B.S."), and the build's own splitter (`load-data.js`) had the same weakness.
+- **Fix:** `lib/sentences.js` (`splitSentences`, `firstSentence`) never splits after a single capital letter, after dotted abbreviations (M.S., B.S., Ph.D., U.S., D.C.…) or common ones (Mr., Ms., Dr., St., Jr., Sr., Inc., Corp., Co., Ltd., etc.), or inside parentheses/quotes. `load-data.js` now uses it for the alumni summary (derived from the first bio paragraph at build time; the stored `summary` is a fallback when there is no bio), for the "has a bio page" sentence count and for the two fee-card sentences (unchanged output).
+- **Data:** the 7 truncated stored summaries were corrected to the same first sentence; bios untouched.
+- Project page descriptions are the taglines (headline style, no final period); they are not split and were left as they are.
+
+## Majors represented (computed) and launch confirmations
+- **Majors represented** is computed at build time (`lib/majors.js`): distinct majors (not minors) among published team members and alumni, normalized (trimmed, "&" = "and", case-insensitive). `site.json → facts` marks it `"computed": "distinct_majors"`; `load-data.js` fills the value (21 in Oct 2026; the only merge is "Government & Politics" / "Government and Politics"). The figure is exposed as `majorsRepresented` but is not shown on any page (no tile exists); the TODO rule skips computed facts.
+- **Confirmed (Oct 2026), TODO items cleared, no text changed:** `confirmed` on the ten October 2026 alumni (jobs and internships; covers Pranav Avula's title, Sriya Sogal's internship year, Melanie Hwan's minor); `semester_confirmed` on scg-internal and business-beyond-borders; `forms.client_request_fallback_email_confirmed`. Carter Gibson's "Board of Trustees, Chair" item stays open.

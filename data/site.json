@@ -16,7 +16,8 @@
     "closed_text": "Fall 2026 applications are closed.",
     "note": "Set 'open' to true and fill application_url when the cycle is live. While false, /join/ shows banner_label + banner_text, closed_text and the interest form button. 'current_step' must match a timeline step name; that step is highlighted on /join/. Source for the URLs and status: old Recruitment page (captured 2026-10).",
     "current_step": "Interest form",
-    "cycle_note": "SCG recruits new analysts at the start of every fall and spring semester."
+    "cycle_note": "SCG recruits new analysts at the start of every fall and spring semester.",
+    "confirmed": "Oct 2026"
   },
   "hero": {
     "_readme": "Home hero copy. 'title' must fit on one line at every width (keep it short); 'subhead' is one line from 1024px. The full name stays in the page title, meta description, Open Graph and JSON-LD.",
@@ -30,7 +31,8 @@
     "hero_is_standin": true,
     "community": "assets/placeholder-group-photo.jpg",
     "community_alt": "SCG members in business attire standing together in front of the Robert H. Smith School of Business.",
-    "community_is_standin": true
+    "community_is_standin": true,
+    "license_confirmed": "Oct 2026"
   },
   "member_employers": {
     "_readme": "Shown on the home page under 'Our members work at…'. Source: the old homepage's 'Our Members Work At…' logo row. Text only until logo files are supplied; add 'logo' paths later if wanted.",
@@ -53,6 +55,7 @@
     "_readme": "Client request on /work-with-us/contact/. 'client_request_endpoint': where the form POSTs (e.g. a Formspree URL); null = not connected: the page shows a 'Request by email' composer instead (same fields; its button opens the visitor's email app with a message to client_request_fallback_email), and npm run dev:notes adds a 'not connected' note. Set the endpoint and rebuild: the real form replaces the composer with no code changes. 'client_request_fallback_email': the shared club address only, never a personal one; it is the only email the build allows besides links.contact_email.",
     "client_request_endpoint": null,
     "client_request_fallback_email": "scgumd@gmail.com",
+    "client_request_fallback_email_confirmed": "Oct 2026",
     "client_request_fallback_source": "The organization address listed on the old site's public Contact Us page (sniderconsultinggroup.com/contact-us)."
   },
   "timeline": {
@@ -107,6 +110,7 @@
     "linkedin": "https://www.linkedin.com/company/sniderconsultinggroup",
     "snider_center": "https://www.rhsmith.umd.edu/centers/snider-center/programs-curricula/snider-consulting-group",
     "resume_guide": "https://docs.google.com/presentation/d/1DiF_Ao0D3uHiXuraPdyiig2I0MsyImVZXG_pZByCAMM/edit",
+    "resume_guide_confirmed": "Oct 2026",
     "contact_email": null
   },
   "press": [
@@ -150,7 +154,8 @@
         "text": "In partnership with Ernst & Young",
         "logo": "assets/logos/ey-reversed.png",
         "logo_alt": "EY (Ernst & Young)",
-        "url": "https://www.ey.com/en_us"
+        "url": "https://www.ey.com/en_us",
+        "confirmed": "Oct 2026"
       }
     },
     {
@@ -191,7 +196,7 @@
       "verified": true
     }
   ],
-  "facts_readme": "Other verified facts, kept for /about/ and /join/ (not shown on the home stat strip). 'EY partnership' is the year the partnership started (e.g. \"2020\"); it fills {ey_since} in partners[EY].blurb and benefits, and the About card reads \"Since <year>\".",
+  "facts_readme": "Other verified facts, kept for /about/ and /join/ (not shown on the home stat strip). 'EY partnership' is the year the partnership started (e.g. \"2020\"); it fills {ey_since} in partners[EY].blurb and benefits, and the About card reads \"Since <year>\". 'Majors represented' is computed at build time (\"computed\": \"distinct_majors\"): the number of distinct majors among published team members and alumni (lib/majors.js); do not type a number.",
   "facts": [
     {
       "label": "Founded",
@@ -210,8 +215,9 @@
     },
     {
       "label": "Majors represented",
-      "value": "[TBD]",
-      "verified": false
+      "value": null,
+      "computed": "distinct_majors",
+      "verified": true
     }
   ],
   "analytics": {
@@ -254,7 +260,7 @@
       "verified": true
     }
   ],
-  "member_stats_as_of": null,
+  "member_stats_as_of": "October 2026",
   "mission": "SCG helps organizations achieve their vision of success through sustainable strategies, research, management and process improvement.",
   "pillars_readme": "The three pillars on /about/, tightened from the old About page: 'summary' (tagline) and 'text' (full description) are both shown. 'image' is a photo id from data/photos.json, 'focal' (x% y%) the point kept in the 16:10 crop, 'alt' what the photo shows.",
   "pillars": [
@@ -700,6 +706,7 @@
       "/work-with-us/contact/": true,
       "/partners/": true,
       "/404.html": true
-    }
+    },
+    "confirmed": "Oct 2026"
   }
 }

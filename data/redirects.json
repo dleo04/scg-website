@@ -46,6 +46,21 @@
       "from": "/brand",
       "to": "/",
       "note": "guess: no matching page on the new site"
+    },
+    {
+      "from": "/case-prep",
+      "to": "/join/prepare/",
+      "note": "linked from the SCG case guides (PDF)"
+    },
+    {
+      "from": "/about-1",
+      "to": "/about/",
+      "note": "linked from the SCG case guides (PDF)"
+    },
+    {
+      "from": "/interview-prep",
+      "to": "/join/prepare/",
+      "note": "linked from the CVH Blood Bank practice case (PDF)"
     }
   ],
   "people": [
@@ -85,7 +100,10 @@
     "faith-lebrun",
     "carter-gibson",
     "pranav-avula",
-    "pavi-paila"
+    "pavi-paila",
+    "alec-musheno",
+    "matthew-weirich",
+    "vincent-yu"
   ],
   "aliases": {
     "olevia-tinpaw": "olevia-tinepaw"

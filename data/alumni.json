@@ -125,7 +125,8 @@
       "linkedin": "https://www.linkedin.com/in/angela-y-luo/",
       "consent_to_publish": true,
       "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
-      "source": "officer-list-2026-10"
+      "source": "officer-list-2026-10",
+      "confirmed": "Oct 2026"
     },
     {
       "id": "christopher-yeh",
@@ -166,7 +167,8 @@
       "linkedin": "https://www.linkedin.com/in/christopher-yeh/",
       "consent_to_publish": true,
       "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
-      "source": "officer-list-2026-10"
+      "source": "officer-list-2026-10",
+      "confirmed": "Oct 2026"
     },
     {
       "id": "faith-lebrun",
@@ -206,7 +208,8 @@
       "linkedin": "https://www.linkedin.com/in/faith-lebrun/",
       "consent_to_publish": true,
       "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
-      "source": "officer-list-2026-10"
+      "source": "officer-list-2026-10",
+      "confirmed": "Oct 2026"
     },
     {
       "id": "krushi-shah",
@@ -247,7 +250,8 @@
       "linkedin": "https://www.linkedin.com/in/krushi-shah/",
       "consent_to_publish": true,
       "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
-      "source": "officer-list-2026-10"
+      "source": "officer-list-2026-10",
+      "confirmed": "Oct 2026"
     },
     {
       "id": "melanie-hwan",
@@ -288,7 +292,8 @@
       "linkedin": "https://www.linkedin.com/in/melaniehwan",
       "consent_to_publish": true,
       "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
-      "source": "officer-list-2026-10"
+      "source": "officer-list-2026-10",
+      "confirmed": "Oct 2026"
     },
     {
       "id": "nikhil-kurian",
@@ -328,7 +333,8 @@
       "linkedin": "https://www.linkedin.com/in/nikhil-kurian027/",
       "consent_to_publish": true,
       "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
-      "source": "officer-list-2026-10"
+      "source": "officer-list-2026-10",
+      "confirmed": "Oct 2026"
     },
     {
       "id": "pranav-avula",
@@ -368,7 +374,8 @@
       "linkedin": "https://www.linkedin.com/in/pavulab",
       "consent_to_publish": true,
       "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
-      "source": "officer-list-2026-10"
+      "source": "officer-list-2026-10",
+      "confirmed": "Oct 2026"
     },
     {
       "id": "shubham-bhatnagar",
@@ -407,7 +414,8 @@
       "linkedin": "https://www.linkedin.com/in/sbhatnag/",
       "consent_to_publish": true,
       "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
-      "source": "officer-list-2026-10"
+      "source": "officer-list-2026-10",
+      "confirmed": "Oct 2026"
     },
     {
       "id": "sriya-sogal",
@@ -448,7 +456,8 @@
       "linkedin": "https://www.linkedin.com/in/sriya-sogal/",
       "consent_to_publish": true,
       "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
-      "source": "officer-list-2026-10"
+      "source": "officer-list-2026-10",
+      "confirmed": "Oct 2026"
     },
     {
       "id": "carter-gibson",
@@ -487,7 +496,8 @@
       "linkedin": "https://www.linkedin.com/in/carterjgibson/",
       "consent_to_publish": true,
       "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
-      "source": "officer-list-2026-10"
+      "source": "officer-list-2026-10",
+      "confirmed": "Oct 2026"
     },
     {
       "id": "matthew-weirich",
@@ -960,7 +970,7 @@
       "summary": "Miranda Chung was a Vice-Chairman on the Board of Trustees for the Snider Consulting Group and the Director of Finance within the organization.",
       "bio": [
         "Miranda Chung was a Vice-Chairman on the Board of Trustees for the Snider Consulting Group and the Director of Finance within the organization. She was a member of cohort 3, joining SCG in the Fall of 2021.",
-        "Miranda graduated a year early with a BS in Information Systems in May 2023 and is currently pursuing a MS in Information Systems through Smith’s Plus 1 program.",
+        "Miranda graduated a year early with a BS in Information Systems in May 2023.",
         "Miranda’s areas of expertise include data analysis, web design, and research.",
         "As an undergrad, Miranda was involved in Smith’s Dean's Student Advisory Council, VP of Strategy and Operations in the Smith Undergraduate Student Association (SUSA), a member of the Information Technology and Business Transformation Fellows (iTBT), Teaching Assistant, and Smith Ambassador.",
         "As a graduate student, Miranda worked as a teaching assistant for BMGT302 and a Graduate Assistant for the Smith School. Miranda is now a Senior Investment Analyst at PGIM.",
@@ -1300,7 +1310,7 @@
         "Will completed a BS in Information Systems. He was involved in numerous student organizations and groups, such as the QUEST Honors Program, Federal/Global Fellows Program, and the College Park Scholars - Public Leadership program.",
         "Will’s greatest strength is his passion for wanting to help people, and he would love to pursue this for a career. Will ultimately wants to combine his business, problem-solving, and information technology skills to strategically and effectively create positive change for the world, especially within the government and public sector.",
         "Within UMD, Will served as a Resident Assistant to the South Hill Community, Challenge Course Facilitator and Adventure Trip leader for the Adventure Program at Eppley, and a member of the Alpha Kappa Psi Business Fraternity.",
-        "Outside of UMD, Will worked for the Department of Justice - Office of the Inspector General as a Pathways intern where he aided the Investigations Division as a member of the support staff. Will interned as a Strategy Consulting intern at Accenture Federal Services, and he will be an extern at Deloitte as well. Will is now a Senior Analyst at Accenture Federal Services."
+        "Outside of UMD, Will worked for the Department of Justice - Office of the Inspector General as a Pathways intern where he aided the Investigations Division as a member of the support staff. Will interned as a Strategy Consulting intern at Accenture Federal Services. Will is now a Senior Analyst at Accenture Federal Services."
       ],
       "photo": {
         "source": {
@@ -1417,7 +1427,7 @@
       "current_role": "Software Engineer",
       "current_org": "JPMorgan Chase & Co.",
       "industry": "Engineering",
-      "summary": "Eunha graduated with a B.S.",
+      "summary": "Eunha graduated with a B.S. in Physiology & Neurobiology with a minor in General Business.",
       "bio": [
         "Eunha graduated with a B.S. in Physiology & Neurobiology with a minor in General Business. At UMD, she was the Brand Director for Technica, a Sponsorship Organizer for Bitcamp, a Marketing Committee Member for Smith Undergraduate Student Association, an Undergraduate Research Assistant in the Child Development Lab, and served as a Smith Business Minor Ambassador. She also was a Teaching Assistant for BSCI170, BSCI222, and FGSM370. Eunha was inducted into the Omicron Delta Kappa Honor Society which engraves her name on the McKeldin Mall Fountain.",
         "Throughout her undergraduate career, Eunha worked at the National Institutes of Mental Health as a Research Assistant Intern, the Department of Health and Human Services as a Program Analyst Intern, PNC Bank as a Treasury Management Intern, and the UMD Women’s Gymnastics Team as a Sports Medicine Intern.",
@@ -1456,7 +1466,7 @@
       "current_role": "PhD student, Chemical and Biomolecular Engineering",
       "current_org": "Johns Hopkins University",
       "industry": "Graduate study",
-      "summary": "Jessica graduated with a B.S.",
+      "summary": "Jessica graduated with a B.S. in Chemical Engineering with concentrations in biomolecular engineering.",
       "bio": [
         "Jessica graduated with a B.S. in Chemical Engineering with concentrations in biomolecular engineering. While at UMD, Jessica did undergraduate research at the Department of Materials Science and Engineering under Dr. Timothy Koeth, focusing on understanding materials at the extremes. She was also a teaching assistant for the QUEST Honors Program and served as an undergraduate teaching fellow for the department of chemical engineering. As a principal and Board of Trustee for SCG, Jessica’s initiatives focused on technical development of members, industry and internal club mentorship, and client recruitment.",
         "Jessica has previously been an intern and co-op for the US Nuclear Regulatory Commission, where she developed data visualizations for radiation protection applications. She also worked as a design engineering and optimization intern for Siemens.",
@@ -1496,11 +1506,11 @@
       "current_role": "M.S. Candidate",
       "current_org": "Columbia University",
       "industry": "Graduate study",
-      "summary": "Ayelette graduated with a B.S in Operations Management Business Analytics and a B.S in Finance from the Robert H.",
+      "summary": "Ayelette graduated with a B.S in Operations Management Business Analytics and a B.S in Finance from the Robert H. Smith School of Business.",
       "bio": [
         "Ayelette graduated with a B.S in Operations Management Business Analytics and a B.S in Finance from the Robert H. Smith School of Business. While at school, Ayelette served as Student Body President and conducted research under Dean Joseph Bailey about undergraduate business education programs. Ayelette was also a part of the QUEST and DCC honors programs.",
         "Throughout her time with the Snider Consulting Group, Ayelette focused on internal organization projects to help guide the group's project and professional development structures as the organization grew and evolved.",
-        "Following graduation, Ayelette will be pursuing a career in value creation and operations optimization strategy. Ayelette is now an M.S. Candidate at Columbia University."
+        "Ayelette is now an M.S. Candidate at Columbia University."
       ],
       "photo": {
         "source": {
@@ -1657,7 +1667,7 @@
       "current_role": "Commercial Strategy Consultant",
       "current_org": "Deloitte",
       "industry": "Consulting",
-      "summary": "Natalie Hirsch graduated from the Robert H.",
+      "summary": "Natalie Hirsch graduated from the Robert H. Smith School of Business with a B.S. in Supply Chain Management and Marketing.",
       "bio": [
         "Natalie Hirsch graduated from the Robert H. Smith School of Business with a B.S. in Supply Chain Management and Marketing. She spent her time at UMD as President of First-Year Class Council, President and Community Service Chair of Gamma Phi Beta Sorority, and co-founder/Principal Consultant of the Snider Consulting Group. She also served on Smith’s Dean’s Student Advisory Council and the inaugural Provost Student Advisory Council. Academically, Natalie was a Global Consulting Fellow and Supply Chain Consulting Fellow.",
         "Natalie was inducted into Omicron Delta Kappa- UMD's most prestigious honor society, which engraves her name on the McKeldin Mall Fountain. She was also inducted into the Order of Omega, an organization honoring the top 3% of Greek Life members, and will have her name engraved onto Fraternity Row. Beyond honor societies, Natalie was on Dean’s List, received the Smith Undergraduate Student Association Outstanding Senior Award, and received the Fall 2020 Panhellenic Association Service Scholarship.",
@@ -1737,7 +1747,7 @@
       "current_role": "Senior Staff Accountant",
       "current_org": "Corporate CFO Services",
       "industry": "Financial services",
-      "summary": "Rob graduated with a dual degree of a B.S.",
+      "summary": "Rob graduated with a dual degree of a B.S. in Accounting and a B.S. in Finance.",
       "bio": [
         "Rob graduated with a dual degree of a B.S. in Accounting and a B.S. in Finance. Rob earned his College Park Scholars citation from the Business, Society, and the Economy program sophomore year. Rob participated in two separate Finance Fellows programs, Sophomore Finance and Emerging CFOs, while at UMD. Rob was also a part of the QUEST honors program earning his citation as a part of cohort 34. Outside of class, Rob also volunteered for UMD’s VITA/TCE tax preparation site TerpTax, served as Director of Community Service for the Management and Organization Society, and worked for UMD Athletic Operations.",
         "After graduating, Rob returned to UMD to finish his Masters degree in Accounting before starting with PwC as a Business Processes Consulting Associate. Rob is now a Senior Staff Accountant at Corporate CFO Services."
@@ -1776,7 +1786,7 @@
       "current_role": "Consultant",
       "current_org": "Alpine Rewards",
       "industry": "Consulting",
-      "summary": "Alexandra Strouse graduated with a B.S.",
+      "summary": "Alexandra Strouse graduated with a B.S. in Finance and Operations Management & Business Analytics.",
       "bio": [
         "Alexandra Strouse graduated with a B.S. in Finance and Operations Management & Business Analytics. She was very active in the QUEST Honors Program as a member of Cohort 33 as well as a mentor, member of the Curriculum Review Committee, and Leader of Workshop Coordinators for the QUEST Development Series, which she worked to revitalize. Outside of QUEST, she has served as a founding member and President of Club Jogging, Treasurer for Women’s Club Lacrosse, and Principal in Snider Consulting Group.",
         "Alexandra was inducted into Omicron Delta Kappa- UMD's most prestigious honor society, which engraves her name on the McKeldin Mall Fountain. She also is the recipient of the Ed Snider Center Leadership Award (an honor given to four students who demonstrate determination and show achievement in the areas of innovation and enterprise) and was chosen as the OMBA Department's Outstanding Senior (which celebrates the top student in each major, as chosen by the faculty). Due to her extensive involvement, she also received a QUEST service award.",
@@ -1818,7 +1828,7 @@
       "current_role": "Senior Consultant",
       "current_org": "EY",
       "industry": "Consulting",
-      "summary": "Cameren graduated with a dual degree of a B.S.",
+      "summary": "Cameren graduated with a dual degree of a B.S. in Finance with a minor in Mathematics and a B.S. in Operations Management and Business Analytics.",
       "bio": [
         "Cameren graduated with a dual degree of a B.S. in Finance with a minor in Mathematics and a B.S. in Operations Management and Business Analytics. Cameren earned her College Park Scholars citation from the Business, Society, and Economy program in her sophomore year, and was a Teaching Assistant for the OMBA department her junior year. Outside the classroom, Cameren was an external analyst on SUSA’s Strategy and Operations Committee for the 2020 calendar year, a Principal Consultant in SCG, a Maryland Images Tour Guide, and a Recwell Fitness Instructor and performance evaluator within the Group Fitness Department.",
         "After graduating, Cameren started working for EY in Tysons, VA as a Business Consulting Staff in their Financial Services Organization. Cameren is now a Senior Consultant at EY."

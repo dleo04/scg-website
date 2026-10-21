@@ -312,7 +312,8 @@
             "Change management"
           ]
         }
-      ]
+      ],
+      "semester_confirmed": "Oct 2026"
     },
     {
       "id": "hy-swap",
@@ -368,6 +369,7 @@
       "featured": false,
       "logo": "assets/logos/windterpineslogo-trimmed.png",
       "logo_bg": "#F7F4EF",
+      "logo_confirmed": "Oct 2026",
       "logo_offset": {
         "x": 0,
         "y": -0.0289
@@ -451,7 +453,8 @@
           "impact": "Gives a fast-growing organization a leadership framework, a semester-to-semester transition guide and an event timeline, plus a corporate sponsorship strategy with contacts, so growth rests on structure and funding.",
           "outcome": null
         }
-      ]
+      ],
+      "semester_confirmed": "Oct 2026"
     },
     {
       "id": "speechpundit",

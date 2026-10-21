@@ -1,5 +1,5 @@
 {
-  "_readme": "Draft FAQ. Items marked source:'existing' come from the current SCG site (lightly edited). Items marked source:'new' are drafts that need officer review before publishing. Items with needs_decision:true depend on a club decision noted in the 'decision' field; do not publish them until resolved. Optional 'links' ([{text, url}]) on an item link the first occurrence of each text in its answer.",
+  "_readme": "Draft FAQ. Items marked source:'existing' come from the current SCG site (lightly edited). Items marked source:'new' are drafts that need officer review before publishing. Items with needs_decision:true depend on a club decision noted in the 'decision' field; do not publish them until resolved. Optional 'links' ([{text, url}]) on an item link the first occurrence of each text in its answer. 'approved' (e.g. \"Oct 2026\") records that officers approved an answer's wording; the TODO list then stops asking for review.",
   "groups": [
     {
       "title": "Who can join",
@@ -8,7 +8,7 @@
           "q": "Do I need to be a business major or have consulting experience?",
           "a": "No. SCG is open to all undergraduates at the University of Maryland who are in good academic standing and meet the semester requirement. Our projects need data science, engineering, design, research and communication skills as much as business skills, and we teach consulting methods in onboarding.",
           "source": "new",
-          "needs_review": true
+          "approved": "Oct 2026"
         },
         {
           "q": "I'm a CS, engineering or data science student. What would I actually do?",
@@ -42,7 +42,8 @@
           "q": "What makes SCG different from other on-campus consulting groups?",
           "a": "SCG's clients are on-campus organizations, so members make lasting changes in the UMD community they are part of. SCG also partners with EY, whose consultants guide every client team.",
           "source": "existing",
-          "note": "Edited: the old answer's ranking claim (Vault, 2021) was dropped as unverifiable and dated."
+          "note": "Edited: the old answer's ranking claim (Vault, 2021) was dropped as unverifiable and dated.",
+          "approved": "Oct 2026"
         },
         {
           "q": "How many people do you accept each semester?",
@@ -53,9 +54,14 @@
         },
         {
           "q": "What does the interview look like?",
-          "a": "[TBD: officers to describe each round, its length and who interviews.] See Prepare for sample behavioral questions and practice cases.",
-          "source": "new",
-          "needs_review": true
+          "a": "There are two rounds. The first is a team interview where you work through a case in a group. The final round is 60 minutes: 30 minutes of behavioral questions and 30 minutes of case. Our interview prep page has sample behavioral questions, a case framework guide and practice cases.",
+          "links": [
+            {
+              "text": "interview prep page",
+              "url": "/join/prepare/"
+            }
+          ],
+          "source": "new"
         }
       ]
     },
