@@ -216,8 +216,7 @@
   ],
   "analytics": {
     "enabled": false,
-    "ga_measurement_id": "G-PRGQGFM60M",
-    "note": "This ID is from the old site. Keep only if officers still own it. If enabled, load only after the visitor consents."
+    "note": "No analytics is loaded and no code reads this block. If analytics is ever added, keep it opt-in: load it only after the visitor consents."
   },
   "member_stats_readme": "About page 'Member statistics' (count-up). Source: the old About page (captured 2026-10). Officers: confirm the figures are current and update 'as_of'.",
   "member_stats": [

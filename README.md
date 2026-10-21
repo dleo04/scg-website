@@ -105,11 +105,9 @@ Photos are listed in `data/gallery.json`: `file` (an image under `assets/`, usua
 - Each `benefits` entry has `image` (a photo id from `data/photos.json`, i.e. `assets/photos/<id>.jpg`), `focal` (`"50% 35%"`: the point kept when the photo is cut to 16:10, so faces stay in frame) and `alt` (what the photo shows). Change them and run `npm run build`; the 16:10 crops are made automatically.
 - `data/process.json`: "How a project works" on `/about/`. A step with `"text": null` is hidden on the live site; `example` links a step to a project (it opens that project's dialog) or a page.
 - `data/tracks.json`: the four tracks in **Find your seat** on `/join/`.
-  - Tile: icon, `name`, `short` (one line) and logos of up to three recent projects tagged with that discipline in `projects.json`. The logos are picked automatically, avoiding repeats across tracks.
-  - Panel: the three `what_you_do` items marked `"panel": true`, the first 5 `skills`, the first 5 `fits` (so order both lists by importance), and the same projects as cards. Keep the longer lists; they are still used for matching.
+  - Tile: icon, `name` and `short` (one line). The tabs follow the order of `tracks.json`; the first is selected when the page opens. Up to three recent projects per track are picked automatically for the panel cards, avoiding repeats across tracks.
+  - Panel: the three `what_you_do` items marked `"panel": true` beside the first 5 `fits` as gold pills ("Good fit if you study or enjoy"; order the list by importance), then up to three project cards. `skills` is not shown on the page (the project cards show their own skills), and `fits` after the fifth are not shown either; keep or trim them as you like.
   - Every `what_you_do` item must name a real project (`project`).
-  - Matching: what a visitor types is compared (partial, case-insensitive, up to three comma-separated terms) with each track's name, `fits` and `skills`, and more weakly with the fits and skills of its projects. To make a word find a track, add it to that track's `fits` or `skills`.
-  - The five suggestion chips are set in `src/join/index.njk`.
 
 ## Work With Us: Services and Contact us
 "Work With Us" in the header is a dropdown (Services → `/work-with-us/`, Contact us → `/work-with-us/contact/`); the header's `nav` list in `src/_includes/partials/header.njk` defines it, like Join SCG.
@@ -128,12 +126,25 @@ A faint, fixed photo of McKeldin Mall sits behind every page; light sections are
 - **Photo:** `page_backdrops.image` is a file name anywhere under `assets/` (now `assets/pictures/mckeldinbackground.jpg`; keep sources in `assets/pictures/`, which is not published). `npm run assets` (or `npm run backdrop`) makes the processed files in `assets/backdrop/`.
 - Without JavaScript, if the image fails, in print, in high-contrast (forced colours) mode or with reduced data, pages keep their solid white/beige colours.
 
-## Preview on GitHub Pages
-Every push to `main` builds the site and publishes a **preview** at https://dleo04.github.io/scg-website/ (`.github/workflows/pages.yml`). The preview is hidden from search engines; it is not the real site.
-- **One-time setup:** on github.com open the repository → Settings → Pages → under "Build and deployment" set Source to **GitHub Actions**. After that each push to `main` deploys (Actions tab shows progress; a run can also be started by hand there).
-- **How it works:** the workflow builds with `PATH_PREFIX=/scg-website/` (every link and file path gets the prefix), `SITE_URL=https://dleo04.github.io/scg-website` (canonical, social and sitemap URLs) and `PREVIEW_NOINDEX=1` (noindex on every page). The production build sets none of these, so it is unchanged.
-- **Try it locally:** `PATH_PREFIX=/scg-website/ SITE_URL=https://dleo04.github.io/scg-website PREVIEW_NOINDEX=1 npm run build`, then serve `_site` under `/scg-website/`.
-- **check:notes** still runs. If a preview ever must go out with dev notes in it, set `SKIP_CHECK_NOTES: "1"` in the workflow (preview only): the build then lists every note as a warning instead of failing.
+## Preview, production and the launch switch (GitHub Pages)
+Every push to `main` builds the site and publishes it with GitHub Pages (`.github/workflows/pages.yml`). **One switch decides which site that is:** `SITE_MODE` in the workflow (under `jobs → build → env`). All settings of each mode live in `scripts/site-mode.mjs`; change nothing else.
+
+| `SITE_MODE` | Address | What the build does |
+|---|---|---|
+| `preview` (**default**) | https://dleo04.github.io/scg-website/ | `/scg-website/` prefix on every link, github.io canonical/social/sitemap URLs, `noindex` on every page and `Disallow: /` in robots.txt |
+| `production` | https://sniderconsultinggroup.com/ | site at the domain root, canonical/social/sitemap URLs on the real domain, no noindex, robots.txt allows crawling and lists the sitemap, `SCG_ENV=production` (every dev-only marker removed; check:notes must pass), writes `CNAME` so Pages keeps the custom domain |
+
+- **Launch:** flip `SITE_MODE` to `production` only on launch day, following **docs/LAUNCH.md** step by step (DNS and the repository's Pages settings must change in a fixed order).
+- **One-time setup:** repository → Settings → Pages → Build and deployment → Source: **GitHub Actions**.
+- **Build a mode locally:** `npm run build:preview` or `npm run build:production` (output in `_site/`; serve preview under `/scg-website/`, production at the root). `npm run build` alone is a root build without the production markers.
+- **check:notes** runs in both modes. A preview may go out with dev notes only if `SKIP_CHECK_NOTES` is set to `"1"` in `scripts/site-mode.mjs` → preview; production ignores it.
+- **Every build** also prunes unused source images from `_site/assets` (`scripts/prune-output.mjs`) and checks the old-site redirects (`scripts/check-redirects.mjs`).
+
+## Redirects from the old site
+The old GoDaddy site's URLs (e.g. `/about-us`, `/apply`, `/krushi-shah`) keep working: each gets a tiny redirect page (`<old-path>/index.html`, meta refresh + JS, noindex, canonical to the new page). The list is `data/redirects.json`:
+- **pages:** `{ "from": "/old-path", "to": "/new/route/" }`.
+- **people:** old person slugs; each goes to that member's Team page or the alumnus's own page automatically (`aliases` fixes misspelled old slugs).
+- The build fails if a target page does not exist or an old path collides with a real page. Never add `/m/login`, `/m/reset` or `/m/create`.
 
 ## How to change a page banner
 The header of `/projects/`, `/join/`, `/join/prepare/`, `/about/`, `/team/`, `/alumni/`, `/work-with-us/` and `/partners/` is a banner: a photo under a maroon-black tint, or, while a page has no photo, a plain maroon-black gradient. Settings live in `data/site.json → page_banners`, keyed by the page's URL:

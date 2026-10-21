@@ -1,0 +1,29 @@
+---
+pagination:
+  data: redirects
+  size: 1
+  alias: r
+permalink: "{{ r.from }}/index.html"
+eleventyExcludeFromCollections: true
+---
+{#- Redirect stubs for the old site's URLs (data/redirects.json, resolved in lib/load-data.js).
+    GitHub Pages has no server redirects, so each old path gets a tiny page: meta refresh and
+    location.replace to the target (both with the path prefix via the url filter), a visible
+    link, canonical to the target on the real domain, noindex. Excluded from collections, so it is
+    never in the sitemap or navigation; scripts/check-redirects.mjs verifies every target. -#}
+{%- set target = r.to | url -%}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>This page has moved | {{ site.name }}</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="{{ r.to | absoluteUrl(site.domain) }}">
+<meta http-equiv="refresh" content="0; url={{ target }}">
+<script>location.replace({{ target | dump | safe }});</script>
+</head>
+<body>
+<p>This page has moved. <a href="{{ target }}">Continue to the new page</a>.</p>
+</body>
+</html>

@@ -7,3 +7,8 @@ assets/generated/
 reference/
 scratch/
 assets/backdrop/
+
+# Spreadsheets/exports with personal data never belong in the (public) repo.
+*.csv
+*.xlsx
+*.xls

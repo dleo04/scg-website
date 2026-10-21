@@ -124,7 +124,7 @@
       },
       "linkedin": "https://www.linkedin.com/in/angela-y-luo/",
       "consent_to_publish": true,
-      "consent_basis": "Supplied by SCG officers (new alumni list, October 2026); photo and bio publishing permission to be confirmed",
+      "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
       "source": "officer-list-2026-10"
     },
     {
@@ -165,7 +165,7 @@
       },
       "linkedin": "https://www.linkedin.com/in/christopher-yeh/",
       "consent_to_publish": true,
-      "consent_basis": "Supplied by SCG officers (new alumni list, October 2026); photo and bio publishing permission to be confirmed",
+      "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
       "source": "officer-list-2026-10"
     },
     {
@@ -205,7 +205,7 @@
       },
       "linkedin": "https://www.linkedin.com/in/faith-lebrun/",
       "consent_to_publish": true,
-      "consent_basis": "Supplied by SCG officers (new alumni list, October 2026); photo and bio publishing permission to be confirmed",
+      "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
       "source": "officer-list-2026-10"
     },
     {
@@ -246,7 +246,7 @@
       },
       "linkedin": "https://www.linkedin.com/in/krushi-shah/",
       "consent_to_publish": true,
-      "consent_basis": "Supplied by SCG officers (new alumni list, October 2026); photo and bio publishing permission to be confirmed",
+      "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
       "source": "officer-list-2026-10"
     },
     {
@@ -287,7 +287,7 @@
       },
       "linkedin": "https://www.linkedin.com/in/melaniehwan",
       "consent_to_publish": true,
-      "consent_basis": "Supplied by SCG officers (new alumni list, October 2026); photo and bio publishing permission to be confirmed",
+      "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
       "source": "officer-list-2026-10"
     },
     {
@@ -327,7 +327,7 @@
       },
       "linkedin": "https://www.linkedin.com/in/nikhil-kurian027/",
       "consent_to_publish": true,
-      "consent_basis": "Supplied by SCG officers (new alumni list, October 2026); photo and bio publishing permission to be confirmed",
+      "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
       "source": "officer-list-2026-10"
     },
     {
@@ -367,7 +367,7 @@
       },
       "linkedin": "https://www.linkedin.com/in/pavulab",
       "consent_to_publish": true,
-      "consent_basis": "Supplied by SCG officers (new alumni list, October 2026); photo and bio publishing permission to be confirmed",
+      "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
       "source": "officer-list-2026-10"
     },
     {
@@ -406,7 +406,7 @@
       },
       "linkedin": "https://www.linkedin.com/in/sbhatnag/",
       "consent_to_publish": true,
-      "consent_basis": "Supplied by SCG officers (new alumni list, October 2026); photo and bio publishing permission to be confirmed",
+      "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
       "source": "officer-list-2026-10"
     },
     {
@@ -447,7 +447,7 @@
       },
       "linkedin": "https://www.linkedin.com/in/sriya-sogal/",
       "consent_to_publish": true,
-      "consent_basis": "Supplied by SCG officers (new alumni list, October 2026); photo and bio publishing permission to be confirmed",
+      "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
       "source": "officer-list-2026-10"
     },
     {
@@ -486,7 +486,7 @@
       },
       "linkedin": "https://www.linkedin.com/in/carterjgibson/",
       "consent_to_publish": true,
-      "consent_basis": "Supplied by SCG officers (new alumni list, October 2026); photo and bio publishing permission to be confirmed",
+      "consent_basis": "Alumni confirmed permission to publish name, photo and bio (Oct 2026)",
       "source": "officer-list-2026-10"
     },
     {
@@ -1723,8 +1723,7 @@
       "linkedin": "https://www.linkedin.com/in/devinstreight/",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
-      "source": "old-site",
-      "review_note": "Bio ends with a joke line ('…and your mom's house') kept as written; confirm or trim."
+      "source": "old-site"
     },
     {
       "id": "robert-koehler",

@@ -1,16 +1,16 @@
 {%- from "components/work-card.njk" import workCard with context -%}
+{%- from "components/ui.njk" import chip with context -%}
 {#- "Find your seat" (SPEC 5.2) for /join/, from data/tracks.json + data/projects.json.
-    With JS (src/js/seat-matcher.js): one search bar, four equal selector tiles (icon, name, one line; WAI-ARIA tabs:
-    Left/Right, Home/End, roving tabindex) and ONE detail panel for the selected track
-    (the first track in data/tracks.json is selected when the page opens and after "Clear").
-    Typing or tapping a suggestion scores the tracks against their own fits/skills (strong) and
-    their projects' fits/skills (weak); the best match is selected and badged "Best match",
-    other matches get "Also relevant". Deep link: /join/#track=<slug>.
-    Without JS: the tiles and search are hidden and the four panels are plain stacked sections.
-    Panel = name + one-line description, 3 "What you'd do" items (panel: true), 5 skills, one
-    "Good fit if you study or enjoy" line (5 fits, copied from projects' inferred fits; never a
-    claim that people of a major did this work), up to 3 project cards (same card as /projects/)
-    and a link to /projects/ filtered by the track. -#}
+    With JS (src/js/seat-matcher.js): four equal selector tiles (icon, name, one line; WAI-ARIA tabs:
+    Left/Right, Home/End, roving tabindex) and ONE detail panel for the selected track (the
+    first track in data/tracks.json is selected when the page opens). Deep link: /join/#track=<slug>.
+    Without JS: the tiles are hidden and the four panels are plain stacked sections.
+    Panel = name + one-line description (shown only in the no-JS stacked view; with the tabs the
+    selected tile already shows both, so the name stays as a visually hidden h3 for the heading
+    outline and the description is hidden), 3 "What you'd do" items (panel: true) beside "Good
+    fit if you study or enjoy" as gold pills (5 fits, copied from projects' inferred fits; never
+    a claim that people of a major did this work), up to 3 project cards (same card as
+    /projects/) and a link to /projects/ filtered by the track. -#}
 {% macro trackIcon(slug) -%}
 <svg class="seat-icon" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
   {%- if slug == "data-engineering" %}<ellipse cx="10" cy="5.5" rx="6.5" ry="2.5"/><path d="M3.5 5.5v9c0 1.4 2.9 2.5 6.5 2.5"/><path d="M3.5 10c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5V5.5"/><path d="M14 21v-4M17.5 21v-6.5M21 21v-9"/>
@@ -20,25 +20,11 @@
 </svg>
 {%- endmacro %}
 
-{% macro seatMatcher(tracks, suggestions) -%}
+{% macro seatMatcher(tracks) -%}
 <div class="seat" data-seat>
-  <div class="seat-search" data-seat-search hidden>
-    <label class="seat-search__label" for="seat-q">What do you study or enjoy?</label>
-    <p class="seat-search__hint" id="seat-q-hint">Type a major, interest or skill. Separate up to three with commas.</p>
-    <div class="seat-search__row">
-      <input class="seat-search__input" id="seat-q" type="search" autocomplete="off" spellcheck="false" aria-describedby="seat-q-hint" data-seat-input>
-      <button class="seat-search__clear" type="button" data-seat-clear hidden>Clear</button>
-    </div>
-    <ul class="seat-search__chips" aria-label="Suggestions">
-      {%- for s in suggestions %}<li><button class="seat-search__chip" type="button" aria-pressed="false" data-seat-suggest="{{ s }}">{{ s }}</button></li>{% endfor %}
-    </ul>
-    <p class="seat-search__status" role="status" data-seat-status></p>
-  </div>
-
   <div class="seat-tiles" role="tablist" aria-label="Tracks" data-seat-tiles hidden>
     {%- for t in tracks %}
-    <button class="seat-tile" type="button" role="tab" id="seat-tab-{{ t.slug }}" aria-controls="seat-panel-{{ t.slug }}" {% set isDefault = loop.first %}aria-selected="{{ 'true' if isDefault else 'false' }}" tabindex="{{ 0 if isDefault else -1 }}"{% if isDefault %} data-seat-default{% endif %} data-seat-tab="{{ t.slug }}" data-terms="{{ t.matchTerms | dump }}">
-      <span class="seat-tile__badge" data-seat-badge hidden></span>
+    <button class="seat-tile" type="button" role="tab" id="seat-tab-{{ t.slug }}" aria-controls="seat-panel-{{ t.slug }}" {% set isDefault = loop.first %}aria-selected="{{ 'true' if isDefault else 'false' }}" tabindex="{{ 0 if isDefault else -1 }}"{% if isDefault %} data-seat-default{% endif %} data-seat-tab="{{ t.slug }}">
       <span class="seat-tile__icon">{{ trackIcon(t.slug) }}</span>
       <span class="seat-tile__name">{{ t.name }}</span>
       <span class="seat-tile__short">{{ t.short }}</span>
@@ -63,11 +49,12 @@
             {%- for item in t.panelDo %}<li>{{ item.text }}</li>{% endfor %}
           </ul>
         </div>
+        {%- if t.panelFits.length %}
         <div>
-          <h4 class="seat-panel__label">Skills you'd build</h4>
-          <ul class="seat-panel__skills">{% for s in t.panelSkills %}<li class="seat-skill" data-term="{{ s }}">{{ s }}</li>{% endfor %}</ul>
-          <p class="seat-panel__fit">Good fit if you study or enjoy: {% for f in t.panelFits %}<span data-term="{{ f }}">{{ f }}</span>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+          <h4 class="seat-panel__label">Good fit if you study or enjoy</h4>
+          <ul class="chips seat-panel__fits">{% for f in t.panelFits %}{{ chip(f, "gold") }}{% endfor %}</ul>
         </div>
+        {%- endif %}
       </div>
       {%- if t.showcase.length %}
       <h4 class="seat-panel__label">Work from this track</h4>

@@ -100,7 +100,12 @@ const noConsent = people.filter((p) => p.consent_to_publish !== true);
 if (noConsent.length) data.push(`team.json / alumni.json: ${noConsent.length} entr${noConsent.length === 1 ? "y has" : "ies have"} no consent_to_publish yet and are not shown.`);
 if (site.forms?.client_request_fallback_email) data.push(`site.json → forms.client_request_fallback_email (${site.forms.client_request_fallback_email}): confirm this inbox is monitored for client requests (the old Contact Us page listed it for applicants; client requests went to a personal address, which is not used).`);
 if (!site.forms?.client_request_endpoint) data.push("site.json → forms.client_request_endpoint: supply a form endpoint (e.g. a Formspree form URL) so /work-with-us/contact/ shows the real request form instead of the 'Request by email' composer. No code change needed.");
-data.push("Launch: redirect the old URLs /services → /work-with-us/ and /contact-us → /work-with-us/contact/ (there is no redirect map in the repo yet; see DECISIONS.md → Work With Us dropdown).");
+// Resolved once data/redirects.json covers both old URLs (redirect stubs, see README).
+{
+  const rp = fs.existsSync(path.join(ROOT, "data/redirects.json")) ? readJson("redirects.json").pages || [] : [];
+  const has = (from, to) => rp.some((r) => r.from === from && r.to === to);
+  if (!(has("/services", "/work-with-us/") && has("/contact-us", "/work-with-us/contact/"))) data.push("Launch: redirect the old URLs /services → /work-with-us/ and /contact-us → /work-with-us/contact/ (there is no redirect map in the repo yet; see DECISIONS.md → Work With Us dropdown).");
+}
 data.push("Replace the Smith Equity Research logo with a cleaner (transparent or white background) file");
 data.push("Confirm usage rights and any required credit for the backdrop photo (mckeldinbackground). It is now shown behind every page of the site, so its permission matters more: if it is a UMD photo, get UMD's written permission (and any required credit) before launch, or replace it with an SCG-owned photo of the same view.");
 // New alumni added from the October 2026 list (data/alumni.json, source "officer-list-2026-10").
@@ -109,7 +114,9 @@ data.push("alumni.json → Carter Gibson: confirm what \"Board of Trustees, Chai
 data.push("alumni.json → Sriya Sogal: confirm the year of her venture capital internship (the bio gives none).");
 data.push("alumni.json → new alumni (Angela Luo, Christopher Yeh, Faith LeBrun, Krushi Shah, Melanie Hwan, Nikhil Kurian, Pranav Avula, Shubham Bhatnagar, Sriya Sogal, Carter Gibson): confirm each started the post-graduation job shown and that the summer internships in their bios happened.");
 data.push("alumni.json → Melanie Hwan: confirm her Business Analytics minor.");
-data.push("alumni.json → new alumni (all 10 above): confirm permission to publish each photo and bio. Photo for Angela Luo is the file assets/photos/people/angela-lou.png (name differs from her id; photo.file points to it).");
+// Open only while an alumnus's consent_basis still says permission is "to be confirmed".
+const unconfirmed = alumni.filter((p) => /to be confirmed/i.test(p.consent_basis || ""));
+if (unconfirmed.length) data.push(`alumni.json → ${unconfirmed.map((p) => p.name).join(", ")}: confirm permission to publish each photo and bio (consent_basis says "to be confirmed").`);
 // Bio sentences left unchanged on purpose (October 2026 job update): confirm with the alumnus and update.
 data.push("alumni.json → Will Ahn: confirm with the alumnus and update \"…and he will be an extern at Deloitte as well.\" (future tense; unconfirmed).");
 data.push("alumni.json → Miranda Chung: confirm with the alumnus and update \"…is currently pursuing a MS in Information Systems through Smith’s Plus 1 program.\" (she is now a Senior Investment Analyst at PGIM).");

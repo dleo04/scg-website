@@ -1,14 +1,18 @@
-# GitHub Pages PREVIEW deployment: https://dleo04.github.io/scg-website/
+# GitHub Pages deployment for the SCG site.
 #
-# Runs on every push to main (and by hand from the Actions tab). It builds the site under the
-# /scg-website/ path prefix and publishes it to GitHub Pages. This is a preview only: it is
-# not the production site, it is hidden from search engines, and it does not change how the
-# production build for sniderconsultinggroup.com works (that build sets none of the variables
-# below and is served from the domain root).
+# ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+# │ LAUNCH SWITCH: SITE_MODE (below, under jobs → build → env)                               │
+# │   preview     https://dleo04.github.io/scg-website/  (sub-folder, noindex) ← DEFAULT     │
+# │   production  https://sniderconsultinggroup.com/     (domain root, indexable, CNAME)     │
+# │ Every setting of a mode lives in scripts/site-mode.mjs. Change only SITE_MODE here.      │
+# │ Flip it to production ONLY on launch day, following docs/LAUNCH.md step by step.        │
+# └──────────────────────────────────────────────────────────────────────────────────────────┘
+#
+# Runs on every push to main (and by hand from the Actions tab).
 #
 # One-time setup on github.com: repository Settings → Pages → Build and deployment →
 # Source: "GitHub Actions".
-name: Deploy preview to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -29,15 +33,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # PREVIEW-ONLY settings (never set these for the production build):
-      PATH_PREFIX: /scg-website/                       # every internal URL gets this prefix
-      SITE_URL: https://dleo04.github.io/scg-website   # canonical, Open Graph, JSON-LD, sitemap URLs
-      PREVIEW_NOINDEX: "1"                             # robots noindex meta on every page + Disallow robots.txt
-      # PREVIEW-ONLY escape hatch for check:notes (dev notes such as [TBD] / TODO left in pages).
-      # Keep "0": the build then fails on any note, exactly like production. Setting "1" lets a
-      # preview deploy while still printing every note as a warning in the log; never use it
-      # for production (SCG_ENV=production ignores it).
-      SKIP_CHECK_NOTES: "0"
+      # LAUNCH SWITCH: "preview" (default) or "production". See the box at the top and
+      # docs/LAUNCH.md. Nothing else in this file changes between the two modes.
+      SITE_MODE: preview
     steps:
       - uses: actions/checkout@v4
 
@@ -48,9 +46,9 @@ jobs:
 
       - run: npm ci
 
-      # Same build as production (images, Eleventy, privacy check, check:notes, contrast check),
-      # with the preview settings above.
-      - run: npm run build
+      # Full build (images, Eleventy, privacy check, check:notes, redirects check, contrast
+      # check) with the settings of SITE_MODE; production also writes _site/CNAME.
+      - run: node scripts/site-mode.mjs "$SITE_MODE"
 
       - uses: actions/configure-pages@v5
 

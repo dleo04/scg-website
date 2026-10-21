@@ -1,0 +1,93 @@
+{
+  "_readme": "Redirect stubs for the old GoDaddy site's URLs (flat paths, no trailing slash). The build writes <from>/index.html at each old path: meta refresh + JS location.replace to the target, a visible 'This page has moved' link, rel=canonical to the target and noindex; never in the sitemap or navigation. 'pages': {from, to, note?}; 'to' must be a real route of this site. 'people': old slugs of person pages; each is matched to data/team.json (→ /team/, which has no per-person anchors) or data/alumni.json (→ /alumni/<id>/, the alumnus's own page); unmatched slugs go to /team/. 'aliases': old slug → current id for misspelled slugs. Paths are written without the path prefix; the build adds it in preview mode. The build fails if a 'from' collides with a real page or a target does not exist (scripts/check-redirects.mjs). Do NOT add /m/login, /m/reset or /m/create (old site-builder internals).",
+  "pages": [
+    {
+      "from": "/home-1",
+      "to": "/"
+    },
+    {
+      "from": "/about-us",
+      "to": "/about/"
+    },
+    {
+      "from": "/services",
+      "to": "/work-with-us/"
+    },
+    {
+      "from": "/contact-us",
+      "to": "/work-with-us/contact/"
+    },
+    {
+      "from": "/our-partners",
+      "to": "/partners/"
+    },
+    {
+      "from": "/our-alumni",
+      "to": "/alumni/"
+    },
+    {
+      "from": "/apply",
+      "to": "/join/"
+    },
+    {
+      "from": "/recruitment-2",
+      "to": "/join/"
+    },
+    {
+      "from": "/interview-resources",
+      "to": "/join/prepare/"
+    },
+    {
+      "from": "/important-links",
+      "to": "/",
+      "note": "guess: no matching page on the new site"
+    },
+    {
+      "from": "/brand",
+      "to": "/",
+      "note": "guess: no matching page on the new site"
+    }
+  ],
+  "people": [
+    "audrey-feng",
+    "krushi-shah",
+    "shree-dave",
+    "sebastian-decady",
+    "melanie-hwan",
+    "daniel-leo",
+    "vasa-schnell",
+    "ibraheem-shaikh",
+    "nikhil-kurian",
+    "pranav-sasikumar",
+    "santana-pina",
+    "olevia-tinpaw",
+    "hasan-ege",
+    "ethan-han",
+    "abby-richard",
+    "chaewon-cheon",
+    "vibha-gunturi",
+    "saachi-aggarwal",
+    "jessie-feng",
+    "stacy-sun",
+    "shubham-bhatnagar",
+    "hamid-shabbir",
+    "angela-luo",
+    "sriya-sogal",
+    "christopher-yeh",
+    "daniel-li",
+    "amari-mehta",
+    "michelle-sun",
+    "riley-ying",
+    "nikhil-thomas",
+    "utkarsh-mandsaurwale",
+    "harrisen-cefalu-schwartz",
+    "bryce-powell",
+    "faith-lebrun",
+    "carter-gibson",
+    "pranav-avula",
+    "pavi-paila"
+  ],
+  "aliases": {
+    "olevia-tinpaw": "olevia-tinepaw"
+  }
+}
