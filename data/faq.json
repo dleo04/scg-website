@@ -1,5 +1,5 @@
 {
-  "_readme": "Draft FAQ. Items marked source:'existing' come from the current SCG site (lightly edited). Items marked source:'new' are drafts that need officer review before publishing. Items with needs_decision:true depend on a club decision noted in the 'decision' field; do not publish them until resolved.",
+  "_readme": "Draft FAQ. Items marked source:'existing' come from the current SCG site (lightly edited). Items marked source:'new' are drafts that need officer review before publishing. Items with needs_decision:true depend on a club decision noted in the 'decision' field; do not publish them until resolved. Optional 'links' ([{text, url}]) on an item link the first occurrence of each text in its answer.",
   "groups": [
     {
       "title": "Who can join",
@@ -75,6 +75,12 @@
         {
           "q": "What does the EY partnership mean for me?",
           "a": "SCG partners with EY to train our consultants and expose us to the industry. EY holds workshops on topics useful to SCG, pairs each project with consultants and partners, and connects us to EY recruiters.",
+          "links": [
+            {
+              "text": "partners with EY",
+              "url": "/partners/"
+            }
+          ],
           "source": "existing"
         },
         {

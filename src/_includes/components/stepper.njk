@@ -4,8 +4,9 @@
     Without JS: a numbered list (role=list) with every step's details (nothing hidden).
     With JS (site.js, [data-tabs]): a row of step buttons (WAI-ARIA tabs: arrow keys, Home/End),
     one detail panel at a time, Previous/Next buttons and swipe on touch screens.
-    steps: [{ name, slug, text|description, status?, optional?, date?, example? }]
-    opts: { id, label, headingLevel, initial (index), calendar (bool), visuals (bool) }
+    steps: [{ name, slug, text|description, links? ([{text, url}], see textLinks), status?, optional?, date?, example? }]
+    opts: { id, label, headingLevel, initial (index), calendar (bool), visuals (bool), dark (bool),
+          stack (bool: all panels share one grid cell, so the panel keeps the tallest step's height) }
     visuals (About "How a project works"): each step has a photo (4:3 right of the text, 16:9
     on top on phones) or an on-brand graphic panel; the panels crossfade in one shared card with
     Previous/Next in its footer; the rail shows progress (filled line, checks for done steps);
@@ -31,7 +32,7 @@
 {% macro stepper(steps, opts) -%}
 {%- set h = opts.headingLevel or 3 -%}
 {%- set initial = opts.initial if opts.initial is defined else 0 -%}
-<div class="stepper{% if opts.dark %} stepper--dark{% endif %}{% if opts.visuals %} stepper--visual{% endif %}" data-tabs data-swipe{% if opts.visuals %} data-step-fade data-step-progress data-step-hash="step" style="--steps: {{ steps.length }}"{% endif %}>
+<div class="stepper{% if opts.dark %} stepper--dark{% endif %}{% if opts.stack %} stepper--stack{% endif %}{% if opts.visuals %} stepper--visual{% endif %}" data-tabs data-swipe{% if opts.visuals %} data-step-fade data-step-progress data-step-hash="step" style="--steps: {{ steps.length }}"{% endif %}>
   <div class="stepper__rail" data-tablist aria-label="{{ opts.label }}">
     {%- if opts.visuals %}<span class="stepper__fill" aria-hidden="true" data-step-fill></span>{% endif %}
     {%- for s in steps %}
@@ -60,7 +61,8 @@
       {%- if s.date %}
       <p class="stepper__date"><time datetime="{{ s.date }}{% if s.time %}T{{ s.time }}{% endif %}">{{ s.date | longDate }}{% if s.time %}, {{ s.time | clockTime }}{% endif %}</time>{% if s.location %} · {{ s.location }}{% endif %}</p>
       {%- endif %}
-      {%- if body %}<p class="stepper__text">{{ body }}</p>
+      {%- if body and s.links and s.links.length %}<p class="stepper__text">{{ body | textLinks(s.links) | safe }}</p>
+      {%- elif body %}<p class="stepper__text">{{ body }}</p>
       {%- elif env.showPlaceholders and s.todo %}{{ tbdBlock(s.name ~ ": details coming soon", "[TBD: " ~ s.todo ~ "]") }}{% endif %}
       {%- if env.showPlaceholders and s.todo and body %}{{ tbdBlock("Also needed", "[TBD: " ~ s.todo ~ "]") }}{% endif %}
       {%- if s.example %}

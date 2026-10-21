@@ -56,7 +56,7 @@
     "client_request_fallback_source": "The organization address listed on the old site's public Contact Us page (sniderconsultinggroup.com/contact-us)."
   },
   "timeline": {
-    "_readme": "Recruiting calendar on /join/ (stepper). Each step: name, optional (true shows an 'Optional' pill), description (null = no text), and optional dates. 'date' (YYYY-MM-DD) makes the step show its date and an 'Add to calendar' (.ics) download; add 'time' (24h 'HH:MM', local Eastern time), 'duration_minutes' and 'location' for a timed event. Unknown dates stay null: nothing is shown for them (no placeholder text). recruiting.current_step picks the highlighted step.",
+    "_readme": "Recruiting calendar on /join/ (stepper). Each step: name, optional (true shows an 'Optional' pill), description (null = no text), optional links ([{text, url}]: the first occurrence of each 'text' in the description becomes a link to 'url'; site-relative URLs such as /join/prepare/#resume-title), and optional dates. 'date' (YYYY-MM-DD) makes the step show its date and an 'Add to calendar' (.ics) download; add 'time' (24h 'HH:MM', local Eastern time), 'duration_minutes' and 'location' for a timed event. Unknown dates stay null: nothing is shown for them (no placeholder text). recruiting.current_step picks the highlighted step.",
     "steps": [
       {
         "name": "Interest form",
@@ -68,25 +68,37 @@
         "name": "Application",
         "optional": false,
         "date": null,
-        "description": null
+        "description": "Submit a complete resume and complete a virtual case. No consulting experience needed. Not sure where to start? Use our resume guide.",
+        "links": [
+          {
+            "text": "resume guide",
+            "url": "/join/prepare/#resume-title"
+          }
+        ]
       },
       {
         "name": "Interviews",
         "optional": false,
         "date": null,
-        "description": "Prepare with SCG's sample behavioral questions, case framework guide and practice cases."
+        "description": "Two rounds. The first is a team interview where you work through a case in a group. The final round is 60 minutes: 30 minutes of behavioral questions and 30 minutes of case. Prepare with SCG's sample behavioral questions, case framework guide and practice cases."
       },
       {
         "name": "Decision",
         "optional": false,
         "date": null,
-        "description": null
+        "description": "Decisions are sent after the final round. SCG is selective: we admit about 2% of applicants. Previous applicants who are still interested and eligible are encouraged to reapply."
       },
       {
         "name": "Onboarding",
         "optional": false,
         "date": null,
-        "description": "New analysts join faculty- and EY-led workshops and complete a benchmarking analysis for the rest of the semester, then take on client projects the following term."
+        "description": "New analysts join faculty- and EY-led workshops and complete a benchmarking analysis for the rest of the semester, then take on client projects the following term.",
+        "links": [
+          {
+            "text": "EY-led workshops",
+            "url": "/partners/"
+          }
+        ]
       }
     ]
   },
@@ -131,7 +143,7 @@
     {
       "name": "EY",
       "role": "Corporate partner",
-      "blurb": "EY sends consultants to lead workshops, pairs each project with consultants, senior managers and partners, and connects members to EY recruiters. SCG has partnered with EY for over four years.",
+      "blurb": "EY sends consultants to lead workshops, pairs each project with consultants, senior managers and partners, and connects members to EY recruiters. SCG has partnered with EY since {ey_since}.",
       "url": "https://www.ey.com/en_us/consulting",
       "band": {
         "_readme": "Home page partnership band (between Our Work and Where SCG Takes You). 'logo' is the reversed (white) EY variant made by scripts/make-ey-reversed.mjs, for dark/photo backgrounds only; 'url' opens in a new tab (set to null to show the band unlinked).",
@@ -179,7 +191,7 @@
       "verified": true
     }
   ],
-  "facts_readme": "Other verified facts, kept for /about/ and /join/ (not shown on the home stat strip).",
+  "facts_readme": "Other verified facts, kept for /about/ and /join/ (not shown on the home stat strip). 'EY partnership' is the year the partnership started (e.g. \"2020\"); it fills {ey_since} in partners[EY].blurb and benefits, and the About card reads \"Since <year>\".",
   "facts": [
     {
       "label": "Founded",
@@ -193,7 +205,7 @@
     },
     {
       "label": "EY partnership",
-      "value": "4+ years",
+      "value": "2020",
       "verified": true
     },
     {
@@ -272,7 +284,7 @@
       "alt": "A group of SCG members in casual clothes standing on large rocks above a river on a sunny autumn hike."
     }
   ],
-  "benefits_readme": "'What you get' on /join/: five equal photo cards, text reworded from the old Recruitment page's membership benefits. {ey_years} is replaced with facts → 'EY partnership'. 'image' is a photo id from data/photos.json (assets/photos/<id>.jpg); 'focal' is the vertical/horizontal point (x% y%) kept when the photo is cut to 16:10 (npm run assets); 'alt' describes what is visible. Photos follow the old site's own pairing in its Membership Benefits section (IMG_6911, IMG-1013, IMG_5159, EY Site Visit, IMG_6909).",
+  "benefits_readme": "'What you get' on /join/: five equal photo cards, text reworded from the old Recruitment page's membership benefits. {ey_since} is replaced with facts → 'EY partnership' (the start year). Optional 'links' ([{text, url}]) link the first occurrence of each text. 'image' is a photo id from data/photos.json (assets/photos/<id>.jpg); 'focal' is the vertical/horizontal point (x% y%) kept when the photo is cut to 16:10 (npm run assets); 'alt' describes what is visible. Photos follow the old site's own pairing in its Membership Benefits section (IMG_6911, IMG-1013, IMG_5159, EY Site Visit, IMG_6909).",
   "benefits": [
     {
       "icon": "growth",
@@ -301,7 +313,13 @@
     {
       "icon": "partner",
       "title": "EY partnership",
-      "text": "SCG has partnered with EY for {ey_years}. Members get career advice, project support and mentorship, plus workshops and events hosted with EY.",
+      "text": "SCG has partnered with EY since {ey_since}. Members get career advice, project support and mentorship, plus workshops and events hosted with EY.",
+      "links": [
+        {
+          "text": "partnered with EY",
+          "url": "/partners/"
+        }
+      ],
       "image": "ey-site-visit",
       "focal": "50% 55%",
       "alt": "SCG members in business attire seated along a long conference table in a bright office during the EY site visit."

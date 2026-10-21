@@ -42,6 +42,7 @@ if (fs.existsSync(path.join(ROOT, "assets/logos/ey-reversed.png"))) data.push("a
 const testimonials = fs.existsSync(path.join(ROOT, "data/testimonials.json")) ? readJson("testimonials.json").testimonials : [];
 if (!testimonials.some((t) => t.consent_to_publish === true)) data.push("Client testimonials: add quotes with written permission to data/testimonials.json to enable the section.");
 site.timeline.steps.forEach((s) => { if (!s.date) data.push(`site.json → timeline: date for "${s.name}".`); });
+if ((site.timeline.steps || []).some((s) => /about 2%/.test(s.description || ""))) data.push('site.json → timeline → "Decision": re-check the "about 2%" acceptance figure every recruiting cycle and update or remove it if it no longer holds.');
 // Per project tile and per engagement: every field the live site OMITS because it is missing,
 // plus facts to confirm. challenge, approach, scope_detail and team are archived (kept in
 // projects.json, not rendered; see DECISIONS.md), so they are not listed.
@@ -85,7 +86,8 @@ data.push("Banners waiting for a photo (gradient until then): /partners/ (partne
 data.push("assets/PHOTO-CREDITS.md: record the photographer and license of the five supplied banner photos (projectsimage, joinscgimage, alumniimage, aboutimage, workwithusimage) and of the starter-package photos (placeholder-hero-quad.jpg, placeholder-group-photo.jpg).");
 data.push("tracks.json: confirm the one-line 'short' descriptions, the three 'panel: true' What-you'd-do items per track, and the order of 'skills' and 'fits' (the first 5 of each are shown on /join/). Product & Design has only two projects (SpeechPundit, Product Space).");
 data.push("Hidden for now: the SICC December 2023 case prompt (site.json → downloads, \"published\": false). The PDF and entry stay in the repo; remove the flag and rebuild to show it on /join/prepare/ again.");
-data.push("Confirm the year the EY partnership started so the label can be 'Since 20XX' instead of '4+ years' (which goes stale each year) (site.json → facts → EY partnership; shown on /about/ and /join/).");
+// Resolved once facts → "EY partnership" holds the start year (e.g. "2020").
+if (!/^\d{4}$/.test(String((site.facts || []).find((f) => f.label === "EY partnership")?.value ?? ""))) data.push("Confirm the year the EY partnership started so the label can be 'Since 20XX' instead of '4+ years' (which goes stale each year) (site.json → facts → EY partnership; shown on /about/ and /join/).");
 data.push("/about/ timeline: the Smith Impact Case Competition card has no photo (no case competition photo exists on the old site); add one to data/photos.json and site.json → story_photos → competition if you have one.");
 data.push("Confirm members in gallery photos are OK with being shown on the site; remove any photo on request (data/gallery.json).");
 data.push("Semester labels: confirm 'SCG Internal Project' (Spring 2025 + Fall 2025) and 'Business Beyond Borders' (Fall 2025) are listed in the right semesters.");

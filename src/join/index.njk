@@ -69,7 +69,7 @@ bodyClass: page-join
             {%- else %}<svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M2.5 19c.6-3.3 2.8-5 5.5-5s4.9 1.7 5.5 5M13.5 14.3c.9-.5 1.9-.8 3-.8 2.3 0 4.2 1.5 4.7 4.5"/></svg>{% endif -%}
           </span>
           <h3 class="benefit__title">{{ b.title }}</h3>
-          <p class="benefit__text">{{ b.text }}</p>
+          <p class="benefit__text">{% if b.links and b.links.length %}{{ b.text | textLinks(b.links) | safe }}{% else %}{{ b.text }}{% endif %}</p>
         </div>
       </li>
       {%- endfor %}
@@ -84,7 +84,7 @@ bodyClass: page-join
       <h2 class="section__title" id="calendar-title">How recruiting works</h2>
       <p class="section__lede">{{ site.recruiting.cycle_note }} Select a step to see what happens.</p>
     </header>
-    {{ stepper(recruitingSteps, { id: "recruiting", label: "Recruiting steps", headingLevel: 3, initial: initialStep, calendar: true, dark: true }) }}
+    {{ stepper(recruitingSteps, { id: "recruiting", label: "Recruiting steps", headingLevel: 3, initial: initialStep, calendar: true, dark: true, stack: true }) }}
   </div>
 </section>
 
@@ -118,7 +118,7 @@ bodyClass: page-join
           {%- for item in g.items %}
           <details id="{{ item.id }}" data-faq-item{% if item.unpublished %} data-placeholder="true" data-todo="[TBD: faq.json → &quot;{{ item.q }}&quot; is not published until resolved: {{ item.decision or 'answer still has a [TBD]' }}]"{% endif %}>
             <summary>{{ item.q }}{% if item.unpublished %} <span class="tbd">not published</span>{% endif %}</summary>
-            <div class="accordion__body"><p>{{ item.a | tbd | safe }}</p></div>
+            <div class="accordion__body"><p>{% if item.links and item.links.length %}{{ item.a | textLinks(item.links) | safe }}{% else %}{{ item.a | tbd | safe }}{% endif %}</p></div>
           </details>
           {%- endfor %}
         </div>

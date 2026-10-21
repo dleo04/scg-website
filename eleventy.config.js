@@ -23,6 +23,7 @@ export default function (eleventyConfig) {
   eleventyConfig.setNunjucksEnvironmentOptions({ autoescape: true, throwOnUndefined: false });
 
   eleventyConfig.addFilter("tbd", filters.tbd);
+  eleventyConfig.addFilter("textLinks", filters.textLinks);
   eleventyConfig.addFilter("isTbd", filters.isTbd);
   eleventyConfig.addFilter("isPlaceholderImage", filters.isPlaceholderImage);
   eleventyConfig.addFilter("ctaState", filters.ctaState);

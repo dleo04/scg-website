@@ -58,7 +58,7 @@ bodyClass: page-about
       </li>
       {%- if ey %}
       <li class="story__item" data-reveal>
-        <p class="story__when">{% if eyYears and eyYears.verified %}{{ eyYears.value }}{% else %}Partner{% endif %}</p>
+        <p class="story__when">{% if eyYears and eyYears.verified %}Since {{ eyYears.value }}{% else %}Partner{% endif %}</p>
         <div class="story__card story__card--photo">
           {{ storyPhoto("ey") }}
           <div class="story__text">
