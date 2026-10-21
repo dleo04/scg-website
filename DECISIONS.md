@@ -234,7 +234,7 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
 
 - **Why the logos sat low.** The tile was a grid with `<picture>` set to `display: contents`, so `<picture>`'s `<source>` child (which Chrome renders as `display: block`) became a second grid item. The grid then had an empty 34px row plus the logo's row, and the logo was centred in the lower row, 16–32px below the tile centre.
   - The tile is now a flex container (`align-items: center; justify-content: center`), `<source>` is `display: none`, and the image is `display: block`.
-  - The dashed divider is a `border-bottom`, so it is outside the centring box.
+  - The divider (now a 1px solid hairline) is a `border-bottom`, so it is outside the centring box.
   - ui-check now fails if a card logo's box is more than 3px off the tile centre.
 - **Uneven margins inside the files** (artwork margins top/bottom/left/right in pixels):
   - Alliom 30/21/21/30 and School Harbor 125/149/256/255. These margins are opaque logo background, not transparency, so they are compensated with `logo_offset` in `projects.json`, as a fraction of the rendered logo size: Alliom `{x: 0.0225, y: -0.0225}`, School Harbor `{y: 0.0234}`.
@@ -1199,3 +1199,44 @@ Choices made where the spec was ambiguous, newest stage last. Each says what was
   - **Unchanged:** the Projects page and Join cards (Impact rows included), the drawers and the project pages are identical to before.
 - **Logos.** DefenX on #F7F4EF and SpeechPundit on #FFFFFF are fully visible and legible; no logo fields changed.
 
+
+## Projects rebuilt from the October 2026 project sheet
+- **Source.** `scratch/scg-projects-info.csv` (22 engagements, data only; not copied into the repo). Public columns only. The internal columns (priority, project lead, status, notes) are never written to `data/` or the build.
+- **Existing 15 tiles.** Taglines, scope lists, skills, disciplines, fits, client names and engagement titles already matched the sheet. Changes: a new `impact` line on all 17 engagements, and Hy-Swap `client_type` (empty → "Nonprofit"). `featured`, `home_order`, `short_name`, `logo*` and `links` are untouched.
+- **Five new Fall 2024 tiles** (featured: false): `haefa`, `justice-for-fraud-victims`, `robotics-at-maryland`, `cp-scholars`, `hearts-delight`. Title = the sheet's client name. `short_name` is HAEFA, R@M or Heart's Delight (searchable). It is also used to match the old past-clients names, so "HAEFA" and "R@M" no longer appear twice on /work-with-us/.
+- **New engagement fields.** `deliverables` (list, only when the sheet has one) and `impact` (exact sheet text). `outcome` stays `null` until written. `quote` {text, attribution, permission} and `public_link` are added only when the sheet has them.
+- **Drawer / project page order:** client and client type; per engagement: semester (+ title), tagline, **What we delivered** (deliverables, else scope; never both), **Skills used**, then **Impact**. Once an outcome is written it shows as **Outcome** instead. Then Disciplines and Good fit if you study (suggested). Empty parts are omitted in every mode, including dev:notes (no TBD boxes).
+- **Quote / link rules:** a quote renders only when its text is non-empty and `permission` is "yes". A public link renders only as an https URL that contains neither "canva.com" nor "/edit". Tile `links` follow the same rule.
+- **Archived on purpose, not rendered:** `challenge`, `approach`, `scope_detail` and `team` stay in projects.json but are no longer rendered. The team lists in particular are archived on purpose: they were mostly empty and are not part of the sheet. The challenge duplicated the tagline. `summary`/`challenge` still feed the Projects search text.
+- **Projects page cards.** The Impact row shows the impact line (or the outcome, labelled "Outcome"). "Results coming soon" appears only when both are empty. The Scope row still summarises `scope` (first two items), so the five new cards describe the work rather than list "Final client presentation". Home cards are unchanged.
+- **Logos.** Trimmed with `npm run trim-logos`. The originals are untouched, and `logo_bg` follows the script's rule: edge colour for opaque files, `#F7F4EF` for transparent dark artwork. No offsets were needed. The AVIF (College Park Scholars) is read by sharp and served through the same pipeline as `cpscholarslogo-trimmed.png`, which becomes WebP + PNG; no browser ever receives the AVIF.
+- **Wide logos are never enlarged past 1x** (`--logo-max-w`, like the existing height cap for square logos). This only affects Heart's Delight (280×132 file). Every other logo renders at exactly the same size as before.
+- **Follow-up: card divider and HAEFA title.**
+  - **Divider:** the dashed 2px line under the logo tile is now a 1px solid hairline in `--line`, the card-border colour. It is one rule in `.work-card__logo-tile`, so it covers every use of the card: Projects, Home "Our Work" and Join "where you'd fit".
+  - **Dark or coloured tiles** (`logo_bg` luminance < 0.6, the same threshold as the Work With Us tiles) get `--dark`, which colours the 1px in the tile's own colour, so no extra line shows.
+  - **Sizes unchanged:** 1px of bottom padding replaces the old border's second pixel, so tile, card and logo sizes are unchanged.
+  - **Not changed:** the dashed borders on dev:notes placeholders and the empty-state boxes are a different style.
+  - **HAEFA:** the tile `title` is "HAEFA" (card, drawer heading, page title). The full "HAEFA (Health and Education for All)" stays as `client`, which the drawer shows on the Client line and Work With Us uses for the tile caption.
+
+## Project drawer / page layout rework (presentation only)
+- **Shared component.** One change in `components/project-detail.njk` covers the drawer (Projects, Home, About, Join) and `/projects/<id>/`. No data changed.
+- **Header:**
+  - Title + "(semester label)".
+  - The client name as a quiet line only when it differs from the title (`clientDiffers`: case, punctuation and a trailing "(<semester>)" ignored). It shows for SCG Internal Project → Snider Consulting Group, both DefenX tiles → DefenX, and HAEFA → its full name. A trailing non-semester parenthesis counts as different on purpose, so HAEFA's full name shows.
+  - Client type in the old small-caps label style (with a visually hidden "Client type:" prefix for screen readers), and the disciplines as outlined pills on the same row (a list labelled "Disciplines").
+- **Engagements:** tagline → Impact/Outcome → What we delivered → Skills used. The semester (+ title) heading appears only on multi-engagement tiles (School Harbor, SCG Internal), whose titles already read "(Spring & Fall 2025)". A single engagement is a plain block with no heading, and its section headings move up one level, so no level is skipped.
+- **Removed:** the Client/Client type columns and the Disciplines section at the bottom (with its divider).
+- **Follow-up: labelled header fields.** The header is a `<dl>` again: **Client** (only when it differs from the title), **Client type** and **Disciplines** (outlined pills), each a small-caps label above its value.
+  - **Layout:** one row of columns, stacked at 640px and below.
+  - **Disciplines column:** grows from 160px and wraps its pills inside itself. That keeps HAEFA's long client name on the same row in the 720px drawer, and pills never overflow.
+  - **Screen readers:** the visible labels replace the hidden "Client type:" text and the "Disciplines" list label, so nothing is announced twice.
+
+## Projects/Join cards: Skills row replaces Scope
+- **Default card** (Projects page, Join "where you'd fit"): Objective / **Skills** / Impact. The Skills row is the Home card's own row: same icon, `.seat-skill` pills, the first up to 4 skills of the newest engagement, clipped to at most 2 rows (`max-height: 54px`). The Home rule was followed instead of "3 + '+N more'", so both cards are identical.
+- **Home** keeps Objective / Scope / Skills, so it doesn't get two Skills rows. Its output is byte-identical.
+- **Card height:** the two pill rows (54px) are 9px taller than two lines of Scope text, so Projects and Join cards are uniformly 9px taller. They stay equal height row by row.
+- **Search:** each card's `data-search` now also includes every engagement's `scope` and `deliverables` (in addition to title, client, short name, summary, engagement titles/taglines and skills). Before, scope text was not indexed even though it was visible on the card.
+- **Follow-up: one row order everywhere, unclipped pills.**
+  - **Rows:** every card (Home "Our Work", /projects/, Join) now reads Objective / Impact / Skills. Home's Scope row became the Impact row (same styling and two-line clamp), so the `home` variant only changes the title.
+  - **Clipped pills:** the global `ul[class]` reset outranked `.work-card__skills`, so its own padding/margin never applied, and the second row of pills sat exactly on the 54px clip edge, where fractional positions cut its bottom border. Now `ul.work-card__skills` has 3px bottom padding with `max-height: 57px`. Two whole rows show with 3px clear below; a third row would start at 60px and stays hidden.
+  - **Height:** cards grew 3px, and Home cards at 768/390 also take the Impact line's height instead of Scope's. Cards are still equal height per row.

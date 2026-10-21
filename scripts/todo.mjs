@@ -42,21 +42,20 @@ if (fs.existsSync(path.join(ROOT, "assets/logos/ey-reversed.png"))) data.push("a
 const testimonials = fs.existsSync(path.join(ROOT, "data/testimonials.json")) ? readJson("testimonials.json").testimonials : [];
 if (!testimonials.some((t) => t.consent_to_publish === true)) data.push("Client testimonials: add quotes with written permission to data/testimonials.json to enable the section.");
 site.timeline.steps.forEach((s) => { if (!s.date) data.push(`site.json → timeline: date for "${s.name}".`); });
-// Per project tile and per engagement: every field the live site OMITS because it is missing
-// (shown only with npm run dev:notes), plus facts to confirm.
+// Per project tile and per engagement: every field the live site OMITS because it is missing,
+// plus facts to confirm. challenge, approach, scope_detail and team are archived (kept in
+// projects.json, not rendered; see DECISIONS.md), so they are not listed.
 const tbdOrEmpty = (v) => v == null || v === "" || (Array.isArray(v) && v.length === 0) || /\[TBD/i.test(String(v));
 for (const p of projects) {
   const engagements = engagementsOf(p);
   const omitted = [];
   for (const e of engagements) {
     const miss = [];
-    if (tbdOrEmpty(e.challenge)) miss.push("Challenge");
-    if (tbdOrEmpty(e.scope)) miss.push("Scope");
-    if (tbdOrEmpty(e.approach)) miss.push("Approach");
-    if (tbdOrEmpty(e.outcome)) miss.push("Outcome (card shows \"Results coming soon\")");
+    if (tbdOrEmpty(e.deliverables) && tbdOrEmpty(e.scope)) miss.push("What we delivered (deliverables or scope)");
+    if (tbdOrEmpty(e.impact) && tbdOrEmpty(e.outcome)) miss.push("Impact (card shows \"Results coming soon\")");
+    if (tbdOrEmpty(e.outcome)) miss.push("Outcome (optional; replaces the Impact line once written)");
     if (miss.length) omitted.push(`${e.semester}: ${miss.join(", ")}`);
   }
-  if (tbdOrEmpty(p.team?.size) && tbdOrEmpty(p.team?.roles) && tbdOrEmpty(p.team?.majors)) omitted.push("Team (size, roles, majors)");
   if (tbdOrEmpty(p.links)) omitted.push("Links");
   if (!resolveLogo(ROOT, p.logo)) omitted.push(p.logo ? `logo file "${p.logo}" not found (add e.g. ${p.logo}.png; the client name is shown on a neutral tile until then)` : "logo + logo_bg (the client name is shown on a neutral tile instead)");
   if (!p.client_type) omitted.push("client type (no existing type fits; see DECISIONS.md)");
@@ -69,7 +68,7 @@ for (const p of projects) {
   parts.push(`confirm: ${confirm.join("; ")}`);
   data.push(`projects.json → ${p.id}: ${parts.join(". ")}.`);
 }
-data.push("Logos: confirm assets/logos/windterpineslogo.png is Wind Terpines' official logo (the brief said none was supplied yet; it is shown because the file is in the folder). Ask Smith Equity Research for a transparent or flat-background logo (the current file's grey gradient shows as a lighter box on its tile). Optional: a flat-background MPDS logo (faint shell-texture fragments around the cropped artwork) and a larger SpeechPundit file (451x172 after trimming; slightly soft on retina in the dialog/page banner).");
+data.push("Logos: confirm assets/logos/windterpineslogo.png is Wind Terpines' official logo (the brief said none was supplied yet; it is shown because the file is in the folder). Ask Smith Equity Research for a transparent or flat-background logo (the current file's grey gradient shows as a lighter box on its tile). Optional: a flat-background MPDS logo (faint shell-texture fragments around the cropped artwork) and a larger SpeechPundit file (451x172 after trimming; slightly soft on retina in the dialog/page banner). Ask Heart's Delight Wine Auction for a larger logo (the supplied file is 298x148; it is shown at most at its natural size, so it is soft on retina screens), ideally SVG or at least 900px wide.");
 // Stage 3A: About / Join / Prepare.
 data.push(`site.json → member_stats: ${(site.member_stats || []).map((m) => `${m.value} ${m.label}`).join(", ")} come from the old About page; confirm the figures are current and set member_stats_as_of.`);
 data.push("site.json → recruiting: interest_form_url and the status ('Spring 2027 recruitment · Interest form is open', 'Fall 2026 applications are closed') come from the old Recruitment page; confirm the form is the current one. links.resume_guide is a Google Slides link: confirm it is shared publicly.");

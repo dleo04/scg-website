@@ -192,7 +192,8 @@ From `site.json → partners`. Keep the EY narrative but shorten and make it fac
 | `home_order` | no | order of the featured tiles on Home (1, 2, 3); without it, file order |
 | `engagements` | yes | list, see below; newest is used on the card |
 | `disciplines`, `fits` (lists) | recommended | chips in the dialog/page; `disciplines` must be in the file's list; `fits` shown as "(suggested)", `fit_inferred: true` until officers confirm |
-| `team` {`size`, `roles`, `majors`}, `links` [{`label`, `url`}] | no | only filled fields render; never invent members or majors |
+| `links` [{`label`, `url`}] | no | https only (no Canva or `/edit` links) |
+| `team` {`size`, `roles`, `majors`} | no | archived: kept in the data, not rendered |
 | `logo` | no | the client's logo, unaltered. May omit the extension (`assets/logos/hyswaplogo`): any `.png/.jpg/.jpeg/.webp/.svg` with that name is used. Without a file the tile shows the client name on a neutral background. |
 | `logo_bg` | no | tile color behind the logo; if omitted it is the dominant color of the logo's outer 2px edge (neutral `#F7F4EF` for transparent logos) |
 | `logo_offset` {`x`, `y`} | no | nudges a logo with uneven built-in margins (fraction of its rendered size) |
@@ -202,9 +203,13 @@ From `site.json → partners`. Keep the EY narrative but shorten and make it fac
 | `semester` | yes | "Spring 2026", "Fall 2025", etc. (Winter/Spring/Summer/Fall + year) |
 | `title` | no | shown after the semester in the engagement heading |
 | `tagline` | yes | the Objective (card for the latest engagement; page description) |
-| `challenge`, `scope` (list), `scope_detail`, `approach` | no | omitted if missing |
-| `skills` | no | merged across engagements into one chip list |
-| `outcome` | no | `null` until known; the card's Impact row shows "Results coming soon" |
+| `scope` (list), `deliverables` (list) | no | "What we delivered" = `deliverables`, else `scope` (never both); the card's Scope row uses `scope` |
+| `skills` | no | "Skills used" per engagement |
+| `impact` | no | one line, exactly as written; "Impact" in the drawer and the card's Impact row |
+| `outcome` | no | `null` until known; once written it is shown as "Outcome" instead of Impact |
+| `quote` {`text`, `attribution`, `permission`} | no | rendered only when `permission` is "yes" |
+| `public_link` | no | rendered only as an https URL without "canva.com" or "/edit" |
+| `challenge`, `scope_detail`, `approach` | no | archived: kept in the data, not rendered |
 
 Old flat projects (semester/tagline/… at the top level) are still read as one engagement.
 
@@ -212,7 +217,7 @@ Old flat projects (semester/tagline/… at the top level) are still read as one 
 
 No individual contact names or emails anywhere in this file (the build fails on emails/phone numbers).
 
-**Card** (shared component `components/work-card.njk`, identical on Home and `/projects/`; spec in `docs/HOME-LAYOUT.md` block 4): logo tile (`components/logo-tile.njk`, 8/3), title + (semester label), the LATEST engagement's Objective / Scope (first two items) / Impact rows with 28px icons, "Read more →". The title link goes to `/projects/<id>/`; with JS it opens the dialog. Cards are equal height.
+**Card** (shared component `components/work-card.njk`, identical on Home and `/projects/`; spec in `docs/HOME-LAYOUT.md` block 4): logo tile (`components/logo-tile.njk`, 8/3), title + (semester label), the LATEST engagement's Objective / Impact / Skills (up to 4 pills, at most 2 rows) rows with 28px icons, the same on Home, /projects/ and Join, "Read more →". The title link goes to `/projects/<id>/`; with JS it opens the dialog. Cards are equal height.
 
 **Explorer `/projects/`**
 - Page header (eyebrow, H1 "Projects", one-line intro). Grid: 1 col mobile, 2 from 640px, 3 from 1024px.
@@ -221,8 +226,8 @@ No individual contact names or emails anywhere in this file (the build fails on 
 
 **Detail (dialog and page, shared component `components/project-detail.njk`)**
 - Native `<dialog>` labelled by the project title: right-side drawer (720px) on desktop, full-screen sheet on mobile, fade/slide only when motion is allowed.
-- Content, in order: logo banner (same tile, 3/1); title with "(semester label)" in the card style; tagline (single-engagement tiles); Client / Client type; "Also for <client>: …" links to parallel tiles; then **one section per engagement, newest first**, headed with its semester (and title), each with **Challenge**, **Scope**, **Approach**, **Outcome** (and the engagement's tagline when there are several); then merged **Skills used**, **Disciplines**, **Good fit if you study (suggested)** (chips), **Team**, **Links**.
-- Missing content: on the live site a section with no data is **omitted** (no placeholder, no note). With `SHOW_PLACEHOLDERS=1` (`npm run dev:notes`) missing sections appear as labeled placeholders. Every omitted field is listed per project in `TODO-CONTENT.md`.
+- Content, in order: logo banner (same tile, 3/1); title with "(semester label)" in the card style; labelled fields (small-caps label above each value) in one row, stacked at 640px and below: **Client** (only when it differs from the title), **Client type**, **Disciplines** (outlined pills); "Also for <client>: …" links to parallel tiles; then **one block per engagement, newest first**: tagline, **Impact** (or **Outcome** once written), **What we delivered**, **Skills used**, the client quote (with permission) and public link. Only tiles with several engagements show a semester (and title) heading per block. Then **Good fit if you study (suggested)** (chips), **Links**.
+- Missing content is **omitted** in every mode (no placeholder boxes, also in `npm run dev:notes`). Omitted fields are listed per project in `TODO-CONTENT.md`.
 - Controls: close (X, Escape, backdrop), Previous/Next buttons and Left/Right arrow keys (cycling through the cards currently visible, so filters are respected), "Open full page".
 - Behavior: focus trapped and returned to the originating card; background inert; scroll locked; deep links `/projects/#<id>` and `/#<id>` (Home) open on load; browser Back closes; closing keeps the filter query.
 - Standalone page `/projects/<id>/`: same content in a card on a warm background, breadcrumbs (Home / Projects / title) with `BreadcrumbList` JSON-LD (first item named "Snider Consulting Group"), own `<title>`, meta description (tagline), canonical URL and Open Graph tags, Previous/Next project links and "Back to all projects".

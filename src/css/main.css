@@ -574,11 +574,15 @@ main:focus { outline: none; }
 .work-card__media .ph, .work-card__media .media { border-radius: 0; border-width: 0 0 2px; }
 /* Flex-centred (not grid): with <picture> as display: contents, its <source> child (which
    Chrome renders as display: block) became a second grid row and pushed the logo 16-32px
-   below centre. The dashed divider is a border, so it is outside the centring box. */
+   below centre. The divider is a border, so it is outside the centring box. */
+/* Divider: a 1px hairline in the card-border colour. Dark/coloured tiles (--dark: logo_bg
+   luminance < 0.6) keep the same 1px in their own colour, so they show no extra line and
+   every tile keeps the same height. */
 .work-card__logo-tile {
   container-type: size; display: flex; align-items: center; justify-content: center; overflow: hidden;
-  background: var(--tile-bg); border-bottom: 2px dashed var(--ph-border);
+  background: var(--tile-bg); border-bottom: 1px solid var(--line); padding-bottom: 1px;   /* + 1px = the old 2px border, so the logo box (container units) is unchanged */
 }
+.work-card__logo-tile--dark { border-bottom-color: var(--tile-bg); }
 .work-card__logo-tile picture { display: contents; }
 .work-card__logo-tile source { display: none; }
 /* Never cropped or distorted (contain); sized with the tile's container units. Wide logos by
@@ -590,7 +594,7 @@ main:focus { outline: none; }
   display: block; flex: none; object-fit: contain; max-width: 60cqw; max-height: min(55cqh, var(--logo-max-h));
   transform: translate(calc(var(--off-x, 0) * 100%), calc(var(--off-y, 0) * 100%));
 }
-.work-card__logo-tile--wide img { width: 55cqw; height: auto; }
+.work-card__logo-tile--wide img { width: 55cqw; max-width: min(60cqw, var(--logo-max-w, 100%)); height: auto; }   /* never past 1x */
 .work-card__logo-tile--square img { height: min(50cqh, 100px, var(--logo-max-h)); width: auto; }
 
 /* Compact body: 20px (mobile) / 24px (768+) padding. */
@@ -614,11 +618,14 @@ main:focus { outline: none; }
 .work-card__row { --icon: 28px; position: relative; padding-left: calc(var(--icon) + 14px); }
 .work-card__row dt { font-family: var(--font-head); font-weight: 600; font-size: .9375rem; line-height: 1.4; }   /* 15px semibold */
 .work-card__row dd { margin: 2px 0 0; color: var(--ink-2); font-size: .9375rem; line-height: 1.5; }               /* 15px / 1.5 */
-/* Home "Our Work" Skills row: up to 4 pills in the Join "Skills you'd build" style
+/* Card Skills row (every card): up to 4 pills in the Join "Skills you'd build" style
    (.seat-skill), at most two rows: each pill is 24px tall (20px line + 2px padding + 1px
-   borders) and rows are 6px apart, so 54px shows two whole rows; a pill that would start a
-   third row (only on narrow 3-column cards, ~1024px) is left out rather than cut. */
-.work-card__skills { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 0; padding: 0; list-style: none; max-height: 54px; overflow: hidden; }
+   borders) and rows are 6px apart, so two rows are 54px. 3px of bottom padding (inside the
+   clip) keeps the second row's bottom border clear of the edge at fractional positions; a
+   third row would start at 60px, past the 57px limit, so a pill that does not fit is left out
+   rather than cut. */
+.work-card__skills { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 0; padding: 0; list-style: none; max-height: 57px; overflow: hidden; }
+ul.work-card__skills { padding-bottom: 3px; }   /* ul.: outranks the ul[class] list reset */
 .work-card__skills .seat-skill { font-size: .8125rem; line-height: 20px; padding: 1px 10px; }
 .work-card__icon {
   position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: var(--icon); height: var(--icon);
@@ -735,7 +742,7 @@ html.dialog-open { overflow: hidden; }
   display: block; flex: none; object-fit: contain; max-width: 60cqw; max-height: min(55cqh, var(--logo-max-h));
   transform: translate(calc(var(--off-x, 0) * 100%), calc(var(--off-y, 0) * 100%));
 }
-.project-banner--wide img { width: 50cqw; height: auto; }
+.project-banner--wide img { width: 50cqw; max-width: min(60cqw, var(--logo-max-w, 100%)); height: auto; }
 .project-banner--square img { height: min(50cqh, 110px, var(--logo-max-h)); width: auto; }
 .project-banner--missing { border-bottom: 2px dashed var(--ph-border); }
 /* Client name on a neutral tile when there is no logo file (cards and banner). */
@@ -749,10 +756,17 @@ html.dialog-open { overflow: hidden; }
 /* The title receives programmatic focus (so screen readers announce it) but is not an
    interactive control, so it shows no focus ring; the dialog's buttons and links keep theirs. */
 .project-detail__title:focus, .project-detail__title:focus-visible { outline: none; }
-.project-detail__tagline { font-size: 1.0625rem; line-height: 1.5; color: var(--ink-2); margin: 0 0 14px; }
-.project-detail__meta { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 0; }
+/* Labelled fields under the title (label above value): one row of columns, stacked at 640px
+   and below. The Disciplines column takes the remaining width so its pills wrap inside it. */
+.project-detail__meta { display: flex; flex-wrap: wrap; gap: 12px 28px; margin: 0; }
+.project-detail__meta > div { min-width: 0; }
 .project-detail__meta dt { font-family: var(--font-head); font-size: .6875rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
 .project-detail__meta dd { margin: 2px 0 0; font-weight: 700; font-size: .9375rem; }
+.project-detail__disciplines { flex: 1 1 160px; }   /* narrow enough to share the row with a long client name */
+.project-detail__disciplines dd { margin-top: 6px; font-weight: inherit; }
+.project-detail__meta .chips { gap: 6px; }
+.project-detail__meta .chip { font-size: .8125rem; }
+@media (max-width: 640px) { .project-detail__meta { flex-direction: column; gap: 12px; } .project-detail__disciplines { flex: none; } }
 .project-detail__body { padding: 4px var(--pad) 32px; }
 .project-detail__section { padding-top: 20px; margin-top: 20px; border-top: 1px solid var(--line); }
 .project-detail__label { font-family: var(--font-head); font-size: .9375rem; font-weight: 700; margin: 0 0 8px; color: var(--ink); }   /* 15px, like the card labels */
@@ -760,7 +774,6 @@ html.dialog-open { overflow: hidden; }
 .project-detail__section .checklist { gap: 6px; font-size: .9375rem; color: var(--ink-2); }
 .project-detail__section .chips { gap: 6px; }
 .project-detail__section .chip { font-size: .8125rem; }
-.project-detail__note { margin-top: 10px !important; }
 /* Engagements (one per semester, newest first) */
 .engagement { padding-top: 22px; margin-top: 22px; border-top: 1px solid var(--line); }
 .engagement__heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 0 0 4px; font-family: var(--font-head); }
@@ -769,6 +782,13 @@ html.dialog-open { overflow: hidden; }
 .engagement__tagline { margin: 0 0 4px; font-size: .9375rem; line-height: 1.55; color: var(--ink-2); font-style: italic; }
 .engagement .project-detail__section { border-top: 0; margin-top: 14px; padding-top: 0; }
 .project-detail__shared { margin-top: 22px; }
+/* Client quote (only with permission) and public link, inside an engagement */
+.project-detail__quote { margin: 16px 0 0; padding-left: 14px; border-left: 3px solid var(--scg-gold); }
+.project-detail__quote blockquote { margin: 0; }
+.project-detail__quote p { margin: 0; font-size: .9375rem; line-height: 1.6; color: var(--ink); }
+.project-detail__quote figcaption { margin-top: 6px; font-size: .875rem; color: var(--ink-2); }
+.project-detail__link { margin: 14px 0 0; font-size: .9375rem; }
+.project-detail__link a { font-weight: 700; }
 .project-detail__related { margin: 12px 0 0; font-size: .9375rem; color: var(--ink-2); }
 .project-detail__related a { font-weight: 700; }
 

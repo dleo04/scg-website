@@ -1,13 +1,14 @@
 {#- "Our Work" case-study card (docs/HOME-LAYOUT.md block 4), sized to the reference's
     proportions. Image area: the shared logo tile (components/logo-tile.njk): the client
     logo on its logo_bg, or the client name on a neutral tile when no logo exists yet.
-    Rows: Objective = tagline (max 2 lines), Scope = first two scope items
-    joined into one line (max 2 lines), Impact = outcome (max 2 lines) or a muted
-    "Results coming soon". Skills stay in the dialog and on the project page.
+    Rows (every card): Objective = tagline (max 2 lines); Impact = the newest engagement's
+    impact line, or its outcome (labelled "Outcome") once one is written (max 2 lines), and a
+    muted "Results coming soon" only when both are empty; Skills = up to 4 skills of the newest
+    engagement as pills, at most 2 rows. The full deliverables/scope list stays in the dialog
+    and on the project page.
     The title link goes to /projects/<id>/ and, with JS, opens the project dialog.
     variant "home" (Home "Our Work" only): the title uses the client name when it is shorter
-    than the tile title (e.g. "DefenX"), and a Skills row (up to 4 skills of the newest
-    engagement, as pills) replaces the Impact row. Projects page and Join keep the default. -#}
+    than the tile title (e.g. "DefenX"). -#}
 {%- from "components/logo-tile.njk" import logoTile with context -%}
 {% macro workCard(p, number, headingLevel = 3, variant = "default") -%}
 {%- set home = variant == "home" -%}
@@ -24,29 +25,20 @@
         <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg></span>Objective</dt>
         <dd class="clamp clamp--2">{{ p.tagline | tbd | safe }}</dd>
       </div>
+      {#- Impact: outcome or impact, else "Results coming soon". -#}
       <div class="work-card__row">
-        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M9 6h11M9 12h11M9 18h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="4.5" cy="6" r="1.4" fill="currentColor"/><circle cx="4.5" cy="12" r="1.4" fill="currentColor"/><circle cx="4.5" cy="18" r="1.4" fill="currentColor"/></svg></span>Scope</dt>
-        <dd class="clamp clamp--2">
-          {%- if (p.scope | isTbd) and env.showPlaceholders %}<span class="tbd" data-placeholder="true" data-todo="[TBD: scope for {{ p.title }}]">[TBD: scope]</span>
-          {%- else %}{{ p | scopeLine | tbd | safe }}{% endif -%}
-        </dd>
+        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M4 18l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 8h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>{{ p.result.label if p.result else "Impact" }}</dt>
+        {%- if p.result %}
+        <dd class="clamp clamp--2">{{ p.result.text }}</dd>
+        {%- else %}
+        <dd class="work-card__pending"{% if env.showPlaceholders %} data-placeholder="true" data-todo="[TBD: impact for {{ p.title }} (projects.json → impact)]"{% endif %}>Results coming soon</dd>
+        {%- endif %}
       </div>
       {%- set skills = (p.engagements[0].skills if p.engagements and p.engagements[0].skills else []) %}
-      {%- if home and skills.length %}
+      {%- if skills.length %}
       <div class="work-card__row work-card__row--skills">
         <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M14.5 5.5l4 4M4 20l1-4.5L15.5 5a1.4 1.4 0 0 1 2 0l1.5 1.5a1.4 1.4 0 0 1 0 2L8.5 19 4 20z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>Skills</dt>
         <dd><ul class="work-card__skills">{% for s in skills.slice(0, 4) %}<li class="seat-skill">{{ s }}</li>{% endfor %}</ul></dd>
-      </div>
-      {%- endif %}
-      {#- Impact always shows (except on Home cards): the outcome, or "Results coming soon". -#}
-      {%- if not home %}
-      <div class="work-card__row">
-        <dt><span class="work-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M4 18l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 8h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Impact</dt>
-        {%- if p.outcome | isTbd %}
-        <dd class="work-card__pending"{% if env.showPlaceholders %} data-placeholder="true" data-todo="[TBD: outcome for {{ p.title }} (projects.json → outcome)]"{% endif %}>Results coming soon</dd>
-        {%- else %}
-        <dd class="clamp clamp--2">{{ p.outcome | tbd | safe }}</dd>
-        {%- endif %}
       </div>
       {%- endif %}
     </dl>

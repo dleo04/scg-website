@@ -1,5 +1,5 @@
 {
-  "_readme": "One object per client tile. A client that returns in a later semester keeps ONE tile with several 'engagements' (newest shown on the card); parallel projects for the same client in the same semester are separate tiles. Each engagement: semester (e.g. 'Fall 2025'), optional title, tagline (the card's Objective), challenge, scope (list), optional scope_detail/approach, skills, outcome (null until known). Tile fields: id, title, client, optional short_name, client_type, featured (shown in Home \"Our Work\"), home_order (its order there), disciplines, fits (inferred mapping of majors/interests; fit_inferred: true until officers confirm), team, links, logo (path; may omit the extension, e.g. assets/logos/hyswaplogo, and any .png/.jpg/.svg with that name is used), logo_bg (tile color; sampled automatically from the logo if omitted), logo_offset. Fields that are null or empty are omitted on the live site. No individual contact names, emails, fees or payment terms.",
+  "_readme": "One object per client tile. A client that returns in a later semester keeps ONE tile with several 'engagements' (newest shown on the card); parallel projects for the same client in the same semester are separate tiles. Each engagement: semester (e.g. 'Fall 2025'), optional title, tagline (the card's Objective), scope (list), optional deliverables (list; shown as 'What we delivered' instead of scope), skills, impact (one line, shown as 'Impact'), outcome (null until known; replaces Impact when written), optional quote {text, attribution, permission: 'yes' to show} and public_link (https only; no Canva or /edit links). challenge, approach, scope_detail and team are archived: kept but not shown. Tile fields: id, title, client, optional short_name, client_type, featured (shown in Home \"Our Work\"), home_order (its order there), disciplines, fits (inferred mapping of majors/interests; fit_inferred: true until officers confirm), team, links, logo (path; may omit the extension, e.g. assets/logos/hyswaplogo, and any .png/.jpg/.svg with that name is used), logo_bg (tile color; sampled automatically from the logo if omitted), logo_offset. Fields that are null or empty are omitted on the live site. No individual contact names, emails, fees or payment terms.",
   "projects": [
     {
       "id": "alliom",
@@ -47,6 +47,7 @@
           ],
           "scope_detail": "The project refines two forecasting models (a time-series model and an LSTM), brings in professionals for technical guidance, and develops business strategies for monetization and legal compliance.",
           "approach": "[TBD: how the team actually worked, tools, methods, cadence]",
+          "impact": "Gives Alliom a benchmarked zip-code-level housing-value forecasting model and a view of its monetization and compliance questions, to help judge whether the product is viable.",
           "outcome": null,
           "skills": [
             "Machine learning",
@@ -112,6 +113,7 @@
             "Git and GitHub",
             "Technical documentation"
           ],
+          "impact": "Gives School Harbor a clean, queryable Colorado school database and public API, backed by documentation and an annual update pipeline, so the data stays current and others can build on it.",
           "outcome": null
         },
         {
@@ -124,6 +126,7 @@
           ],
           "scope_detail": "Data is managed in a Google SQL database and visualized in Google Looker Studio to give a Tableau-like experience. The work includes configuring the database, connecting it to Looker Studio, and potentially using Python for sub-tasks.",
           "approach": "[TBD: how the team actually worked, tools, methods, cadence]",
+          "impact": "Moves School Harbor's student test-score dashboard onto a cloud SQL database and Looker Studio, giving the team a rebuilt dashboard it can maintain and extend; School Harbor later returned for the Colorado school data API.",
           "outcome": null,
           "skills": [
             "SQL",
@@ -177,6 +180,7 @@
           ],
           "scope_detail": "The team built an outreach process, benchmarked best practices from comparable organizations, and documented a timeline and process flow to manage growth and turnover.",
           "approach": "[TBD: how the team actually worked, tools, methods, cadence]",
+          "impact": "Gives a new product-design organization an outreach contact list, a benchmarking report and a process flow with a timeline, so it can scale outreach and hand work over smoothly as members turn over.",
           "outcome": null,
           "skills": [
             "Benchmarking",
@@ -228,6 +232,7 @@
           ],
           "scope_detail": "The project focuses on role delegation, streamlining documentation and communication processes, and refining the team's marketing approach.",
           "approach": "[TBD: how the team actually worked, tools, methods, cadence]",
+          "impact": "Gives a 25-member dance team a role delegation framework, a knowledge management system and marketing recommendations, so responsibilities and know-how stay with the team when leaders change.",
           "outcome": null,
           "skills": [
             "Role and responsibility design",
@@ -284,6 +289,7 @@
             "Stakeholder communication",
             "Organizational design"
           ],
+          "impact": "Gives SCG leadership a donation approach, a framework for assessing the club's relationship with the Snider Center, and an action list, so decisions on funding and partnerships rest on a clear picture.",
           "outcome": null
         },
         {
@@ -297,6 +303,7 @@
           ],
           "scope_detail": "The team identifies solutions for senior-member involvement, work and presentation quality, and internal procedures from recruitment through client acquisition.",
           "approach": "[TBD: how the team actually worked, tools, methods, cadence]",
+          "impact": "Gives SCG a plan to engage senior members, improve project quality and presentations, and documented operating procedures, so the club runs the same way as membership changes.",
           "outcome": null,
           "skills": [
             "Organizational strategy",
@@ -311,7 +318,7 @@
       "id": "hy-swap",
       "title": "Hy-Swap",
       "client": "Hy-Swap",
-      "client_type": null,
+      "client_type": "Nonprofit",
       "featured": false,
       "logo": "assets/logos/hyswaplogo-trimmed.png",
       "logo_bg": "#FDFEFE",
@@ -348,6 +355,7 @@
             "Volunteer program design",
             "Fundraising research"
           ],
+          "impact": "Gives a local sustainability exchange a community outreach strategy, a media toolkit and a volunteer leadership pipeline, plus a fundraising plan, to grow its reach and volunteer base.",
           "outcome": null
         }
       ]
@@ -396,6 +404,7 @@
             "Sponsorship strategy",
             "Stakeholder research"
           ],
+          "impact": "Gives the wind energy team an organization toolkit, a recruitment and retention strategy and a sponsorship packet with tiers and a partner list, in the same spirit as the sponsorship packet we built for Robotics at Maryland.",
           "outcome": null
         }
       ]
@@ -439,6 +448,7 @@
             "Event planning",
             "Fundraising strategy"
           ],
+          "impact": "Gives a fast-growing organization a leadership framework, a semester-to-semester transition guide and an event timeline, plus a corporate sponsorship strategy with contacts, so growth rests on structure and funding.",
           "outcome": null
         }
       ]
@@ -488,6 +498,7 @@
             "Business planning",
             "Grant research"
           ],
+          "impact": "Gives SpeechPundit pilot plans for universities and an industry association, a product brief drawn from hands-on use, and a comparison of nonprofit and corporate growth paths to guide its next distribution moves.",
           "outcome": null
         }
       ]
@@ -530,6 +541,7 @@
             "Pricing strategy",
             "Market research"
           ],
+          "impact": "Gives a school-safety startup a five-year financial outlook and a pricing strategy to guide budgeting and sales conversations, in the same vein as the monetization strategy we built for Alliom.",
           "outcome": null
         }
       ]
@@ -572,6 +584,7 @@
             "Regulatory research",
             "Sales playbook design"
           ],
+          "impact": "Gives DefenX a two-year outreach plan with a target list and sales playbook for taking its school-safety product to customers nationally, alongside the financial plan we built for the same client.",
           "outcome": null
         }
       ]
@@ -616,6 +629,7 @@
             "Event logistics",
             "Process documentation"
           ],
+          "impact": "Gives the team a fundraising guide covering sponsors, donors and high school academy partnerships, plus a transition document so incoming leaders can pick up where the last left off, similar to our work with Robotics at Maryland.",
           "outcome": null
         }
       ]
@@ -661,6 +675,7 @@
             "Content planning",
             "Process documentation"
           ],
+          "impact": "Gives the journal a financial management system, a social media content plan and transition documents so funding and publicity carry across changes in leadership.",
           "outcome": null
         }
       ]
@@ -709,6 +724,7 @@
             "Member engagement",
             "Organizational design"
           ],
+          "impact": "Gives the club a plan to widen its reach and reputation through marketing, member engagement and a clearer internal structure, the same mix of work we have done for UMD Dynamic Dance and Justice for Fraud Victims.",
           "outcome": null
         }
       ]
@@ -751,6 +767,245 @@
             "Process documentation",
             "Member engagement strategy"
           ],
+          "impact": "Gives the chapter an onboarding and task-tracking guide and E-Board efficiency tools to support retention, similar to the membership structure work we did for Justice for Fraud Victims.",
+          "outcome": null
+        }
+      ]
+    },
+    {
+      "id": "haefa",
+      "title": "HAEFA",
+      "client": "HAEFA (Health and Education for All)",
+      "short_name": "HAEFA",
+      "client_type": "UMD student organization",
+      "featured": false,
+      "logo": "assets/logos/haefalogo-trimmed.png",
+      "logo_bg": "#FFFFFF",
+      "disciplines": [
+        "Operations & People",
+        "Strategy & Research"
+      ],
+      "fits": [
+        "Management",
+        "Communication",
+        "Marketing"
+      ],
+      "fit_inferred": true,
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Fall 2024",
+          "tagline": "Raising visibility and formalizing membership for a UMD health and education nonprofit club",
+          "scope": [
+            "Raffle fundraiser outreach and coordination support",
+            "Formalized membership structure and engagement strategy for long-term growth",
+            "Social media content ideas and an email campaign to reach other clubs and professors"
+          ],
+          "deliverables": [
+            "Final client presentation",
+            "Raffle guide",
+            "Social media and event planning tracker",
+            "Officer roles and responsibilities"
+          ],
+          "skills": [
+            "Social media strategy",
+            "Event planning",
+            "Fundraising support",
+            "Organizational design",
+            "Member engagement strategy"
+          ],
+          "impact": "Gives HAEFA a raffle guide, a social media and event planning tracker, and defined officer roles, so the club can run fundraising and outreach with a clear structure.",
+          "outcome": null
+        }
+      ]
+    },
+    {
+      "id": "justice-for-fraud-victims",
+      "title": "Justice for Fraud Victims",
+      "client": "Justice for Fraud Victims",
+      "client_type": "UMD student organization",
+      "featured": false,
+      "logo": "assets/logos/jffvlogo-trimmed.png",
+      "logo_bg": "#000000",
+      "disciplines": [
+        "Operations & People",
+        "Strategy & Research"
+      ],
+      "fits": [
+        "Management",
+        "Business",
+        "Communication"
+      ],
+      "fit_inferred": true,
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Fall 2024",
+          "tagline": "Building a committed membership base and a clearer structure for a UMD fraud-awareness student organization",
+          "scope": [
+            "Membership recruitment and onboarding to build an engaged general body",
+            "Organizational structure balancing general body meetings with case-based work",
+            "Funding opportunities and budget considerations for club activities"
+          ],
+          "deliverables": [
+            "Recruitment guide and application template",
+            "Sponsorship guide",
+            "General body roles and expectations",
+            "Final presentation with recommendations"
+          ],
+          "skills": [
+            "Recruitment strategy",
+            "Onboarding design",
+            "Organizational design",
+            "Sponsorship strategy",
+            "Financial planning"
+          ],
+          "impact": "Gives the organization a recruitment and application process, a sponsorship guide and clear general-body roles, so new members arrive prepared and stay engaged, similar to the membership work we did for FBLA at UMD.",
+          "outcome": null
+        }
+      ]
+    },
+    {
+      "id": "robotics-at-maryland",
+      "title": "Robotics at Maryland",
+      "client": "Robotics at Maryland",
+      "short_name": "R@M",
+      "client_type": "UMD student organization",
+      "featured": false,
+      "logo": "assets/logos/roboticsatmdlogo-trimmed.png",
+      "logo_bg": "#FFFFFF",
+      "disciplines": [
+        "Operations & People",
+        "Strategy & Research"
+      ],
+      "fits": [
+        "Business",
+        "Marketing",
+        "Management",
+        "Engineering (product interest)"
+      ],
+      "fit_inferred": true,
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Fall 2024",
+          "tagline": "Recruiting a business team and securing sponsorships for UMD's student robotics club",
+          "scope": [
+            "Recruitment strategy and structure for a Smith student business team",
+            "Sponsorship packet template to grow club funding",
+            "Streamlined onboarding and knowledge transfer across leadership changes",
+            "Engineered AI prompts for the business team"
+          ],
+          "deliverables": [
+            "Midpoint client presentation (current-state analysis and proposed future state)",
+            "Tailored sponsorship packet template",
+            "Detailed business team roles and structure",
+            "Engineered ChatGPT prompts for the business team",
+            "Final client presentation"
+          ],
+          "skills": [
+            "Sponsorship strategy",
+            "Recruitment strategy",
+            "Organizational design",
+            "Knowledge transfer",
+            "Prompt engineering"
+          ],
+          "impact": "Equips the club with a tailored sponsorship packet, a defined business-team structure and AI prompts for the team, so recruiting and fundraising can continue across leadership changes.",
+          "outcome": null
+        }
+      ]
+    },
+    {
+      "id": "cp-scholars",
+      "title": "College Park Scholars",
+      "client": "College Park Scholars",
+      "client_type": "UMD program",
+      "featured": false,
+      "logo": "assets/logos/cpscholarslogo-trimmed.png",
+      "logo_bg": "#FEFEFE",
+      "disciplines": [
+        "Operations & People",
+        "Strategy & Research"
+      ],
+      "fits": [
+        "Information Systems",
+        "Communication",
+        "Management",
+        "Business"
+      ],
+      "fit_inferred": true,
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Fall 2024",
+          "tagline": "Creating a sustainable alumni database and engagement plan for a UMD living-learning program",
+          "scope": [
+            "Alumni contact database built for long-term maintenance",
+            "Recommendations for keeping alumni engaged through mentorship, career opportunities and program updates"
+          ],
+          "deliverables": [
+            "Alumni database (Public Leadership alumni)",
+            "Alumni engagement packet",
+            "Knowledge transfer and long-term implementation guide",
+            "Final client presentation"
+          ],
+          "skills": [
+            "Database design",
+            "Alumni engagement strategy",
+            "Knowledge transfer",
+            "Process documentation",
+            "Stakeholder communication"
+          ],
+          "impact": "Gives the program a maintained alumni database, an engagement packet and a long-term implementation guide, so alumni relations can be sustained over time and potentially extended to other Scholars programs.",
+          "outcome": null
+        }
+      ]
+    },
+    {
+      "id": "hearts-delight",
+      "title": "Heart's Delight Wine Auction",
+      "client": "Heart's Delight Wine Auction",
+      "short_name": "Heart's Delight",
+      "client_type": "Nonprofit",
+      "featured": false,
+      "logo": "assets/logos/heartsdelightlogo-trimmed.png",
+      "logo_bg": "#F7F4EF",
+      "disciplines": [
+        "Strategy & Research",
+        "Product & Design"
+      ],
+      "fits": [
+        "Marketing",
+        "Communication",
+        "Design",
+        "Business"
+      ],
+      "fit_inferred": true,
+      "links": [],
+      "engagements": [
+        {
+          "semester": "Fall 2024",
+          "tagline": "Building awareness for a wine auction fundraiser through social media and a consistent brand",
+          "scope": [
+            "Social media presence focused on content engagement, reach and event promotion",
+            "Sustainable messaging campaign to build credibility",
+            "Instagram bio and Linktree, pinned posts, branding guide and content guide"
+          ],
+          "deliverables": [
+            "Final client presentation",
+            "Instagram bio and Linktree recommendations",
+            "Pinned post and caption creations",
+            "Branding guide",
+            "Content guide (logistical tips and content ideas)"
+          ],
+          "skills": [
+            "Social media strategy",
+            "Brand strategy",
+            "Content planning",
+            "Event promotion",
+            "Marketing communications"
+          ],
+          "impact": "Gives the fundraiser a consistent brand, an Instagram bio and Linktree, pinned posts and a content guide, so its awareness-building on social media can continue after the project ends.",
           "outcome": null
         }
       ]

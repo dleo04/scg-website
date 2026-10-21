@@ -27,7 +27,7 @@ bodyClass: page-projects
         <div class="project-filters__field project-filters__field--search">
           <label for="pf-q">Search</label>
           <input id="pf-q" name="q" type="search" autocomplete="off" aria-describedby="pf-q-hint">
-          <span id="pf-q-hint" class="visually-hidden">Searches project names, clients, summaries and skills.</span>
+          <span id="pf-q-hint" class="visually-hidden">Searches project names, clients, summaries, scope, deliverables and skills.</span>
         </div>
         {#- On small screens the other filters sit behind this toggle to keep the bar compact. -#}
         <button type="button" class="project-filters__toggle" aria-expanded="false" aria-controls="pf-more" data-filters-toggle>Filters <span data-active-count></span></button>
@@ -81,7 +81,7 @@ bodyClass: page-projects
 
     <div class="projects-grid" data-project-grid>
       {%- for p in projectsSorted %}
-      {%- set engText = [] %}{% for e in p.engagements %}{% set engText = (engText.push(e.title or "", e.tagline or ""), engText) %}{% endfor %}
+      {%- set engText = [] %}{% for e in p.engagements %}{% set engText = (engText.push(e.title or "", e.tagline or "", (e.scope or []) | join(" "), (e.deliverables or []) | join(" ")), engText) %}{% endfor %}
       <div class="projects-grid__item" data-project-item
            data-semester="{{ p.semesters | join('|') }}" data-type="{{ p.client_type or '' }}"
            data-tracks="{{ (p.disciplines or []) | join('|') }}" data-fits="{{ (p.fits or []) | join('|') }}"

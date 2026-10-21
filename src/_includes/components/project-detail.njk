@@ -1,12 +1,18 @@
-{%- from "components/ui.njk" import tbdBlock, chip with context -%}
+{%- from "components/ui.njk" import chip with context -%}
 {%- from "components/logo-tile.njk" import logoTile with context -%}
 {#- Full client story (SPEC 6), the single source for the dialog and /projects/<id>/.
-    Order: logo banner; title + (semesters); tagline (single engagement); client / client type;
-    "Also for <client>" links (parallel projects); one section per ENGAGEMENT, newest first,
-    headed with its semester (and title), each with Challenge, Scope, Approach, Outcome;
-    then merged Skills used, Disciplines, Good fit if you study, Team, Links.
-    Live site: anything missing is OMITTED. SHOW_PLACEHOLDERS=1: missing parts appear as
-    labeled placeholders for the team. titleLevel: 1 on the page, 2 in the dialog. -#}
+    Header: logo banner; title + (semester label); labelled fields in one row (stacked at 640px
+    and below): Client (only when it differs from the title, p.clientDiffers), Client type,
+    Disciplines (outlined pills); "Also for <client>" links (parallel projects).
+    Then one block per ENGAGEMENT, newest first: tagline, Impact (or Outcome once one is
+    written), What we delivered (deliverables, else scope), Skills used, the client quote (only
+    with permission) and the public link. Only tiles with several engagements get a semester
+    (and title) heading per block; a single engagement's semester is already in the title.
+    Then Good fit if you study, Links.
+    Not rendered (kept in projects.json): challenge, approach, scope_detail, team; see
+    DECISIONS.md. Empty fields are omitted in every mode, with no TBD boxes.
+    titleLevel: 1 on the page, 2 in the dialog. Section headings sit one level below the
+    engagement heading when there is one, otherwise directly below the title (no skipped levels). -#}
 {% macro section(label, h, cls = "") -%}
 <section class="project-detail__section {{ cls }}">
   <h{{ h }} class="project-detail__label">{{ label | safe }}</h{{ h }}>
@@ -22,10 +28,11 @@
   {{ logoTile(p, "banner") }}
   <header class="project-detail__head">
     <h{{ titleLevel }} class="project-detail__title" data-detail-title tabindex="-1">{{ p.title }} <span class="project-detail__term">({{ p.semester }})</span></h{{ titleLevel }}>
-    {%- if not multi and not (p.tagline | isTbd) %}<p class="project-detail__tagline">{{ p.tagline | tbd | safe }}</p>{% endif %}
+    {#- Labelled fields: Client (only when it differs from the title), Client type, Disciplines. -#}
     <dl class="project-detail__meta">
-      <div><dt>Client</dt><dd>{{ p.client }}</dd></div>
+      {%- if p.clientDiffers %}<div><dt>Client</dt><dd>{{ p.client }}</dd></div>{% endif %}
       {%- if p.client_type %}<div><dt>Client type</dt><dd>{{ p.client_type }}</dd></div>{% endif %}
+      {%- if p.disciplines and p.disciplines.length %}<div class="project-detail__disciplines"><dt>Disciplines</dt><dd><ul class="chips">{% for d in p.disciplines %}{{ chip(d, "outline") }}{% endfor %}</ul></dd></div>{% endif %}
     </dl>
     {%- if p.related and p.related.length %}
     <p class="project-detail__related">Also for {{ p.client }}:
@@ -35,45 +42,37 @@
   </header>
 
   <div class="project-detail__body">
+    {%- set sh = h + 1 if multi else h %}
     {%- for e in p.engagements %}
-    <section class="engagement" aria-labelledby="eng-{{ p.id }}-{{ loop.index }}">
+    {%- set tag = "section" if multi else "div" %}
+    <{{ tag }} class="engagement"{% if multi %} aria-labelledby="eng-{{ p.id }}-{{ loop.index }}"{% endif %}>
+      {%- if multi %}
       <h{{ h }} class="engagement__heading" id="eng-{{ p.id }}-{{ loop.index }}"><span class="engagement__semester">{{ e.semester }}</span>{% if e.title %}<span class="engagement__title">{{ e.title }}</span>{% endif %}</h{{ h }}>
-      {%- if multi and not (e.tagline | isTbd) %}<p class="engagement__tagline">{{ e.tagline | tbd | safe }}</p>{% endif %}
+      {%- endif %}
+      {%- if not (e.tagline | isTbd) %}<p class="engagement__tagline">{{ e.tagline }}</p>{% endif %}
 
-      {%- if not (e.challenge | isTbd) %}{% call section("Challenge", h + 1) %}<p>{{ e.challenge | tbd | safe }}</p>{% endcall %}
-      {%- elif notes %}{% call section("Challenge", h + 1) %}{{ tbdBlock("Challenge coming soon", "[TBD: the client's challenge, " ~ e.semester ~ "]") }}{% endcall %}{% endif %}
+      {%- if e.result %}{% call section(e.result.label, sh) %}<p>{{ e.result.text }}</p>{% endcall %}{% endif %}
 
-      {%- if not (e.scope | isTbd) %}{% call section("Scope", h + 1) %}
-        <ul class="checklist">{% for s in e.scope %}<li>{{ s | tbd | safe }}</li>{% endfor %}</ul>
-        {%- if e.scope_detail and not (e.scope_detail | isTbd) %}<p class="project-detail__note">{{ e.scope_detail | tbd | safe }}</p>{% endif %}
-      {% endcall %}
-      {%- elif notes %}{% call section("Scope", h + 1) %}{{ tbdBlock("Scope coming soon", "[TBD: deliverables, " ~ e.semester ~ "]") }}{% endcall %}{% endif %}
+      {%- if e.delivered.length %}{% call section("What we delivered", sh) %}
+        <ul class="checklist">{% for s in e.delivered %}<li>{{ s }}</li>{% endfor %}</ul>
+      {% endcall %}{% endif %}
 
-      {%- if not (e.approach | isTbd) %}{% call section("Approach", h + 1) %}<p>{{ e.approach | tbd | safe }}</p>{% endcall %}
-      {%- elif notes %}{% call section("Approach", h + 1) %}{{ tbdBlock("Approach coming soon", "[TBD: how the team worked, " ~ e.semester ~ "]") }}{% endcall %}{% endif %}
+      {%- if e.skills and e.skills.length %}{% call section("Skills used", sh) %}<ul class="chips">{% for s in e.skills %}{{ chip(s) }}{% endfor %}</ul>{% endcall %}{% endif %}
 
-      {%- if not (e.outcome | isTbd) %}{% call section("Outcome", h + 1) %}<p>{{ e.outcome | tbd | safe }}</p>{% endcall %}
-      {%- elif notes %}{% call section("Outcome", h + 1) %}{{ tbdBlock("Outcome coming soon", "[TBD: results for the client, " ~ e.semester ~ "]") }}{% endcall %}{% endif %}
-    </section>
+      {%- if e.quoteShown %}
+      <figure class="project-detail__quote">
+        <blockquote><p>{{ e.quoteShown.text }}</p></blockquote>
+        {%- if e.quoteShown.attribution %}<figcaption>{{ e.quoteShown.attribution }}</figcaption>{% endif %}
+      </figure>
+      {%- endif %}
+
+      {%- if e.linkShown %}<p class="project-detail__link"><a href="{{ e.linkShown }}" rel="noopener">View the public project</a></p>{% endif %}
+    </{{ tag }}>
     {%- endfor %}
 
     <div class="project-detail__shared">
-    {%- if p.skills and p.skills.length %}{% call section("Skills used", h) %}<ul class="chips">{% for s in p.skills %}{{ chip(s) }}{% endfor %}</ul>{% endcall %}{% endif %}
-
-    {%- if p.disciplines and p.disciplines.length %}{% call section("Disciplines", h) %}<ul class="chips">{% for d in p.disciplines %}{{ chip(d, "outline") }}{% endfor %}</ul>{% endcall %}{% endif %}
-
     {#- 'fits' is inferred from the scope of work (projects.json → fit_inferred), so it is labeled as a suggestion. -#}
     {%- if p.fits and p.fits.length %}{% call section('Good fit if you study <span class="eyebrow__note">(suggested)</span>', h) %}<ul class="chips">{% for f in p.fits %}{{ chip(f, "gold") }}{% endfor %}</ul>{% endcall %}{% endif %}
-
-    {%- set hasTeam = p.team and (not (p.team.size | isTbd) or not (p.team.roles | isTbd) or not (p.team.majors | isTbd)) %}
-    {%- if hasTeam %}{% call section("Team", h) %}
-      <dl class="project-detail__meta">
-        {%- if not (p.team.size | isTbd) %}<div><dt>Size</dt><dd>{{ p.team.size }}</dd></div>{% endif %}
-        {%- if not (p.team.roles | isTbd) %}<div><dt>Roles</dt><dd>{{ p.team.roles | join(", ") }}</dd></div>{% endif %}
-        {%- if not (p.team.majors | isTbd) %}<div><dt>Majors</dt><dd>{{ p.team.majors | join(", ") }}</dd></div>{% endif %}
-      </dl>
-    {% endcall %}
-    {%- elif notes %}{% call section("Team", h) %}{{ tbdBlock("Team details coming soon", "[TBD: team size, roles and majors]") }}{% endcall %}{% endif %}
 
     {%- if p.links and p.links.length %}{% call section("Links", h) %}<ul class="link-list">{% for l in p.links %}<li><a href="{{ l.url }}" rel="noopener">{{ l.label }}</a></li>{% endfor %}</ul>{% endcall %}{% endif %}
     </div>
