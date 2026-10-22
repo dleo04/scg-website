@@ -35,7 +35,7 @@ jobs:
     env:
       # LAUNCH SWITCH: "preview" (default) or "production". See the box at the top and
       # docs/LAUNCH.md. Nothing else in this file changes between the two modes.
-      SITE_MODE: preview
+      SITE_MODE: production
     steps:
       - uses: actions/checkout@v4
 
