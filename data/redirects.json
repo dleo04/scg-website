@@ -6,6 +6,10 @@
       "to": "/"
     },
     {
+      "from": "/home",
+      "to": "/"
+    },
+    {
       "from": "/about-us",
       "to": "/about/"
     },
@@ -31,6 +35,10 @@
     },
     {
       "from": "/recruitment-2",
+      "to": "/join/"
+    },
+    {
+      "from": "/recruitment",
       "to": "/join/"
     },
     {
