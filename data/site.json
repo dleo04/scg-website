@@ -52,8 +52,8 @@
     ]
   },
   "forms": {
-    "_readme": "Client request on /work-with-us/contact/. 'client_request_endpoint': where the form POSTs (e.g. a Formspree URL); null = not connected: the page shows a 'Request by email' composer instead (same fields; its button opens the visitor's email app with a message to client_request_fallback_email), and npm run dev:notes adds a 'not connected' note. Set the endpoint and rebuild: the real form replaces the composer with no code changes. 'client_request_fallback_email': the shared club address only, never a personal one; it is the only email the build allows besides links.contact_email.",
-    "client_request_endpoint": null,
+    "_readme": "Client project requests. 'client_request_form_url': the prospective-client Google Form; every 'Request a project' button (Work With Us and the Contact page) opens it in a new tab. Change it here only; if it is null, those buttons fall back to /work-with-us/contact/. 'client_request_fallback_email': the shared club address shown as 'Prefer email?' on the Contact page; never a personal one; it is the only email the build allows besides links.contact_email.",
+    "client_request_form_url": "https://docs.google.com/forms/d/e/1FAIpQLSc1KjbARtQzEzeBTUMoXuA8E40hSEw6Wi7fWMYMENBa2F6Ikg/viewform",
     "client_request_fallback_email": "scgumd@gmail.com",
     "client_request_fallback_email_confirmed": "Oct 2026",
     "client_request_fallback_source": "The organization address listed on the old site's public Contact Us page (sniderconsultinggroup.com/contact-us)."
@@ -677,9 +677,10 @@
   },
   "partners_intro": "SCG partners with corporate and on-campus organizations that support its members and the Robert H. Smith School community.",
   "contact": {
-    "_readme": "/work-with-us/contact/. 'intro' and 'next' come from the old Contact Us page ('we're always happy to meet potential clients…', 'E-mail us to set up a 1-hour online consulting session') and the old Services page ('happy to meet and discuss if our services are the right fit'). 'include' is the request checklist (the old page listed nothing else). 'photo' is an id from data/photos.json.",
+    "_readme": "/work-with-us/contact/. 'intro' and 'next' come from the old Contact Us page ('we're always happy to meet potential clients…', 'E-mail us to set up a 1-hour online consulting session') and the old Services page ('happy to meet and discuss if our services are the right fit'). 'form_intro' is the sentence under the 'Request a project' heading; 'form_asks' is the 'The form asks for:' checklist above the button. 'photo' is an id from data/photos.json.",
     "intro": "We're always happy to meet potential clients and learn more about UMD student clubs.",
-    "include": [
+    "form_intro": "Tell us about your organization and the project you have in mind.",
+    "form_asks": [
       "Your organization and what it does",
       "What you need help with",
       "Your timeline"

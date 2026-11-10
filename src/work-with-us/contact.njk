@@ -5,16 +5,17 @@ title: "Contact us"
 description: "Request a project from the Snider Consulting Group: tell us about your organization, what you need and your timeline."
 bodyClass: page-contact
 ---
-{#- Work With Us → Contact us. Intro, checklist and "What happens next" come from the old
-    Contact Us and Services pages (site.json → contact). Left: the request form, or the email
-    composer while forms.client_request_endpoint is null (components/request-form.njk). Right:
-    the shared club email, social links, checklist, next step and a photo. Then the FAQ's
-    client questions (clientFaq: drafts and open decisions excluded). -#}
+{#- Work With Us → Contact us. Intro and "What happens next" come from the old Contact Us and
+    Services pages (site.json → contact). Left: a short intro, "The form asks for:" checklist
+    (contact.form_asks), the "Request a project form" button (site.json → forms.client_request_form_url, the Google Form,
+    opens in a new tab), a "Prefer email?" line (the shared club address) and "What happens
+    next". Right: the shared club email, social links and a photo. Then the FAQ's client
+    questions (clientFaq: drafts and open decisions excluded). -#}
 {%- from "components/page-banner.njk" import pageBanner with context -%}
-{%- from "components/request-form.njk" import requestForm with context -%}
 {%- from "components/wwu-icons.njk" import wwuIcon with context -%}
 {%- set c = site.contact -%}
 {%- set email = site.forms.client_request_fallback_email if site.forms else null -%}
+{%- set formUrl = site.forms.client_request_form_url if site.forms else null -%}
 {%- set photo = photos | findBy("id", c.photo) -%}
 {%- set photoImg = generatedImages.photos[c.photo] if generatedImages.photos else null -%}
 
@@ -23,9 +24,27 @@ bodyClass: page-contact
 
 <section class="section" aria-label="Request a project">
   <div class="container contact-layout">
-    <div class="contact-layout__main">
+    <div class="contact-layout__main request">
       <h2 class="section__title contact-layout__title">Request a project</h2>
-      {{ requestForm() }}
+      {%- if formUrl %}
+      {%- if c.form_intro %}<p class="request__intro">{{ c.form_intro }}</p>{% endif %}
+      {%- if c.form_asks and c.form_asks.length %}
+      <p class="request__label" id="form-asks-label">The form asks for:</p>
+      <ul class="request__check" aria-labelledby="form-asks-label">
+        {%- for item in c.form_asks %}<li>{{ wwuIcon("check", 18) }}<span>{{ item }}</span></li>{% endfor %}
+      </ul>
+      {%- endif %}
+      <p class="request__actions"><a class="btn btn--primary" href="{{ formUrl }}" target="_blank" rel="noopener noreferrer">Request a project form<span class="visually-hidden"> (opens in a new tab)</span>{{ wwuIcon("external", 18) }}</a></p>
+      {%- if email %}<p class="request__email">Prefer email? Write to <a href="mailto:{{ email }}?subject=Project%20request">{{ email }}</a>.</p>{% endif %}
+      {%- elif email %}
+      <p class="request__intro">Email us at <a href="mailto:{{ email }}?subject=Project%20request">{{ email }}</a> with your organization, what you need help with and your timeline.</p>
+      {%- else %}
+      <p class="request__intro">To request a project, message SCG on <a href="{{ site.links.instagram }}" rel="noopener">Instagram</a> or <a href="{{ site.links.linkedin }}" rel="noopener">LinkedIn</a>.</p>
+      {%- endif %}
+      {%- if c.next %}
+      <h3 class="request__sub">What happens next</h3>
+      <p class="request__next">{{ c.next }}</p>
+      {%- endif %}
     </div>
     <aside class="contact-card" aria-labelledby="contact-card-title">
       <h2 class="contact-card__title" id="contact-card-title">Get in touch</h2>
@@ -34,14 +53,6 @@ bodyClass: page-contact
         <li><span class="icon-chip">{{ wwuIcon("instagram", 20) }}</span><span><span class="contact-card__label">Instagram</span><a href="{{ site.links.instagram }}" rel="noopener">@scgumd</a></span></li>
         <li><span class="icon-chip">{{ wwuIcon("linkedin", 20) }}</span><span><span class="contact-card__label">LinkedIn</span><a href="{{ site.links.linkedin }}" rel="noopener">Snider Consulting Group</a></span></li>
       </ul>
-      <h3 class="contact-card__sub">What to include in your request</h3>
-      <ul class="contact-card__check">
-        {%- for item in c.include %}<li>{{ wwuIcon("check", 18) }}<span>{{ item }}</span></li>{% endfor %}
-      </ul>
-      {%- if c.next %}
-      <h3 class="contact-card__sub">What happens next</h3>
-      <p class="contact-card__next">{{ c.next }}</p>
-      {%- endif %}
       {%- if photo and photoImg %}
       <picture class="contact-card__photo">
         <source type="image/webp" srcset="{{ photoImg.webpSrcset }}" sizes="(min-width: 1024px) 400px, 92vw">

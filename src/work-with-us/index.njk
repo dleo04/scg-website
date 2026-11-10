@@ -8,12 +8,17 @@ bodyClass: page-wwu
     engagement, more) and the FAQ fee answer (feeFacts, one sentence per card). Service cards:
     work_with_us.help with client logo chips (helpCards, from projects.json skills/tracks).
     Clients: logo tiles (clientTiles) + other names (otherClients) + the verified "Client
-    projects" stat. No stepper here (that is /about/). CTA → /work-with-us/contact/. -#}
+    projects" stat. No stepper here (that is /about/). Every "Request a project" CTA opens
+    site.json → forms.client_request_form_url (the Google Form) in a new tab; without it they
+    fall back to /work-with-us/contact/. -#}
 {%- from "components/page-banner.njk" import pageBanner with context -%}
 {%- from "components/wwu-icons.njk" import wwuIcon with context -%}
 {%- set wwu = site.work_with_us -%}
 {%- set clientStat = site.stats | findBy("label", "Client projects") -%}
 {%- set hero = generatedImages.hero -%}
+{%- set formUrl = site.forms.client_request_form_url if site.forms else null -%}
+{%- set requestAttrs %}href="{{ formUrl or '/work-with-us/contact/' }}"{% if formUrl %} target="_blank" rel="noopener noreferrer"{% endif %}{% endset -%}
+{%- set newTab %}{% if formUrl %}<span class="visually-hidden"> (opens in a new tab)</span>{% endif %}{% endset -%}
 
 {{ pageBanner({ id: "page-title", title: "Our services", lede: wwu.intro,
   before: '<nav class="breadcrumbs page-banner__crumbs" aria-label="Breadcrumb"><ol><li>Work With Us</li><li aria-current="page">Services</li></ol></nav>' }) }}
@@ -72,7 +77,7 @@ bodyClass: page-wwu
     {%- if wwu.more %}
     <div class="help-close">
       <p class="help-close__text">{{ wwu.more }}</p>
-      <a class="btn btn--primary help-close__btn" href="/work-with-us/contact/">Request a project</a>
+      <a class="btn btn--primary help-close__btn" {{ requestAttrs | safe }}>Request a project{{ newTab | safe }}</a>
     </div>
     {%- endif %}
   </div>
@@ -146,7 +151,7 @@ bodyClass: page-wwu
         </div>
       </div>
       {%- endif %}
-      <p class="engage__cta"><a class="engage__link" href="/work-with-us/contact/">Request a project <span class="engage__arrow" aria-hidden="true">→</span></a></p>
+      <p class="engage__cta"><a class="engage__link" {{ requestAttrs | safe }}>Request a project{{ newTab | safe }} <span class="engage__arrow" aria-hidden="true">→</span></a></p>
     </div>
   </div>
 </section>
@@ -202,6 +207,6 @@ bodyClass: page-wwu
   {%- endif %}
   <div class="container cta-band__inner">
     <h2 class="cta-band__text" id="cta-title">{{ wwu.cta }}</h2>
-    <a class="btn btn--white" href="/work-with-us/contact/">Request a project</a>
+    <a class="btn btn--white" {{ requestAttrs | safe }}>Request a project{{ newTab | safe }}</a>
   </div>
 </section>

@@ -101,7 +101,7 @@ const people = [...(team.board || []), ...(team.members || []), ...alumni];
 const noConsent = people.filter((p) => p.consent_to_publish !== true);
 if (noConsent.length) data.push(`team.json / alumni.json: ${noConsent.length} entr${noConsent.length === 1 ? "y has" : "ies have"} no consent_to_publish yet and are not shown.`);
 if (site.forms?.client_request_fallback_email && !site.forms?.client_request_fallback_email_confirmed) data.push(`site.json → forms.client_request_fallback_email (${site.forms.client_request_fallback_email}): confirm this inbox is monitored for client requests (the old Contact Us page listed it for applicants; client requests went to a personal address, which is not used).`);
-if (!site.forms?.client_request_endpoint) data.push("site.json → forms.client_request_endpoint: supply a form endpoint (e.g. a Formspree form URL) so /work-with-us/contact/ shows the real request form instead of the 'Request by email' composer. No code change needed.");
+if (!site.forms?.client_request_form_url) data.push("site.json → forms.client_request_form_url: add the prospective-client Google Form link so every 'Request a project' button opens it (until then they go to /work-with-us/contact/).");
 // Resolved once data/redirects.json covers both old URLs (redirect stubs, see README).
 {
   const rp = fs.existsSync(path.join(ROOT, "data/redirects.json")) ? readJson("redirects.json").pages || [] : [];

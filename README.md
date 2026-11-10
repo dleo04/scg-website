@@ -111,11 +111,11 @@ Photos are listed in `data/gallery.json`: `file` (an image under `assets/`, usua
 
 ## Work With Us: Services and Contact us
 "Work With Us" in the header is a dropdown (Services → `/work-with-us/`, Contact us → `/work-with-us/contact/`); the header's `nav` list in `src/_includes/partials/header.njk` defines it, like Join SCG.
-- **Connect the request form:** set `site.json → forms.client_request_endpoint` to your form service's URL (for example a Formspree form URL) and rebuild. The real form then replaces the "Request by email" composer automatically. It posts `name`, `organization`, `need`, `timeline`, `email` and the hidden spam trap `_gotcha`; without JavaScript it is a normal form post.
-- **Until then** (`null`), the Contact page shows the composer: the same fields, and a "Write the email" button that opens the visitor's email app with a message to `forms.client_request_fallback_email` (now `scgumd@gmail.com`, the club address from the old Contact page). Never put a personal email there; the build fails on any other address.
+- **Project requests:** every "Request a project" button (Services page and Contact page) opens the prospective-client Google Form in a new tab. The link lives only in `site.json → forms.client_request_form_url`; change it there and rebuild. If it is set to `null`, the buttons fall back to `/work-with-us/contact/`.
+- **"Prefer email?"** on the Contact page uses `forms.client_request_fallback_email` (now `scgumd@gmail.com`, the club address from the old Contact page). Never put a personal email there; the build fails on any other address.
 - **Services text:** `site.json → work_with_us` (intro, the five "How an engagement works" points, the closing line) is the old Services page's own wording. The two cost cards are the FAQ answer "How much do SCG services cost?", one sentence each, so edit it in `faq.json`.
 - **Service cards:** `work_with_us.help` (title, one line, icon, a `/projects/` link with `q=` or `track=`, and `examples` that picks up to three client logo chips from matching project skills or tracks).
-- **Contact page text:** `site.json → contact` (intro, checklist, "What happens next", photo id). "Questions from clients" lists the FAQ's "For clients" group (drafts and open decisions left out).
+- **Contact page text:** `site.json → contact` (intro, `form_intro` under "Request a project", `form_asks` for the "The form asks for:" checklist, "What happens next", photo id). "Questions from clients" lists the FAQ's "For clients" group (drafts and open decisions left out).
 - **Banner:** the Contact page uses the Services banner until a photo named `contactimage` is added under `assets/` (`page_banners → fallback_same_as`).
 
 ## Faded page backdrop (every page)

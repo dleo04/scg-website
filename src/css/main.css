@@ -1730,38 +1730,17 @@ a.client-chip:hover { text-decoration: underline; }
 .contact-layout { display: grid; gap: clamp(32px, 5vw, 56px); align-items: start; }
 @media (min-width: 1024px) { .contact-layout { grid-template-columns: minmax(0, 1fr) 400px; } }
 .contact-layout__title { margin-bottom: 8px; }
-.request__title { font-size: var(--step-1); margin: 0 0 6px; }
-.request__intro { margin: 0 0 20px; color: var(--ink-2); }
-.no-js .request__intro--js, .no-js .request-form--composer { display: none; }
-.request-nojs { display: none; }
-.no-js .request-nojs { display: block; padding: 20px; background: var(--paper-2); border-radius: var(--radius-sm); font-size: var(--step-1); }
-.request-nojs p { margin: 0; }
-.request-form { display: grid; gap: 20px; }
-.request-form__note { margin: 0; color: var(--ink-2); font-size: var(--step--1); }
-.field { display: grid; gap: 6px; }
-.field label { font-family: var(--font-head); font-weight: 700; font-size: .9375rem; }
-.field__optional { font-family: var(--font-body); font-weight: 400; color: var(--ink-2); }
-.field__hint { margin: 0; font-size: var(--step--1); color: var(--ink-2); }
-.field input, .field textarea { width: 100%; min-height: 48px; padding: 10px 14px; font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--ink-2); border-radius: var(--radius-sm); }
-.field textarea { min-height: 128px; resize: vertical; line-height: 1.5; }
-.field--invalid input, .field--invalid textarea { border: 2px solid var(--scg-red); }
-.field__error { margin: 0; font-weight: 700; font-size: var(--step--1); color: var(--scg-red); }   /* 7.2:1 on white */
-.field__error::before { content: "! "; }
-.request-form__summary { padding: 18px 20px; background: var(--paper); border: 2px solid var(--scg-red); border-left-width: 6px; border-radius: var(--radius-sm); }
-.request-form__summary[hidden] { display: none; }
-.request-form__summary-title { font-size: var(--step-0); margin: 0 0 8px; }
-.request-form__summary ul { margin: 0; padding-left: 1.2em; }
-.request-form__summary a { color: var(--scg-red); font-weight: 700; }
-.request-form__hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
-.request-form__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
-.request-form__actions .btn[disabled] { opacity: .7; cursor: progress; }
-.request-form__opens { font-size: var(--step--1); color: var(--ink-2); }
-.request-form__status { margin: 0; min-height: 1.5em; }
-.request-form__status.is-error { font-weight: 700; color: var(--scg-red); }
-.request-done { padding: 24px; background: var(--paper); border: 1px solid var(--line); border-left: 6px solid var(--scg-gold); border-radius: var(--radius-sm); }
-.request-done[hidden] { display: none; }
-.request-done__title { font-size: var(--step-1); margin: 0 0 6px; }
-.request-done p { margin: 0; }
+.request__intro { margin: 0; max-width: 60ch; font-size: var(--step-1); line-height: 1.5; }
+.request__label { margin: 24px 0 10px; font-family: var(--font-head); font-weight: 700; font-size: .9375rem; }
+.request__check { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.request__check li { display: flex; gap: 10px; align-items: flex-start; }
+.request__check svg { flex: none; margin-top: 3px; color: var(--scg-red); }
+.request__actions { margin: 28px 0 0; }
+.request__actions svg { flex: none; }
+.request__email { margin: 14px 0 0; font-size: var(--step--1); color: var(--ink-2); }
+.request__email a { font-weight: 700; overflow-wrap: anywhere; }
+.request__sub { font-size: var(--step-0); margin: 32px 0 8px; padding-top: 20px; border-top: 1px solid var(--line); }
+.request__next { margin: 0; max-width: 60ch; line-height: 1.55; }
 .contact-card { display: grid; gap: 14px; padding: clamp(22px, 3vw, 28px); background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--radius); }
 @media (min-width: 1024px) { .contact-card { position: sticky; top: calc(var(--header-h) + 24px); } }
 .contact-card__title { font-size: var(--step-1); margin: 0; }
@@ -1770,11 +1749,6 @@ a.client-chip:hover { text-decoration: underline; }
 .contact-card__list li > span:last-child { display: grid; min-width: 0; }
 .contact-card__list a { font-weight: 700; overflow-wrap: anywhere; }
 .contact-card__label { font-size: var(--step--1); color: var(--ink-2); }
-.contact-card__sub { font-size: var(--step-0); margin: 10px 0 0; padding-top: 14px; border-top: 1px solid var(--line); }
-.contact-card__check { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.contact-card__check li { display: flex; gap: 10px; align-items: flex-start; }
-.contact-card__check svg { flex: none; margin-top: 3px; color: var(--scg-red); }
-.contact-card__next { margin: 0; line-height: 1.55; }
 .contact-card__photo img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius); margin-top: 6px; }
 
 /* Partners ---------------------------------------------------------------- */
@@ -1852,7 +1826,7 @@ body { --backdrop-visibility: 21%; --section-gap: clamp(56px, 7vw, 96px); --ink-
   .backdrop-ready body[data-backdrop="on"] :is(.help-close, .client-more, .cta-strip) { border-top-color: transparent; }
   /* Darker secondary text on the photo; solid components keep their own --ink-2. */
   .backdrop-ready body[data-backdrop="on"] :is(main > :is(.section, .projects-explorer, .home-block):not(.section--ink, .home-block--ink), .hero-wrap > .stat-strip) { --ink-2: var(--ink); }
-  .backdrop-ready body[data-backdrop="on"] main :is(input, select, textarea, summary, button:not(.link-button, .client-more__toggle, .alumni-card__more, .stepper__tab), .btn, .card, .work-card, .project-filters__popover, .project-page__card, .project-pager__link, .employer-card, .seat-tile, .seat-skill, .benefit, .join-process__eligibility, .accordion, .resource-card, .qcard, .timer, .doc-card, .embed-frame, .story__card, .pillar, .stepper__card, .stepper__num, .stat-strip--grid .stat-strip__list, .press-link, .team-card, .alumni-card, .fee-card, .help-card, .client-tile, .client-chip, .contact-card, .partner-card, .engage__badge, .engage-step__marker, .request-done, .request-form__summary, .ph-text, .faq__empty, .projects-empty, .people-empty, .star__letter, .gallery__item, .media) { --ink-2: var(--ink-2-solid); }
+  .backdrop-ready body[data-backdrop="on"] main :is(input, select, textarea, summary, button:not(.link-button, .client-more__toggle, .alumni-card__more, .stepper__tab), .btn, .card, .work-card, .project-filters__popover, .project-page__card, .project-pager__link, .employer-card, .seat-tile, .seat-skill, .benefit, .join-process__eligibility, .accordion, .resource-card, .qcard, .timer, .doc-card, .embed-frame, .story__card, .pillar, .stepper__card, .stepper__num, .stat-strip--grid .stat-strip__list, .press-link, .team-card, .alumni-card, .fee-card, .help-card, .client-tile, .client-chip, .contact-card, .partner-card, .engage__badge, .engage-step__marker, .ph-text, .faq__empty, .projects-empty, .people-empty, .star__letter, .gallery__item, .media) { --ink-2: var(--ink-2-solid); }
   /* Faint outlines that sit directly on the photo: --ph-border (an existing token). */
   .backdrop-ready body[data-backdrop="on"] .star__item { border-color: var(--ph-border); }
   /* Components without a background of their own stay opaque (FAQ rows). */
