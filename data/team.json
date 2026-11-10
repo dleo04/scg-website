@@ -1,5 +1,5 @@
 {
-  "_readme": "SCG members shown on /team/, grouped by level (levels, in order). Imported from the old site's About page (source: old-site). Fields: id, name, level (one of levels), title, cohort, majors (list; null until known, never guessed), experience (internship line from the old site, optional; shown on the /team/ tile), headline (one line under the name on the member's page /team/<id>/, e.g. \"Past Audit Intern, EY\"; null = no line), bio (list of paragraphs, exactly as supplied; a member gets a page /team/<id>/ only with consent_to_publish: true and a non-empty bio), worked_on (project ids from projects.json; optional), photo (written by npm run assets from face detection: source, face box and focal point in % of the original; add focal_override {x, y} in % to move the face centre by hand; see README → Headshot framing); the file is assets/photos/people/<id>.*, linkedin (only if publicly linked; null otherwise), consent_to_publish (true to show), consent_basis, source. To add a person: add an entry, put their photo at assets/photos/people/<id>.jpg (or .png/.webp) and run npm run build. 'show_majors': false keeps majors as data only (no majors line or Major filter on /team/); set true to show them.",
+  "_readme": "SCG members shown on /team/, grouped by level (levels, in order). Imported from the old site's About page (source: old-site). Fields: id, name, level (one of levels), title, cohort, majors (list; null until known, never guessed), experience (internship line from the old site, optional; shown on the /team/ tile), headline (one line under the name on the member's page /team/<id>/ and on their /team/ tile, e.g. \"Past Audit Intern, EY\"; null = no line), headline_company_break (optional, true: on the tile the text after the last comma wraps as one unit, so a company such as \"Capital One\" never splits across lines), bio (list of paragraphs, exactly as supplied; a member gets a page /team/<id>/ only with consent_to_publish: true and a non-empty bio), worked_on (project ids from projects.json; optional), photo (written by npm run assets from face detection: source, face box and focal point in % of the original; add focal_override {x, y} in % to move the face centre by hand; see README → Headshot framing); the file is assets/photos/people/<id>.*, linkedin (only if publicly linked; null otherwise), consent_to_publish (true to show), consent_basis, source. To add a person: add an entry, put their photo at assets/photos/people/<id>.jpg (or .png/.webp) and run npm run build. 'show_majors': false keeps majors as data only (no majors line or Major filter on /team/); set true to show them.",
   "levels": [
     "Board of Trustees",
     "Principal Consultants",
@@ -106,6 +106,7 @@
       ],
       "experience": "Financial Services Intern at Ernst & Young",
       "headline": "Incoming Business Analyst, Capital One",
+      "headline_company_break": true,
       "bio": [
         "Daniel Leo serves as Vice Chair on the Board of Trustees and Principal Consultant for Snider Consulting Group.",
         "He joined SCG in Spring 2025 as a member of Cohort 10.",
@@ -116,20 +117,21 @@
       ],
       "worked_on": [],
       "photo": {
+        "file": "daniel-leo.jpg",
         "source": {
           "file": "daniel-leo.jpg",
-          "width": 828,
-          "height": 1131
+          "width": 1016,
+          "height": 1524
         },
         "face": {
-          "x": 38.3,
-          "y": 18.7,
-          "w": 22,
-          "h": 19.5
+          "x": 42.2,
+          "y": 21.9,
+          "w": 16.5,
+          "h": 13.9
         },
         "focal": {
-          "x": 49.3,
-          "y": 28.4
+          "x": 50.4,
+          "y": 28.8
         }
       },
       "linkedin": "https://www.linkedin.com/in/dleo1",
@@ -149,6 +151,7 @@
       ],
       "experience": "Business Analyst Intern at Capital One",
       "headline": "Past Business Analyst Intern, Capital One",
+      "headline_company_break": true,
       "bio": [
         "Audrey Feng is a Principal Consultant for Snider Consulting Group. She joined in the Fall of 2024 as a part of Cohort 9.",
         "Audrey is pursuing a BS in Finance and Information Systems at the Robert H. Smith School of Business. She is also a part of the QUEST Honors Program, Phi Chi Theta Professional Fraternity, and the Media, Self, and Society College Park Scholars Program.",
@@ -272,6 +275,7 @@
       ],
       "experience": "Business Analyst Intern at Capital One",
       "headline": "Past Business Analyst Intern, Capital One",
+      "headline_company_break": true,
       "bio": [
         "Michelle Sun is a Principal Consultant for the Snider Consulting Group. She joined SCG as a member of Cohort 10 in the Spring of 2025.",
         "Michelle is pursuing a B.S. in Operations Management and Business Analytics and Information Systems. She is a member of the QUEST Honors Program, as well as the Media, Self, and Society Scholars Program.",
@@ -684,6 +688,7 @@
       ],
       "experience": "PDIP at Capital One",
       "headline": "Incoming Product Manager, Capital One",
+      "headline_company_break": true,
       "bio": [
         "Hasan Ege is a consultant for the Snider Consulting Group. He joined SCG as a member of Cohort 10 in the Spring of 2025.",
         "Hasan is pursuing a BS in Computer Science and a BA in Economics. He is a member of the Global Challenges & Solutions Honors Program and the Global Fellows Program.",
