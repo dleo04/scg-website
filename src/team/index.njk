@@ -7,9 +7,12 @@ bodyClass: page-team
 {#- /team/ from data/team.json (consent enforced in lib/load-data.js). Grouped by level; filters
     (level, name, and major once at least 3 people have one and team.json → show_majors is true)
     are added by people-filter.js. Majors are data only while show_majors is false.
-    Without JS every card is visible. -#}
+    Without JS every card is visible. Members with a bio page (/team/<id>/, src/team/person.njk)
+    get a "Read bio" link whose hit area covers the whole card, as on /alumni/; LinkedIn is on
+    that page, not on the tile. The tile line is the member's headline (the same line as on
+    their page), or the old 'experience' line when the headline is blank. -#}
 {%- from "components/page-banner.njk" import pageBanner with context -%}
-{%- from "components/person.njk" import avatar, linkedinLink with context -%}
+{%- from "components/person.njk" import avatar with context -%}
 {{ pageBanner({ id: "page-title", eyebrow: "Who we are", title: "Our team" }) }}
 <section class="section section--paper-2 people" aria-label="Team members">
   <div class="container">
@@ -35,16 +38,17 @@ bodyClass: page-team
       <h2 class="people-group__title" id="lvl-{{ g.slug }}">{{ g.level }}</h2>
       <ul class="team-grid">
         {%- for p in g.people %}
-        <li class="team-card" data-person data-name="{{ p.name }}" data-level="{{ p.level }}" data-majors="{{ p.majors | join('|') if team.showMajors else '' }}" data-search="{{ p.name }} {{ p.title }} {{ p.experience }}">
+        {%- set line = p.headline or p.experience %}
+        <li class="team-card{% if p.url %} team-card--link{% endif %}"{% if p.url %} id="{{ p.id }}"{% endif %} data-person data-name="{{ p.name }}" data-level="{{ p.level }}" data-majors="{{ p.majors | join('|') if team.showMajors else '' }}" data-search="{{ p.name }} {{ p.title }} {{ line }}">
           <div class="team-card__photo">{{ avatar(p, "avatar--square") }}</div>
           <div class="team-card__body">
             <h3 class="team-card__name">{{ p.name }}</h3>
             <p class="team-card__title">{{ p.title }}</p>
             {%- if p.cohort %}<p class="team-card__cohort">Cohort {{ p.cohort }}</p>{% endif %}
             {%- if team.showMajors and p.majors.length %}<p class="team-card__majors">{{ p.majors | join(", ") }}</p>{% endif %}
-            {%- if p.experience %}<p class="team-card__exp">{{ p.experience }}</p>{% endif %}
+            {%- if line %}<p class="team-card__exp">{{ line }}</p>{% endif %}
             {%- if p.workedOn.length %}<ul class="chips team-card__projects" aria-label="Worked on">{% for pr in p.workedOn %}<li><a class="chip" href="{{ pr.url }}">{{ pr.title }}</a></li>{% endfor %}</ul>{% endif %}
-            {{ linkedinLink(p) }}
+            {% if p.url %}<p class="team-card__foot"><a class="team-card__more" href="{{ p.url }}" aria-label="{{ p.name }}, {{ p.title }}: read bio">Read bio <span aria-hidden="true">→</span></a></p>{% endif %}
           </div>
         </li>
         {%- endfor %}

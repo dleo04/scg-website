@@ -1,0 +1,58 @@
+---
+layout: layouts/base.njk
+bodyClass: page-alum page-member
+pagination:
+  data: teamPages
+  size: 1
+  alias: member
+  addAllPagesToCollections: true
+permalink: "/team/{{ member.id }}/"
+eleventyComputed:
+  # "| safe" here because the <head> escapes these values itself.
+  title: "{{ member.name | safe }}{% if member.title %}, {{ member.title | safe }}{% endif %} | Team"
+  description: "{{ member.summary | safe }}"
+  ogImagePath: "{{ member.headshot.og.src if member.headshot and member.headshot.og else '' }}"
+  ogImageAlt: "Photo of {{ member.name | safe }} beside the Snider Consulting Group logo"
+---
+{%- from "components/alumni-detail.njk" import alumniDetail with context -%}
+{#- Member bio /team/<id>/ (teamPages: consent_to_publish true and a non-empty bio). Same layout
+    and CSS as the alumni page (src/alumni/person.njk, components/alumni-detail.njk) via
+    member.detail (lib/load-data.js): "Cohort N · Title" in the class line, the headline in the
+    role line, the square tile photo. Previous / Next as on the alumni pages, in /team/ order,
+    wrapping around. -#}
+{%- set pageUrl = member.url | absoluteUrl(site.domain) -%}
+{%- set crumbs = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Team", "item": "/team/" | absoluteUrl(site.domain) },
+    { "@type": "ListItem", "position": 2, "name": member.name, "item": pageUrl }
+  ]
+} -%}
+{%- set person = { "@context": "https://schema.org", "@type": "Person", "name": member.name, "url": pageUrl, "description": member.summary,
+  "memberOf": { "@type": "Organization", "name": site.name, "url": "/" | absoluteUrl(site.domain) } } -%}
+{%- if member.headshot %}{% set person = person | merge({ "image": member.headshot.src | absoluteUrl(site.domain) }) %}{% endif -%}
+{%- if member.title %}{% set person = person | merge({ "jobTitle": member.title }) %}{% endif -%}
+{%- if member.linkedin %}{% set person = person | merge({ "sameAs": [member.linkedin] }) %}{% endif -%}
+<script type="application/ld+json">{{ crumbs | jsonLd | safe }}</script>
+<script type="application/ld+json">{{ person | jsonLd | safe }}</script>
+<section class="section project-page alum-page member-page">
+  <div class="container project-page__inner">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/team/">Team</a></li>
+        <li><span aria-current="page">{{ member.name }}</span></li>
+      </ol>
+    </nav>
+    <div class="project-page__card">
+      {{ alumniDetail(member.detail, 1) }}
+    </div>
+    {%- if member.prev or member.next %}
+    <nav class="project-pager" aria-label="More team members">
+      {%- if member.prev %}<a class="project-pager__link project-pager__link--prev" href="{{ member.prev.url }}" aria-label="Previous: {{ member.prev.name }}"><span class="project-pager__dir">Previous</span><span class="project-pager__name">{{ member.prev.name }}</span></a>{% else %}<span></span>{% endif %}
+      {%- if member.next %}<a class="project-pager__link project-pager__link--next" href="{{ member.next.url }}" aria-label="Next: {{ member.next.name }}"><span class="project-pager__dir">Next</span><span class="project-pager__name">{{ member.next.name }}</span></a>{% else %}<span></span>{% endif %}
+    </nav>
+    {%- endif %}
+    <p class="project-page__back"><a class="link-arrow" href="/team/#{{ member.id }}"><span aria-hidden="true">←</span> Back to team</a></p>
+  </div>
+</section>

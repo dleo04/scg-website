@@ -1,5 +1,5 @@
 {
-  "_readme": "Redirect stubs for the old GoDaddy site's URLs (flat paths, no trailing slash). The build writes <from>/index.html at each old path: meta refresh + JS location.replace to the target, a visible 'This page has moved' link, rel=canonical to the target and noindex; never in the sitemap or navigation. 'pages': {from, to, note?}; 'to' must be a real route of this site. 'people': old slugs of person pages; each is matched to data/team.json (→ /team/, which has no per-person anchors) or data/alumni.json (→ /alumni/<id>/, the alumnus's own page); unmatched slugs go to /team/. 'aliases': old slug → current id for misspelled slugs. Paths are written without the path prefix; the build adds it in preview mode. The build fails if a 'from' collides with a real page or a target does not exist (scripts/check-redirects.mjs). Do NOT add /m/login, /m/reset or /m/create (old site-builder internals).",
+  "_readme": "Redirect stubs for the old GoDaddy site's URLs (flat paths, no trailing slash). The build writes <from>/index.html at each old path: meta refresh + JS location.replace to the target, a visible 'This page has moved' link, rel=canonical to the target and noindex; never in the sitemap or navigation. 'pages': {from, to, note?}; 'to' must be a real route of this site. 'people': old slugs of person pages; each is matched to data/team.json (→ /team/<id>/ when the member has a bio page, else /team/) or data/alumni.json (→ /alumni/<id>/, the alumnus's own page); unmatched slugs go to /team/. 'aliases': old slug → current id for misspelled slugs (olevia-tinepaw: the earlier misspelled id of Olevia Tinpaw). Paths are written without the path prefix; the build adds it in preview mode. The build fails if a 'from' collides with a real page or a target does not exist (scripts/check-redirects.mjs). Do NOT add /m/login, /m/reset or /m/create (old site-builder internals).",
   "pages": [
     {
       "from": "/home-1",
@@ -84,6 +84,7 @@
     "pranav-sasikumar",
     "santana-pina",
     "olevia-tinpaw",
+    "olevia-tinepaw",
     "hasan-ege",
     "ethan-han",
     "abby-richard",
@@ -114,6 +115,6 @@
     "vincent-yu"
   ],
   "aliases": {
-    "olevia-tinpaw": "olevia-tinepaw"
+    "olevia-tinepaw": "olevia-tinpaw"
   }
 }

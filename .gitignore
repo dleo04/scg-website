@@ -12,3 +12,6 @@ assets/backdrop/
 *.csv
 *.xlsx
 *.xls
+
+# Raw imports (member bios CSV etc.) are source material only; never published or committed.
+imports/

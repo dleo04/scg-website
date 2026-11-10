@@ -1,5 +1,5 @@
 {
-  "_readme": "SCG members shown on /team/, grouped by level (levels, in order). Imported from the old site's About page (source: old-site). Fields: id, name, level (one of levels), title, cohort, majors (list; null until known, never guessed), experience (internship line from the old site, optional), worked_on (project ids from projects.json; optional), photo (written by npm run assets from face detection: source, face box and focal point in % of the original; add focal_override {x, y} in % to move the face centre by hand; see README → Headshot framing); the file is assets/photos/people/<id>.*, linkedin (only if publicly linked; null otherwise), consent_to_publish (true to show), consent_basis, source. To add a person: add an entry, put their photo at assets/photos/people/<id>.jpg (or .png/.webp) and run npm run build. 'show_majors': false keeps majors as data only (no majors line or Major filter on /team/); set true to show them.",
+  "_readme": "SCG members shown on /team/, grouped by level (levels, in order). Imported from the old site's About page (source: old-site). Fields: id, name, level (one of levels), title, cohort, majors (list; null until known, never guessed), experience (internship line from the old site, optional; shown on the /team/ tile), headline (one line under the name on the member's page /team/<id>/, e.g. \"Past Audit Intern, EY\"; null = no line), bio (list of paragraphs, exactly as supplied; a member gets a page /team/<id>/ only with consent_to_publish: true and a non-empty bio), worked_on (project ids from projects.json; optional), photo (written by npm run assets from face detection: source, face box and focal point in % of the original; add focal_override {x, y} in % to move the face centre by hand; see README → Headshot framing); the file is assets/photos/people/<id>.*, linkedin (only if publicly linked; null otherwise), consent_to_publish (true to show), consent_basis, source. To add a person: add an entry, put their photo at assets/photos/people/<id>.jpg (or .png/.webp) and run npm run build. 'show_majors': false keeps majors as data only (no majors line or Major filter on /team/); set true to show them.",
   "levels": [
     "Board of Trustees",
     "Principal Consultants",
@@ -20,6 +20,14 @@
         "Finance"
       ],
       "experience": "Business Analyst Intern at Capital One",
+      "headline": "Incoming Associate Product Manager, Capital One",
+      "bio": [
+        "Stacy Sun is the Chair for Snider Consulting Group. She joined in Spring 2024 as part of Cohort 8.",
+        "At UMD, Stacy is pursuing a double degree in Finance and Computer Science. She is also an alum of the Wall Street Fellows Program.",
+        "Through her past experiences, Stacy’s strengths include data analysis, project planning, collaboration, and storytelling.",
+        "Outside of SCG, Stacy is a Teaching Assistant for CMS389P and BMGT262. She is also involved in Omicron Delta Kappa National Honors Society, Crossroads Ministry, and RecWell Group Fitness as a Barre Format Lead and Pilates instructor. Formerly, she was a member of the Quantitative Research team at Smith Investment Fund, University Honors, Product Space, and the Women in Finance Mentorship Program. In her free time, she enjoys doing pilates, running, and trying out new restaurants.",
+        "After graduating, Stacy will be joining Capital One as an Associate Product Manager as part of PDP."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -38,7 +46,7 @@
           "y": 38.4
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/stacyks",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -54,127 +62,34 @@
         "Operations Management & Business Analytics"
       ],
       "experience": "Business Analyst Intern at Capital One",
-      "worked_on": [],
-      "photo": {
-        "source": {
-          "file": "abby-richard.png",
-          "width": 2560,
-          "height": 1708
-        },
-        "face": {
-          "x": 44.5,
-          "y": 24.6,
-          "w": 14.7,
-          "h": 26.9
-        },
-        "focal": {
-          "x": 51.9,
-          "y": 38.1
-        }
-      },
-      "linkedin": null,
-      "consent_to_publish": true,
-      "consent_basis": "Listed on the public old site",
-      "source": "old-site"
-    },
-    {
-      "id": "audrey-feng",
-      "name": "Audrey Feng",
-      "level": "Principal Consultants",
-      "title": "Principal Consultant",
-      "cohort": 9,
-      "majors": [
-        "Finance",
-        "Information Systems"
+      "headline": "Incoming Summer Associate, BCG",
+      "bio": [
+        "Abby Richard serves as Vice Chair on the Board of Trustees and Principal Consultant for Snider Consulting Group. She joined SCG in Fall 2024 as a member of Cohort 9.",
+        "Abby is pursuing a B.S. in Information Systems and Operations Management & Business Analytics at the Robert H. Smith School of Business. She was a previous member of Smith’s iTBT Fellows Program, QUEST Honors Program, and University Honors.",
+        "Through past leadership and academic experiences, Abby’s strengths include strategic problem-solving, team leadership, collaboration, data-analysis, and client relations.",
+        "Outside of SCG, Abby’s been involved with the Women’s Club Soccer team, Best Buddies, IM Sports, and Catholic Terps. She’s currently a Teaching Assistant for BMGT110F, and previously served as Vice President of Membership for the Business and Information Society (BITS). In her free time, Abby enjoys staying active, spending time outside, reading, and trying new foods.",
+        "In Summer 2026, Abby interned at Capital One as an AEIP in McLean, where she supported the Online Car Buying team in identifying growth opportunities for Capital One Auto Navigator. In Summer 2027, she will join Boston Consulting Group (BCG) as a Summer Associate in the D.C. Office."
       ],
-      "experience": "Business Analyst Intern at Capital One",
       "worked_on": [],
       "photo": {
+        "file": "abby-richard.jpg",
         "source": {
-          "file": "audrey-feng.png",
-          "width": 578,
-          "height": 578
-        },
-        "face": {
-          "x": 36.2,
-          "y": 23.9,
-          "w": 27.7,
-          "h": 33.2
-        },
-        "focal": {
-          "x": 50,
-          "y": 40.5
-        }
-      },
-      "linkedin": null,
-      "consent_to_publish": true,
-      "consent_basis": "Listed on the public old site",
-      "source": "old-site"
-    },
-    {
-      "id": "hamid-shabbir",
-      "name": "Hamid Shabbir",
-      "level": "Principal Consultants",
-      "title": "Principal Consultant",
-      "cohort": 9,
-      "majors": [
-        "Finance",
-        "Economics"
-      ],
-      "experience": "Prev Banking Intern at J. P. Morgan",
-      "worked_on": [],
-      "photo": {
-        "source": {
-          "file": "hamid-shabbir.jpg",
-          "width": 1708,
+          "file": "abby-richard.jpg",
+          "width": 2080,
           "height": 2560
         },
         "face": {
-          "x": 37.8,
-          "y": 20.2,
-          "w": 25.3,
-          "h": 20
+          "x": 40.6,
+          "y": 38.8,
+          "w": 18,
+          "h": 16.9
         },
         "focal": {
-          "x": 50.4,
-          "y": 30.2
+          "x": 49.6,
+          "y": 47.2
         }
       },
-      "linkedin": null,
-      "consent_to_publish": true,
-      "consent_basis": "Listed on the public old site",
-      "source": "old-site"
-    },
-    {
-      "id": "pavi-paila",
-      "name": "Pavi Paila",
-      "level": "Principal Consultants",
-      "title": "Principal Consultant",
-      "cohort": 10,
-      "majors": [
-        "Information Systems",
-        "Operations Management & Business Analytics"
-      ],
-      "experience": "Past Intern at Artemis Real Estate Partners",
-      "worked_on": [],
-      "photo": {
-        "source": {
-          "file": "pavi-paila.jpg",
-          "width": 864,
-          "height": 1080
-        },
-        "face": {
-          "x": 34.8,
-          "y": 24.7,
-          "w": 27.5,
-          "h": 25.4
-        },
-        "focal": {
-          "x": 48.5,
-          "y": 37.4
-        }
-      },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/abbyrichard",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -182,14 +97,23 @@
     {
       "id": "daniel-leo",
       "name": "Daniel Leo",
-      "level": "Principal Consultants",
-      "title": "Principal Consultant",
+      "level": "Board of Trustees",
+      "title": "Vice Chair",
       "cohort": 10,
       "majors": [
         "Accounting",
         "Information Systems"
       ],
       "experience": "Financial Services Intern at Ernst & Young",
+      "headline": "Incoming Business Analyst, Capital One",
+      "bio": [
+        "Daniel Leo serves as Vice Chair on the Board of Trustees and Principal Consultant for Snider Consulting Group.",
+        "He joined SCG in Spring 2025 as a member of Cohort 10.",
+        "At UMD, Daniel is pursuing dual degrees in Accounting and Information Systems at the Robert H. Smith School of Business.",
+        "Through past leadership and academic experiences, Daniel’s strengths include problem-solving, team collaboration, and adaptability.",
+        "Outside of SCG, Daniel is the President of the Association of Latino Professionals For America (ALPFA) and is involved with GraceLife Campus Ministry. He was formerly a member of the Events Committee of the Smith Undergraduate Student Association (SUSA). Daniel’s professional experience includes interning at EY within their Financial Services group.",
+        "In his free time, he enjoys watching Arsenal Football Club, cooking traditional Peruvian dishes, and spending time with his 9-year-old Chocolate Lab, Alaska. After graduating, Daniel will join Capital One as a Business Analyst as part of the Analyst Development Program."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -208,7 +132,130 @@
           "y": 28.4
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/dleo1",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "audrey-feng",
+      "name": "Audrey Feng",
+      "level": "Principal Consultants",
+      "title": "Principal Consultant",
+      "cohort": 9,
+      "majors": [
+        "Finance",
+        "Information Systems"
+      ],
+      "experience": "Business Analyst Intern at Capital One",
+      "headline": "Past Business Analyst Intern, Capital One",
+      "bio": [
+        "Audrey Feng is a Principal Consultant for Snider Consulting Group. She joined in the Fall of 2024 as a part of Cohort 9.",
+        "Audrey is pursuing a BS in Finance and Information Systems at the Robert H. Smith School of Business. She is also a part of the QUEST Honors Program, Phi Chi Theta Professional Fraternity, and the Media, Self, and Society College Park Scholars Program.",
+        "Audrey’s strengths from past professional and academic experiences include creative problem-solving and leading through collaboration."
+      ],
+      "worked_on": [],
+      "photo": {
+        "source": {
+          "file": "audrey-feng.png",
+          "width": 578,
+          "height": 578
+        },
+        "face": {
+          "x": 36.2,
+          "y": 23.9,
+          "w": 27.7,
+          "h": 33.2
+        },
+        "focal": {
+          "x": 50,
+          "y": 40.5
+        }
+      },
+      "linkedin": "https://www.linkedin.com/in/audreyfeng1",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "hamid-shabbir",
+      "name": "Hamid Shabbir",
+      "level": "Principal Consultants",
+      "title": "Principal Consultant",
+      "cohort": 9,
+      "majors": [
+        "Finance",
+        "Economics"
+      ],
+      "experience": "Prev Banking Intern at J. P. Morgan",
+      "headline": "Past Banking Intern, J. P. Morgan",
+      "bio": [
+        "Hamid Shabbir is a Principal Consultant for the Snider Consulting Group. He joined as a member of Cohort 9 in the fall of 2024.",
+        "Hamid is pursuing a B.S. in Finance with minors in Economics and Education Policy, Equity, and Justice.",
+        "Hamid’s strengths include community building, event planning, and creating opportunities for professional development among peers.",
+        "Outside SCG, Hamid serves as the Vice President of Events for the Smith Undergraduate Student Association (SUSA). He is also the Vice President of the UMD Ahlul Bayt Student Association (ABSA). Additionally, Hamid is involved with Alpha Kappa Psi, a professional business fraternity, and the UMD Muslim Student Association.",
+        "Hamid is passionate about using business to address issues related to sustainability, food distribution, and energy management. He has consulted for Repurpose Farm Plastic and worked as a Marketing Intern for United Source One, a commercial food wholesaler."
+      ],
+      "worked_on": [],
+      "photo": {
+        "source": {
+          "file": "hamid-shabbir.jpg",
+          "width": 1708,
+          "height": 2560
+        },
+        "face": {
+          "x": 37.8,
+          "y": 20.2,
+          "w": 25.3,
+          "h": 20
+        },
+        "focal": {
+          "x": 50.4,
+          "y": 30.2
+        }
+      },
+      "linkedin": "https://www.linkedin.com/in/hamidshabbir1",
+      "consent_to_publish": true,
+      "consent_basis": "Listed on the public old site",
+      "source": "old-site"
+    },
+    {
+      "id": "pavi-paila",
+      "name": "Pavi Paila",
+      "level": "Principal Consultants",
+      "title": "Principal Consultant",
+      "cohort": 10,
+      "majors": [
+        "Information Systems",
+        "Operations Management & Business Analytics"
+      ],
+      "experience": "Past Intern at Artemis Real Estate Partners",
+      "headline": "Past Intern, Artemis Real Estate Partners",
+      "bio": [
+        "Pavi Paila is a Principal Consultant for the Snider Consulting Group. She joined SCG as a member of Cohort 10 in the Spring of 2025.",
+        "Pavi is pursuing a B.S. in Information Systems and Operations Management and Business Analytics with a Presidential Scholarship. Team management, creative thinking, goal-oriented project management, and a love of efficiency are among Pavi's strengths.",
+        "At the University of Maryland, Pavi is involved within her business fraternity, Pi Sigma Epsilon, on the Public Relations and Professional Development Committees. She also serves on the Technology Committee for the Smith Undergraduate Student Association. Pavi also works at Smith’s Office of Career Services as a front desk associate.",
+        "Outside of UMD, Pavi works with her father on running their company, SpeechPundit, an AI tool that allows anyone to sharpen their public speaking skills independently. Pavi has recently completed her internship with Artemis Real Estate Partners through their summer enrichment program, where she learned and applied crucial skills in the world of commercial real estate."
+      ],
+      "worked_on": [],
+      "photo": {
+        "source": {
+          "file": "pavi-paila.jpg",
+          "width": 864,
+          "height": 1080
+        },
+        "face": {
+          "x": 34.8,
+          "y": 24.7,
+          "w": 27.5,
+          "h": 25.4
+        },
+        "focal": {
+          "x": 48.5,
+          "y": 37.4
+        }
+      },
+      "linkedin": "https://www.linkedin.com/in/pavipaila",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -224,6 +271,13 @@
         "Operations Management & Business Analytics"
       ],
       "experience": "Business Analyst Intern at Capital One",
+      "headline": "Past Business Analyst Intern, Capital One",
+      "bio": [
+        "Michelle Sun is a Principal Consultant for the Snider Consulting Group. She joined SCG as a member of Cohort 10 in the Spring of 2025.",
+        "Michelle is pursuing a B.S. in Operations Management and Business Analytics and Information Systems. She is a member of the QUEST Honors Program, as well as the Media, Self, and Society Scholars Program.",
+        "Through various experiences in team leadership, Michelle’s strengths include creative problem solving, strong communication, and effective collaboration.",
+        "Outside of SCG, Michelle serves as the Vice President of Administration for the Smith Undergraduate Student Association (SUSA). She is also involved in the Pi Sigma Epsilon Professional Business Fraternity, QUEST Recruiting organization, and works as a Teaching Assistant for Business Statistics (BMGT230). In her free time, Michelle enjoys watching cooking shows, making cafe beverages, going to the gym, and spending time with friends."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -242,13 +296,13 @@
           "y": 36.5
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/michellefsun",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
     },
     {
-      "id": "olevia-tinepaw",
+      "id": "olevia-tinpaw",
       "name": "Olevia Tinpaw",
       "level": "Principal Consultants",
       "title": "Principal Consultant",
@@ -258,10 +312,17 @@
         "Marketing"
       ],
       "experience": "Technology Risk & Financial Advisory at Deloitte",
+      "headline": "Past Technology Controls Advisory Intern, Deloitte",
+      "bio": [
+        "Olevia Tinpaw is a Principal Consultant for the Snider Consulting Group. She joined SCG as a member of Cohort 10 in the Spring of 2025.",
+        "Olevia is pursuing a B.S. in Information Systems with a Plus 1 Masters in Marketing Analytics. She is a member of the Interdisciplinary Business Honors Program and a member of the Banneker/Key Scholars program.",
+        "Olevia’s areas of expertise involve project management, innovative problem solving, community building, and philanthropy.",
+        "Outside of SCG, Olevia is involved with Business Beyond Borders where she is the founder and president. She is also the VP of Events for the Business & IT Society at UMD, while also being an active member of the Alpha Kappa Psi Business Fraternity. Olevia has also been finalist for the NDCC Case competition and has won 2nd place in the Deloitte Undergraduate Case Competition at UMD. Outside of UMD, Olevia is a choir teacher and an active volunteer for the Zotung Organization of Maryland. Olevia previously worked at Northrop Grumman as a Business Management Analyst (Summer 2025) and at Deloitte in Technology Risk & Financial Advisory (Summer 2026)."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
-          "file": "olevia-tinepaw.jpg",
+          "file": "olevia-tinpaw.jpg",
           "width": 2079,
           "height": 2560
         },
@@ -276,7 +337,7 @@
           "y": 43.4
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/olevia-tinpaw-a115451aa",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -292,6 +353,14 @@
         "Operations Management & Business Analytics"
       ],
       "experience": "Audit and Controls Intern at Exelon",
+      "headline": "Incoming Associate Consultant Intern, Bain & Company",
+      "bio": [
+        "Bryce Powell is a Principal Consultant for the Snider Consulting Group. He joined SCG as a member of Cohort 11 in the Fall of 2025.",
+        "Bryce is pursuing a B.S. Finance and Operations Management & Business Analytics. He was a former member of the Smith Business Leadership Fellows program (SBLF) and QUEST Honors program.",
+        "Bryce thrives in collaborative settings that require interpersonal and organizational skills. His passion lies in solving problems with people-oriented, modern, and long-lasting solutions.",
+        "Outside of SCG, Bryce is the Consulting Career Peer Advisor for the Smith Office of Career Services, is a member of Alpha Kappa Psi Professional Business Fraternity, and works on campus as a server at the Maryland Club.",
+        "Outside of UMD, Bryce is an incoming Associate Consultant Intern at Bain & Company and spent this past summer as an Audit and Controls Intern at Exelon. In his free time he loves to play soccer, snowboard, read, hit the gym, and take road trips."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -310,7 +379,7 @@
           "y": 45.4
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/powellbryce",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -326,6 +395,13 @@
         "Operations Management & Business Analytics"
       ],
       "experience": "Intern at AlphaSights",
+      "headline": "Past Intern, AlphaSights",
+      "bio": [
+        "Vibha Gunturi is a Senior Consultant for Snider Consulting Group. She joined in Spring 2024 as part of Cohort 8.",
+        "Vibha is pursuing a dual degree B.S. in Information Systems and B.S. in Operations Management and Business Analytics. She has also completed the University’s FIRE (First Year Innovation and Research Experience) program.",
+        "Vibha’s strengths from past experiences and projects include creativity, collaboration, client relations, data analysis, and research.",
+        "At the University of Maryland, Vibha is the Consulting Careers Intern for the Office of Career Services and a Teaching Assistant for BMGT 434. Further, she is an attorney and witness for the University’s Mock Trial Program. In Summer 2026, she interned at AlphaSights."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -344,7 +420,7 @@
           "y": 49.5
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/vibha-gunturi",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -360,6 +436,13 @@
         "Information Systems"
       ],
       "experience": "Finance Intern at Capital One",
+      "headline": "Past Finance Intern, Capital One",
+      "bio": [
+        "Jessie Feng is a Senior Consultant for Snider Consulting Group. She joined in Fall 2024 as part of Cohort 9.",
+        "At UMD, Jessie is pursuing a dual degree in Finance and Information Systems. She is also a member of the Interdisciplinary Business Honors Program (IBH).",
+        "Through her past experiences, Jessie’s strengths include problem-solving, creativity, collaboration, and data analysis.",
+        "Outside of SCG, Jessie is involved in the Smith Investment Fund (SIF) as a research associate for the fundamental team. She is also a student consultant in the QUEST Honors Program. In the past, she has participated in various case competitions, such as the Deloitte Regional Case Competition and the Crowe National Case Competition. In her free time, she enjoys swimming, playing pickleball, and trying new foods. In Summer 2026, Jessie was a Finance intern at Capital One."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -378,7 +461,7 @@
           "y": 43.5
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/jessie-feng-725320238",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -393,6 +476,14 @@
         "Computer Science"
       ],
       "experience": "Intern at PwC",
+      "headline": "Past Intern, PwC",
+      "bio": [
+        "Shree Dave is a Senior Consultant for Snider Consulting Group. She joined Fall 2024 as part of Cohort 9.",
+        "Shree is pursuing a B.S. in Computer Science with a minor in Business Analytics. She is also a member of the QUEST Honors program in Cohort 44 as well as being a Presidential Scholar.",
+        "Shree’s strengths include client relations, adaptability, creative problem-solving, and effective communication, which she has cultivated through her diverse academic and professional experiences.",
+        "At UMD, Shree is the Co-Director of Business and Finance for The Petal Project and is actively involved in QUEST, the Business and IT Society, and the Association for Women in Computing. She has also participated in case competitions and has done numerous project with real world clients, showcasing her ability to apply innovative solutions to real-world challenges. In her free time, she enjoys playing tennis, pickleball, trying new foods, and is an avid traveler.",
+        "Shree’s professional experience includes being a Global Technologies Data Strategy intern at T. Rowe Price where she supported the firm’s data strategy modernization. In Summer 2026, she was an Intern on the Oracle Team at PwC."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -411,7 +502,7 @@
           "y": 24.2
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/shree-dave9",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -426,6 +517,14 @@
         "Finance"
       ],
       "experience": "Intern at KPMG",
+      "headline": "Past Intern, KPMG",
+      "bio": [
+        "Ethan Han is a senior consultant for the Snider Consulting Group. He joined SCG as a member of Cohort 9 in the Fall of 2024.",
+        "Ethan is pursuing a degree in finance and is part of the ETE Scholars Program at the University of Maryland, College Park.",
+        "Ethan’s specific areas of expertise include creative thinking, proficiency in real estate markets, and financial analysis. He is also a great team player and a leader in a team setting.",
+        "At UMD, Ethan also served as the former VP of Marketing for Ascend Leadership, was lead Professional Chair for Phi Chi Theta Business Fraternity and participated in multiple case competitions. Ethan also was inducted into the Omicron Delta Kappa leadership honors society in the Fall of 2025. Outside of school, Ethan has interned at KPMG for the last two summers as a Finance Transformation and Embark Scholar intern and hopes to do consulting during his professional career.",
+        "Prior to coming to campus, Ethan played tennis at the national level and now is a part time tennis instructor. He has his real estate license and hopes to be a Real Estate investor as a part-time job."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -444,7 +543,7 @@
           "y": 40.5
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/ehan1",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -460,6 +559,13 @@
         "Mathematics"
       ],
       "experience": "Past Strategy & Analytics Intern at School Harbor",
+      "headline": "Past Global Markets Intern, ICBC Standard Bank",
+      "bio": [
+        "Vasa Schnell is a consultant for Snider Consulting Group. He joined Fall 2024 as a member of Cohort 9.",
+        "Vasa is pursuing a BS in Physics at the University of Maryland. He is also in the Justice and Legal Thought CP Scholars program.",
+        "Vasa is interested in the intersections of different fields and is always looking for new challenges to learn from.",
+        "At Maryland, Vasa is part of Public Health Beyond Borders, and this past winter he traveled with the club to Varanasi, India to conduct water quality research. Last semester, he joined Smith Equity Research and won Analyst of the Semester. He has begun independent study with a computational physics group in deep learning and hopes to join down the road as a research assistant."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -478,7 +584,7 @@
           "y": 46.3
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/vassily-schnell-921a8a31b",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -486,14 +592,21 @@
     {
       "id": "amari-mehta",
       "name": "Amari Mehta",
-      "level": "Consultants",
-      "title": "Consultant",
+      "level": "Senior Consultants",
+      "title": "Senior Consultant",
       "cohort": 10,
       "majors": [
         "Finance",
         "Information Systems"
       ],
       "experience": "Past Enterprise Advisory & Transformation Intern at SC&H",
+      "headline": "Incoming Analyst, JPMorganChase",
+      "bio": [
+        "Amari Mehta is a senior consultant for the Snider Consulting Group. She joined in the Spring of 2025 as a member of cohort 10.",
+        "Amari is pursuing a B.S. in Finance and Information Systems. She is a member of the QUEST Honors Program in cohort 43 and the International Studies Scholars Program.",
+        "Amari’s strengths include process improvement, organization, collaboration, and practical thinking.",
+        "Outside of SCG, Amari serves as the President of the Smith Undergraduate Student Association. She is also part of the Dean’s Student Advisory Council, involved with QUEST Serves, and is a peer mentor for both the College Park Scholars International Studies Program and the Smith Start program. Additionally, she serves on the Scholars Student Advisory Board, is a member of Best Buddies, and is part of the Smith Faculty Awards Committee. In her free time, she enjoys baking, playing intramural sports, and reading."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -512,7 +625,7 @@
           "y": 30.6
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/amari-mehta",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -528,6 +641,14 @@
         "Government & Politics"
       ],
       "experience": "Past Strategic Insights & Analytics Intern at Stanley Black & Decker",
+      "headline": "Past Strategic Insights & Analytics Intern, Stanley Black & Decker",
+      "bio": [
+        "Saachi Aggarwal is a consultant for the Snider Consulting Group. She joined SCG as a member of Cohort 10 in the Spring of 2025.",
+        "Saachi is pursuing a dual degree in Operations Management & Business Analytics and Government & Politics. She is also a member of the Interdisciplinary Business Honors (IBH) Program.",
+        "Through past experiences, Saachi’s biggest strengths include creative problem-solving, cross-functional collaboration, and organization.",
+        "Outside of SCG, Saachi is the Vice President of External Affairs for Consult Your Community, serves on the University Student Judiciary (Student Honor Council), and is a Teaching Assistant for the IBH Program. In the past, she has also participated in various case competitions, such as the Deloitte Undergraduate Case Competition and the PwC Challenge Case Competition, where her team placed first.",
+        "Outside of UMD, Saachi has worked as a Program Analysis Intern at the U.S. Department of the Interior. This past summer, she interned at Stanley Black & Decker as an Strategic Insights & Analytics Intern. In her free time, she enjoys hiking, crocheting, and visiting D.C. with friends!"
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -546,7 +667,7 @@
           "y": 32.2
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/saggarwal05",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -562,6 +683,14 @@
         "Economics"
       ],
       "experience": "PDIP at Capital One",
+      "headline": "Incoming Product Manager, Capital One",
+      "bio": [
+        "Hasan Ege is a consultant for the Snider Consulting Group. He joined SCG as a member of Cohort 10 in the Spring of 2025.",
+        "Hasan is pursuing a BS in Computer Science and a BA in Economics. He is a member of the Global Challenges & Solutions Honors Program and the Global Fellows Program.",
+        "Hasan’s areas of expertise involve organization, problem-solving, analytical thinking, collaboration, and adaptability.",
+        "Outside of SCG, Hasan serves as the Treasurer of the Global Communities Student Association. He is also a part of the Global Fellows Program and is an active member of Alpha Kappa Psi Business Fraternity.",
+        "Hasan’s professional experience includes interning at the U.S. Securities & Exchange Commission where he worked for the Department of Economic Risk & Analysis. He also interned at Capital One as a Business Analyst before switching into the Product Management track."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -580,7 +709,7 @@
           "y": 22.9
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/hasan-ege-2aa35921b",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -596,6 +725,15 @@
         "Information Systems"
       ],
       "experience": "Past Intern at Capitol Hill",
+      "headline": "Past Intern, Committee on House Administration",
+      "bio": [
+        "Pranav Sasikumar is a consultant for the Snider Consulting Group. He joined SCG as a member of Cohort 11 in the Fall of 2025.",
+        "Pranav is pursuing a B.S. in Finance at the Robert H. Smith School of Business at the University of Maryland. He is part of the Justice and Legal Thought (JLT) Scholars Program.",
+        "Pranav is driven by intellectual curiosity, a growth mindset, and a passion for creatively tackling analytical challenges.",
+        "Beyond SCG, Pranav serves as an Executive Board Member of the Maryland Parliamentary Debate Society, competing at the national collegiate level. He also frequently participates in case competitions, which allow him to apply his innovate problem-solving to real-world business challenges.",
+        "Previously, Pranav represented all Smith undergraduates on the Presidential Executive Board and has held several on-campus positions, including Tennis Instructor, Auditor for the UMD Committee on Financial Affairs, Peer Mentor for the JLT Scholars Program, and Staff Economic Writer for The Observer and Staff Writer for The Undergraduate Law Review.",
+        "Off campus, Pranav stood as a Delegate at the UN Social Forum on Human Rights in Geneva and interned for the Committee on House Administration on Capitol Hill. In his free time, he enjoys producing music, playing cards, and solving logic puzzles."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -614,7 +752,7 @@
           "y": 41.1
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/pranavsasikumar",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -630,6 +768,14 @@
         "Information Systems"
       ],
       "experience": null,
+      "headline": "Outreach Assistant, HC DrugFree",
+      "bio": [
+        "Utkarsh Mandsaurwale is a consultant for the Snider Consulting Group. He joined SCG as a member of Cohort 11 in the Fall of 2025.",
+        "Utkarsh is pursuing a B.S. in Finance and Information Systems at the Robert H. Smith School of Business at the University of Maryland. He is also a member of the Business, Society, and Entrepreneurship (BSE) Scholars Program.",
+        "He is driven by a strong analytical mindset, a commitment to continuous learning, and a passion for solving complex problems through strategic, data-oriented thinking.",
+        "Beyond SCG, Utkarsh serves as a Fundamental Team Academy Associate for the Smith Investment Fund, where he develops skills in equity research and investment analysis. He also serves as the Brotherhood Director for Delta Sigma Pi, helping foster engagement, community, and professional development within the chapter.",
+        "Outside of UMD, Utkarsh is an Outreach Assistant at HC DrugFree, supporting community education efforts and helping expand the organization’s reach through targeted engagement. In his free time, Utkarsh enjoys bouldering, playing poker, and discovering new music."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -648,7 +794,7 @@
           "y": 41.7
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/utkarsh-mands",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -664,6 +810,14 @@
         "Information Systems"
       ],
       "experience": "Incoming Intern at MetLife Investment Management",
+      "headline": "Incoming Business Analyst Intern, Capital One",
+      "bio": [
+        "Riley Ying is a Consultant for the Snider Consulting Group. He joined SCG as a member of Cohort 11 in the Fall of 2025.",
+        "Riley is pursuing a B.S. in Finance and Information Systems. He is a member of the Interdisciplinary Business Honors (IBH) program.",
+        "Through past leadership experiences and team projects, Riley’s strengths include creative problem-solving, learning agility, and cross-functional collaboration.",
+        "Outside of SCG, Riley serves as the Vice President of Technology for the Smith Undergraduate Student Association (SUSA). He is involved in the professional business fraternity Pi Sigma Epsilon, serving on the Professional Development and Human Resources committees. He also has worked as a Teaching Assistant for BMGT 301 (Introduction to Information Systems) in the Smith school.",
+        "Outside of UMD, Riley will be working as a Business Analyst Intern at Capital One in Summer 2027. Previously, he has worked at MetLife Investment Management as an Insurance Asset Management Intern. In his free time, he enjoys playing pickleball, discovering new music, and traveling."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -682,7 +836,7 @@
           "y": 42.2
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/riley-ying",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -697,6 +851,14 @@
         "Computer Science"
       ],
       "experience": "Software Engineer Intern at AfterQuery",
+      "headline": "Previous Software Engineer, AfterQuery",
+      "bio": [
+        "Ibraheem Shaikh is a consultant for Snider Consulting Group. He joined SCG as a member of Cohort 11 in the Fall of 2025.",
+        "Ibraheem is pursuing a B.S. in Computer Science. He is also a member of the Interdisciplinary Business Honors (IBH) program.",
+        "Ibraheem excels in team environments where he can learn from others and contribute to team success. With an organizational mindset and enthusiasm for technology projects, he embraces calculated risks to develop solutions that make meaningful differences in people’s lives.",
+        "Outside SCG, Ibraheem is a Quantitative Developer for Smith Investment Fund, has been involved with two research projects with Professor Michel Cukier and with Professor Haizhao Yang respectively.",
+        "Outside UMD, Ibraheem is the founder of Rudimint, previously founded his own startup called ThinkEx with 750+ WAU, and interned as a Software Engineer at AfterQuery, a startup backed by YCombinator. In his free time he loves to play basketball, listen to music, go to the gym, snowboard, and spend time with friends."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -715,7 +877,7 @@
           "y": 51.5
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/ibraheemshaikh",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -730,6 +892,14 @@
         "Computer Science"
       ],
       "experience": "Past AI Intern at the National Institutes of Health",
+      "headline": "Incoming SWE intern, Capital One",
+      "bio": [
+        "Daniel Li is a consultant for Snider Consulting Group. He joined SCG as a member of Cohort 11 in the Fall of 2025.",
+        "Daniel is pursuing a B.S. in Computer Science at the University of Maryland, College Park. He is a Banneker/Key Scholar and a part of the Interdisciplinary Business Honors program.",
+        "Daniel’s strengths include data analysis, technical problem-solving, and structured strategic thinking. He brings a strong ability to break down complex problems and support recommendations with clear, data-driven insights.",
+        "Outside SCG, Daniel is involved in Product Space and the App Development Club, where he works on product-focused and technical projects at the intersection of software and business strategy. He is also a part of Asian American Inter-Varsity, a Christian Campus Ministry.",
+        "Outside of UMD, Daniel has conducted AI medical imaging research at the National Institutes of Health and will join Capital One as a software engineering intern in Summer 2027. In his free time, he likes playing the violin, going to the gym, and exploring the outdoors."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -748,7 +918,7 @@
           "y": 39.4
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/daniel-dongyue-li",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -764,6 +934,13 @@
         "Information Systems"
       ],
       "experience": null,
+      "headline": null,
+      "bio": [
+        "Nikhil Thomas is a consultant for the Snider Consulting Group. He joined SCG as a member of Cohort 11 in the Fall of 2025.",
+        "Nikhil is pursuing a B.S. in Finance and Information Systems.",
+        "Nikhil’s main strengths include analytical thinking, problem solving, and developing innovative and creative solutions.",
+        "Nikhil is involved in the Smith Undergraduate Student Association as a member of the President’s Committee, Business and IT Society as VP of Finance, and the Smith Finance Group. Outside of UMD, Nikhil has interned at Perfetti Van Melle and the Moody Street Group, and volunteers with special needs programs. In his free time, he loves to play the guitar, golf, and play basketball with his friends."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -782,7 +959,7 @@
           "y": 44.8
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/nikhil-thomas-676b0b282",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site",
@@ -799,6 +976,14 @@
         "Finance"
       ],
       "experience": "District Manager Intern at Aldi",
+      "headline": "District Manager Intern, Aldi",
+      "bio": [
+        "Santana Pina is a consultant for Snider Consulting Group. She joined SCG as a member of Cohort 11 in the Fall of 2025.",
+        "Santana is pursuing a B.S. in International Business. She is also a member of Smith Business Leadership Fellows Program (SBLF).",
+        "She is driven by a passion for global cultures, a commitment to advancing women’s leadership in international business, and a strong analytical mindset shaped by her experience in case competitions and strategic problem-solving.",
+        "Outside of SCG, Santana also serves on the Presidents Committee for the Smith Undergraduate Student Association (SUSA), the Events Committee for Women Business Association (WBA), the Marketing Committee for International Economics and Finance Society (IEFS), is a Smith Ambassador, and an active member of Women Empowerment Institute (WEI).",
+        "In addition to her involvement in Smith, Santana currently works for PathSpark, an education technology company, as their Youth Developement Officer, assisting in product development and market research. In her free time, Santana enjoys traveling, exploring new cultures, learning latin dances, and discovering local food spots."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -817,7 +1002,7 @@
           "y": 43
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/santana-pina",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -833,25 +1018,33 @@
         "Operations Management & Business Analytics"
       ],
       "experience": "Digital Services Intern at Marriott",
+      "headline": "Past Custom Products Intern, Marriott International",
+      "bio": [
+        "Chaewon Cheon is a consultant for Snider Consulting Group. She joined SCG as a member of Cohort 11 in the Fall of 2025.",
+        "Chaewon is pursuing a B.S. in Marketing and Operations Management & Business Analytics. She is a part of the Strategic Design Fellows Program and Business, Society, and Entrepreneurship Scholars Program.",
+        "In consulting projects, Chaewon’s strengths include strategic creativity, data-driven decision-making, and a team-oriented mindset, collaboratively navigating complex challenges through an innovative lens.",
+        "Outside of SCG, Chaewon serves as Special Events Director and Incoming President for UMD’s Student Entertainment Events (SEE), and Marketing Director for the Alpha Kappa Psi Professional Business Fraternity.",
+        "Outside of UMD, Chaewon worked as a Custom Products Intern for Marriott International and as a Visitor Studies Intern at The Maryland Zoo. In her free time, she enjoys reading, doing pilates and spin, and trying new restaurants."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
           "file": "chaewon-cheon.jpg",
-          "width": 2560,
-          "height": 1438
+          "width": 1707,
+          "height": 2560
         },
         "face": {
-          "x": 44.6,
-          "y": 35.5,
-          "w": 10.5,
-          "h": 23
+          "x": 34.3,
+          "y": 18.3,
+          "w": 27.8,
+          "h": 22.9
         },
         "focal": {
-          "x": 49.9,
-          "y": 47
+          "x": 48.2,
+          "y": 29.7
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/chaewon-cheon",
       "consent_to_publish": true,
       "consent_basis": "Listed on the public old site",
       "source": "old-site"
@@ -867,6 +1060,14 @@
         "Information Systems"
       ],
       "experience": "Previous Investor Relations & Operations Intern at ARMR Systems",
+      "headline": "Previous Investor Relations & Operations Intern, ARMR Systems",
+      "bio": [
+        "Jeremey Jacob is a consultant for Snider Consulting Group. He joined SCG as a member of Cohort 12 in the Spring of 2026.",
+        "Jeremey is pursuing a dual degree in Finance and Information Systems. He is part of QUEST Cohort 47, Justice & Legal Thought Scholars Program, and Wall Street Fellows.",
+        "Jeremey’s strengths include structured problem-solving, data analysis, and strategic creativity. He approaches complex business challenges with an analytical lens, using clear insights and collaborative thinking to develop practical, high-impact recommendations.",
+        "Outside of SCG, Jeremey is the Founder and Managing Partner of the Dingman Venture Capital Group, where he leads UMD’s only student-run venture fund, connecting students with venture education, startup diligence, fund operations, and hands-on exposure to early-stage investing. He also supports the Maryland Momentum Fund as a USM Venture Fellow.",
+        "Outside of UMD, Jeremey builds websites and codes mobile applications for organizations across industries, blending technical development with UI/UX design and business strategy. In his free time, he enjoys bouldering, playing badminton, and trying new foods."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -885,7 +1086,7 @@
           "y": 37
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/jeremeyjacob",
       "consent_to_publish": true,
       "consent_basis": "Member consent confirmed by team lead (Oct 2026)",
       "source": "cohort-12-sheet"
@@ -901,25 +1102,33 @@
         "Information Systems"
       ],
       "experience": "Previous Financial Systems Intern at T. Rowe Price",
+      "headline": "Incoming Global Private Bank Advisor Summer Analyst, J.P. Morgan",
+      "bio": [
+        "Maaz Riaz is a consultant and team lead for Snider Consulting Group. He joined SCG as a member of Cohort 12 in the Spring of 2026.",
+        "Maaz is pursuing a B.S. in Finance and Information Systems at the Robert H. Smith School of Business. In consulting projects, Maaz brings strengths in problem-solving, clear communication, and data-driven thinking. He works well with others to break down complex challenges and develop practical, effective solutions.",
+        "Outside of SCG, Maaz is involved in UMD student organizations including Smith Finance Group, the Muslim Business Student Association, the Muslim Student Association, and the Pakistani Student Association. He was also previously involved in Consult Your Community, where he completed pro-bono consulting work for a local nonprofit. In 2026, Maaz represented UMD in the Accenture Innovation Challenge, where his team advanced as a semifinalist.",
+        "Outside of UMD, Maaz previously worked as a Finance Systems Intern at T. Rowe Price during 2026 and will be joining J.P. Morgan as a Global Private Bank Advisor Summer Analyst in 2027. He also serves as a Youth Team Lead at the Islamic Society of Baltimore. In his free time, Maaz enjoys playing and watching soccer, watching films, and spending time with friends and family."
+      ],
       "worked_on": [],
       "photo": {
+        "file": "maaz-riaz.jpg",
         "source": {
           "file": "maaz-riaz.jpg",
-          "width": 1600,
-          "height": 1067
+          "width": 966,
+          "height": 1483
         },
         "face": {
-          "x": 42.6,
-          "y": 28.4,
-          "w": 12.7,
-          "h": 21.2
+          "x": 37,
+          "y": 27.5,
+          "w": 32.1,
+          "h": 23.7
         },
         "focal": {
-          "x": 48.9,
-          "y": 39
+          "x": 53.1,
+          "y": 39.4
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/maazriaz",
       "consent_to_publish": true,
       "consent_basis": "Member consent confirmed by team lead (Oct 2026)",
       "source": "cohort-12-sheet"
@@ -935,6 +1144,14 @@
         "Information Systems"
       ],
       "experience": "Previous Embark Intern at KPMG",
+      "headline": "Past Embark Intern, KPMG",
+      "bio": [
+        "Darwin Ferrufino is a Consultant with the Snider Consulting Group. He joined SCG as a member of cohort 12 in the Spring of 2026.",
+        "Darwin is pursuing a BS in Finance and Information Systems at the University of Maryland’s Robert H. Smith School of Business, with an expected graduation in May 2028.",
+        "Darwin’s specific areas of expertise include financial modeling, go-to-market and marketing strategy, and data analysis. On SCG engagements, he has built a three-statement financial model for DefenX under EY mentor oversight. He also helped develop a go-to-market strategy for Orbit, a student-founded schedule-building startup.",
+        "During his time at UMD, Darwin has served as VP of Finance for the UMD chapter of ALPFA and VP of Inclusion for the Smith Undergraduate Student Association. He has also worked at the front desk for the Office of Career Services.",
+        "Outside of UMD, Darwin interned at KPMG’s McLean office as an Embark Scholar during his sophomore year. In his free time, he enjoys playing basketball, working out, and listening to music."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -953,7 +1170,7 @@
           "y": 50.4
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/darwinferrufino",
       "consent_to_publish": true,
       "consent_basis": "Member consent confirmed by team lead (Oct 2026)",
       "source": "cohort-12-sheet"
@@ -968,6 +1185,14 @@
         "Bioengineering"
       ],
       "experience": "Undergraduate Researcher at Stanford University School of Medicine",
+      "headline": "Undergraduate Researcher, Stanford University School of Medicine",
+      "bio": [
+        "Edith Yang is a consultant for Snider Consulting Group. She joined SCG as a member of Cohort 12 in the Spring of 2026.",
+        "Edith is pursuing a B.S. in Bioengineering. She is a part of QUEST Cohort 47 and Integrated Life Science Honors.",
+        "Edith’s strengths are driven through data analysis, communication, and graphic design. She works well in team-oriented settings to optimize each member’s strengths to develop innovative solutions that are at the forefront of the industry.",
+        "Outside of SCG, Edith is a peer mentor for incoming freshmen in the Integrated Life Sciences Honors Program, supporting students in their transition to college with finding research opportunities, creating a 4-year course plan, and exploring clinical experience. Additionally, she was a Programming Head in UMD’s Taiwanese American Student Association, managing volunteers and performers for their fall capstone event, Tour of Taiwan, and spring capstone event, Night Market. She is also a member of Kharis Campus Ministry.",
+        "Outside of UMD, Edith researches the genetic pathology of neurodegenerative diseases, such as amyotrophic lateral sclerosis and frontotemporal dementia, at the Stanford School of Medicine. In her free time, Edith enjoys playing volleyball with friends and trying new restaurants."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -986,7 +1211,7 @@
           "y": 43
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/edithy",
       "consent_to_publish": true,
       "consent_basis": "Member consent confirmed by team lead (Oct 2026)",
       "source": "cohort-12-sheet"
@@ -1002,6 +1227,14 @@
         "Finance"
       ],
       "experience": "Previous Software Engineer Intern at Ntrepid",
+      "headline": "Past Software Engineer Intern, Ntrepid",
+      "bio": [
+        "Siddanth Vinay is a consultant for Snider Consulting Group. He joined SCG as a member of Cohort 12 in the Spring of 2026.",
+        "Siddanth is currently pursuing a double major in Computer Science and Finance at the University of Maryland, College Park.",
+        "In consulting projects, Siddanth’s strengths lie in technical problem-solving, computational analysis, and data-driven strategy. He excels at bridging the gap between complex engineering challenges and business operations.",
+        "Outside of SCG, Siddanth is a Machine Learning Engineer in the App Development Club, where he works on a project with Children’s National Hospital. He also serves as a Scouting Intern for Maryland Football. In April 2026, he placed in three UMD hackathons: Google x UMD, AWS x UMD GenAI, and Anthropic x UMD.",
+        "Outside of UMD, Siddanth has interned as a Software Engineer at Ntrepid and Children’s National Hospital, and as a Software Developer and Tech Lead at Propel Earth. In his free time, he enjoys playing basketball and other sports, woodworking, and learning about football strategy."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -1020,7 +1253,7 @@
           "y": 43.8
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/siddanthvinay",
       "consent_to_publish": true,
       "consent_basis": "Member consent confirmed by team lead (Oct 2026)",
       "source": "cohort-12-sheet"
@@ -1036,6 +1269,14 @@
         "Information Systems"
       ],
       "experience": "Incoming Business Analyst Intern at Capital One",
+      "headline": "Incoming Business Analyst Intern, Capital One",
+      "bio": [
+        "Orlyn Gomez is an analyst for Snider Consulting Group. He joined SCG as a member of Cohort 13 in the Fall of 2026.",
+        "Orlyn is pursuing a B.S. in Finance and Information Systems at the Robert H. Smith School of Business at the University of Maryland. He is also a member of the Business, Society, and Entrepreneurship (BSE) Scholars Program.",
+        "Orlyn is energized by working with teams and is intentional about leveraging what each person does best. Driven by a passion for finance and technology, he uses analytical storytelling to connect the numbers to the bigger picture and move people toward meaningful change.",
+        "Outside of SCG, Orlyn is involved in the Seeking Alpha Mu Investment Fund, where he is an Equity Research Analyst, and the professional business fraternity Phi Chi Theta. He also works at the Smith Office of Career Services as a Front Desk Coordinator. He was previously a Lead Consultant in the Impact Consulting Fellowship, where he completed pro bono consulting work. In 2026, Orlyn earned 2nd place at the BCorp Invitational Case Competition among 51+ universities.",
+        "Outside of UMD, Orlyn will be interning as a Business Analyst Intern at Capital One in Summer 2027. In his free time, he enjoys trying new recipes, discovering great movies, exploring the outdoors, and spending time with friends."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -1054,7 +1295,7 @@
           "y": 34.8
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/orlyngomez",
       "consent_to_publish": true,
       "consent_basis": "Member consent confirmed by team lead (Oct 2026)",
       "source": "cohort-13-list"
@@ -1137,6 +1378,14 @@
         "Information Systems"
       ],
       "experience": "Past Revenue Accounting Intern at Harmony Biosciences",
+      "headline": "Past Revenue Accounting Intern, Harmony Biosciences",
+      "bio": [
+        "Andrew Advani is an analyst for Snider Consulting Group. He joined SCG as a member of Cohort 13 in the Fall of 2026.",
+        "Andrew Advani is pursuing a B.S. in Finance and Information Systems at the Robert H. Smith School of Business.",
+        "Andrew’s strengths include data analytics, quantitative analysis, and value creation. He excels in high intensity, collaborative environments where he leverages strengths to use data to drive decisions.",
+        "Outside of SCG, Andrew is involved within Smith. He is a brother of Pi Sigma Epsilon, a professional business fraternity, where he is a co-founder of their fraternal investment fund. In addition, Andrew is also a Business Analyst in Consult Your Community where he is staffed on a semester long engagement. Further, Andrew is involved within the Smith Undergraduate Student Association where he serves on the Technology Committee.",
+        "Outside of UMD, Andrew previously interned at Harmony Biosciences, a pharmaceutical company with a focus on rare diseases. In his free time, Andrew loves spending time outside and staying active. Some of his hobbies include east coast skiing, playing basketball, bouldering, hiking, and reading."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -1155,7 +1404,7 @@
           "y": 39.7
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/andrew-advania",
       "consent_to_publish": true,
       "consent_basis": "Member consent confirmed by team lead (Oct 2026)",
       "source": "cohort-13-list"
@@ -1171,6 +1420,14 @@
         "Mathematics"
       ],
       "experience": "Incoming Business Analyst Intern at Capital One",
+      "headline": "Incoming Business Analyst Intern, Capital One",
+      "bio": [
+        "Andres Parra is an analyst for Snider Consulting Group. He joined SCG as a member of Cohort 13 in the Fall of 2026.",
+        "Andres is pursuing a B.S. in Finance with a minor in Mathematics. He is a part of QUEST Cohort 47 and the Smith Business Leadership Fellows.",
+        "Andres brings expertise in quantitative analysis, strategic problem-solving, and leadership. He thrives in collaborative environments where he can effectively combine his analytical mindset with leadership and communication abilities to develop practical and data-driven solutions.",
+        "Outside of SCG, Andres is a brother of Delta Sigma Pi Business Fraternity. Additionally, he is a Smith Start Mentor, Smith Ambassador, and Front Desk Assistant in the Smith Undergraduate Office. Through SBLF, he earned 1st place in both the Fall 2025 Consulting Project with the Ed Snider Center for Enterprise and Markets and the Spring 2026 Startup Pitch Competition. He also earned 3rd place in the Fall 2025 Interfraternal Case Competition.",
+        "Outside of UMD, Andres previously interned at Nota Consulting, a boutique management consulting firm specializing in M&A projects for private equity-backed clients. He will also be joining Capital One as a Business Analyst Intern at its headquarters in McLean, VA, in Summer 2027. In his free time, Andres enjoys road biking, weightlifting, running, spending time with friends and family, and creating day-in-the-life content for his vlog."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -1189,7 +1446,7 @@
           "y": 42.7
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/andresparra7",
       "consent_to_publish": true,
       "consent_basis": "Member consent confirmed by team lead (Oct 2026)",
       "source": "cohort-13-list"
@@ -1204,6 +1461,14 @@
         "Mechanical Engineering"
       ],
       "experience": "AI Research Intern at Yunnan University",
+      "headline": "AI Research Intern, Yunnan University",
+      "bio": [
+        "Yipeng Lu is an analyst for Snider Consulting Group. He joined SCG as a member of Cohort 13 in the Fall of 2026.",
+        "Yipeng is currently pursuing a B.S. in Mechanical Engineering at the A. James Clark School of Engineering. He is a part of QUEST Honors Program Cohort 48 and First-Year Innovation & Research Experience (FIRE).",
+        "Yipeng’s strengths include strategic thinking, data analytics, teamwork, and client communication. With his engineering background, he breaks down complex problems into clear steps and works closely with his team to deliver clear, practical solutions.",
+        "Outside of SCG, Yipeng is a Hardware Lead Engineer for ProjectLift, where he leads a team that works with clients to solve their problems through technology. He is also a member of Startup Shell and a Clark Undergraduate Teaching Fellow for ENME 202, and he previously conducted research in the UMD Environmental Monitoring Lab. In addition, he serves as Vice President of the UMD Badminton Club and as a member of the International Student Council and the Clark School Dean’s Student Advisory Board.",
+        "Outside of UMD, Yipeng joined Yunnan University as an AI research intern in Summer 2026 and continues to contribute part-time, working on knowledge editing methods that help large language models (LLMs) update their knowledge more efficiently. In his free time, Yipeng enjoys playing badminton and basketball, travelling, and trying new restaurants."
+      ],
       "worked_on": [],
       "photo": {
         "source": {
@@ -1222,7 +1487,7 @@
           "y": 32.5
         }
       },
-      "linkedin": null,
+      "linkedin": "https://www.linkedin.com/in/luyipeng",
       "consent_to_publish": true,
       "consent_basis": "Member consent confirmed by team lead (Oct 2026)",
       "source": "cohort-13-list"

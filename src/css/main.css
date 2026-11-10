@@ -1530,6 +1530,16 @@ a.resource-card[target="_blank"] .resource-card__title::after { content: " ↗";
 .team-card__exp { margin-top: 4px; }
 .team-card__projects { margin-top: 8px; }
 .team-card .person__linkedin { margin-top: auto; padding-top: 8px; }
+.team-card--link { position: relative; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.team-card--link:hover { box-shadow: var(--shadow-lift); border-color: #CFC6B8; }
+@media (prefers-reduced-motion: no-preference) { .team-card--link:hover { transform: translateY(-3px); } }
+.team-card--link:has(.team-card__more:focus-visible) { outline: 3px solid var(--focus); outline-offset: 3px; }
+.team-card__foot { margin: auto 0 0; padding-top: 8px; }
+.team-card__more { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; font-weight: 700; color: var(--scg-red); text-decoration: none; }
+.team-card__more:hover { text-decoration: underline; text-underline-offset: 3px; }
+.team-card__more::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.team-card__more:focus-visible { outline: none; text-decoration: underline; text-underline-offset: 3px; }
+.team-card--link .team-card__projects { position: relative; z-index: 2; }   /* project chips stay their own links above the card link */
 /* Alumni cards: the Team card format; 1 / 2 / 3 / 4 columns (under 400 / 400 / 768 / 1024px). */
 .alumni-grid { grid-template-columns: 1fr; }
 @media (min-width: 400px) { .alumni-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -1563,6 +1573,7 @@ a.resource-card[target="_blank"] .resource-card__title::after { content: " ↗";
 .alum-detail__photo { width: min(100%, 300px); }
 .alum-detail__photo img, .alum-detail__photo .avatar { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); background: var(--ph-bg); }
 .alum-detail__photo .avatar--initials { font-size: 4rem; }
+.member-page .alum-detail__photo img, .member-page .alum-detail__photo .avatar { aspect-ratio: 1 / 1; }   /* the square tile photo */
 .alum-detail__name { font-size: var(--step-2); line-height: 1.15; margin: 0; }
 .alum-page .alum-detail__name { font-size: var(--step-3); line-height: 1.1; }
 .alum-detail__name:focus, .alum-detail__name:focus-visible { outline: none; }

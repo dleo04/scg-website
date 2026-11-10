@@ -121,6 +121,9 @@ const unconfirmed = alumni.filter((p) => /to be confirmed/i.test(p.consent_basis
 if (unconfirmed.length) data.push(`alumni.json → ${unconfirmed.map((p) => p.name).join(", ")}: confirm permission to publish each photo and bio (consent_basis says "to be confirmed").`);
 data.push("Officers: confirm each listed member and alumnus is OK with their name, photo and details being shown; set consent_to_publish to false (or delete the entry) on request.");
 for (const p of people.filter((p) => p.review_note)) data.push(`${p.level ? "team.json" : "alumni.json"} → ${p.name}: ${p.review_note}`);
+// Members with a bio page (consent and a bio) but no headline: the page leaves the line out.
+const noHeadline = (team.members || []).filter((p) => p.consent_to_publish === true && Array.isArray(p.bio) && p.bio.length && !p.headline);
+if (noHeadline.length) data.push(`team.json → ${noHeadline.map((p) => p.name).join(", ")}: supply a headline ("Past <Role>, <Company>") for the bio page /team/<id>/; until then the page shows none.`);
 const noMajors = (team.members || []).filter((p) => !p.majors).length;
 if (noMajors) data.push(`team.json: ${noMajors} members have no majors (the old site did not list them); the major filter on /team/ appears once at least 3 members have one. "worked_on" (project ids) is empty for everyone.`);
 if (!site.alumni_report?.file) data.push("site.json → alumni_report.file: add the 2026 Alumni Report PDF to show the download on /alumni/ (the old site only showed it as an image carousel; no file was found).");

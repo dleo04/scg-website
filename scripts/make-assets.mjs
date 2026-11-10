@@ -386,7 +386,8 @@ for (const g of fs.existsSync(galleryFile) ? JSON.parse(fs.readFileSync(galleryF
 }
 
 // Team and alumni headshots: assets/photos/people/<id>.* → a square card image (600px, as on
-// /team/ and /alumni/ cards) and a 4:5 portrait (600×750, alumni drawer and page), WebP < 60KB,
+// /team/ and /alumni/ cards and the /team/<id>/ page) and a 4:5 portrait (600×750, alumni drawer
+// and page), WebP < 60KB, plus a 1200×630 Open Graph image for both page kinds,
 // framed on the detected face (lib/faces.mjs, lib/headshots.mjs). Detection runs here only for
 // photos without a stored face box (or whose file changed); results are written back to the
 // data files so framing is reproducible and can be overridden by hand (photo.focal_override).
@@ -434,8 +435,8 @@ fs.mkdirSync(path.join(GEN_DIR, "people"), { recursive: true });
         fs.writeFileSync(path.join(GEN_DIR, "people", fileName), buf);
         out[kind] = { src: `/assets/generated/people/${fileName}`, width, height, kb: Math.round(buf.length / 1024) };
       }
-      // Open Graph image for /alumni/<id>/: the portrait beside the logo on --paper-2.
-      if (key === "alumni") {
+      // Open Graph image for /alumni/<id>/ and /team/<id>/: the portrait beside the logo on --paper-2.
+      {
         const portrait = await sharp(path.join(GEN_DIR, "people", `${person.id}-portrait.webp`)).resize(504, 630, { fit: "cover" }).toBuffer();
         const logo = await sharp(LOGO).resize({ width: 520 }).toBuffer();
         const lh = (await sharp(logo).metadata()).height;
